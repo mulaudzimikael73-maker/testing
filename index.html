@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lizzy ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- ========================= -->
+<!-- Animated Background -->
+<!-- ========================= -->
+
+<div id="background"></div>
+
+<div id="hearts"></div>
+
+<div id="petals"></div>
+
+<div id="sparkles"></div>
+
+<!-- ========================= -->
+<!-- Loading Screen -->
+<!-- ========================= -->
+
+<section id="loading">
+
+    <div class="glass">
+
+        <div class="loadingHeart">
+            ❤️
+        </div>
+
+        <h1>Loading Something Special...</h1>
+
+        <p>Please wait just a moment.</p>
+
+        <div class="loadingBar">
+
+            <div class="loadingFill"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Progress -->
+<!-- ========================= -->
+
+<div id="progress">
+
+    <div id="progressFill"></div>
+
+</div>
+
+<!-- ========================= -->
+<!-- Sound Toggle -->
+<!-- ========================= -->
+
+<button id="soundButton">
+
+🔈
+
+</button>
+
+<!-- ========================= -->
+<!-- Opening Scene -->
+<!-- ========================= -->
+
+<section id="opening" class="scene hidden">
+
+    <div class="glass">
+
+        <h1 class="title">
+
+            Every Great Story...
+
+        </h1>
+
+        <p class="subtitle">
+
+            starts with one choice.
+
+        </p>
+
+        <p>
+
+            This isn't just another website.
+
+            <br><br>
+
+            It's a little adventure made especially for one person.
+
+        </p>
+
+        <button id="startStory">
+
+            Begin ❤️
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Storybook -->
+<!-- ========================= -->
+
+<section id="storybook" class="scene hidden">
+
+    <div class="glass">
+
+        <h1>
+
+            Chapter One
+
+        </h1>
+
+        <h2>
+
+            Once Upon A Time...
+
+        </h2>
+
+        <p>
+
+            There was a girl who somehow made pink seem like the best colour in the world.
+
+        </p>
+
+        <p>
+
+            She had a little attitude...
+
+            but somehow that just made her even more unforgettable.
+
+        </p>
+
+        <button id="nextChapter">
+
+            Turn The Page 📖
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Quiz -->
+<!-- ========================= -->
+
+<section id="quiz" class="scene hidden">
+
+    <div class="glass">
+
+        <h1>Quick Quiz 💕</h1>
+
+        <p class="subtitle">
+
+            Let's see how well this story is going...
+
+        </p>
+
+        <h2 id="questionTitle">
+
+            Question goes here
+
+        </h2>
+
+        <div id="answers">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- TV References -->
+<!-- ========================= -->
+
+<section id="tvSection" class="scene hidden">
+
+    <div class="glass">
+
+        <h1>Things That Reminded Me Of You 📺</h1>
+
+        <div class="referenceCard">
+
+            <h2>The Office</h2>
+
+            <p>
+                Sometimes life is wonderfully awkward... and somehow that's part of the charm.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>Brooklyn Nine-Nine</h2>
+
+            <p>
+                Cool. Cool cool cool.
+                Some moments are just more fun because of the people you're with.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>Gilmore Girls</h2>
+
+            <p>
+                A warm conversation, a peaceful evening and good company always wins.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>High School Musical</h2>
+
+            <p>
+                Every good story deserves a memorable ending.
+            </p>
+
+        </div>
+
+        <button id="continueStory">
+
+            Continue 🌸
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Emotional Section -->
+<!-- ========================= -->
+
+<section id="story" class="scene hidden">
+
+    <div class="glass">
+
+        <h1>
+
+            One More Thing...
+
+        </h1>
+
+        <p>
+
+            Life moves incredibly fast.
+
+        </p>
+
+        <p>
+
+            People come and go.
+
+        </p>
+
+        <p>
+
+            But every now and then...
+
+        </p>
+
+        <p>
+
+            someone comes along who makes ordinary days feel a little brighter.
+
+        </p>
+
+        <p>
+
+            Thank you for every laugh.
+
+        </p>
+
+        <p>
+
+            Every random conversation.
+
+        </p>
+
+        <p>
+
+            Every "Little Miss Attitude" moment.
+
+        </p>
+
+        <p>
+
+            And thank you for simply being you.
+
+        </p>
+
+        <button id="proposalButton">
+
+            Keep Going ❤️
+
+        </button>
+
+    </div>
+
+</section>
+<!-- ========================= -->
+<!-- Proposal -->
+<!-- ========================= -->
+
+<section id="proposal" class="scene hidden">
+
+    <div class="glass proposalCard">
+
+        <h1>
+
+            Lebone Elizabeth Kganyago...
+
+        </h1>
+
+        <h2>
+
+            Will you go on a date with me? ❤️
+
+        </h2>
+
+        <p>
+
+            No pressure...
+
+            (Well... maybe just a little 😄)
+
+        </p>
+
+        <div class="buttonRow">
+
+            <button id="yesButton">
+
+                YES ❤️
+
+            </button>
+
+            <button id="noButton">
+
+                No 🙈
+
+            </button>
+
+        </div>
+
+        <p id="funnyMessage"></p>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Celebration -->
+<!-- ========================= -->
+
+<section id="celebration" class="scene hidden">
+
+    <div class="glass">
+
+        <h1>
+
+            🎉 You Said Yes! 🎉
+
+        </h1>
+
+        <h2>
+
+            You just made someone incredibly happy.
+
+        </h2>
+
+        <p>
+
+            I can't wait to spend some time with you.
+
+        </p>
+
+        <p>
+
+            Here's a little riddle for what's coming next...
+
+        </p>
+        <div class="riddleGrid">
+
+            <div class="riddleCard" data-answer="⛳ Mini Golf">
+
+                <p class="riddleText">
+
+                    I'm played with a tiny ball and a stick so neat,<br>
+                    windmills and ramps make my challenge complete.<br>
+                    No green fees, no golf cart, just laughs galore —<br>
+                    what am I?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+            <div class="riddleCard" data-answer="🕹️ Arcade">
+
+                <p class="riddleText">
+
+                    Coins turn to tokens, lights flashing bright,<br>
+                    high scores get chased deep into the night.<br>
+                    Joysticks and buttons, a friendly little duel —<br>
+                    what place is this?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+            <div class="riddleCard" data-answer="🎬 Movie Date">
+
+                <p class="riddleText">
+
+                    Popcorn in hand, the lights dimming low,<br>
+                    a story unfolds on a giant screen's glow.<br>
+                    Two seats, one screen, no need to talk —<br>
+                    what am I?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+        </div>
+
+        <p class="memoryMessage">Tap each one to reveal the answer 💕</p>
+
+        <button id="secretButton">
+
+            One Last Surprise 🌅
+
+        </button>
+
+    </div>
+
+</section>
+<!-- ========================= -->
+<!-- Secret Ending -->
+<!-- ========================= -->
+
+<section id="secretEnding" class="scene hidden">
+
+    <div id="desktop">
+
+        <!-- Wallpaper Overlay -->
+        <div id="wallpaperOverlay"></div>
+
+        <!-- Terminal -->
+        <div id="terminal">
+
+            <div class="terminalBar">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+
+                <p>Terminal</p>
+            </div>
+
+            <div id="terminalText"></div>
+
+        </div>
+
+        <!-- Desktop -->
+        <div id="desktopArea" class="hidden">
+
+            <!-- Desktop Icons -->
+
+            <div class="desktopIcon" id="folderIcon">
+
+                <div class="desktopEmoji">📁</div>
+
+                <span>Lizzy Archives</span>
+
+            </div>
+
+            <div class="desktopIcon" id="readMeIcon">
+
+                <div class="desktopEmoji">❤️</div>
+
+                <span>Read Me</span>
+
+            </div>
+
+            <div class="desktopIcon" id="missionIcon">
+
+                <div class="desktopEmoji">🗂️</div>
+
+                <span>Mission Log</span>
+
+            </div>
+
+            <div class="desktopIcon" id="openWhenIcon">
+
+                <div class="desktopEmoji">💌</div>
+
+                <span>Open When...</span>
+
+            </div>
+
+            <div class="desktopIcon">
+
+                <div class="desktopEmoji">🗑️</div>
+
+                <span>Bin</span>
+
+            </div>
+
+            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
+                <div class="desktopEmoji calendarFolderEmoji">
+                    <span class="folderCalendarBadge">📅</span>
+                </div>
+                <span>Our Date</span>
+            </div>
+
+        </div>
+
+        <!-- Finder Window -->
+
+        <div id="finderWindow" class="hidden">
+
+            <div class="finderTop">
+
+                <div class="finderButtons">
+
+                    <span class="closeBtn"></span>
+
+                    <span class="minBtn"></span>
+
+                    <span class="maxBtn"></span>
+
+                </div>
+
+                <h2>📁 The Lizzy Archives</h2>
+
+            </div>
+
+            <div class="finderInfo">
+
+                11 Files Stored 💗
+
+            </div>
+
+<div id="finderGrid">
+
+                <h3>💗 The Lizzy Archives</h3>
+
+                <div id="archiveList" class="likesList"></div>
+
+                <p class="memoryMessage">
+
+                    ❤️ My version of the folder in her brain that stores all the info about me.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Read Me -->
+
+<div id="readMeWindow" class="hidden">
+
+    <div class="windowTop readMeWindowTop">
+        <div class="windowDots">
+            <span class="windowCloseDot" id="readMeRedClose" title="Close"></span>
+            <span class="windowMinDot" id="readMeYellowMin" title="Minimise"></span>
+            <span class="windowMaxDot" id="readMeGreenMax" title="Expand"></span>
+        </div>
+        <h2>❤️ Read Me ❤️</h2>
+    </div>
+
+    <div id="readMeIntro">
+
+        <p><strong>Congratulations...</strong></p>
+
+        <p>You found the hidden folder.</p>
+
+        <p>These aren't just photos and videos.</p>
+
+        <p>They're little moments that made me smile.</p>
+
+        <p>Thank you for being part of these memories.</p>
+
+        <p><strong>...and if you're reading this, hopefully we're already making more. ❤️</strong></p>
+
+        <button id="openMemoriesButton">
+
+            📸 Open Our Memories
+
+        </button>
+
+    </div>
+
+    <div id="readMeContent" class="hidden">
+
+        Loading memories...
+
+    </div>
+
+    <button id="closeReadMe">
+
+        Close
+
+    </button>
+
+</div>
+
+        <!-- Mission Log -->
+        <div id="missionWindow" class="desktopWindow hidden">
+
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🗂️ Mission Log</h2>
+            </div>
+
+            <div class="windowScroll missionPaper">
+
+                <div class="classifiedHeader">
+                    <span>TOP SECRET</span>
+                    <h3>MISSION LOG</h3>
+                    <p>Security Clearance: LEVEL 7</p>
+                </div>
+
+                <div class="missionStatus">🟢 ACTIVE</div>
+
+                <section class="missionSection">
+                    <p class="missionLabel">MISSION #001</p>
+                    <h3>Operation: Strike Her Heart ❤️</h3>
+                    <p><strong>Location:</strong> Montecasino</p>
+                </section>
+
+                <section class="missionSection">
+                    <h3>🎯 Mission Brief</h3>
+                    <p>
+                        Agent Mikhail Petrov has officially accepted his first mission alongside
+                        <strong>Agent Yelizaveta</strong>. Intelligence reports indicate that Agent
+                        Yelizaveta possesses exceptional bowling abilities, placing Agent Petrov at
+                        a significant competitive disadvantage.
+                    </p>
+                    <p>
+                        Primary objectives include sharing plenty of laughs, creating the first
+                        official Mission Log memories, and surviving the scoreboard with dignity.
+                    </p>
+                    <p><strong>Success will be measured by the memories we create. ❤️</strong></p>
+                </section>
+
+                <div class="agentGrid">
+                    <article class="agentCard">
+                        <h3>👩 Agent Yelizaveta</h3>
+                        <p><strong>Role:</strong> Elite Operative</p>
+                        <p><strong>Bowling experience:</strong> Highly experienced</p>
+                        <p><strong>Mission difficulty:</strong> ⭐☆☆☆☆ Easy</p>
+                        <ul>
+                            <li>🎯 Precision accuracy</li>
+                            <li>💥 Consistent strikes</li>
+                            <li>😏 Highly competitive</li>
+                            <li>🏆 Expected to dominate the scoreboard</li>
+                        </ul>
+                    </article>
+
+                    <article class="agentCard">
+                        <h3>👨 Agent Mikhail Petrov</h3>
+                        <p><strong>Role:</strong> Rookie Operative</p>
+                        <p><strong>Bowling experience:</strong> One previous mission; results classified</p>
+                        <p><strong>Mission difficulty:</strong> ⭐⭐⭐⭐⭐ Legendary</p>
+                        <ul>
+                            <li>🎳 Limited field experience</li>
+                            <li>🤞 Hoping the ball reaches the correct lane</li>
+                            <li>😂 May invent new bowling techniques</li>
+                            <li>❤️ Primary objective: make Agent Yelizaveta smile</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <section class="missionSection">
+                    <h3>🎖️ Optional Side Quests</h3>
+                    <div class="checkList">
+                        <p>☐ Make Agent Yelizaveta laugh</p>
+                        <p>☐ Celebrate every strike, even if it is hers</p>
+                        <p>☐ Avoid an excessive number of gutter balls</p>
+                        <p>☐ Capture our first Mission Log photo 📸</p>
+                        <p>☐ Successfully unlock Mission #002</p>
+                    </div>
+                </section>
+
+                <section class="missionSection">
+                    <h3>🎁 Mission Rewards</h3>
+                    <p>🏅 First Date Badge</p>
+                    <p>📸 New Memories Added</p>
+                    <p>❤️ Story Progress +1</p>
+                    <p>🔓 Mission #002 Unlocked</p>
+                </section>
+
+                <section class="missionSection missionReport">
+                    <h3>📋 Mission Report</h3>
+                    <p><strong>Status:</strong> Awaiting Deployment...</p>
+                    <p>Awaiting Agent Yelizaveta's arrival...</p>
+                    <p><strong>Estimated mission success:</strong> 99.9%</p>
+                    <p>
+                        <strong>Reason for the remaining 0.1%:</strong><br>
+                        Agent Mikhail Petrov has never attempted a bowling mission against
+                        Agent Yelizaveta before. The final score is unpredictable, but this
+                        mission is already worth accepting. ❤️
+                    </p>
+                </section>
+
+            </div>
+
+            <button id="closeMission" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Open When Letters -->
+        <div id="openWhenWindow" class="desktopWindow hidden">
+
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>💌 Open When...</h2>
+            </div>
+
+            <div class="windowScroll">
+                <div id="letterList" class="letterList">
+                    <button class="letterButton" data-letter="miss">❤️ Open when you miss me</button>
+                    <button class="letterButton" data-letter="amazing">🌸 Open when you need reminding how amazing you are</button>
+                </div>
+
+                <article id="letterContent" class="letterPaper hidden">
+                    <h3 id="letterTitle"></h3>
+                    <div id="letterText"></div>
+                    <button id="backLetters" class="secondaryButton">← Back to letters</button>
+                </article>
+            </div>
+
+            <button id="closeOpenWhen" class="windowCloseButton">Close</button>
+        </div>
+
+
+        <!-- Our Date Calendar -->
+        <div id="calendarWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="calendarRedClose"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>📁 Our Date</h2>
+            </div>
+            <div class="windowScroll calendarDesktopContent">
+                <div class="calendarHeart">❤️</div>
+                <h3>Pick Our Date ❤️</h3>
+                <p id="desktopSchedulerRandomMessage">Loading mission instructions... ❤️</p>
+                <div class="schedulerGrid desktopSchedulerGrid">
+                    <label class="schedulerField"><span>📆 Date</span><div class="dateInputShell"><input id="desktopDateChoice" type="date"></div></label>
+                    <label class="schedulerField"><span>🕐 Time</span><div class="dateInputShell"><input id="desktopTimeChoice" type="time"></div></label>
+                </div>
+                <div id="desktopDatePreview" class="dateChoicePreview"><span>💗</span><p>Select the next mission date.</p></div>
+                <button id="confirmDesktopDate">Send Mission Update ❤️</button>
+                <p id="desktopDateStatus" class="dateSchedulerStatus" aria-live="polite"></p>
+                <div id="savedMissionDate" class="savedMissionDate"></div>
+            </div>
+            <button id="closeCalendar" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Full Screen Viewer -->
+
+        <div id="viewer" class="hidden">
+
+            <button id="viewerClose">
+
+                ✕
+
+            </button>
+
+            <button id="viewerPrev">
+
+                ◀
+
+            </button>
+
+            <button id="viewerNext">
+
+                ▶
+
+            </button>
+
+           <img id="viewerImage" src="" alt="Memory">
+
+            <video id="viewerVideo" controls></video>
+
+        </div>
+
+        <!-- Final Message -->
+
+        <div id="finalMessage" class="hidden">
+
+            <h1>
+
+                ❤️
+
+            </h1>
+
+            <h2>
+
+                Some memories are simply too special...
+
+            </h2>
+
+            <p>
+
+                ...to stay hidden forever.
+
+            </p>
+
+            <p>
+
+                Thank you for making this journey with me.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<audio id="backgroundMusic" loop>
+
+   <source src="assets/audio/Lizzy mp3.mp3" type="audio/mpeg">
+
+</audio>
+<audio id="officeAudio" preload="auto">
+    <source src="assets/audio/thats-what-she-said.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="brooklynAudio" preload="auto">
+    <source src="assets/audio/nine-nine.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="gilmoreAudio" preload="auto">
+    <source src="assets/audio/i-got-hit-by-a-deer.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="hsmAudio" preload="auto">
+    <source src="assets/audio/wildcats.mp3" type="audio/mpeg">
+</audio>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+(function () {
+    emailjs.init({
+        publicKey: "DA2h4ERPi-f5S0YBH"
+    });
+})();
+</script>
+
+<!-- Netlify Identity -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<script>
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function(user) {
+        if (!user) {
+            window.netlifyIdentity.on("login", function() {
+                window.location.href = "/admin/";
+            });
+        }
+    });
+}
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
