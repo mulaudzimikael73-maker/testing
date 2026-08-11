@@ -407,7 +407,6 @@
             Here's a little riddle for what's coming next...
 
         </p>
-
         <div class="riddleGrid">
 
             <div class="riddleCard" data-answer="⛳ Mini Golf">
@@ -531,51 +530,19 @@
 
             </div>
 
-            <div class="desktopIcon">
-
+            <div class="desktopIcon" id="recycleBinIcon">
                 <div class="desktopEmoji">🗑️</div>
-
-                <span>Bin</span>
-
+                <span>Recycle Bin</span>
             </div>
 
-            
-            <div class="desktopIcon" id="mailIcon">
-                <div class="desktopEmoji badgeHost">💌<b id="mailUnreadBadge">2</b></div>
-                <span>Lizzy Mail</span>
-            </div>
-
-            <div class="desktopIcon" id="aboutLizzyIcon">
-                <div class="desktopEmoji">💻</div>
-                <span>About This Lizzy</span>
-            </div>
-            <div class="desktopIcon" id="personalityIcon">
-                <div class="desktopEmoji">🧠</div>
-                <span>Personality Lab</span>
-            </div>
-
-
-            <div class="desktopIcon" id="nightModeIcon">
-                <div class="desktopEmoji" id="nightModeEmoji">🌙</div>
-                <span>Night Mode</span>
-            </div>
-
-<div class="desktopIcon" id="funQuizIcon">
-                <div class="desktopEmoji">🧠</div>
-                <span>Lizzy Quiz</span>
-            </div>
-
-            <div class="desktopIcon" id="heartGameIcon">
-                <div class="desktopEmoji">💗</div>
-                <span>Heart Catch</span>
-            </div>
-
-        </div>
             <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
-                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
+                <div class="desktopEmoji calendarFolderEmoji">
+                    <span class="folderCalendarBadge">📅</span>
+                </div>
                 <span>Our Date</span>
             </div>
 
+        </div>
 
         <!-- Finder Window -->
 
@@ -805,175 +772,7 @@
         </div>
 
 
-        <!-- Lizzy Quiz -->
-        <div id="funQuizWindow" class="desktopWindow hidden">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="funQuizRedClose"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>🧠 The Extremely Scientific Lizzy Quiz</h2>
-            </div>
-            <div class="windowScroll lizzyMiniApp">
-                <p class="memoryMessage">Important research about Little Miss Attitude is currently underway. Results may be biased. 😏</p>
-                <div class="miniScore">Score: <strong id="funQuizScore">0</strong>/<span id="funQuizTotal">5</span></div>
-                <h3 id="funQuizQuestion"></h3>
-                <div id="funQuizAnswers" class="funQuizAnswers"></div>
-                <p id="funQuizFeedback" class="gameFeedback"></p>
-                <button id="restartFunQuiz" class="hidden">Play Again 🧠</button>
-            </div>
-            <button id="closeFunQuiz" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- Heart Catch Game -->
-        <div id="heartCatchWindow" class="desktopWindow hidden">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="heartGameRedClose"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>💗 Operation: Catch Her Heart</h2>
-            </div>
-            <div class="windowScroll lizzyMiniApp">
-                <p class="memoryMessage">Catch as many hearts as you can before the 20-second mission timer runs out.</p>
-                <div class="heartStats">
-                    <span>💗 Score: <strong id="heartCatchScore">0</strong></span>
-                    <span>⏱️ Time: <strong id="heartCatchTime">20</strong>s</span>
-                    <span>🏆 Best: <strong id="heartCatchBest">0</strong></span>
-                </div>
-                <div id="heartCatchArena" class="heartCatchArena">
-                    <div class="gameStartMessage">Press Start Mission 💗</div>
-                </div>
-                <button id="startHeartCatch">Start Mission</button>
-            </div>
-            <button id="closeHeartCatch" class="windowCloseButton">Close</button>
-        </div>
-
-
-        <!-- Lizzy Mail -->
-        <div id="mailWindow" class="desktopWindow hidden">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="mailRedClose"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>💌 Lizzy Mail</h2>
-            </div>
-            <div class="windowScroll mailApp">
-                <aside class="mailSidebar">
-                    <button class="mailNav active" data-mail-view="inbox">📥 Inbox <span id="mailInboxCount">2</span></button>
-                    <button class="mailNav" data-mail-view="compose">✍️ Message Mikhail</button>
-                    <button class="mailNav" data-mail-view="sent">📤 Sent</button>
-                </aside>
-                <main class="mailMain">
-                    <section id="mailInboxView">
-                        <div class="mailHeaderRow"><div><p class="eyebrow">INBOX</p><h3>Messages from Mikhail Petrov</h3></div><span class="mailStatusPill">LizzyOS Mail • Connected</span></div>
-                        <div id="mailInboxList" class="mailList"></div>
-                    </section>
-                    <section id="mailComposeView" class="hidden">
-                        <p class="eyebrow">NEW MESSAGE</p><h3 id="composeGreeting">Message Mikhail ❤️</h3>
-                        <div class="composeCard">
-                            <label>From</label><input id="mailFrom" readonly>
-                            <label>Subject</label><input id="mailSubject" maxlength="100" placeholder="What are you thinking?">
-                            <label>Message</label><textarea id="mailBody" rows="8" maxlength="2000" placeholder="Type your message here..."></textarea>
-                            <button id="sendLizzyMail">Send to Mikhail ❤️</button>
-                            <p id="mailSendStatus" class="mailSendStatus"></p>
-                        </div>
-                    </section>
-                    <section id="mailSentView" class="hidden">
-                        <p class="eyebrow">SENT</p><h3>Your messages from this device</h3><div id="mailSentList" class="mailList"></div>
-                    </section>
-                </main>
-            </div>
-            <button id="closeMail" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- About This Lizzy -->
-        <div id="aboutLizzyWindow" class="desktopWindow hidden">
-            <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="aboutLizzyRedClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>💻 About This Lizzy</h2></div>
-            <div class="windowScroll aboutLizzy">
-                <div class="aboutLizzyAvatar">💗</div>
-                <h2 id="aboutLizzyModel">Agent Yelizaveta — Classified Edition</h2>
-                <p class="aboutVersion">LizzyOS • Living Desktop Edition</p>
-                <div class="specGrid">
-                    <div><span>Processor</span><strong>Extremely Smart™</strong></div>
-                    <div><span>Kindness Engine</span><strong>100%</strong></div>
-                    <div><span>Attitude Storage</span><strong>128 TB 😏</strong></div>
-                    <div><span>Bowling Skill</span><strong>Unfortunately Elite 🎳</strong></div>
-                    <div><span>Display</span><strong>Spex Retina — allegedly 👓</strong></div>
-                    <div><span>Beauty</span><strong>ERROR: Maximum exceeded</strong></div>
-                    <div><span>Mikhail Tolerance</span><strong>Variable 😂</strong></div>
-                    <div><span>Current User</span><strong id="aboutCurrentUser">Agent Yelizaveta</strong></div>
-                </div>
-                <div class="aboutQuote" id="aboutQuote">Security clearance confirmed. Bowling intelligence remains deeply concerning.</div>
-            </div>
-            <button id="closeAboutLizzy" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- Fake Warning -->
-        <div id="fakeWarning" class="fakeWarning hidden">
-            <div class="warningIcon">⚠️</div>
-            <div class="warningCopy"><strong id="warningTitle">LizzyOS Warning</strong><span id="warningMessage">Excessive attitude detected.</span></div>
-            <button id="dismissWarning">Ignore</button>
-        </div>
-
-
-        <!-- LizzyOS Personality Lab -->
-        <div id="personalityWindow" class="desktopWindow hidden">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="personalityRedClose"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>🧠 LizzyOS Personality Lab</h2>
-            </div>
-
-            <div class="windowScroll personalityLab">
-                <p class="eyebrow">SYSTEM PERSONALITY</p>
-                <h3>Who are we dealing with today? 😭</h3>
-                <p class="memoryMessage">This changes how LizzyOS talks, reacts and comments — not just the wallpaper.</p>
-
-                <div class="personalityCards">
-                    <button data-v5-persona="Lizzy">
-                        <span>💗</span>
-                        <strong>Lizzy</strong>
-                        <small>Sweet, warm, flower-powered and suspiciously adorable.</small>
-                    </button>
-                    <button data-v5-persona="Little Miss Attitude">
-                        <span>😏</span>
-                        <strong>Little Miss Attitude</strong>
-                        <small>Sassy, cheeky and mildly judgemental of Agent Mikhail.</small>
-                    </button>
-                    <button data-v5-persona="Agent Yelizaveta">
-                        <span>🕵️</span>
-                        <strong>Agent Yelizaveta</strong>
-                        <small>Classified, mission-focused and permanently suspicious.</small>
-                    </button>
-                </div>
-
-                <div class="personalityConsole">
-                    <span>LIVE SYSTEM PREVIEW</span>
-                    <p id="personalitySample"></p>
-                </div>
-
-                <div class="personalityEffects">
-                    <div>🖥️ <strong>Desktop</strong><span>Mood & labels</span></div>
-                    <div>⚠️ <strong>Warnings</strong><span>Different reactions</span></div>
-                    <div>💌 <strong>Mail</strong><span>Different greetings</span></div>
-                    <div>🎮 <strong>Games</strong><span>Different commentary</span></div>
-                    <div>🗑️ <strong>Recycle Bin</strong><span>Different sass</span></div>
-                    <div>💻 <strong>About Lizzy</strong><span>Different system profile</span></div>
-                </div>
-            </div>
-
-            <button id="closePersonality" class="windowCloseButton">Close</button>
-        </div>
-
-        
+        <!-- Our Date Calendar -->
         <div id="calendarWindow" class="desktopWindow hidden">
             <div class="windowTop">
                 <div class="windowDots">
@@ -997,6 +796,25 @@
                 <div id="savedMissionDate" class="savedMissionDate"></div>
             </div>
             <button id="closeCalendar" class="windowCloseButton">Close</button>
+        </div>
+
+        
+        <!-- Recycle Bin -->
+        <div id="recycleBinWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="recycleBinClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🗑️ Recycle Bin</h2>
+            </div>
+            <div class="windowScroll">
+                <p class="memoryMessage">Things permanently rejected by LizzyOS 😂</p>
+                <div id="recycleBinGrid" class="recycleBinGrid"></div>
+                <p class="binWarning">⚠️ Restoration disabled. These names belong exactly where they are.</p>
+            </div>
+            <button id="closeRecycleBin" class="windowCloseButton">Close</button>
         </div>
 
         <!-- Full Screen Viewer -->
