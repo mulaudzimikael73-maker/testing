@@ -237,51 +237,39 @@ function loadQuestion(){
 loadQuestion();
 function playSelectionSound(answer){
 
-    [officeAudio, brooklynAudio, gilmoreAudio, hsmAudio].forEach(audio => {
-        if (!audio) return;
-        audio.pause();
-        audio.currentTime = 0;
-    });
+    officeAudio.pause();
+    officeAudio.currentTime = 0;
 
-    function playClip(audio, startAt, durationMs) {
-        if (!audio) return;
+    brooklynAudio.pause();
+    brooklynAudio.currentTime = 0;
 
-        audio.currentTime = startAt;
-        audio.play().catch(() => {});
+    gilmoreAudio.pause();
+    gilmoreAudio.currentTime = 0;
 
-        setTimeout(() => {
-            audio.pause();
-            audio.currentTime = 0;
-        }, durationMs);
-    }
+    hsmAudio.pause();
+    hsmAudio.currentTime = 0;
 
     switch(answer){
 
         case "The Office":
-            // Uploaded clip is 4.27s: "That's what she said!" plus the few seconds after.
-            playClip(officeAudio, 0, 4270);
+            officeAudio.play();
             break;
 
         case "Brooklyn Nine-Nine":
-            // One "Nine-Nine!" only.
-            playClip(brooklynAudio, 0, 1500);
+            brooklynAudio.play();
             break;
 
         case "Gilmore Girls":
-            // Starts just before "I just got hit by a deer!" and keeps the short exchange.
-            playClip(gilmoreAudio, 22.0, 10500);
+            gilmoreAudio.play();
             break;
 
         case "High School Musical":
-            // Kept unchanged for now: the uploaded wildcats.mp3 contains
-            // the "What team? Wildcats!" chant, not "Get'cha head in the game".
             hsmAudio.play();
             break;
 
     }
 
 }
-
 function nextQuestion(){
 
     currentQuestion++;
@@ -1346,214 +1334,356 @@ document.addEventListener("keydown", (event) => {
 });
 
 // =====================================================
-// LIZZYOS — INTERACTIVE DATE SCHEDULER
+// LIZZYOS EXTRA — QUIZ + HEART CATCH GAME
 // =====================================================
 (() => {
     const $ = id => document.getElementById(id);
-    const FORMSPREE_URL = "https://formspree.io/f/mzdnaree";
 
-    const formatDate = value => {
-        if (!value) return "";
-        const d = new Date(value + "T12:00:00");
-        return new Intl.DateTimeFormat("en-ZA", {weekday:"long", day:"numeric", month:"long", year:"numeric"}).format(d);
-    };
-    const formatTime = value => {
-        if (!value) return "";
-        const [h,m] = value.split(":").map(Number);
-        const d = new Date(); d.setHours(h,m,0,0);
-        return new Intl.DateTimeFormat("en-ZA", {hour:"2-digit", minute:"2-digit"}).format(d);
-    };
+    // ---------- Windows ----------
+    function openWindow(id){ $(id)?.classList.remove("hidden"); }
+    function closeWindow(id){ $(id)?.classList.add("hidden"); }
 
-    const now = new Date();
-    const today = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
-    ["lizzyDateChoice","desktopDateChoice"].forEach(id => { if ($(id)) $(id).min = today; });
+    $("funQuizIcon")?.addEventListener("click", () => {
+        openWindow("funQuizWindow");
+        startFunQuiz();
+        if (typeof unlockAchievement === "function") unlockAchievement("Lizzy Quiz Activated 🧠");
+    });
+    $("closeFunQuiz")?.addEventListener("click", () => closeWindow("funQuizWindow"));
+    $("funQuizRedClose")?.addEventListener("click", () => closeWindow("funQuizWindow"));
 
-    function preview(dateId,timeId,previewId){
-        const date=$(dateId)?.value, time=$(timeId)?.value, box=$(previewId);
-        if(!box) return;
-        if(!date && !time){ box.innerHTML="<span>💗</span><p>Pick a date and time to create the mission.</p>"; return; }
-        if(!date){ box.innerHTML=`<span>📆</span><p>Time selected: <strong>${formatTime(time)}</strong><br>Now pick the day.</p>`; return; }
-        if(!time){ box.innerHTML=`<span>🕐</span><p><strong>${formatDate(date)}</strong><br>Now choose a time.</p>`; return; }
-        box.innerHTML=`<span>🎳</span><p><strong>${formatDate(date)}</strong><br>at <strong>${formatTime(time)}</strong><br><small>Mission: Operation Strike Her Heart ❤️</small></p>`;
-    }
+    $("heartGameIcon")?.addEventListener("click", () => {
+        openWindow("heartCatchWindow");
+        updateHeartBest();
+        if (typeof unlockAchievement === "function") unlockAchievement("Operation: Catch Her Heart 💗");
+    });
+    $("closeHeartCatch")?.addEventListener("click", () => closeWindow("heartCatchWindow"));
+    $("heartGameRedClose")?.addEventListener("click", () => closeWindow("heartCatchWindow"));
 
-    ["lizzyDateChoice","lizzyTimeChoice"].forEach(id => $(id)?.addEventListener("change",()=>preview("lizzyDateChoice","lizzyTimeChoice","dateChoicePreview")));
-    ["desktopDateChoice","desktopTimeChoice"].forEach(id => $(id)?.addEventListener("change",()=>preview("desktopDateChoice","desktopTimeChoice","desktopDatePreview")));
-
-    async function sendSelection(date,time,statusId,confirmedId,confirmedTextId){
-        const status=$(statusId);
-        if(!date || !time){ if(status) status.textContent="Choose both a date and a time first 😭"; return; }
-        const prettyDate=formatDate(date), prettyTime=formatTime(time);
-        if(status) status.textContent="Sending mission details to Mikhail... 📡";
-        try{
-            const r=await fetch(FORMSPREE_URL,{
-                method:"POST",
-                headers:{"Content-Type":"application/json","Accept":"application/json"},
-                body:JSON.stringify({
-                    subject:"❤️ Lizzy selected a date!",
-                    message:`📅 LIZZYOS DATE SELECTED\n\nDate: ${prettyDate}\nTime: ${prettyTime}\n\nMission: Operation Strike Her Heart ❤️`,
-                    selected_date:prettyDate,
-                    selected_time:prettyTime,
-                    raw_date:date,
-                    raw_time:time
-                })
-            });
-            if(!r.ok) throw new Error("Formspree "+r.status);
-            localStorage.setItem("lizzySelectedDate",date);
-            localStorage.setItem("lizzySelectedTime",time);
-            if(status) status.textContent="Sent! Agent Mikhail has been notified ❤️";
-            if(confirmedId && $(confirmedId)) $(confirmedId).classList.remove("hidden");
-            if(confirmedTextId && $(confirmedTextId)) $(confirmedTextId).textContent=`${prettyDate} • ${prettyTime}`;
-            renderSavedMission();
-            if(typeof unlockAchievement==="function") unlockAchievement("Mission Date Locked In 📅❤️");
-            if(typeof confetti==="function") confetti({particleCount:90,spread:90,origin:{y:.72}});
-        }catch(e){
-            console.error("Date scheduler:",e);
-            if(status) status.textContent="Couldn't send the date right now. Please try again ❤️";
+    // ---------- Lizzy Quiz ----------
+    const lizzyQuizQuestions = [
+        {
+            q: "What colour has administrator privileges in LizzyOS? 💗",
+            a: ["Blue", "Pink — obviously", "Corporate grey"],
+            correct: 1,
+            right: "Correct. Pink has full system access. 🌸",
+            wrong: "Security alert: this answer was suspiciously un-Lizzy."
+        },
+        {
+            q: "Who has the unfair advantage on the first bowling mission? 🎳",
+            a: ["Agent Mikhail", "Agent Yelizaveta", "The bowling ball"],
+            correct: 1,
+            right: "Correct 😭 Intelligence reports say Agent Yelizaveta is dangerously experienced.",
+            wrong: "Nice try. Agent Mikhail has approximately one mission of experience 😂"
+        },
+        {
+            q: "Where should banned nicknames be sent?",
+            a: ["The Recycle Bin 🗑️", "The Mission Log", "Pinned to the desktop"],
+            correct: 0,
+            right: "Correct. Delete immediately. Empty Bin optional 😂",
+            wrong: "Absolutely not. LizzyOS recommends immediate deletion."
+        },
+        {
+            q: "What food has suspiciously high priority in this system? 🍝",
+            a: ["Pasta", "Plain toast", "A single lettuce leaf"],
+            correct: 0,
+            right: "Correct. Pasta database verified. 🍝",
+            wrong: "LizzyOS refuses to accept this answer."
+        },
+        {
+            q: "What is Agent Mikhail's most important mission objective?",
+            a: ["Win every argument", "Make Agent Yelizaveta smile ❤️", "Become a professional bowler overnight"],
+            correct: 1,
+            right: "Mission intelligence confirms this answer. ❤️",
+            wrong: "Incorrect. Please review Mission Log #001."
         }
-    }
-
-    $("confirmLizzyDate")?.addEventListener("click", async ()=>{
-        const b=$("confirmLizzyDate"); if(b)b.disabled=true;
-        await sendSelection($("lizzyDateChoice")?.value,$("lizzyTimeChoice")?.value,"dateSchedulerStatus","confirmedDateCard","confirmedDateText");
-        if(b)b.disabled=false;
-    });
-
-    $("confirmDesktopDate")?.addEventListener("click", async ()=>{
-        const b=$("confirmDesktopDate"); if(b)b.disabled=true;
-        await sendSelection($("desktopDateChoice")?.value,$("desktopTimeChoice")?.value,"desktopDateStatus");
-        if(b)b.disabled=false;
-    });
-
-    $("calendarIcon")?.addEventListener("click",()=>{
-        const d=localStorage.getItem("lizzySelectedDate"), t=localStorage.getItem("lizzySelectedTime");
-        if(d && $("desktopDateChoice")) $("desktopDateChoice").value=d;
-        if(t && $("desktopTimeChoice")) $("desktopTimeChoice").value=t;
-        preview("desktopDateChoice","desktopTimeChoice","desktopDatePreview");
-        renderSavedMission();
-        $("calendarWindow")?.classList.remove("hidden");
-    });
-    ["closeCalendar","calendarRedClose"].forEach(id=>$(id)?.addEventListener("click",()=>$("calendarWindow")?.classList.add("hidden")));
-
-    function renderSavedMission(){
-        const box=$("savedMissionDate"); if(!box)return;
-        const d=localStorage.getItem("lizzySelectedDate"), t=localStorage.getItem("lizzySelectedTime");
-        if(!d || !t){ box.innerHTML='<p class="memoryMessage">No mission date has been locked in yet.</p>'; return; }
-        box.innerHTML=`<div class="savedMissionCard"><span>📌</span><div><small>CURRENT MISSION DATE</small><strong>${formatDate(d)}</strong><p>${formatTime(t)} ❤️</p></div></div>`;
-    }
-
-    const sd=localStorage.getItem("lizzySelectedDate"), st=localStorage.getItem("lizzySelectedTime");
-    if(sd && $("lizzyDateChoice")) $("lizzyDateChoice").value=sd;
-    if(st && $("lizzyTimeChoice")) $("lizzyTimeChoice").value=st;
-    if(sd || st) preview("lizzyDateChoice","lizzyTimeChoice","dateChoicePreview");
-    if(sd && st){
-        $("confirmedDateCard")?.classList.remove("hidden");
-        if($("confirmedDateText")) $("confirmedDateText").textContent=`${formatDate(sd)} • ${formatTime(st)}`;
-    }
-    renderSavedMission();
-
-    const readMe=$("readMeWindow");
-    $("readMeRedClose")?.addEventListener("click",()=>readMe?.classList.add("hidden"));
-    $("readMeYellowMin")?.addEventListener("click",()=>readMe?.classList.toggle("readMeMinimised"));
-    $("readMeGreenMax")?.addEventListener("click",()=>{
-        if(!readMe)return;
-        readMe.classList.remove("readMeMinimised");
-        readMe.classList.toggle("readMeExpanded");
-    });
-})();
-
-
-// =====================================================
-// LIZZYOS — RANDOM CALENDAR MESSAGES
-// A different message is selected whenever the calendar opens.
-// =====================================================
-(() => {
-    const messages = [
-        "Alright Little Miss Attitude 😭❤️ You pick the day, you pick the time, and I’ll handle the rest.",
-        "Agent Yelizaveta, Mission Control requires your availability 🕵️❤️ Pick a date and time to continue the mission.",
-        "Pick a day I get to steal you for a little while 🌸❤️ The when is completely up to you.",
-        "No pressure 😌❤️ You tell me when you’re free, and I’ll take care of everything else.",
-        "Okay, your turn 😂❤️ Date. Time. That’s all Agent Mikhail needs.",
-        "Mikhail has officially surrendered control of the calendar to you 😭📅 Choose wisely.",
-        "⚠️ Mission pending: awaiting availability from one very difficult Agent Yelizaveta. 😂❤️",
-        "Choose wisely… I’m expecting a very important date with a very pretty girl 👀❤️",
-        "The calendar has been opened. There’s no escaping now 😂📅❤️",
-        "Little Miss Attitude has been granted full scheduling privileges. Please use them responsibly 😏❤️",
-        "Your schedule, your choice 💗 Pick whatever day works best for you and I’ll make the rest happen.",
-        "Mission Control is standing by 🫡❤️ All we need now is your preferred date and time."
     ];
 
-    let lastMessage = sessionStorage.getItem("lizzyLastCalendarMessage") || "";
+    let fqIndex = 0;
+    let fqScore = 0;
 
-    function randomMessage() {
-        let options = messages.filter(message => message !== lastMessage);
-        if (!options.length) options = messages;
-        const chosen = options[Math.floor(Math.random() * options.length)];
-        lastMessage = chosen;
-        sessionStorage.setItem("lizzyLastCalendarMessage", chosen);
-        return chosen;
+    function startFunQuiz(){
+        fqIndex = 0;
+        fqScore = 0;
+        $("funQuizScore").textContent = "0";
+        $("funQuizTotal").textContent = lizzyQuizQuestions.length;
+        $("restartFunQuiz").classList.add("hidden");
+        renderFunQuiz();
     }
 
-    function updateCalendarMessage(targetId) {
-        const target = document.getElementById(targetId);
-        if (target) target.textContent = randomMessage();
-    }
-
-    // The celebration scheduler gets a random message when it becomes relevant.
-    const yesButton = document.getElementById("yesButton");
-    yesButton?.addEventListener("click", () => {
-        setTimeout(() => updateCalendarMessage("schedulerRandomMessage"), 100);
-    });
-
-    // Give it a message immediately as a fallback if the celebration is already visible.
-    updateCalendarMessage("schedulerRandomMessage");
-
-    // Desktop "Our Date" app gets a fresh random message every time it opens.
-    const calendarIcon = document.getElementById("calendarIcon");
-    calendarIcon?.addEventListener("click", () => {
-        updateCalendarMessage("desktopSchedulerRandomMessage");
-    });
-
-    // Also refresh when returning to the tab after a while.
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) {
-            const calendarWindow = document.getElementById("calendarWindow");
-            if (calendarWindow && !calendarWindow.classList.contains("hidden")) {
-                updateCalendarMessage("desktopSchedulerRandomMessage");
+    function renderFunQuiz(){
+        const q = lizzyQuizQuestions[fqIndex];
+        if (!q) {
+            $("funQuizQuestion").innerHTML =
+                fqScore === lizzyQuizQuestions.length
+                ? `🏆 Perfect score! ${fqScore}/${lizzyQuizQuestions.length}`
+                : `Mission complete: ${fqScore}/${lizzyQuizQuestions.length}`;
+            $("funQuizAnswers").innerHTML = "";
+            $("funQuizFeedback").innerHTML =
+                fqScore === lizzyQuizQuestions.length
+                ? "Okay... either you know LizzyOS extremely well or you have classified information. 😏❤️"
+                : fqScore >= 3
+                ? "Approved. Your Lizzy knowledge clearance remains active. 💗"
+                : "Agent Mikhail is requesting a formal investigation into this score 😂";
+            $("restartFunQuiz").classList.remove("hidden");
+            if (fqScore === lizzyQuizQuestions.length && typeof unlockAchievement === "function") {
+                unlockAchievement("Certified Lizzy Expert 💗");
             }
+            return;
         }
+
+        $("funQuizQuestion").textContent = q.q;
+        $("funQuizFeedback").textContent = "";
+        $("funQuizAnswers").innerHTML = q.a.map((answer, i) =>
+            `<button class="funQuizAnswer" data-fq-answer="${i}">${answer}</button>`
+        ).join("");
+
+        document.querySelectorAll("[data-fq-answer]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const chosen = Number(btn.dataset.fqAnswer);
+                const correct = chosen === q.correct;
+                if (correct) {
+                    fqScore++;
+                    $("funQuizScore").textContent = fqScore;
+                }
+                $("funQuizFeedback").textContent = correct ? q.right : q.wrong;
+                document.querySelectorAll("[data-fq-answer]").forEach(b => b.disabled = true);
+                btn.classList.add(correct ? "answerCorrect" : "answerWrong");
+                setTimeout(() => {
+                    fqIndex++;
+                    renderFunQuiz();
+                }, 1200);
+            });
+        });
+    }
+
+    $("restartFunQuiz")?.addEventListener("click", startFunQuiz);
+
+    // ---------- Heart Catch ----------
+    let heartScore = 0;
+    let heartTime = 20;
+    let spawnTimer = null;
+    let countdownTimer = null;
+    let gameRunning = false;
+
+    function updateHeartBest(){
+        if ($("heartCatchBest")) {
+            $("heartCatchBest").textContent = localStorage.getItem("lizzyHeartBest") || "0";
+        }
+    }
+
+    function spawnHeart(){
+        const arena = $("heartCatchArena");
+        if (!arena || !gameRunning) return;
+
+        const heart = document.createElement("button");
+        heart.className = "catchableHeart";
+        const rare = Math.random() < 0.12;
+        heart.textContent = rare ? "✨" : "💗";
+        heart.dataset.points = rare ? "3" : "1";
+        heart.style.left = (4 + Math.random() * 84) + "%";
+        heart.style.top = (5 + Math.random() * 75) + "%";
+
+        heart.addEventListener("click", (e) => {
+            e.stopPropagation();
+            heartScore += Number(heart.dataset.points);
+            $("heartCatchScore").textContent = heartScore;
+            heart.classList.add("caughtHeart");
+            setTimeout(() => heart.remove(), 120);
+        });
+
+        arena.appendChild(heart);
+        setTimeout(() => heart.remove(), 1200);
+    }
+
+    function finishHeartGame(){
+        gameRunning = false;
+        clearInterval(spawnTimer);
+        clearInterval(countdownTimer);
+
+        const oldBest = Number(localStorage.getItem("lizzyHeartBest") || 0);
+        const best = Math.max(oldBest, heartScore);
+        localStorage.setItem("lizzyHeartBest", best);
+        updateHeartBest();
+
+        $("heartCatchArena").innerHTML = `
+            <div class="gameStartMessage">
+                <strong>Mission Complete 💗</strong><br>
+                You caught ${heartScore} points.<br>
+                ${heartScore >= 30 ? "Okay Agent Yelizaveta... overachiever 😏" :
+                  heartScore >= 18 ? "Excellent heart-catching skills ❤️" :
+                  "Agent Mikhail has requested a rematch 😂"}
+            </div>`;
+        $("startHeartCatch").textContent = "Play Again";
+
+        if (heartScore >= 30 && typeof unlockAchievement === "function") {
+            unlockAchievement("Heart Thief 💗");
+        }
+    }
+
+    $("startHeartCatch")?.addEventListener("click", () => {
+        clearInterval(spawnTimer);
+        clearInterval(countdownTimer);
+        heartScore = 0;
+        heartTime = 20;
+        gameRunning = true;
+
+        $("heartCatchScore").textContent = "0";
+        $("heartCatchTime").textContent = "20";
+        $("heartCatchArena").innerHTML = "";
+        $("startHeartCatch").textContent = "Mission Active...";
+
+        spawnHeart();
+        spawnTimer = setInterval(spawnHeart, 430);
+        countdownTimer = setInterval(() => {
+            heartTime--;
+            $("heartCatchTime").textContent = heartTime;
+            if (heartTime <= 0) finishHeartGame();
+        }, 1000);
     });
+
+    updateHeartBest();
 })();
 
 
 // =====================================================
-// LIZZYOS — CALENDAR-ONLY CLEAN START
-// Date selection is available ONLY inside the "Our Date" desktop folder.
+// LIZZYOS — LIVING DESKTOP MERGE
+// Built on top of the current Quiz + Game version.
 // =====================================================
 (() => {
-    // Remove any legacy post-YES scheduler if an older HTML fragment is ever cached/injected.
-    document.getElementById("dateScheduler")?.remove();
+    const $ = id => document.getElementById(id);
+    const qsa = sel => [...document.querySelectorAll(sel)];
+    const store = localStorage;
 
-    // Start the real calendar blank on this release.
-    // This intentionally clears the developer/test selection once.
-    const CLEAN_VERSION = "calendar-clean-v1";
-    if (localStorage.getItem("lizzyCalendarCleanVersion") !== CLEAN_VERSION) {
-        localStorage.removeItem("lizzySelectedDate");
-        localStorage.removeItem("lizzySelectedTime");
-        localStorage.setItem("lizzyCalendarCleanVersion", CLEAN_VERSION);
-    }
-
-    const clearCalendarInputs = () => {
-        const date = document.getElementById("desktopDateChoice");
-        const time = document.getElementById("desktopTimeChoice");
-        if (!localStorage.getItem("lizzySelectedDate") && date) date.value = "";
-        if (!localStorage.getItem("lizzySelectedTime") && time) time.value = "";
+    const moods = {
+        "Lizzy": {label:"💗 Mood: Soft Pink", cls:"mood-lizzy", model:"Lizzy Pro 💗", quote:"Powered by kindness, pink, pasta and the ability to make ordinary days better."},
+        "Little Miss Attitude": {label:"😏 Mood: Maximum Attitude", cls:"mood-attitude", model:"Little Miss Attitude Pro Max 😏", quote:"Warning: sass is a permanent system feature and cannot be uninstalled."},
+        "Agent Yelizaveta": {label:"🕵️ Mood: Classified", cls:"mood-agent", model:"Agent Yelizaveta — Classified Edition", quote:"Security clearance confirmed. Bowling intelligence remains deeply concerning."}
     };
+    const warnings = {
+        "Lizzy":[["Beauty Limit Reached","LizzyOS cannot calculate a higher value. Please stop being so pretty. 💗"],["Cuteness Alert","A suspicious amount of cuteness has been detected."]],
+        "Little Miss Attitude":[["Attitude Spike Detected","Sass levels have exceeded the recommended daily allowance. 😏"],["Low Patience Warning","Mikhail should proceed with extreme caution."]],
+        "Agent Yelizaveta":[["SECURITY ALERT","Agent Mikhail has been detected nearby. Threat level: probably annoying."],["CLASSIFIED WARNING","Excessive beauty has compromised facial-recognition accuracy."]]
+    };
+    const genericWarnings = [["SYSTEM ERROR","Beauty value exceeds supported range."],["BOWLING ALERT","Opponent skill level detected: unnecessarily high. 🎳"],["MEMORY WARNING","Too many cute moments are being stored. Extra heart space allocated. ❤️"]];
 
-    clearCalendarInputs();
+    const persona = () => store.getItem("lizzyPersona") || "Agent Yelizaveta";
 
-    // Ensure first opening is blank after the clean reset.
-    document.getElementById("calendarIcon")?.addEventListener("click", () => {
-        setTimeout(clearCalendarInputs, 0);
+    function applyMood(){
+        const p=persona(), m=moods[p]||moods["Agent Yelizaveta"];
+        document.body.classList.remove("mood-lizzy","mood-attitude","mood-agent");
+        document.body.classList.add(m.cls);
+        if($("desktopMoodLabel")) $("desktopMoodLabel").textContent=m.label;
+        if($("aboutLizzyModel")) $("aboutLizzyModel").textContent=m.model;
+        if($("aboutCurrentUser")) $("aboutCurrentUser").textContent=p;
+        if($("aboutQuote")) $("aboutQuote").textContent=m.quote;
+        if($("mailFrom")) $("mailFrom").value=p;
+        if($("composeGreeting")) $("composeGreeting").textContent=p==="Agent Yelizaveta"?"Secure Message to Agent Mikhail ❤️":p==="Little Miss Attitude"?"Fine... message Mikhail 🙄❤️":"Message Mikhail ❤️";
+    }
+    qsa("[data-persona]").forEach(b=>b.addEventListener("click",()=>setTimeout(applyMood,0)));
+
+    // Night mode: automatic after 19:00, with manual toggle.
+    let manualNight=store.getItem("lizzyNightMode");
+    const autoNight=()=>{const h=new Date().getHours();return h>=19||h<6};
+    function applyNight(force){
+        const night=typeof force==="boolean"?force:manualNight==="on"?true:manualNight==="off"?false:autoNight();
+        document.body.classList.toggle("lizzy-night",night);
+        if($("nightStatus")) $("nightStatus").textContent=night?"🌙 Night":"☀️ Day";
+        if($("nightModeEmoji")) $("nightModeEmoji").textContent=night?"☀️":"🌙";
+    }
+    $("nightModeIcon")?.addEventListener("click",()=>{const next=!document.body.classList.contains("lizzy-night");manualNight=next?"on":"off";store.setItem("lizzyNightMode",manualNight);applyNight(next)});
+    $("nightStatus")?.addEventListener("dblclick",()=>{manualNight=null;store.removeItem("lizzyNightMode");applyNight();showWarning("Automatic Night Mode","LizzyOS will switch automatically after 7 PM. 🌙")});
+
+    // About
+    $("aboutLizzyIcon")?.addEventListener("click",()=>{applyMood();$("aboutLizzyWindow")?.classList.remove("hidden")});
+    ["closeAboutLizzy","aboutLizzyRedClose"].forEach(id=>$(id)?.addEventListener("click",()=>$("aboutLizzyWindow")?.classList.add("hidden")));
+
+    // Mail
+    const inbox=[
+        {id:"welcome",from:"Mikhail Petrov",subject:"Just in case you forgot ❤️",date:"Pinned",body:"You are kind, smart, beautiful, stunning and one of my favourite people to annoy. Some facts shouldn't be allowed to expire."},
+        {id:"mission",from:"Agent Mikhail Petrov",subject:"Mission Control Update 🕵️",date:"Classified",body:"Agent Yelizaveta: your current mission is to continue being suspiciously good at bowling while pretending this is normal behaviour."}
+    ];
+    const readSet=()=>new Set(JSON.parse(store.getItem("lizzyMailRead")||"[]"));
+    function updateUnread(){
+        const n=inbox.filter(m=>!readSet().has(m.id)).length;
+        if($("mailUnreadBadge")){$("mailUnreadBadge").textContent=n;$("mailUnreadBadge").classList.toggle("hidden",n===0)}
+        if($("mailInboxCount")) $("mailInboxCount").textContent=n;
+    }
+    function renderInbox(){
+        const list=$("mailInboxList"); if(!list)return; const read=readSet();
+        list.innerHTML=inbox.map(m=>`<article class="mailMessage ${read.has(m.id)?"":"unread"}" data-lmail="${m.id}"><div class="mailMessageTop"><strong>${m.from}</strong><span>${m.date}</span></div><h4>${m.subject}</h4><p>${m.body}</p></article>`).join("");
+        qsa("[data-lmail]").forEach(card=>card.onclick=()=>{const r=readSet();r.add(card.dataset.lmail);store.setItem("lizzyMailRead",JSON.stringify([...r]));card.classList.remove("unread");updateUnread()});
+        updateUnread();
+    }
+    const sent=()=>JSON.parse(store.getItem("lizzySentMail")||"[]");
+    function renderSent(){const l=$("mailSentList");if(!l)return;const s=sent();l.innerHTML=s.length?s.map(m=>`<article class="mailMessage"><div class="mailMessageTop"><strong>${m.from}</strong><span>${m.date}</span></div><h4>${m.subject||"No subject"}</h4><p>${m.body}</p></article>`).join(""):`<div class="emptyMail">No messages sent from this device yet. 💗</div>`}
+    function mailView(v){
+        ["inbox","compose","sent"].forEach(n=>{const id="mail"+n[0].toUpperCase()+n.slice(1)+"View";$(id)?.classList.toggle("hidden",n!==v)});
+        qsa(".mailNav").forEach(b=>b.classList.toggle("active",b.dataset.mailView===v));
+        if(v==="sent")renderSent(); if(v==="compose")applyMood();
+    }
+    qsa("[data-mail-view]").forEach(b=>b.onclick=()=>mailView(b.dataset.mailView));
+    $("mailIcon")?.addEventListener("click",()=>{applyMood();renderInbox();mailView("inbox");$("mailWindow")?.classList.remove("hidden")});
+    ["closeMail","mailRedClose"].forEach(id=>$(id)?.addEventListener("click",()=>$("mailWindow")?.classList.add("hidden")));
+
+    $("sendLizzyMail")?.addEventListener("click",async()=>{
+        const from=persona(),subject=($("mailSubject")?.value||"").trim(),body=($("mailBody")?.value||"").trim(),status=$("mailSendStatus"),button=$("sendLizzyMail");
+        if(!body){if(status)status.textContent="Write something first 😭";return}
+        if(button)button.disabled=true;if(status)status.textContent="Sending securely to Mikhail...";
+        try{
+            const r=await fetch("https://formspree.io/f/mzdnaree",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({message:`💌 LizzyOS message from ${from}\nSubject: ${subject||"(No subject)"}\n\n${body}`,sender:from,subject:subject||"LizzyOS Message"})});
+            if(!r.ok)throw new Error("send failed");
+            const s=sent();s.unshift({from,subject,body,date:new Date().toLocaleString("en-ZA",{dateStyle:"medium",timeStyle:"short"})});store.setItem("lizzySentMail",JSON.stringify(s.slice(0,30)));
+            $("mailSubject").value="";$("mailBody").value="";if(status)status.textContent="Sent to Mikhail ❤️";showWarning("Message Delivered 💌","Mikhail has officially been notified.");
+        }catch(e){if(status)status.textContent="Couldn't send right now. Try again in a moment."}finally{if(button)button.disabled=false}
     });
+
+    // Fake warnings
+    let wt;
+    function showWarning(title,message){const w=$("fakeWarning");if(!w)return;clearTimeout(wt);$("warningTitle").textContent=title;$("warningMessage").textContent=message;w.classList.remove("hidden");requestAnimationFrame(()=>w.classList.add("show"));wt=setTimeout(hideWarning,6500)}
+    function hideWarning(){const w=$("fakeWarning");if(!w)return;w.classList.remove("show");setTimeout(()=>w.classList.add("hidden"),350)}
+    $("dismissWarning")?.addEventListener("click",hideWarning);
+    function randomWarning(){const opts=[...genericWarnings,...(warnings[persona()]||[])],x=opts[Math.floor(Math.random()*opts.length)];showWarning(x[0],x[1])}
+    setTimeout(()=>{if($("desktopArea")&&!$("desktopArea").classList.contains("hidden"))randomWarning()},22000);
+    setInterval(()=>{if($("desktopArea")&&!$("desktopArea").classList.contains("hidden")&&Math.random()<.55)randomWarning()},65000);
+
+    renderInbox();renderSent();applyMood();applyNight();setInterval(()=>{if(!manualNight)applyNight()},60000);
+})();
+
+
+// =====================================================
+// OUR DATE FOLDER — RANDOM MESSAGES + CLEAN FIRST RUN
+// =====================================================
+(() => {
+ const $=id=>document.getElementById(id);
+ const URL="https://formspree.io/f/mzdnaree";
+ const msgs=[
+  "Alright Little Miss Attitude 😭❤️ You pick the day, you pick the time, and I’ll handle the rest.",
+  "Agent Yelizaveta, Mission Control requires your availability 🕵️❤️ Pick a date and time to continue the mission.",
+  "Pick a day I get to steal you for a little while 🌸❤️ The when is completely up to you.",
+  "No pressure 😌❤️ You tell me when you’re free, and I’ll take care of everything else.",
+  "Okay, your turn 😂❤️ Date. Time. That’s all Agent Mikhail needs.",
+  "Mikhail has officially surrendered control of the calendar to you 😭📅 Choose wisely.",
+  "⚠️ Mission pending: awaiting availability from one very difficult Agent Yelizaveta. 😂❤️",
+  "Choose wisely… I’m expecting a very important date with a very pretty girl 👀❤️",
+  "The calendar has been opened. There’s no escaping now 😂📅❤️",
+  "Little Miss Attitude has been granted full scheduling privileges. Please use them responsibly 😏❤️",
+  "Your schedule, your choice 💗 Pick whatever day works best for you and I’ll make the rest happen.",
+  "Mission Control is standing by 🫡❤️ All we need now is your preferred date and time."
+ ];
+ let last=sessionStorage.getItem("lizzyLastCalendarMessage")||"";
+ function randomMsg(){let a=msgs.filter(x=>x!==last);let x=a[Math.floor(Math.random()*a.length)];last=x;sessionStorage.setItem("lizzyLastCalendarMessage",x);return x}
+ function fmtD(v){if(!v)return"";return new Intl.DateTimeFormat("en-ZA",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date(v+"T12:00:00"))}
+ function fmtT(v){if(!v)return"";let [h,m]=v.split(":").map(Number),d=new Date();d.setHours(h,m,0,0);return new Intl.DateTimeFormat("en-ZA",{hour:"2-digit",minute:"2-digit"}).format(d)}
+ function preview(){let d=$("desktopDateChoice")?.value,t=$("desktopTimeChoice")?.value,b=$("desktopDatePreview");if(!b)return;if(!d&&!t)b.innerHTML="<span>💗</span><p>Select the next mission date.</p>";else if(!d)b.innerHTML=`<span>📆</span><p>Time: <strong>${fmtT(t)}</strong><br>Now choose the day.</p>`;else if(!t)b.innerHTML=`<span>🕐</span><p><strong>${fmtD(d)}</strong><br>Now choose a time.</p>`;else b.innerHTML=`<span>🎳</span><p><strong>${fmtD(d)}</strong><br>at <strong>${fmtT(t)}</strong><br><small>Mission: Operation Strike Her Heart ❤️</small></p>`}
+ function saved(){let b=$("savedMissionDate"),d=localStorage.getItem("lizzySelectedDate"),t=localStorage.getItem("lizzySelectedTime");if(!b)return;b.innerHTML=d&&t?`<div class="savedMissionCard"><span>📌</span><div><small>CURRENT MISSION DATE</small><strong>${fmtD(d)}</strong><p>${fmtT(t)} ❤️</p></div></div>`:'<p class="memoryMessage">No mission date has been locked in yet.</p>'}
+ const now=new Date(),today=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");if($("desktopDateChoice"))$("desktopDateChoice").min=today;
+ // Clear developer/test date exactly once for this final rebuild.
+ const CLEAN="final-chain-calendar-clean-v1";
+ if(localStorage.getItem("lizzyCalendarCleanVersion")!==CLEAN){localStorage.removeItem("lizzySelectedDate");localStorage.removeItem("lizzySelectedTime");localStorage.setItem("lizzyCalendarCleanVersion",CLEAN)}
+ $("calendarIcon")?.addEventListener("click",()=>{let d=localStorage.getItem("lizzySelectedDate"),t=localStorage.getItem("lizzySelectedTime");if($("desktopDateChoice"))$("desktopDateChoice").value=d||"";if($("desktopTimeChoice"))$("desktopTimeChoice").value=t||"";if($("desktopSchedulerRandomMessage"))$("desktopSchedulerRandomMessage").textContent=randomMsg();preview();saved();$("calendarWindow")?.classList.remove("hidden")});
+ ["calendarRedClose","closeCalendar"].forEach(id=>$(id)?.addEventListener("click",()=>$("calendarWindow")?.classList.add("hidden")));
+ ["desktopDateChoice","desktopTimeChoice"].forEach(id=>$(id)?.addEventListener("change",preview));
+ $("confirmDesktopDate")?.addEventListener("click",async()=>{let d=$("desktopDateChoice")?.value,t=$("desktopTimeChoice")?.value,s=$("desktopDateStatus"),b=$("confirmDesktopDate");if(!d||!t){if(s)s.textContent="Choose both a date and a time first 😭";return}b.disabled=true;if(s)s.textContent="Sending mission details to Mikhail... 📡";try{let r=await fetch(URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({subject:"❤️ Lizzy selected a date!",message:`📅 LIZZYOS DATE SELECTED\n\nDate: ${fmtD(d)}\nTime: ${fmtT(t)}\n\nMission: Operation Strike Her Heart ❤️`,selected_date:fmtD(d),selected_time:fmtT(t)})});if(!r.ok)throw Error();localStorage.setItem("lizzySelectedDate",d);localStorage.setItem("lizzySelectedTime",t);if(s)s.textContent="Sent! Agent Mikhail has been notified ❤️";saved();if(typeof confetti==="function")confetti({particleCount:90,spread:90,origin:{y:.72}})}catch(e){if(s)s.textContent="Couldn't send the date right now. Please try again ❤️"}finally{b.disabled=false}});
+ const rm=$("readMeWindow");$("readMeRedClose")?.addEventListener("click",()=>rm?.classList.add("hidden"));$("readMeYellowMin")?.addEventListener("click",()=>rm?.classList.toggle("readMeMinimised"));$("readMeGreenMax")?.addEventListener("click",()=>{rm?.classList.remove("readMeMinimised");rm?.classList.toggle("readMeExpanded")});
+ saved();
 })();

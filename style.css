@@ -2236,80 +2236,126 @@ color:#ff5ca8;
 
 
 /* ==========================================================
-   LIZZYOS — DATE SCHEDULER + READ ME CONTROLS
+   LIZZYOS EXTRA — QUIZ + HEART CATCH
    ========================================================== */
-.readMeWindowTop{margin:-28px -28px 22px;padding:16px 20px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.13)}
-.readMeWindowTop h2{margin:0 auto;padding-right:65px;font-size:1.35rem}
-#readMeRedClose,#readMeYellowMin,#readMeGreenMax{cursor:pointer}
-#readMeRedClose{background:#ff5f57}#readMeYellowMin{background:#febc2e}#readMeGreenMax{background:#28c840}
-#readMeWindow{transition:width .3s ease,height .3s ease,transform .3s ease}
-#readMeWindow.readMeMinimised{height:62px!important;min-height:62px!important;overflow:hidden!important}
-#readMeWindow.readMeMinimised>:not(.readMeWindowTop){display:none!important}
-#readMeWindow.readMeExpanded{width:94vw!important;max-width:1200px!important;height:88vh!important}
-
-.dateScheduler{width:min(100%,760px);margin:32px auto;padding:26px;border-radius:26px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);box-shadow:0 18px 55px rgba(90,35,75,.12);text-align:left}
-.schedulerHeading{display:flex;align-items:center;gap:15px;margin-bottom:7px}.schedulerIcon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:29px;background:rgba(255,255,255,.17)}
-.schedulerHeading h2{margin:2px 0 0;font-size:1.55rem}.schedulerEyebrow{margin:0;font-size:10px;line-height:1.2;letter-spacing:1.8px;font-weight:700;opacity:.68}.schedulerIntro{font-size:14px;line-height:1.65;opacity:.9}
-.schedulerGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 15px}.schedulerField{display:block;font-size:12px;font-weight:600}.schedulerField>span{display:block;margin-bottom:7px}
-.dateInputShell{width:100%;padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25)}
-.dateInputShell input{display:block;width:100%;min-width:0;border:0;padding:0;margin:0;outline:none;background:transparent;color:white;font:inherit;color-scheme:dark}
-.dateChoicePreview{min-height:82px;display:flex;align-items:center;gap:15px;padding:16px;margin:15px 0;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16)}
-.dateChoicePreview>span{font-size:32px}.dateChoicePreview p{margin:0;font-size:13px;line-height:1.55}.dateChoicePreview small{opacity:.68}.confirmDateButton{width:100%;margin-top:5px}
-.confirmDateButton:disabled,#confirmDesktopDate:disabled{opacity:.55;cursor:wait}.dateSchedulerStatus{margin:12px 0 0;min-height:25px;font-size:12px;font-weight:600;text-align:center}
-.confirmedDateCard{display:flex;align-items:center;gap:15px;margin-top:17px;padding:17px;border-radius:19px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3)}
-.confirmedCheck{flex:0 0 auto;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(83,220,140,.24);border:1px solid rgba(167,255,204,.55);font-size:22px}
-.confirmedDateCard h3{margin:3px 0;font-size:16px}.confirmedDateCard p{margin:3px 0;font-size:11px;line-height:1.5}.calendarDesktopContent{text-align:center}.calendarHeart{font-size:58px;margin:5px 0 8px}
-.desktopSchedulerGrid{max-width:650px;margin-left:auto;margin-right:auto;text-align:left}.savedMissionDate{max-width:650px;margin:17px auto 0}
-.savedMissionCard{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
-.savedMissionCard>span{font-size:32px}.savedMissionCard small,.savedMissionCard strong,.savedMissionCard p{display:block}.savedMissionCard small{font-size:9px;letter-spacing:1.3px;opacity:.65}.savedMissionCard strong{margin-top:4px;font-size:14px}.savedMissionCard p{margin:2px 0 0;font-size:12px}
-@media(max-width:650px){.schedulerGrid{grid-template-columns:1fr}.dateScheduler{padding:20px 16px}.schedulerHeading{align-items:flex-start}.schedulerHeading h2{font-size:1.3rem}}
-
-
-/* ==========================================================
-   OUR DATE — DESKTOP FOLDER
-   ========================================================== */
-.calendarFolderEmoji{
+.lizzyMiniApp{text-align:center}
+.miniScore{
+    display:inline-block;
+    margin:10px auto 22px;
+    padding:8px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,.15);
+    font-size:13px;
+}
+.funQuizAnswers{
+    display:grid;
+    gap:10px;
+    max-width:620px;
+    margin:20px auto;
+}
+.funQuizAnswer{margin:0;width:100%}
+.funQuizAnswer:disabled{opacity:.72;cursor:default}
+.funQuizAnswer.answerCorrect{box-shadow:0 0 0 3px rgba(137,255,181,.65)}
+.funQuizAnswer.answerWrong{box-shadow:0 0 0 3px rgba(255,145,168,.65)}
+.gameFeedback{
+    min-height:55px;
+    font-size:14px;
+    font-weight:600;
+}
+.heartStats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:18px 0;
+}
+.heartStats span{
+    padding:8px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.13);
+    font-size:12px;
+}
+.heartCatchArena{
     position:relative;
-    width:64px;
-    height:49px;
-    margin:0 auto 7px;
-    border-radius:7px 7px 9px 9px;
-    background:linear-gradient(180deg,#ffd86f 0%,#f4b83f 100%);
-    box-shadow:0 8px 18px rgba(54,34,10,.22),inset 0 1px rgba(255,255,255,.5);
-    font-size:0 !important;
+    width:min(100%,680px);
+    height:360px;
+    margin:15px auto;
+    overflow:hidden;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,.25);
+    background:
+      radial-gradient(circle at 50% 100%,rgba(255,255,255,.15),transparent 55%),
+      rgba(255,255,255,.08);
 }
-.calendarFolderEmoji::before{
-    content:"";
+.gameStartMessage{
     position:absolute;
-    left:5px;
-    top:-8px;
-    width:27px;
-    height:12px;
-    border-radius:6px 7px 0 0;
-    background:#f6c451;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.8;
+    padding:25px;
 }
-.calendarFolderEmoji::after{
-    content:"";
+.catchableHeart{
     position:absolute;
-    inset:7px 5px 5px;
-    border-radius:5px;
-    background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.02));
-}
-.folderCalendarBadge{
-    position:absolute;
-    z-index:2;
-    right:-8px;
-    bottom:-8px;
-    width:30px;
-    height:30px;
+    width:50px;
+    height:50px;
+    padding:0;
+    margin:0;
+    border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:9px;
-    background:rgba(255,255,255,.94);
-    box-shadow:0 5px 12px rgba(0,0,0,.22);
-    font-size:18px;
+    font-size:28px;
+    background:rgba(255,255,255,.18);
+    animation:heartGamePop .18s ease, heartGamePulse .75s ease-in-out infinite alternate;
 }
-.calendarFolderIcon:hover .calendarFolderEmoji{
-    transform:translateY(-2px);
+.catchableHeart:hover{transform:scale(1.18)}
+.caughtHeart{transform:scale(1.8)!important;opacity:0;transition:.12s}
+@keyframes heartGamePop{
+    from{transform:scale(.25);opacity:0}
+    to{transform:scale(1);opacity:1}
 }
+@keyframes heartGamePulse{
+    from{filter:drop-shadow(0 0 2px rgba(255,255,255,.3))}
+    to{filter:drop-shadow(0 0 12px rgba(255,255,255,.9))}
+}
+@media(max-width:600px){
+    .heartCatchArena{height:310px}
+    .catchableHeart{width:45px;height:45px;font-size:25px}
+}
+
+
+/* ===== LIZZYOS LIVING DESKTOP MERGE ===== */
+.mood-lizzy #desktop{background:linear-gradient(155deg,#ffc5df,#ff9dcb 46%,#e48dc5 76%,#7952a3)}
+.mood-attitude #desktop{background:linear-gradient(155deg,#ff7fbe,#dd5ea8 42%,#9b4d9e 72%,#422b70)}
+.mood-agent #desktop{background:radial-gradient(circle at 80% 14%,rgba(255,161,215,.22),transparent 26%),linear-gradient(155deg,#b46aa3,#764887 43%,#42315e 73%,#1d233d)}
+.lizzy-night #desktop{background:radial-gradient(circle at 78% 12%,rgba(255,220,246,.18),transparent 18%),linear-gradient(160deg,#321d4d,#47255d 45%,#251b48 75%,#11172d)}
+.lizzy-night #wallpaperOverlay::before{content:"✦ · ✨ · ✦ · ✨ · ✦";position:absolute;inset:12% 5% auto;text-align:center;color:#fff;opacity:.35;letter-spacing:24px;font-size:18px}
+#desktopMoodLabel,#nightStatus{white-space:nowrap}
+.mailApp{display:grid;grid-template-columns:190px 1fr;gap:18px;min-height:470px}
+.mailSidebar{display:flex;flex-direction:column;gap:8px;padding:4px;border-right:1px solid rgba(255,255,255,.16)}
+.mailNav{width:100%;margin:0;padding:12px 14px;text-align:left;border-radius:14px;background:transparent;box-shadow:none}
+.mailNav.active,.mailNav:hover{background:rgba(255,255,255,.17);transform:none}
+.mailMain{min-width:0}.mailHeaderRow,.mailMessageTop{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.eyebrow{font-size:11px;letter-spacing:1.8px;font-weight:700;opacity:.68;margin:0 0 4px}.mailStatusPill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:11px}
+.mailList{display:grid;gap:10px;margin-top:18px}.mailMessage{position:relative;padding:15px 17px;border-radius:17px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:left;cursor:pointer}
+.mailMessage.unread{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.36)}.mailMessage.unread::before{content:"";position:absolute;left:7px;top:20px;width:7px;height:7px;border-radius:50%;background:#ff3d83}
+.mailMessage h4{margin:6px 0;font-size:15px}.mailMessage p{font-size:13px;line-height:1.55;margin:5px 0;opacity:.88}.mailMessageTop span{font-size:10px;opacity:.65}
+.composeCard{display:grid;gap:8px;text-align:left;margin-top:18px}.composeCard label{font-size:11px;font-weight:700;opacity:.75}
+.composeCard input,.composeCard textarea{width:100%;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.11);color:#fff;font:inherit;outline:none}
+.composeCard textarea{resize:vertical;min-height:150px}.composeCard input::placeholder,.composeCard textarea::placeholder{color:rgba(255,255,255,.58)}.mailSendStatus{font-size:12px;min-height:22px;text-align:center}
+.aboutLizzy{text-align:center}.aboutLizzyAvatar{width:92px;height:92px;margin:5px auto 10px;border-radius:26px;display:flex;align-items:center;justify-content:center;font-size:52px;background:rgba(255,255,255,.18);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.aboutVersion{opacity:.7;font-size:12px}.specGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:25px 0}.specGrid>div{padding:14px;border-radius:16px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:left}
+.specGrid span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1.1px;opacity:.62}.specGrid strong{display:block;margin-top:6px;font-size:13px}.aboutQuote{padding:18px;border-radius:18px;background:rgba(255,255,255,.14);font-style:italic;line-height:1.6}
+.fakeWarning{position:fixed;right:20px;top:82px;z-index:120000;width:min(390px,calc(100vw - 30px));display:flex;align-items:center;gap:12px;padding:14px 15px;border-radius:18px;background:rgba(39,25,56,.82);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.25);box-shadow:0 20px 60px rgba(0,0,0,.28);transform:translateX(125%);opacity:0;transition:.35s ease}
+.fakeWarning.show{transform:translateX(0);opacity:1}.warningIcon{font-size:29px}.warningCopy{flex:1;text-align:left}.warningCopy strong,.warningCopy span{display:block}.warningCopy span{font-size:11px;opacity:.82;margin-top:3px}.fakeWarning #dismissWarning{padding:8px 12px;margin:0;font-size:10px;box-shadow:none}
+@media(max-width:720px){.mailApp{grid-template-columns:1fr}.mailSidebar{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:10px}.mailNav{white-space:nowrap;width:auto}.specGrid{grid-template-columns:1fr}}
+
+
+/* OUR DATE FOLDER + READ ME CONTROLS */
+.calendarFolderEmoji{position:relative;width:64px;height:49px;margin:0 auto 7px;border-radius:7px 7px 9px 9px;background:linear-gradient(180deg,#ffd86f,#f4b83f);box-shadow:0 8px 18px rgba(54,34,10,.22);font-size:0!important}.calendarFolderEmoji:before{content:"";position:absolute;left:5px;top:-8px;width:27px;height:12px;border-radius:6px 7px 0 0;background:#f6c451}.folderCalendarBadge{position:absolute;z-index:2;right:-8px;bottom:-8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.94);font-size:18px}
+.calendarDesktopContent{text-align:center}.calendarHeart{font-size:58px}.schedulerGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px auto 15px;max-width:650px;text-align:left}.schedulerField>span{display:block;margin-bottom:7px}.dateInputShell{padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25)}.dateInputShell input{width:100%;border:0;background:transparent;color:white;font:inherit;color-scheme:dark}.dateChoicePreview{max-width:650px;min-height:82px;margin:15px auto;display:flex;align-items:center;gap:15px;padding:16px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16)}.dateChoicePreview>span{font-size:32px}.dateSchedulerStatus{min-height:25px;font-size:12px;text-align:center}.savedMissionDate{max-width:650px;margin:17px auto}.savedMissionCard{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:18px;background:rgba(255,255,255,.12)}
+.readMeWindowTop{margin:-28px -28px 22px;padding:16px 20px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.13)}#readMeRedClose{background:#ff5f57}#readMeYellowMin{background:#febc2e}#readMeGreenMax{background:#28c840}#readMeRedClose,#readMeYellowMin,#readMeGreenMax{cursor:pointer}#readMeWindow.readMeMinimised{height:62px!important;overflow:hidden!important}#readMeWindow.readMeMinimised>:not(.readMeWindowTop){display:none!important}#readMeWindow.readMeExpanded{width:94vw!important;max-width:1200px!important;height:88vh!important}
+@media(max-width:650px){.schedulerGrid{grid-template-columns:1fr}}
