@@ -549,6 +549,11 @@
                 <div class="desktopEmoji">💻</div>
                 <span>About This Lizzy</span>
             </div>
+            <div class="desktopIcon" id="personalityIcon">
+                <div class="desktopEmoji">🧠</div>
+                <span>Personality Lab</span>
+            </div>
+
 
             <div class="desktopIcon" id="nightModeIcon">
                 <div class="desktopEmoji" id="nightModeEmoji">🌙</div>
@@ -913,6 +918,59 @@
             <div class="warningIcon">⚠️</div>
             <div class="warningCopy"><strong id="warningTitle">LizzyOS Warning</strong><span id="warningMessage">Excessive attitude detected.</span></div>
             <button id="dismissWarning">Ignore</button>
+        </div>
+
+
+        <!-- LizzyOS Personality Lab -->
+        <div id="personalityWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="personalityRedClose"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🧠 LizzyOS Personality Lab</h2>
+            </div>
+
+            <div class="windowScroll personalityLab">
+                <p class="eyebrow">SYSTEM PERSONALITY</p>
+                <h3>Who are we dealing with today? 😭</h3>
+                <p class="memoryMessage">This changes how LizzyOS talks, reacts and comments — not just the wallpaper.</p>
+
+                <div class="personalityCards">
+                    <button data-v5-persona="Lizzy">
+                        <span>💗</span>
+                        <strong>Lizzy</strong>
+                        <small>Sweet, warm, flower-powered and suspiciously adorable.</small>
+                    </button>
+                    <button data-v5-persona="Little Miss Attitude">
+                        <span>😏</span>
+                        <strong>Little Miss Attitude</strong>
+                        <small>Sassy, cheeky and mildly judgemental of Agent Mikhail.</small>
+                    </button>
+                    <button data-v5-persona="Agent Yelizaveta">
+                        <span>🕵️</span>
+                        <strong>Agent Yelizaveta</strong>
+                        <small>Classified, mission-focused and permanently suspicious.</small>
+                    </button>
+                </div>
+
+                <div class="personalityConsole">
+                    <span>LIVE SYSTEM PREVIEW</span>
+                    <p id="personalitySample"></p>
+                </div>
+
+                <div class="personalityEffects">
+                    <div>🖥️ <strong>Desktop</strong><span>Mood & labels</span></div>
+                    <div>⚠️ <strong>Warnings</strong><span>Different reactions</span></div>
+                    <div>💌 <strong>Mail</strong><span>Different greetings</span></div>
+                    <div>🎮 <strong>Games</strong><span>Different commentary</span></div>
+                    <div>🗑️ <strong>Recycle Bin</strong><span>Different sass</span></div>
+                    <div>💻 <strong>About Lizzy</strong><span>Different system profile</span></div>
+                </div>
+            </div>
+
+            <button id="closePersonality" class="windowCloseButton">Close</button>
         </div>
 
         

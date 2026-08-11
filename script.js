@@ -237,33 +237,44 @@ function loadQuestion(){
 loadQuestion();
 function playSelectionSound(answer){
 
-    officeAudio.pause();
-    officeAudio.currentTime = 0;
+    [officeAudio, brooklynAudio, gilmoreAudio, hsmAudio].forEach(audio => {
+        if (!audio) return;
+        audio.pause();
+        audio.currentTime = 0;
+    });
 
-    brooklynAudio.pause();
-    brooklynAudio.currentTime = 0;
+    function playClip(audio, startAt, durationMs) {
+        if (!audio) return;
 
-    gilmoreAudio.pause();
-    gilmoreAudio.currentTime = 0;
+        audio.currentTime = startAt;
+        audio.play().catch(() => {});
 
-    hsmAudio.pause();
-    hsmAudio.currentTime = 0;
+        setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0;
+        }, durationMs);
+    }
 
     switch(answer){
 
         case "The Office":
-            officeAudio.play();
+            // Uploaded clip is 4.27s: "That's what she said!" plus the few seconds after.
+            playClip(officeAudio, 0, 4270);
             break;
 
         case "Brooklyn Nine-Nine":
-            brooklynAudio.play();
+            // One "Nine-Nine!" only.
+            playClip(brooklynAudio, 0, 1500);
             break;
 
         case "Gilmore Girls":
-            gilmoreAudio.play();
+            // Starts just before "I just got hit by a deer!" and keeps the short exchange.
+            playClip(gilmoreAudio, 22.0, 10500);
             break;
 
         case "High School Musical":
+            // Kept unchanged for now: the uploaded wildcats.mp3 contains
+            // the "What team? Wildcats!" chant, not "Get'cha head in the game".
             hsmAudio.play();
             break;
 
@@ -1647,6 +1658,184 @@ document.addEventListener("keydown", (event) => {
     setInterval(()=>{if($("desktopArea")&&!$("desktopArea").classList.contains("hidden")&&Math.random()<.55)randomWarning()},65000);
 
     renderInbox();renderSent();applyMood();applyNight();setInterval(()=>{if(!manualNight)applyNight()},60000);
+})();
+
+
+// =====================================================
+// LIZZYOS V5 — FULL PERSONALITY ENGINE
+// Built cumulatively on Master V4.
+// =====================================================
+(() => {
+    const $ = id => document.getElementById(id);
+    const qsa = s => [...document.querySelectorAll(s)];
+    const store = localStorage;
+
+    const personalities = {
+        "Lizzy": {
+            sample: "Hi Lizzy 💗 Everything is working perfectly. Also, system diagnostics say you're pretty today. Again.",
+            login: "Welcome back, Lizzy 💗",
+            gameOpen: "Okay Lizzy, be nice to the high score. 💗",
+            quizRight: "Correct 💗 Obviously.",
+            quizWrong: "Almost! LizzyOS is pretending not to notice.",
+            heartHigh: "Okayyy heart thief 💗 That was actually impressive.",
+            heartLow: "Cute attempt 💗 Agent Mikhail still approves.",
+            bin: "These nicknames have been respectfully deleted for your peace and happiness. 💗"
+        },
+        "Little Miss Attitude": {
+            sample: "🙄 LizzyOS is online. Try not to break anything, Little Miss Attitude.",
+            login: "Oh great. Little Miss Attitude is back. 😏",
+            gameOpen: "Try not to become unbearable if you beat the high score. 😏",
+            quizRight: "Fine. You got it right. Don't get smug.",
+            quizWrong: "Wrong 😂 Apparently attitude does not count as intelligence points.",
+            heartHigh: "Of course you had to overachieve 🙄💗",
+            heartLow: "That score was very... humble. 😂",
+            bin: "Little Miss Attitude personally requested these names be permanently deleted. Complaints will be ignored."
+        },
+        "Agent Yelizaveta": {
+            sample: "CLEARANCE CONFIRMED. 🕵️ Agent Yelizaveta, all systems operational. Agent Mikhail remains under surveillance.",
+            login: "AGENT YELIZAVETA ONLINE — clearance confirmed. 🕵️",
+            gameOpen: "MISSION ACTIVE. High-score intelligence has been classified.",
+            quizRight: "INTELLIGENCE VERIFIED. Correct answer.",
+            quizWrong: "MISSION ERROR. Intelligence requires recalibration.",
+            heartHigh: "MISSION SUCCESS. Heart acquisition level: elite. 💗",
+            heartLow: "MISSION INCOMPLETE. Agent Yelizaveta is authorised for another attempt.",
+            bin: "CLASSIFIED DISPOSAL UNIT: prohibited aliases have been contained."
+        }
+    };
+
+    const persona = () => store.getItem("lizzyPersona") || "Agent Yelizaveta";
+    const text = () => personalities[persona()] || personalities["Agent Yelizaveta"];
+
+    function applyPersonality(){
+        const p=persona();
+        document.body.dataset.personality=p;
+
+        if($("personalitySample")) $("personalitySample").textContent=text().sample;
+
+        // About This Lizzy profile details.
+        const model=$("aboutLizzyModel"), quote=$("aboutQuote");
+        if(model){
+            model.textContent = p==="Lizzy" ? "Lizzy Pro 💗" :
+                p==="Little Miss Attitude" ? "Little Miss Attitude Pro Max 😏" :
+                "Agent Yelizaveta — Classified Edition";
+        }
+        if(quote){
+            quote.textContent = p==="Lizzy" ?
+                "Powered by kindness, pink, pasta and an unreasonable amount of prettiness." :
+                p==="Little Miss Attitude" ?
+                "Sass is a permanent system feature and cannot be uninstalled. Mikhail has tried." :
+                "Security clearance confirmed. Agent Mikhail remains under observation.";
+        }
+
+        // Mail personality.
+        if($("composeGreeting")){
+            $("composeGreeting").textContent = p==="Lizzy" ? "Send Mikhail something cute 💗" :
+                p==="Little Miss Attitude" ? "Fine... message Mikhail 🙄❤️" :
+                "SECURE COMMS: Agent Mikhail 🕵️";
+        }
+
+        // Existing game intros.
+        const heartIntro=document.querySelector("#heartCatchWindow .memoryMessage");
+        if(heartIntro) heartIntro.textContent =
+            p==="Lizzy" ? "Catch as many hearts as you can before the timer runs out 💗" :
+            p==="Little Miss Attitude" ? "Catch the hearts. Try not to act too impressed with yourself 😏" :
+            "MISSION OBJECTIVE: acquire maximum heart units before countdown expiry.";
+
+        const quizIntro=document.querySelector("#funQuizWindow .memoryMessage");
+        if(quizIntro) quizIntro.textContent =
+            p==="Lizzy" ? "A very cute and extremely scientific test of your LizzyOS knowledge. 💗" :
+            p==="Little Miss Attitude" ? "Five questions. Let's see if the attitude comes with answers. 😏" :
+            "INTELLIGENCE ASSESSMENT: five questions. Clearance score pending.";
+    }
+
+    function selectPersona(name){
+        store.setItem("lizzyPersona",name);
+
+        // Reuse the current site's original selector if present so all old behavior remains synced.
+        const old=document.querySelector(`[data-persona="${name}"]`);
+        if(old) old.click();
+
+        applyPersonality();
+
+        // Brief personality-specific system acknowledgement.
+        const message = name==="Lizzy" ? "Lizzy Mode activated 💗 Everything just got softer." :
+            name==="Little Miss Attitude" ? "Little Miss Attitude Mode activated 😏 Mikhail has been warned." :
+            "AGENT YELIZAVETA MODE ACTIVE 🕵️ Secure systems engaged.";
+
+        if(typeof window.showToast==="function") window.showToast(message);
+        else {
+            const sample=$("personalitySample");
+            if(sample) sample.textContent=message;
+            setTimeout(applyPersonality,1800);
+        }
+    }
+
+    $("personalityIcon")?.addEventListener("click",()=>{
+        applyPersonality();
+        $("personalityWindow")?.classList.remove("hidden");
+    });
+    ["closePersonality","personalityRedClose"].forEach(id =>
+        $(id)?.addEventListener("click",()=>$("personalityWindow")?.classList.add("hidden"))
+    );
+    qsa("[data-v5-persona]").forEach(btn =>
+        btn.addEventListener("click",()=>selectPersona(btn.dataset.v5Persona))
+    );
+
+    // Keep personality synced when original identity buttons are used.
+    qsa("[data-persona]").forEach(btn =>
+        btn.addEventListener("click",()=>setTimeout(applyPersonality,30))
+    );
+
+    // Personality reactions when opening games.
+    $("funQuizIcon")?.addEventListener("click",()=>{
+        setTimeout(()=>{
+            const f=$("funQuizFeedback");
+            if(f && !f.textContent) f.textContent=text().gameOpen;
+        },100);
+    });
+    $("heartGameIcon")?.addEventListener("click",()=>{
+        const arena=$("heartCatchArena");
+        if(arena && !arena.querySelector(".catchableHeart") && !arena.textContent.includes("Mission Complete")){
+            const start=arena.querySelector(".gameStartMessage");
+            if(start) start.innerHTML=`${text().gameOpen}<br><small>Press Start Mission 💗</small>`;
+        }
+    });
+
+    // Recycle Bin personality subtitle if current bin window exists.
+    const binIcon=$("binIcon");
+    if(binIcon){
+        binIcon.addEventListener("click",()=>{
+            setTimeout(()=>{
+                const bin=$("binWindow");
+                if(!bin) return;
+                let note=bin.querySelector(".personalityBinNote");
+                if(!note){
+                    note=document.createElement("p");
+                    note.className="personalityBinNote memoryMessage";
+                    const scroll=bin.querySelector(".windowScroll");
+                    if(scroll) scroll.prepend(note);
+                }
+                if(note) note.textContent=text().bin;
+            },50);
+        });
+    }
+
+    // Add persona line to quiz feedback without replacing existing correct/wrong content.
+    const quizAnswers=$("funQuizAnswers");
+    if(quizAnswers){
+        quizAnswers.addEventListener("click",e=>{
+            if(!e.target.closest("[data-fq-answer]")) return;
+            setTimeout(()=>{
+                const f=$("funQuizFeedback");
+                if(!f) return;
+                const chosen=e.target.closest("[data-fq-answer]");
+                const isCorrect=chosen.classList.contains("answerCorrect");
+                if(f.textContent && !f.textContent.includes(" • ")) f.textContent += " • " + (isCorrect?text().quizRight:text().quizWrong);
+            },80);
+        });
+    }
+
+    applyPersonality();
 })();
 
 
