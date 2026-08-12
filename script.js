@@ -918,7 +918,7 @@ openWhenLetters.laugh = {
         <p><strong>🚨 LIZZYOS EMERGENCY COMEDY PROTOCOL</strong></p>
         <p>Apparently you require immediate assistance.</p>
         <p>First of all...</p>
-        <p><strong>Why did you come to ME for comedy? 😭</strong></p>
+        <p>Why did you come to <strong>ME</strong> for comedy? 😭</p>
         <p>That's a lot of pressure.</p>
         <p>So here's your emergency procedure:</p>
         <p><strong>Step 1:</strong> Think about something embarrassing I've done.</p>
@@ -926,8 +926,7 @@ openWhenLetters.laugh = {
         <p><strong>Step 3:</strong> Laugh.</p>
         <p>If that hasn't worked, please switch yourself off and back on again.</p>
         <p>Still nothing?</p>
-        <p>Fine. Press the button below. 😂</p>
-        <p class="letterSignature">— Mikael a.k.a Mr Perfect</p>
+        <p>Fine.</p>
     `
 };
 
