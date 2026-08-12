@@ -1,148 +1,1009 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Lizzy ❤️</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lizzy ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
 </head>
+
 <body>
 
-<div id="background"></div><div id="hearts"></div><div id="petals"></div><div id="sparkles"></div>
-<div id="progress"><div id="progressFill"></div></div>
-<button id="soundButton" aria-label="Toggle sound">🔈</button>
+<!-- ========================= -->
+<!-- Animated Background -->
+<!-- ========================= -->
 
-<section id="loading" class="scene active">
-  <div class="glass">
-    <div class="loadingHeart">❤️</div>
-    <h1>Loading Something Special...</h1>
-    <p>Please wait just a moment.</p>
-    <div class="loadingBar"><div class="loadingFill"></div></div>
-  </div>
+<div id="background"></div>
+
+<div id="hearts"></div>
+
+<div id="petals"></div>
+
+<div id="sparkles"></div>
+
+<!-- ========================= -->
+<!-- Loading Screen -->
+<!-- ========================= -->
+
+<section id="loading">
+
+    <div class="glass">
+
+        <div class="loadingHeart">
+            ❤️
+        </div>
+
+        <h1>Loading Something Special...</h1>
+
+        <p>Please wait just a moment.</p>
+
+        <div class="loadingBar">
+
+            <div class="loadingFill"></div>
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- Progress -->
+<!-- ========================= -->
+
+<div id="progress">
+
+    <div id="progressFill"></div>
+
+</div>
+
+<!-- ========================= -->
+<!-- Sound Toggle -->
+<!-- ========================= -->
+
+<button id="soundButton">
+
+🔈
+
+</button>
+
+<!-- ========================= -->
+<!-- Opening Scene -->
+<!-- ========================= -->
 
 <section id="opening" class="scene hidden">
-  <div class="glass">
-    <h1 class="title">Every Great Story...</h1>
-    <p class="subtitle">starts with one choice.</p>
-    <p>This isn't just another website.<br><br>It's a little adventure made especially for one person.</p>
-    <button id="startStory">Begin ❤️</button>
-  </div>
+
+    <div class="glass">
+
+        <h1 class="title">
+
+            Every Great Story...
+
+        </h1>
+
+        <p class="subtitle">
+
+            starts with one choice.
+
+        </p>
+
+        <p>
+
+            This isn't just another website.
+
+            <br><br>
+
+            It's a little adventure made especially for one person.
+
+        </p>
+
+        <button id="startStory">
+
+            Begin ❤️
+
+        </button>
+
+    </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- Storybook -->
+<!-- ========================= -->
 
 <section id="storybook" class="scene hidden">
-  <div class="glass">
-    <h1>Chapter One</h1><h2>Once Upon A Time...</h2>
-    <p>There was a girl who somehow made pink seem like the best colour in the world.</p>
-    <p>She had a little attitude...<br>but somehow that just made her even more unforgettable.</p>
-    <button id="nextChapter">Turn The Page 📖</button>
-  </div>
+
+    <div class="glass">
+
+        <h1>
+
+            Chapter One
+
+        </h1>
+
+        <h2>
+
+            Once Upon A Time...
+
+        </h2>
+
+        <p>
+
+            There was a girl who somehow made pink seem like the best colour in the world.
+
+        </p>
+
+        <p>
+
+            She had a little attitude...
+
+            but somehow that just made her even more unforgettable.
+
+        </p>
+
+        <button id="nextChapter">
+
+            Turn The Page 📖
+
+        </button>
+
+    </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- Quiz -->
+<!-- ========================= -->
 
 <section id="quiz" class="scene hidden">
-  <div class="glass">
-    <h1>Quick Quiz 💕</h1>
-    <p class="subtitle">Let's see how well this story is going...</p>
-    <h2 id="questionTitle"></h2>
-    <div id="answers" class="answers"></div>
-  </div>
+
+    <div class="glass">
+
+        <h1>Quick Quiz 💕</h1>
+
+        <p class="subtitle">
+
+            Let's see how well this story is going...
+
+        </p>
+
+        <h2 id="questionTitle">
+
+            Question goes here
+
+        </h2>
+
+        <div id="answers">
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- TV References -->
+<!-- ========================= -->
 
 <section id="tvSection" class="scene hidden">
-  <div class="glass scrollGlass">
-    <h1>Things That Reminded Me Of You 📺</h1>
-    <div class="referenceGrid">
-      <div class="referenceCard"><h2>The Office</h2><p>Sometimes life is wonderfully awkward... and somehow that's part of the charm.</p></div>
-      <div class="referenceCard"><h2>Brooklyn Nine-Nine</h2><p>Cool. Cool cool cool. Some moments are just more fun because of the people you're with.</p></div>
-      <div class="referenceCard"><h2>Gilmore Girls</h2><p>A warm conversation, a peaceful evening and good company always wins.</p></div>
-      <div class="referenceCard"><h2>High School Musical</h2><p>Every good story deserves a memorable ending.</p></div>
+
+    <div class="glass">
+
+        <h1>Things That Reminded Me Of You 📺</h1>
+
+        <div class="referenceCard">
+
+            <h2>The Office</h2>
+
+            <p>
+                Sometimes life is wonderfully awkward... and somehow that's part of the charm.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>Brooklyn Nine-Nine</h2>
+
+            <p>
+                Cool. Cool cool cool.
+                Some moments are just more fun because of the people you're with.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>Gilmore Girls</h2>
+
+            <p>
+                A warm conversation, a peaceful evening and good company always wins.
+            </p>
+
+        </div>
+
+        <div class="referenceCard">
+
+            <h2>High School Musical</h2>
+
+            <p>
+                Every good story deserves a memorable ending.
+            </p>
+
+        </div>
+
+        <button id="continueStory">
+
+            Continue 🌸
+
+        </button>
+
     </div>
-    <button id="continueStory">Continue 🌸</button>
-  </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- Emotional Section -->
+<!-- ========================= -->
 
 <section id="story" class="scene hidden">
-  <div class="glass">
-    <h1>One More Thing...</h1>
-    <p>Life moves incredibly fast.</p><p>People come and go.</p><p>But every now and then...</p>
-    <p>someone comes along who makes ordinary days feel a little brighter.</p>
-    <p>Thank you for every laugh.</p><p>Every random conversation.</p>
-    <p>Every "Little Miss Attitude" moment.</p><p>And thank you for simply being you.</p>
-    <button id="proposalButton">Keep Going ❤️</button>
-  </div>
+
+    <div class="glass">
+
+        <h1>
+
+            One More Thing...
+
+        </h1>
+
+        <p>
+
+            Life moves incredibly fast.
+
+        </p>
+
+        <p>
+
+            People come and go.
+
+        </p>
+
+        <p>
+
+            But every now and then...
+
+        </p>
+
+        <p>
+
+            someone comes along who makes ordinary days feel a little brighter.
+
+        </p>
+
+        <p>
+
+            Thank you for every laugh.
+
+        </p>
+
+        <p>
+
+            Every random conversation.
+
+        </p>
+
+        <p>
+
+            Every "Little Miss Attitude" moment.
+
+        </p>
+
+        <p>
+
+            And thank you for simply being you.
+
+        </p>
+
+        <button id="proposalButton">
+
+            Keep Going ❤️
+
+        </button>
+
+    </div>
+
 </section>
+<!-- ========================= -->
+<!-- Proposal -->
+<!-- ========================= -->
 
 <section id="proposal" class="scene hidden">
-  <div class="glass proposalCard">
-    <h1>Lebone Elizabeth Kganyago...</h1>
-    <h2>Will you go on a date with me? ❤️</h2>
-    <p>No pressure...<br>(Well... maybe just a little 😄)</p>
-    <div class="buttonRow"><button id="yesButton">YES ❤️</button><button id="noButton">No 🙈</button></div>
-    <p id="funnyMessage"></p>
-  </div>
+
+    <div class="glass proposalCard">
+
+        <h1>
+
+            Lebone Elizabeth Kganyago...
+
+        </h1>
+
+        <h2>
+
+            Will you go on a date with me? ❤️
+
+        </h2>
+
+        <p>
+
+            No pressure...
+
+            (Well... maybe just a little 😄)
+
+        </p>
+
+        <div class="buttonRow">
+
+            <button id="yesButton">
+
+                YES ❤️
+
+            </button>
+
+            <button id="noButton">
+
+                No 🙈
+
+            </button>
+
+        </div>
+
+        <p id="funnyMessage"></p>
+
+    </div>
+
 </section>
+
+<!-- ========================= -->
+<!-- Celebration -->
+<!-- ========================= -->
 
 <section id="celebration" class="scene hidden">
-  <div class="glass scrollGlass">
-    <h1>🎉 You Said Yes! 🎉</h1>
-    <h2>You just made someone incredibly happy.</h2>
-    <p>I can't wait to spend some time with you.</p>
-    <p>Here's a little riddle for what's coming next...</p>
-    <div class="riddleGrid">
-      <div class="riddleCard" data-answer="⛳ Mini Golf"><p>I'm played with a tiny ball and a stick so neat,<br>windmills and ramps make my challenge complete.<br>No green fees, no golf cart, just laughs galore —<br>what am I?</p><strong class="riddleAnswer hidden"></strong></div>
-      <div class="riddleCard" data-answer="🕹️ Arcade"><p>Coins turn to tokens, lights flashing bright,<br>high scores get chased deep into the night.<br>Joysticks and buttons, a friendly little duel —<br>what place is this?</p><strong class="riddleAnswer hidden"></strong></div>
-      <div class="riddleCard" data-answer="🎬 Movie Date"><p>Popcorn in hand, the lights dimming low,<br>a story unfolds on a giant screen's glow.<br>Two seats, one screen, no need to talk —<br>what am I?</p><strong class="riddleAnswer hidden"></strong></div>
+
+    <div class="glass">
+
+        <h1>
+
+            🎉 You Said Yes! 🎉
+
+        </h1>
+
+        <h2>
+
+            You just made someone incredibly happy.
+
+        </h2>
+
+        <p>
+
+            I can't wait to spend some time with you.
+
+        </p>
+
+        <p>
+
+            Here's a little riddle for what's coming next...
+
+        </p>
+        <div class="riddleGrid">
+
+            <div class="riddleCard" data-answer="⛳ Mini Golf">
+
+                <p class="riddleText">
+
+                    I'm played with a tiny ball and a stick so neat,<br>
+                    windmills and ramps make my challenge complete.<br>
+                    No green fees, no golf cart, just laughs galore —<br>
+                    what am I?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+            <div class="riddleCard" data-answer="🕹️ Arcade">
+
+                <p class="riddleText">
+
+                    Coins turn to tokens, lights flashing bright,<br>
+                    high scores get chased deep into the night.<br>
+                    Joysticks and buttons, a friendly little duel —<br>
+                    what place is this?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+            <div class="riddleCard" data-answer="🎬 Movie Date">
+
+                <p class="riddleText">
+
+                    Popcorn in hand, the lights dimming low,<br>
+                    a story unfolds on a giant screen's glow.<br>
+                    Two seats, one screen, no need to talk —<br>
+                    what am I?
+
+                </p>
+
+                <p class="riddleAnswer hidden"></p>
+
+            </div>
+
+        </div>
+
+        <p class="memoryMessage">Tap each one to reveal the answer 💕</p>
+
+        <button id="secretButton">
+
+            One Last Surprise 🌅
+
+        </button>
+
     </div>
-    <p class="memoryMessage">Tap each one to reveal the answer 💕</p>
-    <button id="secretButton">One Last Surprise 🌅</button>
-  </div>
+
 </section>
+<!-- ========================= -->
+<!-- Secret Ending -->
+<!-- ========================= -->
 
 <section id="secretEnding" class="scene hidden">
-  <div id="desktop">
-    <div id="wallpaperOverlay"></div>
-    <div id="terminal">
-      <div class="terminalBar"><span class="red"></span><span class="yellow"></span><span class="green"></span><p>Terminal</p></div>
-      <div id="terminalText"></div>
+
+    <div id="desktop">
+
+        <!-- Wallpaper Overlay -->
+        <div id="wallpaperOverlay"></div>
+
+        <!-- Terminal -->
+        <div id="terminal">
+
+            <div class="terminalBar">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+
+                <p>Terminal</p>
+            </div>
+
+            <div id="terminalText"></div>
+
+        </div>
+
+        <!-- Desktop -->
+        <div id="desktopArea" class="hidden">
+
+            <!-- Desktop Icons -->
+
+            <div class="desktopIcon" id="folderIcon">
+
+                <div class="desktopEmoji">📁</div>
+
+                <span>Lizzy Archives</span>
+
+            </div>
+
+            <div class="desktopIcon" id="readMeIcon">
+
+                <div class="desktopEmoji">❤️</div>
+
+                <span>Read Me</span>
+
+            </div>
+
+            <div class="desktopIcon" id="missionIcon">
+
+                <div class="desktopEmoji">🗂️</div>
+
+                <span>Mission Log</span>
+
+            </div>
+
+            <div class="desktopIcon" id="openWhenIcon">
+
+                <div class="desktopEmoji">💌</div>
+
+                <span>Open When...</span>
+
+            </div>
+
+            <div class="desktopIcon" id="recycleBinIcon">
+                <div class="desktopEmoji">🗑️</div>
+                <span>Recycle Bin</span>
+            </div>
+
+            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
+                <div class="desktopEmoji calendarFolderEmoji">
+                    <span class="folderCalendarBadge">📅</span>
+                </div>
+                <span>Our Date</span>
+            </div>
+
+        
+            <div class="desktopIcon" id="lizzyQuizIcon">
+                <div class="desktopEmoji">🧠</div>
+                <span>Lizzy Quiz</span>
+            </div>
+
+            <div class="desktopIcon" id="heartGameIcon">
+                <div class="desktopEmoji">💗</div>
+                <span>Heart Catch</span>
+            </div>
+
+            <div class="desktopIcon" id="mikhailQuizIcon">
+                <div class="desktopEmoji">🧠</div>
+                <span>Mikhail Quiz</span>
+            </div>
+
+            <div class="desktopIcon" id="mysteryBoxIcon">
+                <div class="desktopEmoji">🎁</div>
+                <span>Daily Mystery</span>
+            </div>
+
+        </div>
+
+        <!-- Finder Window -->
+
+        <div id="finderWindow" class="hidden">
+
+            <div class="finderTop">
+
+                <div class="finderButtons">
+
+                    <span class="closeBtn"></span>
+
+                    <span class="minBtn"></span>
+
+                    <span class="maxBtn"></span>
+
+                </div>
+
+                <h2>📁 The Lizzy Archives</h2>
+
+            </div>
+
+            <div class="finderInfo">
+
+                11 Files Stored 💗
+
+            </div>
+
+<div id="finderGrid">
+
+                <h3>💗 The Lizzy Archives</h3>
+
+                <div id="archiveList" class="likesList"></div>
+
+                <p class="memoryMessage">
+
+                    ❤️ My version of the folder in her brain that stores all the info about me.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Read Me -->
+
+<div id="readMeWindow" class="hidden">
+
+    <div class="windowTop readMeWindowTop">
+        <div class="windowDots">
+            <span class="windowCloseDot" id="readMeRedClose" title="Close"></span>
+            <span class="windowMinDot" id="readMeYellowMin" title="Minimise"></span>
+            <span class="windowMaxDot" id="readMeGreenMax" title="Expand"></span>
+        </div>
+        <h2>❤️ Read Me ❤️</h2>
     </div>
 
-    <div id="desktopArea" class="hidden">
-      <button class="desktopIcon" data-app="archives"><span class="desktopEmoji">📁</span><span>Lizzy Archives</span></button>
-      <button class="desktopIcon" data-app="mission"><span class="desktopEmoji">🗂️</span><span>Mission Log</span></button>
-      <button class="desktopIcon" data-app="readme"><span class="desktopEmoji">❤️</span><span>Read Me</span></button>
-      <button class="desktopIcon" data-app="openwhen"><span class="desktopEmoji">💌</span><span>Open When...</span></button>
-      <button class="desktopIcon" data-app="recycle"><span class="desktopEmoji">🗑️</span><span>Recycle Bin</span></button>
-      <button class="desktopIcon" data-app="lizzyquiz"><span class="desktopEmoji">🧠</span><span>Lizzy Quiz</span></button>
-      <button class="desktopIcon" data-app="heartcatch"><span class="desktopEmoji">💗</span><span>Heart Catch</span></button>
-      <button class="desktopIcon" data-app="mikhailquiz"><span class="desktopEmoji">🧠</span><span>Mikhail Quiz</span></button>
-      <button class="desktopIcon" data-app="mystery"><span class="desktopEmoji">🎁</span><span>Daily Mystery</span></button>
-      <button class="desktopIcon folderCalendar" data-app="calendar"><span class="desktopEmoji">📁<b>📅</b></span><span>Our Date</span></button>
+    <div id="readMeIntro">
+
+        <p><strong>Congratulations...</strong></p>
+
+        <p>You found the hidden folder.</p>
+
+        <p>These aren't just photos and videos.</p>
+
+        <p>They're little moments that made me smile.</p>
+
+        <p>Thank you for being part of these memories.</p>
+
+        <p><strong>...and if you're reading this, hopefully we're already making more. ❤️</strong></p>
+
+        <button id="openMemoriesButton">
+
+            📸 Open Our Memories
+
+        </button>
+
     </div>
 
-    <div id="appOverlay" class="appOverlay hidden"></div>
-  </div>
+    <div id="readMeContent" class="hidden">
+
+        Loading memories...
+
+    </div>
+
+    <button id="closeReadMe">
+
+        Close
+
+    </button>
+
+</div>
+
+        <!-- Mission Log -->
+        <div id="missionWindow" class="desktopWindow hidden">
+
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🗂️ Mission Log</h2>
+            </div>
+
+            <div class="windowScroll missionPaper">
+
+                <div class="classifiedHeader">
+                    <span>TOP SECRET</span>
+                    <h3>MISSION LOG</h3>
+                    <p>Security Clearance: LEVEL 7</p>
+                </div>
+
+                <div class="missionStatus">🟢 ACTIVE</div>
+
+                <section class="missionSection">
+                    <p class="missionLabel">MISSION #001</p>
+                    <h3>Operation: Strike Her Heart ❤️</h3>
+                    <p><strong>Location:</strong> Montecasino</p>
+                </section>
+
+                <section class="missionSection">
+                    <h3>🎯 Mission Brief</h3>
+                    <p>
+                        Agent Mikhail Petrov has officially accepted his first mission alongside
+                        <strong>Agent Yelizaveta</strong>. Intelligence reports indicate that Agent
+                        Yelizaveta possesses exceptional bowling abilities, placing Agent Petrov at
+                        a significant competitive disadvantage.
+                    </p>
+                    <p>
+                        Primary objectives include sharing plenty of laughs, creating the first
+                        official Mission Log memories, and surviving the scoreboard with dignity.
+                    </p>
+                    <p><strong>Success will be measured by the memories we create. ❤️</strong></p>
+                </section>
+
+                <div class="agentGrid">
+                    <article class="agentCard">
+                        <h3>👩 Agent Yelizaveta</h3>
+                        <p><strong>Role:</strong> Elite Operative</p>
+                        <p><strong>Bowling experience:</strong> Highly experienced</p>
+                        <p><strong>Mission difficulty:</strong> ⭐☆☆☆☆ Easy</p>
+                        <ul>
+                            <li>🎯 Precision accuracy</li>
+                            <li>💥 Consistent strikes</li>
+                            <li>😏 Highly competitive</li>
+                            <li>🏆 Expected to dominate the scoreboard</li>
+                        </ul>
+                    </article>
+
+                    <article class="agentCard">
+                        <h3>👨 Agent Mikhail Petrov</h3>
+                        <p><strong>Role:</strong> Rookie Operative</p>
+                        <p><strong>Bowling experience:</strong> One previous mission; results classified</p>
+                        <p><strong>Mission difficulty:</strong> ⭐⭐⭐⭐⭐ Legendary</p>
+                        <ul>
+                            <li>🎳 Limited field experience</li>
+                            <li>🤞 Hoping the ball reaches the correct lane</li>
+                            <li>😂 May invent new bowling techniques</li>
+                            <li>❤️ Primary objective: make Agent Yelizaveta smile</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <section class="missionSection">
+                    <h3>🎖️ Optional Side Quests</h3>
+                    <div class="checkList">
+                        <p>☐ Make Agent Yelizaveta laugh</p>
+                        <p>☐ Celebrate every strike, even if it is hers</p>
+                        <p>☐ Avoid an excessive number of gutter balls</p>
+                        <p>☐ Capture our first Mission Log photo 📸</p>
+                        <p>☐ Successfully unlock Mission #002</p>
+                    </div>
+                </section>
+
+                <section class="missionSection">
+                    <h3>🎁 Mission Rewards</h3>
+                    <p>🏅 First Date Badge</p>
+                    <p>📸 New Memories Added</p>
+                    <p>❤️ Story Progress +1</p>
+                    <p>🔓 Mission #002 Unlocked</p>
+                </section>
+
+                <section class="missionSection missionReport">
+                    <h3>📋 Mission Report</h3>
+                    <p><strong>Status:</strong> Awaiting Deployment...</p>
+                    <p>Awaiting Agent Yelizaveta's arrival...</p>
+                    <p><strong>Estimated mission success:</strong> 99.9%</p>
+                    <p>
+                        <strong>Reason for the remaining 0.1%:</strong><br>
+                        Agent Mikhail Petrov has never attempted a bowling mission against
+                        Agent Yelizaveta before. The final score is unpredictable, but this
+                        mission is already worth accepting. ❤️
+                    </p>
+                </section>
+
+            </div>
+
+            <button id="closeMission" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Open When Letters -->
+        <div id="openWhenWindow" class="desktopWindow hidden">
+
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>💌 Open When...</h2>
+            </div>
+
+            <div class="windowScroll">
+                <div id="letterList" class="letterList">
+                    <button class="letterButton" data-letter="miss">❤️ Open when you miss me</button>
+                    <button class="letterButton" data-letter="amazing">🌸 Open when you need reminding how amazing you are</button>
+                </div>
+
+                <article id="letterContent" class="letterPaper hidden">
+                    <h3 id="letterTitle"></h3>
+                    <div id="letterText"></div>
+                    <button id="backLetters" class="secondaryButton">← Back to letters</button>
+                </article>
+            </div>
+
+            <button id="closeOpenWhen" class="windowCloseButton">Close</button>
+        </div>
+
+
+        <!-- Our Date Calendar -->
+        <div id="calendarWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="calendarRedClose"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>📁 Our Date</h2>
+            </div>
+            <div class="windowScroll calendarDesktopContent">
+                <div class="calendarHeart">❤️</div>
+                <h3>Pick Our Date ❤️</h3>
+                <p id="desktopSchedulerRandomMessage">Loading mission instructions... ❤️</p>
+                <div class="schedulerGrid desktopSchedulerGrid">
+                    <label class="schedulerField"><span>📆 Date</span><div class="dateInputShell"><input id="desktopDateChoice" type="date"></div></label>
+                    <label class="schedulerField"><span>🕐 Time</span><div class="dateInputShell"><input id="desktopTimeChoice" type="time"></div></label>
+                </div>
+                <div id="desktopDatePreview" class="dateChoicePreview"><span>💗</span><p>Select the next mission date.</p></div>
+                <button id="confirmDesktopDate">Send Mission Update ❤️</button>
+                <p id="desktopDateStatus" class="dateSchedulerStatus" aria-live="polite"></p>
+                <div id="savedMissionDate" class="savedMissionDate"></div>
+            </div>
+            <button id="closeCalendar" class="windowCloseButton">Close</button>
+        </div>
+
+        
+        <!-- Recycle Bin -->
+        <div id="recycleBinWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="recycleBinClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🗑️ Recycle Bin</h2>
+            </div>
+            <div class="windowScroll">
+                <p class="memoryMessage">Things permanently rejected by LizzyOS 😂</p>
+                <div id="recycleBinGrid" class="recycleBinGrid"></div>
+                <p class="binWarning">⚠️ Restoration disabled. These names belong exactly where they are.</p>
+            </div>
+            <button id="closeRecycleBin" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Full Screen Viewer -->
+
+        <div id="viewer" class="hidden">
+
+            <button id="viewerClose">
+
+                ✕
+
+            </button>
+
+            <button id="viewerPrev">
+
+                ◀
+
+            </button>
+
+            <button id="viewerNext">
+
+                ▶
+
+            </button>
+
+           <img id="viewerImage" src="" alt="Memory">
+
+            <video id="viewerVideo" controls></video>
+
+        </div>
+
+        <!-- Final Message -->
+
+        <div id="finalMessage" class="hidden">
+
+            <h1>
+
+                ❤️
+
+            </h1>
+
+            <h2>
+
+                Some memories are simply too special...
+
+            </h2>
+
+            <p>
+
+                ...to stay hidden forever.
+
+            </p>
+
+            <p>
+
+                Thank you for making this journey with me.
+
+            </p>
+
+        </div>
+
+    </div>
+
 </section>
+<audio id="backgroundMusic" loop>
 
-<template id="appWindowTemplate">
-  <div class="desktopWindow">
-    <div class="windowTop">
-      <div class="windowDots"><button class="dot red" data-action="close"></button><button class="dot yellow" data-action="min"></button><button class="dot green" data-action="max"></button></div>
-      <h2 class="windowTitle"></h2>
-    </div>
-    <div class="windowScroll"></div>
-    <button class="windowCloseButton" data-action="close">Close</button>
-  </div>
-</template>
+   <source src="assets/audio/Lizzy mp3.mp3" type="audio/mpeg">
 
-<audio id="backgroundMusic" loop><source src="assets/audio/Lizzy mp3.mp3" type="audio/mpeg"></audio>
-<audio id="officeAudio" preload="auto"><source src="assets/audio/thats-what-she-said.mp3" type="audio/mpeg"></audio>
-<audio id="brooklynAudio" preload="auto"><source src="assets/audio/nine-nine.mp3" type="audio/mpeg"></audio>
-<audio id="gilmoreAudio" preload="auto"><source src="assets/audio/i-got-hit-by-a-deer.mp3" type="audio/mpeg"></audio>
-<audio id="hsmAudio" preload="auto"><source src="assets/audio/wildcats.mp3" type="audio/mpeg"></audio>
+</audio>
+<audio id="officeAudio" preload="auto">
+    <source src="assets/audio/thats-what-she-said.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="brooklynAudio" preload="auto">
+    <source src="assets/audio/nine-nine.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="gilmoreAudio" preload="auto">
+    <source src="assets/audio/i-got-hit-by-a-deer.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="hsmAudio" preload="auto">
+    <source src="assets/audio/wildcats.mp3" type="audio/mpeg">
+</audio>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+(function () {
+    emailjs.init({
+        publicKey: "DA2h4ERPi-f5S0YBH"
+    });
+})();
+</script>
+
+<!-- Netlify Identity -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<script>
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function(user) {
+        if (!user) {
+            window.netlifyIdentity.on("login", function() {
+                window.location.href = "/admin/";
+            });
+        }
+    });
+}
+</script>
+
+
+        <!-- Lizzy Quiz Window -->
+        <div id="lizzyQuizWindow" class="finderWindow quizGameWindow hidden">
+            <div class="finderTop">
+                <div class="windowButtons"><span class="close" id="closeLizzyQuiz"></span><span class="min"></span><span class="max"></span></div>
+                <h3>🧠 Lizzy Quiz</h3>
+            </div>
+            <div class="quizGameBody"><div id="lizzyQuizContent"></div></div>
+        </div>
+
+        <!-- Heart Catch Window -->
+        <div id="heartGameWindow" class="finderWindow quizGameWindow hidden">
+            <div class="finderTop">
+                <div class="windowButtons"><span class="close" id="closeHeartGame"></span><span class="min"></span><span class="max"></span></div>
+                <h3>💗 Heart Catch</h3>
+            </div>
+            <div class="quizGameBody">
+                <div class="quizMeta"><span>Score: <b id="heartScore">0</b></span><span>Time: <b id="heartTime">20</b>s</span></div>
+                <div id="heartArena" class="heartArena"></div>
+                <button id="startHeartGame" class="quizAction">Start Game 💗</button>
+            </div>
+        </div>
+
+        <!-- Mikhail Quiz Window -->
+        <div id="mikhailQuizWindow" class="finderWindow quizGameWindow hidden">
+            <div class="finderTop">
+                <div class="windowButtons"><span class="close" id="closeMikhailQuiz"></span><span class="min"></span><span class="max"></span></div>
+                <h3>🧠 How Well Do You Know Mikhail?</h3>
+            </div>
+            <div class="quizGameBody">
+                <div id="mikhailLevelSelect">
+                    <p>Choose your clearance level, Agent Yelizaveta 😏</p>
+                    <div class="quizLevelGrid">
+                        <button data-mikhail-level="easy"><span>🌸</span><strong>Easy</strong><small>Basic Mikhail knowledge</small></button>
+                        <button data-mikhail-level="medium"><span>👀</span><strong>Medium</strong><small>You've been paying attention, right?</small></button>
+                        <button data-mikhail-level="hard"><span>🕵️</span><strong>Agent Level</strong><small>Classified information</small></button>
+                    </div>
+                </div>
+                <div id="mikhailQuizPlay" class="hidden"></div>
+                <div id="mikhailQuizResult" class="hidden"></div>
+            </div>
+        </div>
+
+        <!-- Daily Mystery Window -->
+        <div id="mysteryBoxWindow" class="finderWindow quizGameWindow hidden">
+            <div class="finderTop">
+                <div class="windowButtons"><span class="close" id="closeMysteryBox"></span><span class="min"></span><span class="max"></span></div>
+                <h3>🎁 Daily Mystery Box</h3>
+            </div>
+            <div class="quizGameBody mysteryBody">
+                <div id="mysteryGift" class="mysteryGift">🎁</div>
+                <h2>One surprise every day.</h2>
+                <p>LizzyOS has prepared today's classified delivery...</p>
+                <button id="openMysteryBox" class="quizAction">Open Today's Box ✨</button>
+                <div id="mysteryReward" class="mysteryReward hidden"></div>
+                <p id="mysteryStatus"></p>
+            </div>
+        </div>
+
 <script src="script.js"></script>
+
 </body>
 </html>
