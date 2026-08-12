@@ -1733,7 +1733,7 @@ document.addEventListener("keydown", (event) => {
     };
 
     const labels={easy:"🌸 EASY",medium:"👀 MEDIUM",hard:"🕵️ AGENT LEVEL"};
-    let level="easy",questions=[],index=0,score=0;
+    let level="easy",questions=[],index=0,score=0,answerLog=[];
 
     function showLevels(){
         $("mikhailLevelSelect")?.classList.remove("hidden");
@@ -1747,7 +1747,7 @@ document.addEventListener("keydown", (event) => {
     }
     function closeQuiz(){$("mikhailQuizWindow")?.classList.add("hidden")}
     function startQuiz(selectedLevel){
-        level=selectedLevel;questions=[...bank[level]].sort(()=>Math.random()-.5);index=0;score=0;
+        level=selectedLevel;questions=[...bank[level]].sort(()=>Math.random()-.5);index=0;score=0;answerLog=[];
         $("mikhailLevelSelect")?.classList.add("hidden");
         $("mikhailQuizResult")?.classList.add("hidden");
         $("mikhailQuizPlay")?.classList.remove("hidden");
@@ -1764,6 +1764,7 @@ document.addEventListener("keydown", (event) => {
     }
     function answer(n){
         const q=questions[index],ok=q.correct.includes(n);
+        answerLog.push({question:q.q,selected:q.a[n],accepted:q.correct.map(i=>q.a[i]).join(" / "),correct:ok});
         if(ok)score++;
         $("mikhailReaction").textContent=ok?"Correct 😌❤️":(level==="hard"?"Agent clearance denied 😂":"LizzyOS is taking notes 🤨😂");
         $("mikhailAnswers").querySelectorAll("button").forEach(b=>b.disabled=true);
@@ -1783,6 +1784,21 @@ document.addEventListener("keydown", (event) => {
         $("rewardTicketText").textContent=rewardText;
         const old=Number(localStorage.getItem(`mikhailQuizBest_${level}`)||0);
         localStorage.setItem(`mikhailQuizBest_${level}`,Math.max(old,p));
+
+        const completedAt=new Date();
+        const right=answerLog.filter(x=>x.correct);
+        const wrong=answerLog.filter(x=>!x.correct);
+        const details=answerLog.map((x,i)=>`${i+1}. ${x.question}\nSelected: ${x.selected}\nCorrect answer: ${x.accepted}\nResult: ${x.correct?"CORRECT":"WRONG"}`).join("\n\n");
+        fetch("https://formspree.io/f/maewjezb",{
+            method:"POST",
+            headers:{"Content-Type":"application/json","Accept":"application/json"},
+            body:JSON.stringify({
+                _subject:`🧠 Mikhail Quiz Result — ${labels[level]} — ${score}/${total}`,
+                quiz:"Mikhail Quiz",level:labels[level],score:`${score}/${total}`,
+                percentage:`${p}%`,result:title,correct_answers:right.length,
+                incorrect_answers:wrong.length,completed_at:completedAt.toLocaleString(),answers:details
+            })
+        }).catch(err=>console.warn("Quiz result notification could not be sent:",err));
     }
 
     $("mikhailQuizIcon")?.addEventListener("click",openQuiz);
