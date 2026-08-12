@@ -2234,59 +2234,269 @@ color:#ff5ca8;
     .desktopWindow{width:95vw;}
 }
 
-/* CURRENT VERSION — RECYCLE BIN */
+
+/* ==========================================================
+   LIZZYOS EXTRA — QUIZ + HEART CATCH
+   ========================================================== */
+.lizzyMiniApp{text-align:center}
+.miniScore{
+    display:inline-block;
+    margin:10px auto 22px;
+    padding:8px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,.15);
+    font-size:13px;
+}
+.funQuizAnswers{
+    display:grid;
+    gap:10px;
+    max-width:620px;
+    margin:20px auto;
+}
+.funQuizAnswer{margin:0;width:100%}
+.funQuizAnswer:disabled{opacity:.72;cursor:default}
+.funQuizAnswer.answerCorrect{box-shadow:0 0 0 3px rgba(137,255,181,.65)}
+.funQuizAnswer.answerWrong{box-shadow:0 0 0 3px rgba(255,145,168,.65)}
+.gameFeedback{
+    min-height:55px;
+    font-size:14px;
+    font-weight:600;
+}
+.heartStats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:18px 0;
+}
+.heartStats span{
+    padding:8px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.13);
+    font-size:12px;
+}
+.heartCatchArena{
+    position:relative;
+    width:min(100%,680px);
+    height:360px;
+    margin:15px auto;
+    overflow:hidden;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,.25);
+    background:
+      radial-gradient(circle at 50% 100%,rgba(255,255,255,.15),transparent 55%),
+      rgba(255,255,255,.08);
+}
+.gameStartMessage{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.8;
+    padding:25px;
+}
+.catchableHeart{
+    position:absolute;
+    width:50px;
+    height:50px;
+    padding:0;
+    margin:0;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:rgba(255,255,255,.18);
+    animation:heartGamePop .18s ease, heartGamePulse .75s ease-in-out infinite alternate;
+}
+.catchableHeart:hover{transform:scale(1.18)}
+.caughtHeart{transform:scale(1.8)!important;opacity:0;transition:.12s}
+@keyframes heartGamePop{
+    from{transform:scale(.25);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+@keyframes heartGamePulse{
+    from{filter:drop-shadow(0 0 2px rgba(255,255,255,.3))}
+    to{filter:drop-shadow(0 0 12px rgba(255,255,255,.9))}
+}
+@media(max-width:600px){
+    .heartCatchArena{height:310px}
+    .catchableHeart{width:45px;height:45px;font-size:25px}
+}
+
+
+/* OUR DATE FOLDER + READ ME CONTROLS */
+.calendarFolderEmoji{position:relative;width:64px;height:49px;margin:0 auto 7px;border-radius:7px 7px 9px 9px;background:linear-gradient(180deg,#ffd86f,#f4b83f);box-shadow:0 8px 18px rgba(54,34,10,.22);font-size:0!important}.calendarFolderEmoji:before{content:"";position:absolute;left:5px;top:-8px;width:27px;height:12px;border-radius:6px 7px 0 0;background:#f6c451}.folderCalendarBadge{position:absolute;z-index:2;right:-8px;bottom:-8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.94);font-size:18px}
+.calendarDesktopContent{text-align:center}.calendarHeart{font-size:58px}.schedulerGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px auto 15px;max-width:650px;text-align:left}.schedulerField>span{display:block;margin-bottom:7px}.dateInputShell{padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25)}.dateInputShell input{width:100%;border:0;background:transparent;color:white;font:inherit;color-scheme:dark}.dateChoicePreview{max-width:650px;min-height:82px;margin:15px auto;display:flex;align-items:center;gap:15px;padding:16px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16)}.dateChoicePreview>span{font-size:32px}.dateSchedulerStatus{min-height:25px;font-size:12px;text-align:center}.savedMissionDate{max-width:650px;margin:17px auto}.savedMissionCard{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:18px;background:rgba(255,255,255,.12)}
+.readMeWindowTop{margin:-28px -28px 22px;padding:16px 20px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.13)}#readMeRedClose{background:#ff5f57}#readMeYellowMin{background:#febc2e}#readMeGreenMax{background:#28c840}#readMeRedClose,#readMeYellowMin,#readMeGreenMax{cursor:pointer}#readMeWindow.readMeMinimised{height:62px!important;overflow:hidden!important}#readMeWindow.readMeMinimised>:not(.readMeWindowTop){display:none!important}#readMeWindow.readMeExpanded{width:94vw!important;max-width:1200px!important;height:88vh!important}
+@media(max-width:650px){.schedulerGrid{grid-template-columns:1fr}}
+
+
+/* LIZZYOS — WORKING RECYCLE BIN FINAL BASE */
+#recycleBinIcon{cursor:pointer;user-select:none}
+#recycleBinWindow:not(.hidden){display:flex!important;position:fixed!important;z-index:10050!important}
+#recycleBinWindow .windowScroll{overflow:auto}
 .recycleBinGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin:22px 0}
-.deletedNickname{padding:18px 10px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:center}
+.deletedNickname{padding:18px 10px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:center;cursor:default;color:inherit;font:inherit;width:100%}
 .deletedNickname>span{display:block;font-size:35px}
 .deletedNickname strong,.deletedNickname small{display:block;margin-top:7px}
 .deletedNickname small{opacity:.65;font-size:11px}
 .binWarning{text-align:center;font-size:12px;opacity:.8}
 
+
+/* QUIZ+ MIKHAIL QUIZ */
+.quizLevelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.quizLevelCard{min-height:145px;padding:18px 12px}.quizLevelCard span,.quizLevelCard strong,.quizLevelCard small{display:block}.quizLevelCard span{font-size:32px}.quizLevelCard strong{margin:9px 0 5px}.quizProgress{display:flex;justify-content:space-between;margin-bottom:20px;font-size:12px;font-weight:700}.mikhailAnswers{display:grid;gap:10px;max-width:620px;margin:20px auto}.mikhailAnswers button{width:100%;margin:0}.quizReaction{min-height:30px;text-align:center}.resultMedal{text-align:center;font-size:65px}.quizRewardTicket{max-width:520px;margin:25px auto;padding:25px;border:2px dashed rgba(255,255,255,.6);border-radius:20px;text-align:center;background:rgba(255,255,255,.12)}.quizRewardTicket small,.quizRewardTicket strong,.quizRewardTicket span{display:block}.quizRewardTicket strong{font-size:20px;margin:10px 0}.mysteryBoxContent{text-align:center}.mysteryGift{font-size:95px;margin:20px 0;animation:mysteryFloat 2.2s ease-in-out infinite}.mysteryReward{max-width:550px;margin:20px auto;padding:22px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24)}@keyframes mysteryFloat{50%{transform:translateY(-9px) rotate(3deg)}}@media(max-width:650px){.quizLevelGrid{grid-template-columns:1fr}}
+
+
 /* =========================================================
-   QUIZ + GAME UPDATE — ORIGINAL LIZZYOS VISUAL STYLE
+   QUIZ UPDATE — RESPONSIVE DESKTOP GRID FIX
+   Keeps every desktop app/folder in its own slot.
    ========================================================= */
-#desktopArea{
-    display:grid;
-    grid-template-columns:repeat(5,minmax(130px,1fr));
-    grid-auto-rows:150px;
-    gap:22px 20px;
-    align-content:start;
-    overflow-y:auto;
-    padding-bottom:90px;
+.desktopIcons,
+.desktop-icons,
+#desktopIcons {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 34px 34px 90px !important;
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(125px, 1fr)) !important;
+    gap: 34px 28px !important;
+    align-items: start !important;
+    justify-items: center !important;
 }
-#desktopArea.hidden{display:none!important}
-#desktopArea > .desktopIcon{
-    position:relative!important;
-    top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
-    transform:none!important;margin:0!important;
+
+/* Individual icons must participate in the grid rather than use old coordinates. */
+.desktopIcons > .desktopIcon,
+.desktop-icons > .desktopIcon,
+#desktopIcons > .desktopIcon {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    width: 145px !important;
+    min-height: 135px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    z-index: 2 !important;
 }
-.quizGameWindow{
-    position:fixed!important;
-    top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;
-    transform:translate(-50%,-50%)!important;
-    width:min(760px,90vw)!important;
-    height:auto!important;
-    max-height:84vh!important;
-    z-index:10000!important;
-    overflow:hidden!important;
+
+.desktopIcons > .desktopIcon .desktopEmoji,
+.desktop-icons > .desktopIcon .desktopEmoji,
+#desktopIcons > .desktopIcon .desktopEmoji {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    width: 96px !important;
+    min-height: 96px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 78px !important;
+    line-height: 1 !important;
 }
-.quizGameWindow.hidden{display:none!important}
-.quizGameBody{padding:26px;max-height:calc(84vh - 58px);overflow:auto;text-align:center}
-.quizLevelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
-.quizLevelGrid button,.quizAnswer,.quizAction{
-    border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.16);
-    color:#fff;border-radius:16px;padding:14px;font:inherit;cursor:pointer
+
+.desktopIcons > .desktopIcon > span,
+.desktop-icons > .desktopIcon > span,
+#desktopIcons > .desktopIcon > span {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
 }
-.quizLevelGrid button span,.quizLevelGrid button strong,.quizLevelGrid button small{display:block}
-.quizLevelGrid button span{font-size:34px}.quizLevelGrid button small{margin-top:6px;opacity:.8}
-.quizAnswers{display:grid;gap:10px;max-width:600px;margin:18px auto}.quizAnswer{width:100%}
-.quizMeta{display:flex;justify-content:space-between;font-size:12px;margin-bottom:18px}
-.quizReaction{min-height:26px;font-weight:700}.quizRewardTicket{max-width:520px;margin:22px auto;padding:22px;border:2px dashed rgba(255,255,255,.75);border-radius:20px;background:rgba(255,255,255,.12)}
-.quizRewardTicket small,.quizRewardTicket strong,.quizRewardTicket span{display:block}.quizRewardTicket strong{font-size:20px;margin:8px 0}
-.heartArena{height:320px;position:relative;max-width:620px;margin:15px auto;border-radius:22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);overflow:hidden}
-.catchHeart{position:absolute;width:52px;height:52px;border:0;border-radius:50%;background:rgba(255,255,255,.2);font-size:27px;cursor:pointer}
-.mysteryGift{font-size:88px;margin:10px 0}.mysteryReward{max-width:540px;margin:18px auto;padding:20px;border-radius:18px;background:rgba(255,255,255,.13)}
-.readme-media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.readme-media-grid img,.readme-media-grid video{width:100%;height:180px;object-fit:cover;border-radius:14px;background:#000}
-@media(max-width:850px){#desktopArea{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:650px){#desktopArea{grid-template-columns:repeat(3,1fr)}.quizLevelGrid{grid-template-columns:1fr}.readme-media-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:470px){#desktopArea{grid-template-columns:repeat(2,1fr)}.readme-media-grid{grid-template-columns:1fr}.quizGameWindow{width:94vw!important}}
+
+/* Prevent decorative desktop elements from affecting the icon grid. */
+.desktopIcons > .desktopIcon::before,
+.desktopIcons > .desktopIcon::after,
+.desktop-icons > .desktopIcon::before,
+.desktop-icons > .desktopIcon::after {
+    pointer-events: none !important;
+}
+
+/* Tablet */
+@media (max-width: 950px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(4, minmax(120px, 1fr)) !important;
+        gap: 28px 20px !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
+    }
+}
+
+/* Smaller tablet */
+@media (max-width: 720px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(3, minmax(105px, 1fr)) !important;
+    }
+    .desktopIcons > .desktopIcon,
+    .desktop-icons > .desktopIcon,
+    #desktopIcons > .desktopIcon {
+        width: 120px !important;
+    }
+}
+
+/* Phone */
+@media (max-width: 520px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(2, minmax(100px, 1fr)) !important;
+        gap: 24px 14px !important;
+        padding: 24px 12px 100px !important;
+    }
+    .desktopIcons > .desktopIcon,
+    .desktop-icons > .desktopIcon,
+    #desktopIcons > .desktopIcon {
+        width: 112px !important;
+        min-height: 125px !important;
+    }
+    .desktopIcons > .desktopIcon .desktopEmoji,
+    .desktop-icons > .desktopIcon .desktopEmoji,
+    #desktopIcons > .desktopIcon .desktopEmoji {
+        width: 82px !important;
+        min-height: 82px !important;
+        font-size: 66px !important;
+    }
+}
+
+/* QUIZ+ MIKHAIL / DAILY MYSTERY — added to current v3 */
+#mikhailQuizWindow:not(.hidden),#mysteryBoxWindow:not(.hidden){
+ display:flex!important;position:fixed!important;top:50%!important;left:50%!important;
+ right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;
+ width:min(760px,90vw)!important;max-height:84vh!important;z-index:10050!important;
+}
+#mikhailQuizWindow .windowScroll,#mysteryBoxWindow .windowScroll{overflow:auto!important;max-height:calc(84vh - 125px)!important}
+.mikhailLevelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.mikhailLevelCard{min-height:140px;padding:16px 12px}.mikhailLevelCard span,.mikhailLevelCard strong,.mikhailLevelCard small{display:block}.mikhailLevelCard span{font-size:34px}.mikhailLevelCard strong{margin:8px 0}.mikhailLevelCard small{opacity:.75}
+.mikhailQuizMeta{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px;font-size:12px;font-weight:700}
+.mikhailAnswers{display:grid;gap:10px;max-width:620px;margin:18px auto}.mikhailAnswer{width:100%;margin:0!important}
+.mikhailResultMedal{font-size:62px;text-align:center}.mikhailRewardTicket{max-width:540px;margin:22px auto;padding:24px;border:2px dashed rgba(255,255,255,.65);border-radius:20px;text-align:center;background:rgba(255,255,255,.12)}.mikhailRewardTicket small,.mikhailRewardTicket strong,.mikhailRewardTicket span{display:block}.mikhailRewardTicket strong{font-size:20px;margin:9px 0}
+.mysteryBoxContent{text-align:center}.mysteryGift{font-size:92px;margin:14px 0;animation:mysteryFloat 2.2s ease-in-out infinite}.mysteryReward{max-width:560px;margin:18px auto;padding:20px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22)}
+@keyframes mysteryFloat{50%{transform:translateY(-8px) rotate(2deg)}}
+#desktopArea:not(.hidden){display:grid!important;grid-template-columns:repeat(5,minmax(130px,1fr))!important;grid-auto-rows:150px!important;gap:22px 18px!important;align-content:start!important;overflow-y:auto!important;padding-bottom:95px!important}
+#desktopArea > .desktopIcon{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;transform:none!important;margin:0!important}
+@media(max-width:950px){#desktopArea:not(.hidden){grid-template-columns:repeat(4,minmax(120px,1fr))!important}}
+@media(max-width:720px){#desktopArea:not(.hidden){grid-template-columns:repeat(3,minmax(105px,1fr))!important}.mikhailLevelGrid{grid-template-columns:1fr}}
+@media(max-width:520px){#desktopArea:not(.hidden){grid-template-columns:repeat(2,minmax(100px,1fr))!important}#mikhailQuizWindow:not(.hidden),#mysteryBoxWindow:not(.hidden){width:94vw!important}}
