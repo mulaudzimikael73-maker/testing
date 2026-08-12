@@ -900,7 +900,7 @@ Whenever you forget, come back here. I'll happily remind you again.<br><br>
 
 openWhenLetters.hug = {
     title: "🫂 Open When You Need a Hug",
-    text: `
+    body: `
         <p><strong>Come here, Lizzy 🫂❤️</strong></p>
         <p>I don't know what's happened or why you need a hug right now, but since I can't physically give you one through a computer screen, this will have to do for now.</p>
         <p>Consider yourself officially hugged.</p>
@@ -914,7 +914,7 @@ openWhenLetters.hug = {
 
 openWhenLetters.laugh = {
     title: "😂 Open When You Need to Laugh",
-    text: `
+    body: `
         <p><strong>🚨 LIZZYOS EMERGENCY COMEDY PROTOCOL</strong></p>
         <p>Apparently you require immediate assistance.</p>
         <p>First of all...</p>
