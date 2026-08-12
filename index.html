@@ -1047,9 +1047,9 @@ window.LizzyMiniApps = (function(){
   function forceOpen(id){
     const w=$(id); if(!w)return;
     w.classList.remove("hidden");
-    w.setAttribute("style","display:flex !important; position:fixed !important; inset:7vh 8vw !important; width:84vw !important; height:82vh !important; z-index:2147483000 !important;");
+    w.classList.add("miniAppOpen");
   }
-  function close(id){const w=$(id);if(w){w.classList.add("hidden");w.removeAttribute("style");}}
+  function close(id){const w=$(id);if(w){w.classList.add("hidden");w.classList.remove("miniAppOpen");}}
   function levels(){
     $("mikhailLevelSelect").classList.remove("hidden");
     $("mikhailQuizPlay").classList.add("hidden");
