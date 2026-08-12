@@ -1897,3 +1897,68 @@ document.addEventListener("keydown", (event) => {
         if(result){result.classList.remove("laughPop");void result.offsetWidth;result.textContent=jokes[n];result.classList.add("laughPop");}
     });
 })();
+
+
+// =========================================================
+// OPEN WHEN — LETTER OPEN NOTIFICATIONS
+// Each letter has its own dedicated Formspree endpoint.
+// =========================================================
+(() => {
+    const letterNotificationEndpoints = {
+        miss: "https://formspree.io/f/xljrnjqp",
+        amazing: "https://formspree.io/f/xqpzbprd",
+        laugh: "https://formspree.io/f/mrpzkpnb",
+        hug: "https://formspree.io/f/mvkprkep"
+    };
+
+    const letterNames = {
+        miss: "❤️ Open When You Miss Me",
+        amazing: "🌸 Open When You Need Reminding How Amazing You Are",
+        laugh: "😂 Open When You Need to Laugh",
+        hug: "🫂 Open When You Need a Hug"
+    };
+
+    function currentLizzyPersona() {
+        // Use the site's current persona if it is exposed in one of the common locations.
+        const personaEl =
+            document.querySelector("[data-current-persona]") ||
+            document.getElementById("currentPersona") ||
+            document.getElementById("personaStatus");
+        return personaEl?.dataset?.currentPersona ||
+               personaEl?.textContent?.trim() ||
+               localStorage.getItem("lizzyPersona") ||
+               localStorage.getItem("selectedPersona") ||
+               "Lizzy";
+    }
+
+    function notifyLetterOpened(key) {
+        const endpoint = letterNotificationEndpoints[key];
+        if (!endpoint) return;
+
+        const openedAt = new Date();
+        fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                _subject: `💌 LizzyOS Letter Opened — ${letterNames[key]}`,
+                event: "Open When letter opened",
+                letter: letterNames[key],
+                letter_key: key,
+                persona: currentLizzyPersona(),
+                opened_at: openedAt.toLocaleString(),
+                opened_at_iso: openedAt.toISOString()
+            })
+        }).catch(err => console.warn("Letter-open notification could not be sent:", err));
+    }
+
+    // The existing site already handles opening the letters.
+    // This listener only sends the notification and does not alter that behavior.
+    document.querySelectorAll("#letterList [data-letter]").forEach(button => {
+        button.addEventListener("click", () => {
+            notifyLetterOpened(button.dataset.letter);
+        });
+    });
+})();
