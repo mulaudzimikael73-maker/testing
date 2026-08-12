@@ -2,99 +2,147 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LizzyOS 💗</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lizzy ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-<div id="app">
+<div id="background"></div><div id="hearts"></div><div id="petals"></div><div id="sparkles"></div>
+<div id="progress"><div id="progressFill"></div></div>
+<button id="soundButton" aria-label="Toggle sound">🔈</button>
 
-    <section id="landing" class="screen active">
-        <div class="heroCard">
-            <div class="heroLogo">💗</div>
-            <p class="eyebrow">WELCOME TO</p>
-            <h1>LizzyOS</h1>
-            <p>A tiny pink operating system made for one very specific person.</p>
-            <button id="enterButton">Enter LizzyOS ✨</button>
-        </div>
-    </section>
+<section id="loading" class="scene active">
+  <div class="glass">
+    <div class="loadingHeart">❤️</div>
+    <h1>Loading Something Special...</h1>
+    <p>Please wait just a moment.</p>
+    <div class="loadingBar"><div class="loadingFill"></div></div>
+  </div>
+</section>
 
-    <section id="desktop" class="screen">
-        <div class="desktopBackdrop"></div>
+<section id="opening" class="scene hidden">
+  <div class="glass">
+    <h1 class="title">Every Great Story...</h1>
+    <p class="subtitle">starts with one choice.</p>
+    <p>This isn't just another website.<br><br>It's a little adventure made especially for one person.</p>
+    <button id="startStory">Begin ❤️</button>
+  </div>
+</section>
 
-        <div class="topBar">
-            <div class="brand">🍓 LizzyOS</div>
-            <div class="topStatus">
-                <span id="currentPersona">🕵️ Agent Yelizaveta</span>
-                <span id="liveClock"></span>
-            </div>
-        </div>
+<section id="storybook" class="scene hidden">
+  <div class="glass">
+    <h1>Chapter One</h1><h2>Once Upon A Time...</h2>
+    <p>There was a girl who somehow made pink seem like the best colour in the world.</p>
+    <p>She had a little attitude...<br>but somehow that just made her even more unforgettable.</p>
+    <button id="nextChapter">Turn The Page 📖</button>
+  </div>
+</section>
 
-        <div id="desktopGrid" class="desktopGrid">
-            <button class="desktopIcon" data-app="archives">
-                <span class="iconEmoji">📁</span><span>Lizzy Archives</span>
-            </button>
-            <button class="desktopIcon" data-app="mission">
-                <span class="iconEmoji">🗂️</span><span>Mission Log</span>
-            </button>
-            <button class="desktopIcon" data-app="readme">
-                <span class="iconEmoji">💗</span><span>Read Me</span>
-            </button>
-            <button class="desktopIcon" data-app="openwhen">
-                <span class="iconEmoji">💌</span><span>Open When...</span>
-            </button>
-            <button class="desktopIcon" data-app="lizzyquiz">
-                <span class="iconEmoji">🧠</span><span>Lizzy Quiz</span>
-            </button>
-            <button class="desktopIcon" data-app="heartcatch">
-                <span class="iconEmoji">💖</span><span>Heart Catch</span>
-            </button>
-            <button class="desktopIcon" data-app="mikhailquiz">
-                <span class="iconEmoji">🧠</span><span>Mikhail Quiz</span>
-            </button>
-            <button class="desktopIcon" data-app="mystery">
-                <span class="iconEmoji">🎁</span><span>Daily Mystery</span>
-            </button>
-            <button class="desktopIcon" data-app="calendar">
-                <span class="folderIcon">📁<b>📅</b></span><span>Our Date</span>
-            </button>
-            <button class="desktopIcon" data-app="recycle">
-                <span class="iconEmoji">🗑️</span><span>Recycle Bin</span>
-            </button>
-            <button class="desktopIcon" data-app="personality">
-                <span class="iconEmoji">🎭</span><span>Personality</span>
-            </button>
-            <button class="desktopIcon" data-app="mail">
-                <span class="iconEmoji">💌</span><span>Lizzy Mail</span>
-            </button>
-        </div>
+<section id="quiz" class="scene hidden">
+  <div class="glass">
+    <h1>Quick Quiz 💕</h1>
+    <p class="subtitle">Let's see how well this story is going...</p>
+    <h2 id="questionTitle"></h2>
+    <div id="answers" class="answers"></div>
+  </div>
+</section>
 
-        <div class="taskbar">
-            <button id="homeButton">🍓</button>
-            <span id="taskbarMood">💗 LizzyOS Online</span>
-            <button id="soundToggle">🔊</button>
-        </div>
-    </section>
-
-    <div id="windowLayer" class="windowLayer hidden"></div>
-</div>
-
-<template id="windowTemplate">
-    <div class="appWindow">
-        <div class="windowHeader">
-            <div class="trafficLights">
-                <button class="traffic red" data-window-action="close"></button>
-                <button class="traffic yellow" data-window-action="minimize"></button>
-                <button class="traffic green" data-window-action="maximize"></button>
-            </div>
-            <h2 class="windowTitle"></h2>
-        </div>
-        <div class="windowBody"></div>
-        <button class="windowBottomClose" data-window-action="close">Close</button>
+<section id="tvSection" class="scene hidden">
+  <div class="glass scrollGlass">
+    <h1>Things That Reminded Me Of You 📺</h1>
+    <div class="referenceGrid">
+      <div class="referenceCard"><h2>The Office</h2><p>Sometimes life is wonderfully awkward... and somehow that's part of the charm.</p></div>
+      <div class="referenceCard"><h2>Brooklyn Nine-Nine</h2><p>Cool. Cool cool cool. Some moments are just more fun because of the people you're with.</p></div>
+      <div class="referenceCard"><h2>Gilmore Girls</h2><p>A warm conversation, a peaceful evening and good company always wins.</p></div>
+      <div class="referenceCard"><h2>High School Musical</h2><p>Every good story deserves a memorable ending.</p></div>
     </div>
+    <button id="continueStory">Continue 🌸</button>
+  </div>
+</section>
+
+<section id="story" class="scene hidden">
+  <div class="glass">
+    <h1>One More Thing...</h1>
+    <p>Life moves incredibly fast.</p><p>People come and go.</p><p>But every now and then...</p>
+    <p>someone comes along who makes ordinary days feel a little brighter.</p>
+    <p>Thank you for every laugh.</p><p>Every random conversation.</p>
+    <p>Every "Little Miss Attitude" moment.</p><p>And thank you for simply being you.</p>
+    <button id="proposalButton">Keep Going ❤️</button>
+  </div>
+</section>
+
+<section id="proposal" class="scene hidden">
+  <div class="glass proposalCard">
+    <h1>Lebone Elizabeth Kganyago...</h1>
+    <h2>Will you go on a date with me? ❤️</h2>
+    <p>No pressure...<br>(Well... maybe just a little 😄)</p>
+    <div class="buttonRow"><button id="yesButton">YES ❤️</button><button id="noButton">No 🙈</button></div>
+    <p id="funnyMessage"></p>
+  </div>
+</section>
+
+<section id="celebration" class="scene hidden">
+  <div class="glass scrollGlass">
+    <h1>🎉 You Said Yes! 🎉</h1>
+    <h2>You just made someone incredibly happy.</h2>
+    <p>I can't wait to spend some time with you.</p>
+    <p>Here's a little riddle for what's coming next...</p>
+    <div class="riddleGrid">
+      <div class="riddleCard" data-answer="⛳ Mini Golf"><p>I'm played with a tiny ball and a stick so neat,<br>windmills and ramps make my challenge complete.<br>No green fees, no golf cart, just laughs galore —<br>what am I?</p><strong class="riddleAnswer hidden"></strong></div>
+      <div class="riddleCard" data-answer="🕹️ Arcade"><p>Coins turn to tokens, lights flashing bright,<br>high scores get chased deep into the night.<br>Joysticks and buttons, a friendly little duel —<br>what place is this?</p><strong class="riddleAnswer hidden"></strong></div>
+      <div class="riddleCard" data-answer="🎬 Movie Date"><p>Popcorn in hand, the lights dimming low,<br>a story unfolds on a giant screen's glow.<br>Two seats, one screen, no need to talk —<br>what am I?</p><strong class="riddleAnswer hidden"></strong></div>
+    </div>
+    <p class="memoryMessage">Tap each one to reveal the answer 💕</p>
+    <button id="secretButton">One Last Surprise 🌅</button>
+  </div>
+</section>
+
+<section id="secretEnding" class="scene hidden">
+  <div id="desktop">
+    <div id="wallpaperOverlay"></div>
+    <div id="terminal">
+      <div class="terminalBar"><span class="red"></span><span class="yellow"></span><span class="green"></span><p>Terminal</p></div>
+      <div id="terminalText"></div>
+    </div>
+
+    <div id="desktopArea" class="hidden">
+      <button class="desktopIcon" data-app="archives"><span class="desktopEmoji">📁</span><span>Lizzy Archives</span></button>
+      <button class="desktopIcon" data-app="mission"><span class="desktopEmoji">🗂️</span><span>Mission Log</span></button>
+      <button class="desktopIcon" data-app="readme"><span class="desktopEmoji">❤️</span><span>Read Me</span></button>
+      <button class="desktopIcon" data-app="openwhen"><span class="desktopEmoji">💌</span><span>Open When...</span></button>
+      <button class="desktopIcon" data-app="recycle"><span class="desktopEmoji">🗑️</span><span>Recycle Bin</span></button>
+      <button class="desktopIcon" data-app="lizzyquiz"><span class="desktopEmoji">🧠</span><span>Lizzy Quiz</span></button>
+      <button class="desktopIcon" data-app="heartcatch"><span class="desktopEmoji">💗</span><span>Heart Catch</span></button>
+      <button class="desktopIcon" data-app="mikhailquiz"><span class="desktopEmoji">🧠</span><span>Mikhail Quiz</span></button>
+      <button class="desktopIcon" data-app="mystery"><span class="desktopEmoji">🎁</span><span>Daily Mystery</span></button>
+      <button class="desktopIcon folderCalendar" data-app="calendar"><span class="desktopEmoji">📁<b>📅</b></span><span>Our Date</span></button>
+    </div>
+
+    <div id="appOverlay" class="appOverlay hidden"></div>
+  </div>
+</section>
+
+<template id="appWindowTemplate">
+  <div class="desktopWindow">
+    <div class="windowTop">
+      <div class="windowDots"><button class="dot red" data-action="close"></button><button class="dot yellow" data-action="min"></button><button class="dot green" data-action="max"></button></div>
+      <h2 class="windowTitle"></h2>
+    </div>
+    <div class="windowScroll"></div>
+    <button class="windowCloseButton" data-action="close">Close</button>
+  </div>
 </template>
 
+<audio id="backgroundMusic" loop><source src="assets/audio/Lizzy mp3.mp3" type="audio/mpeg"></audio>
+<audio id="officeAudio" preload="auto"><source src="assets/audio/thats-what-she-said.mp3" type="audio/mpeg"></audio>
+<audio id="brooklynAudio" preload="auto"><source src="assets/audio/nine-nine.mp3" type="audio/mpeg"></audio>
+<audio id="gilmoreAudio" preload="auto"><source src="assets/audio/i-got-hit-by-a-deer.mp3" type="audio/mpeg"></audio>
+<audio id="hsmAudio" preload="auto"><source src="assets/audio/wildcats.mp3" type="audio/mpeg"></audio>
 <script src="script.js"></script>
 </body>
 </html>
