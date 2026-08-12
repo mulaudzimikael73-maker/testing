@@ -2555,3 +2555,7 @@ color:#ff5ca8;
 
 #mikhailQuizIcon,#mysteryBoxIcon{cursor:pointer!important;pointer-events:auto!important}
 #mikhailQuizWindow:not(.hidden),#mysteryBoxWindow:not(.hidden){display:flex!important;position:fixed!important;z-index:10060!important}
+
+#mikhailQuizWindow .windowScroll,#mysteryBoxWindow .windowScroll{flex:1!important;overflow:auto!important}
+#mikhailQuizWindow,#mysteryBoxWindow{flex-direction:column!important}
+#mikhailQuizIcon,#mysteryBoxIcon{pointer-events:auto!important;cursor:pointer!important}

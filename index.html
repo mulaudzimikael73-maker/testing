@@ -546,12 +546,12 @@
                 <span>Heart Catch</span>
             </div>
 
-            <div class="desktopIcon" id="mikhailQuizIcon">
+            <div class="desktopIcon" id="mikhailQuizIcon" onclick="LizzyMiniApps.openQuiz()">
                 <div class="desktopEmoji">🧠</div>
                 <span>Mikhail Quiz</span>
             </div>
 
-            <div class="desktopIcon" id="mysteryBoxIcon">
+            <div class="desktopIcon" id="mysteryBoxIcon" onclick="LizzyMiniApps.openMystery()">
                 <div class="desktopEmoji">🎁</div>
                 <span>Daily Mystery</span>
             </div>
@@ -1016,6 +1016,102 @@ if (window.netlifyIdentity) {
 </div>
 
 <script src="script.js"></script>
+
+<script>
+/* ISOLATED MINI APPS: intentionally independent of script.js */
+window.LizzyMiniApps = (function(){
+  const $ = id => document.getElementById(id);
+  const bank = {
+    easy:[
+      ["What name does Mikhail usually go by when he's coaching?",["Coach Micky","Coach Michael Scott","Coach 99"],0],
+      ["Which sport has Mikhail coached a lot of?",["Soccer","Ice hockey","Baseball"],0],
+      ["What is Mikhail's LizzyOS agent surname?",["Petrov","Peralta","Hunt"],0],
+      ["What does Mikhail call the children he coaches?",["Champions","Cadets","Minions"],0]
+    ],
+    medium:[
+      ["Which fitness event has Mikhail planned to take part in?",["HYROX","Wimbledon","Tour de France"],0],
+      ["Which sport has Mikhail looked for casual teams to play around Johannesburg?",["Basketball","Golf","Rugby"],0],
+      ["What organisation appears on Mikhail's coaching messages?",["The B-Active Group","Active HQ","B-Sport"],0],
+      ["Which theme is used heavily in LizzyOS?",["Secret agents","Pirates","Astronaut school"],0]
+    ],
+    hard:[
+      ["What is Mikhail's coaching nickname?",["Micky","Mikey P","M"],0],
+      ["What is Mikhail's full LizzyOS agent alias?",["Mikhail Petrov","Mikhail Peralta","Mikhail Hunt"],0],
+      ["Which two HYROX categories has Mikhail planned for?",["Open Men's Doubles & Mixed Doubles","Singles & Relay","Pro Singles & Mixed Relay"],0],
+      ["Which nickname belongs in LizzyOS rather than the Recycle Bin?",["Agent Mikhail","The OPP","Jaden Smith"],0]
+    ]
+  };
+  let qs=[], qi=0, score=0, level="easy";
+  const names={easy:"🌸 EASY",medium:"👀 MEDIUM",hard:"🕵️ AGENT LEVEL"};
+
+  function forceOpen(id){
+    const w=$(id); if(!w)return;
+    w.classList.remove("hidden");
+    w.setAttribute("style","display:flex !important; position:fixed !important; inset:7vh 8vw !important; width:84vw !important; height:82vh !important; z-index:2147483000 !important;");
+  }
+  function close(id){const w=$(id);if(w){w.classList.add("hidden");w.removeAttribute("style");}}
+  function levels(){
+    $("mikhailLevelSelect").classList.remove("hidden");
+    $("mikhailQuizPlay").classList.add("hidden");
+    $("mikhailQuizResult").classList.add("hidden");
+  }
+  function openQuiz(){forceOpen("mikhailQuizWindow");levels();}
+  function start(l){
+    level=l; qs=bank[l].slice().sort(()=>Math.random()-.5); qi=0;score=0;
+    $("mikhailLevelSelect").classList.add("hidden");$("mikhailQuizPlay").classList.remove("hidden");
+    $("mikhailLevelLabel").textContent=names[l]; render();
+  }
+  function render(){
+    const q=qs[qi]; $("mikhailProgress").textContent=(qi+1)+" / "+qs.length;
+    $("mikhailQuestion").textContent=q[0]; $("mikhailReaction").textContent="";
+    $("mikhailAnswers").innerHTML=q[1].map((x,n)=>'<button type="button" onclick="LizzyMiniApps.answer('+n+')">'+x+'</button>').join("");
+  }
+  function answer(n){
+    const q=qs[qi]; if(n===q[2]){score++;$("mikhailReaction").textContent="Correct 😌❤️"}else $("mikhailReaction").textContent="LizzyOS is taking notes 🤨😂";
+    Array.from($("mikhailAnswers").querySelectorAll("button")).forEach(b=>b.disabled=true);
+    setTimeout(()=>{qi++;qi<qs.length?render():finish()},600);
+  }
+  function finish(){
+    const p=Math.round(score/qs.length*100);$("mikhailQuizPlay").classList.add("hidden");$("mikhailQuizResult").classList.remove("hidden");
+    $("mikhailResultTitle").textContent=score+"/"+qs.length+" — "+p+"% Mikhail Knowledge";
+    $("mikhailResultText").textContent=p===100?"Suspiciously perfect 😭❤️":p>=75?"Agent Mikhail approves 😌❤️":p>=50?"Further research recommended 😂":"Emergency Mikhail revision required 😭";
+    const r=p===100?["👑 Ultimate Mikhail Expert","One completely unreasonable bragging session."]:p>=75?["🍝 Pasta Emergency Pass","Valid for one dramatic pasta-related request."]:p>=50?["🎳 Bowling Rematch Ticket","One official request for a rematch."]:["📚 Mikhail Revision Pass","Permission to investigate Agent Mikhail further 😂"];
+    $("rewardTicketTitle").textContent=r[0];$("rewardTicketText").textContent=r[1];
+  }
+
+  const gifts=[
+    ["💗 Compliment Drop","Today's system message: you're ridiculously pretty. This is not a bug."],
+    ["🎟️ Argument Voucher","Redeemable for one argument where Mikhail admits you were right 😂"],
+    ["🌸 Flower Delivery","Digital flowers: 🌸🌷🌹"],
+    ["🍝 Pasta Alert","Today's mission: pasta should probably be involved somehow."],
+    ["☕ Tiny Date Idea","Coffee + a walk + unnecessarily long conversation."],
+    ["🕵️ Classified Compliment","Agent report: Subject Yelizaveta remains dangerously beautiful."],
+    ["🎳 Bowling Pass","One rematch has been authorised. Trash talk is permitted."],
+    ["💕 Mikhail Message","Somebody made you your own operating system 😭❤️"]
+  ];
+  function dayKey(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+  function gift(){let n=0;for(const ch of dayKey())n=(n*31+ch.charCodeAt(0))>>>0;return gifts[n%gifts.length];}
+  function refreshMystery(){
+    const opened=localStorage.getItem("lizzyMysteryOpened")===dayKey(), r=gift();
+    $("mysteryGift").textContent=opened?"✨":"🎁";$("mysteryReward").classList.toggle("hidden",!opened);
+    if(opened)$("mysteryReward").innerHTML="<strong>"+r[0]+"</strong><p>"+r[1]+"</p>";
+    $("openMysteryBox").disabled=opened;$("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";
+    $("mysteryCountdown").textContent=opened?"Today's surprise has already been claimed. Another arrives tomorrow.":"";
+  }
+  function openMystery(){forceOpen("mysteryBoxWindow");refreshMystery();}
+  function claimMystery(){localStorage.setItem("lizzyMysteryOpened",dayKey());refreshMystery();}
+
+  document.addEventListener("DOMContentLoaded",function(){
+    document.querySelectorAll(".quizLevelCard").forEach(b=>b.onclick=()=>start(b.dataset.level));
+    $("restartMikhailQuiz").onclick=levels;
+    $("mikhailQuizClose").onclick=()=>close("mikhailQuizWindow");$("closeMikhailQuiz").onclick=()=>close("mikhailQuizWindow");
+    $("mysteryBoxClose").onclick=()=>close("mysteryBoxWindow");$("closeMysteryBox").onclick=()=>close("mysteryBoxWindow");
+    $("openMysteryBox").onclick=claimMystery;
+  });
+  return {openQuiz,openMystery,start,answer,claimMystery};
+})();
+</script>
+
 
 </body>
 </html>
