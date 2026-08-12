@@ -778,11 +778,25 @@
                 <div id="letterList" class="letterList">
                     <button class="letterButton" data-letter="miss">❤️ Open when you miss me</button>
                     <button class="letterButton" data-letter="amazing">🌸 Open when you need reminding how amazing you are</button>
+                    <button class="letterButton" data-letter="hug">🫂 Open when you need a hug</button>
+                    <button class="letterButton" data-letter="laugh">😂 Open when you need to laugh</button>
                 </div>
 
                 <article id="letterContent" class="letterPaper hidden">
                     <h3 id="letterTitle"></h3>
                     <div id="letterText"></div>
+                    <div id="hugExperience" class="openWhenExtra hidden">
+                        <div class="virtualHug">
+                            <span class="hugArm hugArmLeft">🫲</span>
+                            <div class="hugHeart">❤️</div>
+                            <span class="hugArm hugArmRight">🫱</span>
+                        </div>
+                        <p class="hugStatus">Virtual hug successfully delivered 🫂</p>
+                    </div>
+                    <div id="laughExperience" class="openWhenExtra hidden">
+                        <button id="makeMeLaughButton" class="laughButton">Make Me Laugh 😂</button>
+                        <div id="laughResult" class="laughResult">Press the button. LizzyOS will handle the emergency.</div>
+                    </div>
                     <button id="backLetters" class="secondaryButton">← Back to letters</button>
                 </article>
             </div>

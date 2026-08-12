@@ -2500,3 +2500,20 @@ color:#ff5ca8;
 @media(max-width:950px){#desktopArea:not(.hidden){grid-template-columns:repeat(4,minmax(120px,1fr))!important}}
 @media(max-width:720px){#desktopArea:not(.hidden){grid-template-columns:repeat(3,minmax(105px,1fr))!important}.mikhailLevelGrid{grid-template-columns:1fr}}
 @media(max-width:520px){#desktopArea:not(.hidden){grid-template-columns:repeat(2,minmax(100px,1fr))!important}#mikhailQuizWindow:not(.hidden),#mysteryBoxWindow:not(.hidden){width:94vw!important}}
+
+/* Open When: Hug + Laugh */
+.openWhenExtra{margin:20px auto;max-width:620px;text-align:center}
+.virtualHug{height:150px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hugHeart{font-size:58px;z-index:2;animation:hugHeartbeat 1.15s ease-in-out infinite}
+.hugArm{position:absolute;font-size:74px;top:35px;transition:transform .8s cubic-bezier(.2,.9,.3,1)}
+.hugArmLeft{left:4%;transform:translateX(-120px) rotate(-8deg)}
+.hugArmRight{right:4%;transform:translateX(120px) rotate(8deg)}
+.hugPlaying .hugArmLeft{transform:translateX(75px) rotate(4deg)}
+.hugPlaying .hugArmRight{transform:translateX(-75px) rotate(-4deg)}
+.hugStatus{font-weight:700}
+@keyframes hugHeartbeat{50%{transform:scale(1.16)}}
+.laughButton{margin:6px auto 16px!important;font-size:16px!important;padding:12px 20px!important}
+.laughResult{min-height:70px;padding:18px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:700}
+.laughPop{animation:laughPop .35s ease}
+@keyframes laughPop{0%{transform:scale(.92);opacity:.4}70%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.letterSignature{margin-top:22px;font-weight:800;font-style:italic}

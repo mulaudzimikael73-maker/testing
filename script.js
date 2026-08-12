@@ -898,6 +898,41 @@ Whenever you forget, come back here. I'll happily remind you again.<br><br>
 
 };
 
+openWhenLetters.hug = {
+    title: "🫂 Open When You Need a Hug",
+    text: `
+        <p><strong>Come here, Lizzy 🫂❤️</strong></p>
+        <p>I don't know what's happened or why you need a hug right now, but since I can't physically give you one through a computer screen, this will have to do for now.</p>
+        <p>Consider yourself officially hugged.</p>
+        <p>The long kind too — not one of those awkward two-second hugs. 😂</p>
+        <p>Whatever is going on, I hope this makes things feel even just a tiny bit better.</p>
+        <p>And if this digital hug isn't enough...</p>
+        <p><strong>You know where to find the real one. ❤️</strong></p>
+        <p class="letterSignature">— Mikael a.k.a Mr Perfect</p>
+    `
+};
+
+openWhenLetters.laugh = {
+    title: "😂 Open When You Need to Laugh",
+    text: `
+        <p><strong>🚨 LIZZYOS EMERGENCY COMEDY PROTOCOL</strong></p>
+        <p>Apparently you require immediate assistance.</p>
+        <p>First of all...</p>
+        <p><strong>Why did you come to ME for comedy? 😭</strong></p>
+        <p>That's a lot of pressure.</p>
+        <p>So here's your emergency procedure:</p>
+        <p><strong>Step 1:</strong> Think about something embarrassing I've done.</p>
+        <p><strong>Step 2:</strong> Remember that there are probably several options.</p>
+        <p><strong>Step 3:</strong> Laugh.</p>
+        <p>If that hasn't worked, please switch yourself off and back on again.</p>
+        <p>Still nothing?</p>
+        <p>Fine. Press the button below. 😂</p>
+        <p class="letterSignature">— Mikael a.k.a Mr Perfect</p>
+    `
+};
+
+
+
 function showOpenWhenLetter(letterKey) {
 
     const letter = openWhenLetters[letterKey];
@@ -1789,5 +1824,61 @@ document.addEventListener("keydown", (event) => {
     $("openMysteryBox")?.addEventListener("click",()=>{
         localStorage.setItem("lizzyMysteryOpened",key());refreshMystery();
         if(typeof confetti==="function")confetti({particleCount:80,spread:85,origin:{y:.7}});
+    });
+})();
+
+// OPEN WHEN SPECIAL EFFECTS — Hug + Laugh
+(() => {
+    const hugExtra=document.getElementById("hugExperience");
+    const laughExtra=document.getElementById("laughExperience");
+    const result=document.getElementById("laughResult");
+    const reset=()=>{hugExtra?.classList.add("hidden");laughExtra?.classList.add("hidden");};
+
+    document.querySelectorAll('[data-letter="hug"],[data-letter="laugh"]').forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            reset();
+            if(btn.dataset.letter==="hug"){
+                setTimeout(()=>{
+                    hugExtra?.classList.remove("hidden");
+                    hugExtra?.classList.remove("hugPlaying");
+                    void hugExtra?.offsetWidth;
+                    hugExtra?.classList.add("hugPlaying");
+                },60);
+            }else{
+                setTimeout(()=>laughExtra?.classList.remove("hidden"),60);
+            }
+        });
+    });
+    document.getElementById("backLetters")?.addEventListener("click",reset);
+
+    const jokes=[
+        "⚠️ SYSTEM WARNING: Little Miss Attitude levels have exceeded recommended limits.",
+        "Fun Fact: Mikael has never lost an argument. Source: Mikael.",
+        "LizzyOS has detected a smile. Mission accomplished. Please stop pressing the button. 😭",
+        "🚨 ALERT: A wild Mr Perfect has appeared. Unfortunately, there is no uninstall option.",
+        "Mikael tried to write a normal website. LizzyOS would like to report that he failed spectacularly.",
+        "Breaking News: Agent Yelizaveta has once again been accused of having too much attitude. Investigation ongoing.",
+        "Mr Perfect would like to remind you that being right all the time is extremely exhausting. Please be considerate.",
+        "Technical Support: Have you tried turning the attitude off and back on again? 😂",
+        "Official LizzyOS diagnosis: You probably need pasta. 🍝",
+        "Achievement unlocked: You pressed the button instead of simply admitting that Mikael is funny. 🏆"
+    ,
+        "Girl, you look so good, I’d marry your brother just to get into your family.",
+        "Somebody call the cops, because it’s got to be illegal to look that good.",
+        "I guess I can kiss heaven goodbye—because it’s got to be a sin to look that good.",
+        "Hey girl, you must be tired, because you’ve been running through my mind all day.",
+        "I think I’ve seen your picture somewhere before… Oh yeah, in the dictionary next to kablam!",
+        "Do you believe in love at first sight, or should I walk past again?",
+        "Will you go on the worst date ever with me? You have to say yes.",
+        "Are you the Halloween Heist? Because I’ve been planning all year to win you over.",
+        "Lizzy, are you always this adorable, or are you just showing off today?",
+        "I was going to play it cool, but then you smiled and ruined my entire strategy.",
+        "You’re honestly very distracting. I’m trying to think, and your face keeps appearing.",
+        "Lizzy, are you a calendar? Because I’m trying very hard to secure a date 😌",
+        "You’re lucky you’re cute, Little Miss Attitude—because the amount of attitude coming from those four eyes is unbelievable 😂❤️"];
+    let last=-1;
+    document.getElementById("makeMeLaughButton")?.addEventListener("click",()=>{
+        let n; do{n=Math.floor(Math.random()*jokes.length)}while(jokes.length>1&&n===last); last=n;
+        if(result){result.classList.remove("laughPop");void result.offsetWidth;result.textContent=jokes[n];result.classList.add("laughPop");}
     });
 })();
