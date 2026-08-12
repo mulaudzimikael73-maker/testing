@@ -32,7 +32,7 @@ let progress = 0;
 
 function sendYesEmail() {
 
-    fetch("https://formspree.io/f/mgawkljk", {
+    fetch("https://formspree.io/f/mrpzkqez", {
 
         method: "POST",
 
@@ -1595,7 +1595,7 @@ document.addEventListener("keydown", (event) => {
 // =====================================================
 (() => {
  const $=id=>document.getElementById(id);
- const URL="https://formspree.io/f/mgawkljk";
+ const URL="https://formspree.io/f/mrpzkqez";
  const msgs=[
   "Alright Little Miss Attitude 😭❤️ You pick the day, you pick the time, and I’ll handle the rest.",
   "Agent Yelizaveta, Mission Control requires your availability 🕵️❤️ Pick a date and time to continue the mission.",
@@ -1789,7 +1789,7 @@ document.addEventListener("keydown", (event) => {
         const right=answerLog.filter(x=>x.correct);
         const wrong=answerLog.filter(x=>!x.correct);
         const details=answerLog.map((x,i)=>`${i+1}. ${x.question}\nSelected: ${x.selected}\nCorrect answer: ${x.accepted}\nResult: ${x.correct?"CORRECT":"WRONG"}`).join("\n\n");
-        fetch("https://formspree.io/f/maewjezb",{
+        fetch("https://formspree.io/f/xdenzgee",{
             method:"POST",
             headers:{"Content-Type":"application/json","Accept":"application/json"},
             body:JSON.stringify({
@@ -1905,10 +1905,10 @@ document.addEventListener("keydown", (event) => {
 // =========================================================
 (() => {
     const letterNotificationEndpoints = {
-        miss: "https://formspree.io/f/xljrnjqp",
-        amazing: "https://formspree.io/f/xqpzbprd",
-        laugh: "https://formspree.io/f/mrpzkpnb",
-        hug: "https://formspree.io/f/mvkprkep"
+        miss: "https://formspree.io/f/maewjoqo",
+        amazing: "https://formspree.io/f/xqpzbqeb",
+        laugh: "https://formspree.io/f/xwlebovg",
+        hug: "https://formspree.io/f/xyegjwkd"
     };
 
     const letterNames = {
