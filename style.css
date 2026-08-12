@@ -2348,3 +2348,135 @@ color:#ff5ca8;
 
 /* QUIZ+ MIKHAIL QUIZ */
 .quizLevelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.quizLevelCard{min-height:145px;padding:18px 12px}.quizLevelCard span,.quizLevelCard strong,.quizLevelCard small{display:block}.quizLevelCard span{font-size:32px}.quizLevelCard strong{margin:9px 0 5px}.quizProgress{display:flex;justify-content:space-between;margin-bottom:20px;font-size:12px;font-weight:700}.mikhailAnswers{display:grid;gap:10px;max-width:620px;margin:20px auto}.mikhailAnswers button{width:100%;margin:0}.quizReaction{min-height:30px;text-align:center}.resultMedal{text-align:center;font-size:65px}.quizRewardTicket{max-width:520px;margin:25px auto;padding:25px;border:2px dashed rgba(255,255,255,.6);border-radius:20px;text-align:center;background:rgba(255,255,255,.12)}.quizRewardTicket small,.quizRewardTicket strong,.quizRewardTicket span{display:block}.quizRewardTicket strong{font-size:20px;margin:10px 0}.mysteryBoxContent{text-align:center}.mysteryGift{font-size:95px;margin:20px 0;animation:mysteryFloat 2.2s ease-in-out infinite}.mysteryReward{max-width:550px;margin:20px auto;padding:22px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24)}@keyframes mysteryFloat{50%{transform:translateY(-9px) rotate(3deg)}}@media(max-width:650px){.quizLevelGrid{grid-template-columns:1fr}}
+
+
+/* =========================================================
+   QUIZ UPDATE — RESPONSIVE DESKTOP GRID FIX
+   Keeps every desktop app/folder in its own slot.
+   ========================================================= */
+.desktopIcons,
+.desktop-icons,
+#desktopIcons {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 34px 34px 90px !important;
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(125px, 1fr)) !important;
+    gap: 34px 28px !important;
+    align-items: start !important;
+    justify-items: center !important;
+}
+
+/* Individual icons must participate in the grid rather than use old coordinates. */
+.desktopIcons > .desktopIcon,
+.desktop-icons > .desktopIcon,
+#desktopIcons > .desktopIcon {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    width: 145px !important;
+    min-height: 135px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    z-index: 2 !important;
+}
+
+.desktopIcons > .desktopIcon .desktopEmoji,
+.desktop-icons > .desktopIcon .desktopEmoji,
+#desktopIcons > .desktopIcon .desktopEmoji {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    width: 96px !important;
+    min-height: 96px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 78px !important;
+    line-height: 1 !important;
+}
+
+.desktopIcons > .desktopIcon > span,
+.desktop-icons > .desktopIcon > span,
+#desktopIcons > .desktopIcon > span {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+}
+
+/* Prevent decorative desktop elements from affecting the icon grid. */
+.desktopIcons > .desktopIcon::before,
+.desktopIcons > .desktopIcon::after,
+.desktop-icons > .desktopIcon::before,
+.desktop-icons > .desktopIcon::after {
+    pointer-events: none !important;
+}
+
+/* Tablet */
+@media (max-width: 950px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(4, minmax(120px, 1fr)) !important;
+        gap: 28px 20px !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
+    }
+}
+
+/* Smaller tablet */
+@media (max-width: 720px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(3, minmax(105px, 1fr)) !important;
+    }
+    .desktopIcons > .desktopIcon,
+    .desktop-icons > .desktopIcon,
+    #desktopIcons > .desktopIcon {
+        width: 120px !important;
+    }
+}
+
+/* Phone */
+@media (max-width: 520px) {
+    .desktopIcons,
+    .desktop-icons,
+    #desktopIcons {
+        grid-template-columns: repeat(2, minmax(100px, 1fr)) !important;
+        gap: 24px 14px !important;
+        padding: 24px 12px 100px !important;
+    }
+    .desktopIcons > .desktopIcon,
+    .desktop-icons > .desktopIcon,
+    #desktopIcons > .desktopIcon {
+        width: 112px !important;
+        min-height: 125px !important;
+    }
+    .desktopIcons > .desktopIcon .desktopEmoji,
+    .desktop-icons > .desktopIcon .desktopEmoji,
+    #desktopIcons > .desktopIcon .desktopEmoji {
+        width: 82px !important;
+        min-height: 82px !important;
+        font-size: 66px !important;
+    }
+}
