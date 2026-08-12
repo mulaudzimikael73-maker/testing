@@ -2234,16 +2234,117 @@ color:#ff5ca8;
     .desktopWindow{width:95vw;}
 }
 
-/* CURRENT VERSION — RECYCLE BIN */
+
+/* ==========================================================
+   LIZZYOS EXTRA — QUIZ + HEART CATCH
+   ========================================================== */
+.lizzyMiniApp{text-align:center}
+.miniScore{
+    display:inline-block;
+    margin:10px auto 22px;
+    padding:8px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,.15);
+    font-size:13px;
+}
+.funQuizAnswers{
+    display:grid;
+    gap:10px;
+    max-width:620px;
+    margin:20px auto;
+}
+.funQuizAnswer{margin:0;width:100%}
+.funQuizAnswer:disabled{opacity:.72;cursor:default}
+.funQuizAnswer.answerCorrect{box-shadow:0 0 0 3px rgba(137,255,181,.65)}
+.funQuizAnswer.answerWrong{box-shadow:0 0 0 3px rgba(255,145,168,.65)}
+.gameFeedback{
+    min-height:55px;
+    font-size:14px;
+    font-weight:600;
+}
+.heartStats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:18px 0;
+}
+.heartStats span{
+    padding:8px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.13);
+    font-size:12px;
+}
+.heartCatchArena{
+    position:relative;
+    width:min(100%,680px);
+    height:360px;
+    margin:15px auto;
+    overflow:hidden;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,.25);
+    background:
+      radial-gradient(circle at 50% 100%,rgba(255,255,255,.15),transparent 55%),
+      rgba(255,255,255,.08);
+}
+.gameStartMessage{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.8;
+    padding:25px;
+}
+.catchableHeart{
+    position:absolute;
+    width:50px;
+    height:50px;
+    padding:0;
+    margin:0;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:rgba(255,255,255,.18);
+    animation:heartGamePop .18s ease, heartGamePulse .75s ease-in-out infinite alternate;
+}
+.catchableHeart:hover{transform:scale(1.18)}
+.caughtHeart{transform:scale(1.8)!important;opacity:0;transition:.12s}
+@keyframes heartGamePop{
+    from{transform:scale(.25);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+@keyframes heartGamePulse{
+    from{filter:drop-shadow(0 0 2px rgba(255,255,255,.3))}
+    to{filter:drop-shadow(0 0 12px rgba(255,255,255,.9))}
+}
+@media(max-width:600px){
+    .heartCatchArena{height:310px}
+    .catchableHeart{width:45px;height:45px;font-size:25px}
+}
+
+
+/* OUR DATE FOLDER + READ ME CONTROLS */
+.calendarFolderEmoji{position:relative;width:64px;height:49px;margin:0 auto 7px;border-radius:7px 7px 9px 9px;background:linear-gradient(180deg,#ffd86f,#f4b83f);box-shadow:0 8px 18px rgba(54,34,10,.22);font-size:0!important}.calendarFolderEmoji:before{content:"";position:absolute;left:5px;top:-8px;width:27px;height:12px;border-radius:6px 7px 0 0;background:#f6c451}.folderCalendarBadge{position:absolute;z-index:2;right:-8px;bottom:-8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.94);font-size:18px}
+.calendarDesktopContent{text-align:center}.calendarHeart{font-size:58px}.schedulerGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px auto 15px;max-width:650px;text-align:left}.schedulerField>span{display:block;margin-bottom:7px}.dateInputShell{padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25)}.dateInputShell input{width:100%;border:0;background:transparent;color:white;font:inherit;color-scheme:dark}.dateChoicePreview{max-width:650px;min-height:82px;margin:15px auto;display:flex;align-items:center;gap:15px;padding:16px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16)}.dateChoicePreview>span{font-size:32px}.dateSchedulerStatus{min-height:25px;font-size:12px;text-align:center}.savedMissionDate{max-width:650px;margin:17px auto}.savedMissionCard{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border-radius:18px;background:rgba(255,255,255,.12)}
+.readMeWindowTop{margin:-28px -28px 22px;padding:16px 20px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.13)}#readMeRedClose{background:#ff5f57}#readMeYellowMin{background:#febc2e}#readMeGreenMax{background:#28c840}#readMeRedClose,#readMeYellowMin,#readMeGreenMax{cursor:pointer}#readMeWindow.readMeMinimised{height:62px!important;overflow:hidden!important}#readMeWindow.readMeMinimised>:not(.readMeWindowTop){display:none!important}#readMeWindow.readMeExpanded{width:94vw!important;max-width:1200px!important;height:88vh!important}
+@media(max-width:650px){.schedulerGrid{grid-template-columns:1fr}}
+
+
+/* LIZZYOS — WORKING RECYCLE BIN FINAL BASE */
+#recycleBinIcon{cursor:pointer;user-select:none}
+#recycleBinWindow:not(.hidden){display:flex!important;position:fixed!important;z-index:10050!important}
+#recycleBinWindow .windowScroll{overflow:auto}
 .recycleBinGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin:22px 0}
-.deletedNickname{padding:18px 10px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:center}
+.deletedNickname{padding:18px 10px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);text-align:center;cursor:default;color:inherit;font:inherit;width:100%}
 .deletedNickname>span{display:block;font-size:35px}
 .deletedNickname strong,.deletedNickname small{display:block;margin-top:7px}
 .deletedNickname small{opacity:.65;font-size:11px}
 .binWarning{text-align:center;font-size:12px;opacity:.8}
 
-/* RECYCLE BIN RELIABILITY FIX */
-#recycleBinIcon{cursor:pointer;user-select:none}
-#recycleBinWindow:not(.hidden){display:flex!important;position:fixed!important;z-index:10050!important}
-#recycleBinWindow .windowScroll{overflow:auto}
-.deletedNickname{cursor:default;color:inherit;font:inherit;width:100%}
+
+/* QUIZ+ MIKHAIL QUIZ */
+.quizLevelGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.quizLevelCard{min-height:145px;padding:18px 12px}.quizLevelCard span,.quizLevelCard strong,.quizLevelCard small{display:block}.quizLevelCard span{font-size:32px}.quizLevelCard strong{margin:9px 0 5px}.quizProgress{display:flex;justify-content:space-between;margin-bottom:20px;font-size:12px;font-weight:700}.mikhailAnswers{display:grid;gap:10px;max-width:620px;margin:20px auto}.mikhailAnswers button{width:100%;margin:0}.quizReaction{min-height:30px;text-align:center}.resultMedal{text-align:center;font-size:65px}.quizRewardTicket{max-width:520px;margin:25px auto;padding:25px;border:2px dashed rgba(255,255,255,.6);border-radius:20px;text-align:center;background:rgba(255,255,255,.12)}.quizRewardTicket small,.quizRewardTicket strong,.quizRewardTicket span{display:block}.quizRewardTicket strong{font-size:20px;margin:10px 0}.mysteryBoxContent{text-align:center}.mysteryGift{font-size:95px;margin:20px 0;animation:mysteryFloat 2.2s ease-in-out infinite}.mysteryReward{max-width:550px;margin:20px auto;padding:22px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24)}@keyframes mysteryFloat{50%{transform:translateY(-9px) rotate(3deg)}}@media(max-width:650px){.quizLevelGrid{grid-template-columns:1fr}}

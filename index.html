@@ -407,6 +407,7 @@
             Here's a little riddle for what's coming next...
 
         </p>
+
         <div class="riddleGrid">
 
             <div class="riddleCard" data-answer="⛳ Mini Golf">
@@ -535,14 +536,24 @@
                 <span>Recycle Bin</span>
             </div>
 
-            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
-                <div class="desktopEmoji calendarFolderEmoji">
-                    <span class="folderCalendarBadge">📅</span>
-                </div>
-                <span>Our Date</span>
+            <div class="desktopIcon" id="funQuizIcon">
+                <div class="desktopEmoji">🧠</div>
+                <span>Lizzy Quiz</span>
+            </div>
+
+            <div class="desktopIcon" id="heartGameIcon">
+                <div class="desktopEmoji">💗</div>
+                <span>Heart Catch</span>
             </div>
 
         </div>
+            <div class="desktopIcon" id="mikhailQuizIcon"><div class="desktopEmoji">🧠</div><span>Mikhail Quiz</span></div>
+            <div class="desktopIcon" id="mysteryBoxIcon"><div class="desktopEmoji">🎁</div><span>Daily Mystery</span></div>
+            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
+                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
+                <span>Our Date</span>
+            </div>
+
 
         <!-- Finder Window -->
 
@@ -772,7 +783,53 @@
         </div>
 
 
-        <!-- Our Date Calendar -->
+        <!-- Lizzy Quiz -->
+        <div id="funQuizWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="funQuizRedClose"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🧠 The Extremely Scientific Lizzy Quiz</h2>
+            </div>
+            <div class="windowScroll lizzyMiniApp">
+                <p class="memoryMessage">Important research about Little Miss Attitude is currently underway. Results may be biased. 😏</p>
+                <div class="miniScore">Score: <strong id="funQuizScore">0</strong>/<span id="funQuizTotal">5</span></div>
+                <h3 id="funQuizQuestion"></h3>
+                <div id="funQuizAnswers" class="funQuizAnswers"></div>
+                <p id="funQuizFeedback" class="gameFeedback"></p>
+                <button id="restartFunQuiz" class="hidden">Play Again 🧠</button>
+            </div>
+            <button id="closeFunQuiz" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Heart Catch Game -->
+        <div id="heartCatchWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="heartGameRedClose"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>💗 Operation: Catch Her Heart</h2>
+            </div>
+            <div class="windowScroll lizzyMiniApp">
+                <p class="memoryMessage">Catch as many hearts as you can before the 20-second mission timer runs out.</p>
+                <div class="heartStats">
+                    <span>💗 Score: <strong id="heartCatchScore">0</strong></span>
+                    <span>⏱️ Time: <strong id="heartCatchTime">20</strong>s</span>
+                    <span>🏆 Best: <strong id="heartCatchBest">0</strong></span>
+                </div>
+                <div id="heartCatchArena" class="heartCatchArena">
+                    <div class="gameStartMessage">Press Start Mission 💗</div>
+                </div>
+                <button id="startHeartCatch">Start Mission</button>
+            </div>
+            <button id="closeHeartCatch" class="windowCloseButton">Close</button>
+        </div>
+
+        
         <div id="calendarWindow" class="desktopWindow hidden">
             <div class="windowTop">
                 <div class="windowDots">
