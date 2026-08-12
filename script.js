@@ -1700,3 +1700,11 @@ function key(){let d=new Date();return `${d.getFullYear()}-${d.getMonth()+1}-${d
 function daily(){let opened=localStorage.getItem("lizzyMysteryOpened")===key(),r=gifts[idx()];$("mysteryGift").textContent=opened?"✨":"🎁";$("mysteryReward").classList.toggle("hidden",!opened);if(opened)$("mysteryReward").innerHTML=`<strong>${r[0]}</strong><p>${r[1]}</p>`;$("openMysteryBox").disabled=opened;$("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";$("mysteryCountdown").textContent=opened?"Today's surprise has already been claimed. Another arrives tomorrow.":""}
 $("mysteryBoxIcon")?.addEventListener("click",()=>{$("mysteryBoxWindow").classList.remove("hidden");daily()});["mysteryBoxClose","closeMysteryBox"].forEach(x=>$(x)?.addEventListener("click",()=>$("mysteryBoxWindow").classList.add("hidden")));$("openMysteryBox")?.addEventListener("click",()=>{localStorage.setItem("lizzyMysteryOpened",key());daily();if(typeof confetti==="function")confetti({particleCount:80,spread:80,origin:{y:.7}})});
 })();
+
+// MIKHAIL/MYSTERY WINDOW LAUNCH — robust delegated handling
+document.addEventListener("click",e=>{
+ if(e.target.closest("#mikhailQuizIcon")){e.preventDefault();const w=document.getElementById("mikhailQuizWindow");if(w){w.classList.remove("hidden");w.style.display="flex";w.style.zIndex="10060";}}
+ if(e.target.closest("#mysteryBoxIcon")){e.preventDefault();const w=document.getElementById("mysteryBoxWindow");if(w){w.classList.remove("hidden");w.style.display="flex";w.style.zIndex="10060";}}
+ if(e.target.closest("#mikhailQuizClose,#closeMikhailQuiz")){const w=document.getElementById("mikhailQuizWindow");if(w){w.classList.add("hidden");w.style.display="";}}
+ if(e.target.closest("#mysteryBoxClose,#closeMysteryBox")){const w=document.getElementById("mysteryBoxWindow");if(w){w.classList.add("hidden");w.style.display="";}}
+});

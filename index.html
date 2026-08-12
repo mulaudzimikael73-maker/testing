@@ -992,6 +992,29 @@ if (window.netlifyIdentity) {
 }
 </script>
 
+
+<!-- Mikhail Quiz Window -->
+<div id="mikhailQuizWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="mikhailQuizClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🧠 How Well Do You Know Mikhail?</h2></div>
+ <div class="windowScroll">
+  <div id="mikhailLevelSelect"><p class="memoryMessage">Choose your clearance level, Agent Yelizaveta 😏</p><div class="quizLevelGrid">
+   <button class="quizLevelCard" data-level="easy"><span>🌸</span><strong>Easy</strong><small>Surely you know these 😭</small></button>
+   <button class="quizLevelCard" data-level="medium"><span>👀</span><strong>Medium</strong><small>Okay, now pay attention.</small></button>
+   <button class="quizLevelCard" data-level="hard"><span>🕵️</span><strong>Agent Level</strong><small>Classified Mikhail knowledge.</small></button>
+  </div></div>
+  <div id="mikhailQuizPlay" class="hidden"><div class="quizProgress"><span id="mikhailLevelLabel"></span><span id="mikhailProgress"></span></div><h3 id="mikhailQuestion"></h3><div id="mikhailAnswers" class="mikhailAnswers"></div><p id="mikhailReaction" class="quizReaction"></p></div>
+  <div id="mikhailQuizResult" class="hidden"><div class="resultMedal">🏆</div><h3 id="mikhailResultTitle"></h3><p id="mikhailResultText"></p><div class="quizRewardTicket"><small>LIZZYOS OFFICIAL REWARD</small><strong id="rewardTicketTitle">🎟️ Reward Ticket</strong><p id="rewardTicketText"></p><span>AUTHORIZED BY AGENT MIKHAIL ❤️</span></div><button id="restartMikhailQuiz">Play Another Level</button></div>
+ </div>
+ <button id="closeMikhailQuiz" class="windowCloseButton">Close</button>
+</div>
+
+<!-- Daily Mystery Window -->
+<div id="mysteryBoxWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="mysteryBoxClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🎁 Daily Mystery Box</h2></div>
+ <div class="windowScroll mysteryBoxContent"><div id="mysteryGift" class="mysteryGift">🎁</div><h3>One surprise every day.</h3><p>LizzyOS has prepared today's classified delivery...</p><button id="openMysteryBox">Open Today's Box ✨</button><div id="mysteryReward" class="mysteryReward hidden"></div><p id="mysteryCountdown" class="memoryMessage"></p></div>
+ <button id="closeMysteryBox" class="windowCloseButton">Close</button>
+</div>
+
 <script src="script.js"></script>
 
 </body>

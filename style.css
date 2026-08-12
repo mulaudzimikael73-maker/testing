@@ -2552,3 +2552,6 @@ color:#ff5ca8;
  #desktopArea > .desktopIcon{width:100%!important}
  #desktopArea > .desktopIcon .desktopEmoji{width:84px!important;height:84px!important;min-height:84px!important;font-size:66px!important}
 }
+
+#mikhailQuizIcon,#mysteryBoxIcon{cursor:pointer!important;pointer-events:auto!important}
+#mikhailQuizWindow:not(.hidden),#mysteryBoxWindow:not(.hidden){display:flex!important;position:fixed!important;z-index:10060!important}
