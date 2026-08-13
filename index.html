@@ -555,6 +555,9 @@
                 <span>Daily Mystery</span>
             </div>
 
+            <div class="desktopIcon" id="wouldMikaelRatherIcon"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
+            <div class="desktopIcon" id="ticTacToeIcon"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
+            <div class="desktopIcon" id="crackCodeIcon"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
             <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
                 <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
                 <span>Our Date</span>
@@ -854,7 +857,74 @@
         
         
         <!-- Mikhail Quiz -->
-        <div id="mikhailQuizWindow" class="desktopWindow hidden">
+        <div id="wouldMikaelRatherWindow" class="desktopWindow hidden"><div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="wouldMikaelRatherClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🤔 Would Mikael Rather?</h2></div><div class="windowScroll wouldRatherApp"><div id="wouldRatherIntro"><div class="wouldRatherHero">🤔❤️</div><h3>How predictable is Mr Perfect?</h3><p>Every round gives you <strong>5 random questions</strong> from a bank of <strong>40</strong>.</p><button id="startWouldRather">Start Random Round 🎲</button></div><div id="wouldRatherPlay" class="hidden"><div class="wouldRatherMeta"><span id="wouldRatherProgress"></span><span id="wouldRatherScore"></span></div><h3>What would Mikael rather choose?</h3><div class="wouldRatherChoices"><button id="wouldRatherA" class="wouldRatherChoice"></button><div class="wouldRatherOr">OR</div><button id="wouldRatherB" class="wouldRatherChoice"></button></div><p id="wouldRatherReaction"></p></div><div id="wouldRatherResult" class="hidden"><div class="wouldRatherHero">🏆</div><h3 id="wouldRatherResultTitle"></h3><p id="wouldRatherResultText"></p><button id="playWouldRatherAgain">Play Another 5 🎲</button></div></div><button id="closeWouldMikaelRather" class="windowCloseButton">Close</button></div>
+<div id="ticTacToeWindow" class="desktopWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="ticTacToeClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>❌⭕ Tic-Tac-Toe vs Mr Perfect</h2>
+            </div>
+
+            <div class="windowScroll tttApp">
+                <div id="tttLevelSelect">
+                    <div class="tttHero">❌⭕</div>
+                    <h3>Choose your difficulty</h3>
+                    <p class="memoryMessage">Lizzy is ❌. Mr Perfect is ⭕.</p>
+                    <div class="tttLevelGrid">
+                        <button class="tttLevelCard" data-ttt-level="easy">
+                            <span>🌸</span><strong>Easy</strong><small>Mr Perfect is feeling generous.</small>
+                        </button>
+                        <button class="tttLevelCard" data-ttt-level="medium">
+                            <span>👀</span><strong>Medium</strong><small>He blocks, attacks and pays attention.</small>
+                        </button>
+                        <button class="tttLevelCard" data-ttt-level="hard">
+                            <span>🕵️</span><strong>Mr Perfect Mode</strong><small>Unbeatable. Probably annoying.</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="tttGameArea" class="hidden">
+                    <div class="tttMeta">
+                        <span id="tttDifficultyLabel"></span>
+                        <span id="tttScoreLine">Lizzy 0 • Draws 0 • Mr Perfect 0</span>
+                    </div>
+                    <p id="tttStatus" class="gameFeedback">Your move, Lizzy 😌</p>
+                    <div id="tttBoard" class="tttBoard"></div>
+                    <div class="tttButtons">
+                        <button id="tttNewRound">New Round</button>
+                        <button id="tttChangeLevel">Change Level</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="closeTicTacToe" class="windowCloseButton">Close</button>
+        </div>
+<div id="crackCodeWindow" class="desktopWindow hidden">
+<div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="crackCodeClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🔐 Crack the Code</h2></div>
+<div class="windowScroll crackApp">
+<div id="crackMenu">
+<div class="crackHero">🔐🕵️</div><h3>Agent Yelizaveta: Code Division</h3>
+<p>Five classified missions. Each mission contains multiple puzzles. Solve the stages, collect the keys and break LizzyOS security.</p>
+<div class="crackMissionGrid">
+<button data-mission="1">🔐 <strong>Security Breach</strong><small>Mikael • ciphers • website clues</small></button>
+<button data-mission="2">🗂️ <strong>Missing Mr Perfect File</strong><small>Search LizzyOS and recover the file</small></button>
+<button data-mission="3">📺 <strong>TV Multiverse Meltdown</strong><small>The Office • B99 • Gilmore Girls • HSM</small></button>
+<button data-mission="4">🌍 <strong>Agent Knowledge Exam</strong><small>General knowledge • maths • logic</small></button>
+<button data-mission="5">❤️ <strong>LizzyOS Treasure Hunt</strong><small>MAXIMUM difficulty • everything combined</small></button>
+</div></div>
+<div id="crackPlay" class="hidden">
+<div class="crackMeta"><span id="crackMissionTitle"></span><span id="crackStage"></span></div>
+<div id="crackPuzzle" class="crackPuzzle"></div>
+<input id="crackAnswer" autocomplete="off" placeholder="Enter answer / code">
+<div class="crackActions"><button id="crackSubmit">Decrypt 🔓</button><button id="crackHint">Hint 💡</button><button id="crackBack">Missions</button></div>
+<p id="crackFeedback"></p>
+</div>
+<div id="crackComplete" class="hidden"><div class="crackHero">🏆</div><h3 id="crackCompleteTitle"></h3><p id="crackCompleteText"></p><button id="crackAnother">Back to Missions</button></div>
+</div><button id="closeCrackCode" class="windowCloseButton">Close</button></div>
+<div id="mikhailQuizWindow" class="desktopWindow hidden">
             <div class="windowTop">
                 <div class="windowDots">
                     <span class="windowCloseDot" id="mikhailQuizClose" title="Close"></span>
@@ -908,7 +978,7 @@
                 <div id="mysteryGift" class="mysteryGift">🎁</div>
                 <h3>One surprise every day.</h3>
                 <p>LizzyOS has prepared today's classified delivery...</p>
-                <button id="openMysteryBox">Open Today's Box ✨</button>
+                <div class="streakPanel"><strong id="mysteryStreak">🔥 0 Day Streak</strong><small id="mysteryStreakSub">Open today to begin your streak.</small><div class="streakTrack" id="streakTrack"></div></div><p class="legendaryNotice">🏆 Open the box <strong>7 calendar days in a row</strong> for a guaranteed LEGENDARY reward. Miss a day and the streak resets.</p><button id="openMysteryBox">Open Today's Box ✨</button>
                 <div id="mysteryReward" class="mysteryReward hidden"></div>
                 <p id="mysteryCountdown" class="memoryMessage"></p>
             </div>

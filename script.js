@@ -377,6 +377,9 @@ noButton.addEventListener("mouseover", moveButton);
 noButton.addEventListener("click", moveButton);
 
 
+
+// YES BUTTON PRIVACY NOTE: No Formspree/network notification is attached to yesButton.
+// The Yes choice stays local to the LizzyOS experience.
 // ========================================
 // RIDDLE CARDS
 // ========================================
@@ -1824,8 +1827,8 @@ document.addEventListener("keydown", (event) => {
         $("mysteryGift").textContent=opened?"✨":"🎁";
         $("mysteryReward")?.classList.toggle("hidden",!opened);
         if(opened)$("mysteryReward").innerHTML=`<strong>${r[0]}</strong><p>${r[1]}</p>`;
-        $("openMysteryBox").disabled=opened;
-        $("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";
+        $("openMysteryBoxLegacy").disabled=opened;
+        $("openMysteryBoxLegacy").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";
         $("mysteryCountdown").textContent=opened?"Today's surprise has already been claimed. Another arrives tomorrow.":"";
     }
     function openMystery(){
@@ -1833,10 +1836,10 @@ document.addEventListener("keydown", (event) => {
         if(typeof unlockAchievement==="function")unlockAchievement("Daily Mystery Box Found 🎁");
     }
     function closeMystery(){$("mysteryBoxWindow")?.classList.add("hidden")}
-    $("mysteryBoxIcon")?.addEventListener("click",openMystery);
-    $("mysteryBoxClose")?.addEventListener("click",closeMystery);
-    $("closeMysteryBox")?.addEventListener("click",closeMystery);
-    $("openMysteryBox")?.addEventListener("click",()=>{
+    $("mysteryBoxIconLegacy")?.addEventListener("click",openMystery);
+    $("mysteryBoxCloseLegacy")?.addEventListener("click",closeMystery);
+    $("closeMysteryBoxLegacy")?.addEventListener("click",closeMystery);
+    $("openMysteryBoxLegacy")?.addEventListener("click",()=>{
         localStorage.setItem("lizzyMysteryOpened",key());refreshMystery();
         if(typeof confetti==="function")confetti({particleCount:80,spread:85,origin:{y:.7}});
     });
@@ -1961,4 +1964,323 @@ document.addEventListener("keydown", (event) => {
             notifyLetterOpened(button.dataset.letter);
         });
     });
+})();
+
+// WOULD MIKAEL RATHER 40Q
+(()=>{const bank=[{"a": "🏀 Basketball", "b": "⚽ Soccer", "correct": "A", "n": 1}, {"a": "❄️ Winter", "b": "☀️ Summer", "correct": "A", "n": 2}, {"a": "🍕 Pizza", "b": "🍔 Burgers", "correct": "B", "n": 3}, {"a": "📺 The Office", "b": "🚔 Brooklyn Nine-Nine", "correct": "A", "n": 4}, {"a": "🦇 Batman", "b": "🕷️ Spider-Man", "correct": "A", "n": 5}, {"a": "🎤 Dave", "b": "🎤 J. Cole", "correct": "B", "n": 6}, {"a": "🎵 Kwesta", "b": "🎵 Sjava", "correct": "A", "n": 7}, {"a": "⚽ Liverpool", "b": "☠️ Orlando Pirates", "correct": "A", "n": 8}, {"a": "🏠 Movies at home", "b": "🌃 Night out", "correct": "A", "n": 9}, {"a": "✈️ 6 months in Dagestan", "b": "🌍 5 different countries", "correct": "A", "n": 10}, {"a": "💰 R1 million now", "b": "💼 Dream job for life", "correct": "B", "n": 11}, {"a": "🏀 Meet Michael Jordan", "b": "🔥 1v1 Steph Curry", "correct": "B", "n": 12}, {"a": "🍽️ Fancy restaurant", "b": "🎳 Fun activity date", "correct": "B", "n": 13}, {"a": "📞 Call all night", "b": "💬 Text all day", "correct": "A", "n": 14}, {"a": "🎁 Thoughtful gift", "b": "❤️ Thoughtful message", "correct": "A", "n": 15}, {"a": "🎳 Lose to Lizzy at bowling", "b": "😩 Admit Lizzy was right", "correct": "A", "n": 16}, {"a": "😂 Lizzy roasts you all day", "b": "👔 Lizzy chooses your outfits for a week", "correct": "A", "n": 17}, {"a": "👓 Never say Four Eyes", "b": "😏 Never say Little Miss Attitude", "correct": "A", "n": 18}, {"a": "🔎 Lizzy reads your search history", "b": "📸 Lizzy reads your camera roll", "correct": "B", "n": 19}, {"a": "💕 One huge romantic surprise", "b": "🌸 Lots of little surprises", "correct": "B", "n": 20}, {"a": "🌅 Wake up really early", "b": "🌙 Stay up ridiculously late", "correct": "B", "n": 21}, {"a": "🏀 Courtside NBA Finals tickets", "b": "⚽ Champions League Final tickets", "correct": "B", "n": 22}, {"a": "🎤 J. Cole concert", "b": "🎤 Dave concert", "correct": "BOTH", "n": 23}, {"a": "🦇 Live in Gotham for a month", "b": "🏀 Train with Michael Jordan for a week", "correct": "B", "n": 24}, {"a": "🎮 Gaming night", "b": "🎬 Movie marathon", "correct": "B", "n": 25}, {"a": "🍳 Breakfast date", "b": "🍽️ Dinner date", "correct": "A", "n": 26}, {"a": "🏖️ Beach holiday", "b": "🏔️ Mountain holiday", "correct": "B", "n": 27}, {"a": "💵 Extremely rich but unknown", "b": "🌟 Famous but comfortably wealthy", "correct": "A", "n": 28}, {"a": "🏆 Liverpool win Champions League", "b": "🏆 Orlando Pirates win CAF Champions League", "correct": "B", "n": 29}, {"a": "🏀 Michael Jordan in his prime", "b": "🏀 Steph Curry in his prime", "correct": "A", "n": 30}, {"a": "😂 Make Lizzy laugh", "b": "😳 Make Lizzy blush", "correct": "B", "n": 31}, {"a": "💌 Long paragraph from Lizzy", "b": "🎁 Surprise from Lizzy", "correct": "BOTH", "n": 32}, {"a": "🫂 30-minute cuddle", "b": "📞 3-hour late-night call", "correct": "BOTH", "n": 33}, {"a": "🎳 Beat Lizzy badly at bowling", "b": "😏 Let her win and never tell her", "correct": "B", "n": 34}, {"a": "🪪 Full government name for a week", "b": "👑 Only Mr Perfect for a week", "correct": "B", "n": 35}, {"a": "👀 Lizzy knows everything you've said about her", "b": "📱 Lizzy gets your unlocked phone for 30 minutes", "correct": "B", "n": 36}, {"a": "💕 Plan the entire date yourself", "b": "👸 Let Lizzy plan everything", "correct": "B", "n": 37}, {"a": "💋 One perfect kiss", "b": "🫂 Unlimited hugs for a week", "correct": "BOTH", "n": 38}, {"a": "😤 Win every argument against Lizzy", "b": "🥺 Never have Lizzy annoyed with you again", "correct": "A", "n": 39}, {"a": "❤️ Hear Lizzy say “I miss you”", "b": "👀 Hear Lizzy admit “You were right”", "correct": "A", "n": 40}],$=x=>document.getElementById(x);let round=[],i=0,score=0;
+function intro(){$("wouldRatherIntro").classList.remove("hidden");$("wouldRatherPlay").classList.add("hidden");$("wouldRatherResult").classList.add("hidden")}
+function start(){round=[...bank].sort(()=>Math.random()-.5).slice(0,5);i=score=0;$("wouldRatherIntro").classList.add("hidden");$("wouldRatherResult").classList.add("hidden");$("wouldRatherPlay").classList.remove("hidden");render()}
+function render(){let q=round[i];$("wouldRatherProgress").textContent=`${i+1}/5 • Q${q.n}`;$("wouldRatherScore").textContent=`Score: ${score}`;$("wouldRatherA").textContent=q.a;$("wouldRatherB").textContent=q.b;$("wouldRatherA").disabled=$("wouldRatherB").disabled=false;$("wouldRatherReaction").textContent=""}
+function pick(x){let q=round[i],ok=q.correct==="BOTH"||q.correct===x;if(ok)score++;$("wouldRatherA").disabled=$("wouldRatherB").disabled=true;$("wouldRatherReaction").textContent=ok?"Correct 👀❤️":"Wrong 😭 Mr Perfect disagrees.";setTimeout(()=>{i++;i<5?render():finish()},650)}
+function finish(){$("wouldRatherPlay").classList.add("hidden");$("wouldRatherResult").classList.remove("hidden");let t=score===5?"DANGEROUSLY HIGH CLEARANCE 🕵️❤️":score>=4?"Very Suspicious 👀":score>=3?"Respectable 😌":score>=2?"Further Investigation Required 😂":"SECURITY CLEARANCE DENIED 🚨";$("wouldRatherResultTitle").textContent=`${score}/5 — ${t}`;$("wouldRatherResultText").textContent=score===5?"Agent Yelizaveta knows Mr Perfect suspiciously well.":"Play another random five and prove yourself."}
+$("wouldMikaelRatherIcon")?.addEventListener("click",()=>{$("wouldMikaelRatherWindow").classList.remove("hidden");intro()});$("wouldMikaelRatherClose")?.addEventListener("click",()=>$("wouldMikaelRatherWindow").classList.add("hidden"));$("closeWouldMikaelRather")?.addEventListener("click",()=>$("wouldMikaelRatherWindow").classList.add("hidden"));$("startWouldRather")?.addEventListener("click",start);$("playWouldRatherAgain")?.addEventListener("click",start);$("wouldRatherA")?.addEventListener("click",()=>pick("A"));$("wouldRatherB")?.addEventListener("click",()=>pick("B"));})();
+// TIC-TAC-TOE VS MR PERFECT
+// Easy = mostly random
+// Medium = tactical
+// Hard = minimax, unbeatable
+// =========================================================
+(() => {
+    const $ = id => document.getElementById(id);
+    const HUMAN = "X";
+    const AI = "O";
+    const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+
+    let board = Array(9).fill("");
+    let level = "easy";
+    let locked = false;
+    let score = { human:0, draw:0, ai:0 };
+
+    const labels = {
+        easy:"🌸 EASY",
+        medium:"👀 MEDIUM",
+        hard:"🕵️ MR PERFECT MODE"
+    };
+
+    const reactions = {
+        humanWin:[
+            "Okay... this game is clearly broken. 😭",
+            "Mr Perfect would like an immediate investigation.",
+            "Enjoy this moment, Little Miss Attitude. It may never happen again 😂"
+        ],
+        aiWin:[
+            "Mr Perfect remains perfect. Shocking. 😌",
+            "Skill issue? 👀",
+            "LizzyOS recommends a rematch immediately 😂"
+        ],
+        draw:[
+            "A draw. Mr Perfect will accept this... reluctantly.",
+            "Nobody wins. Very diplomatic. 😭",
+            "Stalemate. Agent Yelizaveta survives another round."
+        ]
+    };
+
+    function winner(b) {
+        for (const line of wins) {
+            const [a,c,d] = line;
+            if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+        }
+        return b.every(Boolean) ? "DRAW" : null;
+    }
+
+    function emptyCells(b) {
+        return b.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+    }
+
+    function randomMove(b) {
+        const cells = emptyCells(b);
+        return cells.length ? cells[Math.floor(Math.random()*cells.length)] : null;
+    }
+
+    function findWinningMove(b, mark) {
+        for (const i of emptyCells(b)) {
+            b[i]=mark;
+            const w=winner(b);
+            b[i]="";
+            if (w===mark) return i;
+        }
+        return null;
+    }
+
+    function mediumMove(b) {
+        // 1) Win if possible.
+        let move = findWinningMove(b, AI);
+        if (move !== null) return move;
+
+        // 2) Block Lizzy.
+        move = findWinningMove(b, HUMAN);
+        if (move !== null) return move;
+
+        // 3) Prefer center.
+        if (!b[4]) return 4;
+
+        // 4) Prefer corners.
+        const corners=[0,2,6,8].filter(i=>!b[i]);
+        if (corners.length) return corners[Math.floor(Math.random()*corners.length)];
+
+        return randomMove(b);
+    }
+
+    function minimax(b, maximizing, depth=0) {
+        const result = winner(b);
+        if (result === AI) return { score: 10-depth };
+        if (result === HUMAN) return { score: depth-10 };
+        if (result === "DRAW") return { score: 0 };
+
+        const cells = emptyCells(b);
+        let best = maximizing ? {score:-Infinity, move:null} : {score:Infinity, move:null};
+
+        for (const i of cells) {
+            b[i] = maximizing ? AI : HUMAN;
+            const trial = minimax(b, !maximizing, depth+1);
+            b[i] = "";
+
+            if (maximizing) {
+                if (trial.score > best.score) best = {score:trial.score, move:i};
+                else if (trial.score === best.score && Math.random() < 0.35) best = {score:trial.score, move:i};
+            } else {
+                if (trial.score < best.score) best = {score:trial.score, move:i};
+                else if (trial.score === best.score && Math.random() < 0.35) best = {score:trial.score, move:i};
+            }
+        }
+        return best;
+    }
+
+    function hardMove(b) {
+        // Optimal play: cannot lose.
+        // Opening preferences make it feel less robotic while preserving optimality.
+        if (emptyCells(b).length === 9) {
+            return [0,2,4,6,8][Math.floor(Math.random()*5)];
+        }
+        return minimax(b, true).move;
+    }
+
+    function chooseAIMove() {
+        if (level === "easy") {
+            // Easy occasionally notices obvious wins/blocks, but often plays randomly.
+            if (Math.random() < 0.30) {
+                return findWinningMove(board,AI) ?? findWinningMove(board,HUMAN) ?? randomMove(board);
+            }
+            return randomMove(board);
+        }
+        if (level === "medium") return mediumMove(board);
+        return hardMove(board);
+    }
+
+    function render() {
+        $("tttBoard").innerHTML = board.map((cell,i)=>
+            `<button class="tttCell ${cell ? "filled" : ""}" data-cell="${i}" ${locked || cell ? "disabled" : ""}>${cell==="X"?"❌":cell==="O"?"⭕":""}</button>`
+        ).join("");
+
+        $("tttBoard").querySelectorAll("[data-cell]").forEach(btn=>{
+            btn.addEventListener("click",()=>humanMove(Number(btn.dataset.cell)));
+        });
+
+        $("tttScoreLine").textContent = `Lizzy ${score.human} • Draws ${score.draw} • Mr Perfect ${score.ai}`;
+    }
+
+    function setStatus(text) {
+        $("tttStatus").textContent = text;
+    }
+
+    function humanMove(i) {
+        if (locked || board[i]) return;
+        board[i] = HUMAN;
+        locked = true;
+        render();
+
+        const result = winner(board);
+        if (result) return finish(result);
+
+        setStatus("Mr Perfect is thinking... unfortunately. 👀");
+
+        setTimeout(()=>{
+            const move = chooseAIMove();
+            if (move !== null) board[move] = AI;
+            const result2 = winner(board);
+            if (result2) return finish(result2);
+
+            locked = false;
+            setStatus(level==="hard" ? "Your move. Good luck... genuinely. 😭" : "Your move, Lizzy 😌");
+            render();
+        }, level==="hard" ? 550 : 450);
+    }
+
+    function finish(result) {
+        locked = true;
+
+        if (result === HUMAN) {
+            score.human++;
+            setStatus(reactions.humanWin[Math.floor(Math.random()*reactions.humanWin.length)]);
+            if (typeof confetti === "function") confetti({particleCount:80,spread:80,origin:{y:.7}});
+        } else if (result === AI) {
+            score.ai++;
+            setStatus(reactions.aiWin[Math.floor(Math.random()*reactions.aiWin.length)]);
+        } else {
+            score.draw++;
+            setStatus(reactions.draw[Math.floor(Math.random()*reactions.draw.length)]);
+        }
+        render();
+    }
+
+    function newRound() {
+        board = Array(9).fill("");
+        locked = false;
+        setStatus(level==="hard" ? "Mr Perfect Mode activated. This one does not lose. 😌" : "Your move, Lizzy 😌");
+        render();
+    }
+
+    function startLevel(selected) {
+        level = selected;
+        score = {human:0,draw:0,ai:0};
+        $("tttLevelSelect").classList.add("hidden");
+        $("tttGameArea").classList.remove("hidden");
+        $("tttDifficultyLabel").textContent = labels[level];
+        newRound();
+    }
+
+    function openGame() {
+        $("ticTacToeWindow")?.classList.remove("hidden");
+        $("tttLevelSelect")?.classList.remove("hidden");
+        $("tttGameArea")?.classList.add("hidden");
+    }
+
+    function closeGame() {
+        $("ticTacToeWindow")?.classList.add("hidden");
+    }
+
+    $("ticTacToeIcon")?.addEventListener("click",openGame);
+    $("ticTacToeClose")?.addEventListener("click",closeGame);
+    $("closeTicTacToe")?.addEventListener("click",closeGame);
+
+    document.querySelectorAll("[data-ttt-level]").forEach(btn=>{
+        btn.addEventListener("click",()=>startLevel(btn.dataset.tttLevel));
+    });
+
+    $("tttNewRound")?.addEventListener("click",newRound);
+    $("tttChangeLevel")?.addEventListener("click",()=>{
+        $("tttGameArea")?.classList.add("hidden");
+        $("tttLevelSelect")?.classList.remove("hidden");
+    });
+})();
+
+// =========================================================
+// CRACK THE CODE — FIVE CLASSIFIED MISSIONS
+// =========================================================
+(()=>{
+const $=x=>document.getElementById(x);
+const missions={
+1:{title:"🔐 Security Breach",reward:"LIZZYOS SECURITY CLEARANCE: MAXIMUM",stages:[
+{q:`<h3>Stage 1 — Mr Perfect Cipher</h3><div class="cipher">20 • 8 • 5 • 13 • 2 • 9 • 14 • 11 • 15 • 19 • 9</div><p>A begins with 1. Decode the name, then enter the number of letters in it.</p>`,a:["11"],hint:"A=1, B=2, C=3..."},
+{q:`<h3>Stage 2 — Gotham Encryption</h3><div class="cipher">WKH GDUN NQLJKW</div><p>Gotham moved everything three places forward. Move it back. Then multiply the letters in DARK by the letters in KNIGHT, and multiply that result by Mikael's high-school basketball number.</p>`,a:["96"],hint:"THE DARK KNIGHT → 4 × 6 × 4."},
+{q:`<h3>Stage 3 — Deleted Evidence</h3><p>Someone deleted the clue. Think about where unwanted LizzyOS things go.</p><div class="cipher">🦇 × 💜 + 🏀</div><p>Batman letters × Purple letters + Mikael's old basketball number.</p>`,a:["40"],hint:"6 × 6 + 4."},
+{q:`<h3>Stage 4 — Agent Intercept</h3><div class="cipher">YMJWJ NX F XJHWJY</div><p>Caesar was here. Five steps separate you from the truth. After decoding it, decode <b>19 • 8 • 1 • 4 • 15 • 23</b>. Add the A=1 values of the first and last letters of that word.</p>`,a:["42"],hint:"The second word is SHADOW. S + W."},
+{q:`<h3>Stage 5 — Final Security Protocol</h3><div class="cipher">23 | 30 | 4 | 6 | 6 | 11</div><p>Use THE GREATEST, THE PAST and THE IDENTITY. Identity comes first, the past follows, greatness waits at the end. Then calculate (First × Second) + Third.</p>`,a:["67"],hint:"11, 4, 23 → (11×4)+23."}
+]},
+2:{title:"🗂️ Missing Mr Perfect File",reward:"MR_PERFECT.exe RESTORED",stages:[
+{q:`<h3>Fragment I — Trash Retrieval</h3><p>The first fragment is somewhere LizzyOS sends things that should probably never be mentioned again.</p><p>What desktop folder should Agent Yelizaveta investigate?</p>`,a:["recycle bin","recyclebin"],hint:"Where deleted things go."},
+{q:`<h3>Fragment II — Why Does This Exist?</h3><p>Find the folder that explains why this ridiculous operating system exists.</p><p>Enter the folder name.</p>`,a:["read me","readme"],hint:"You normally open this before using something."},
+{q:`<h3>Fragment III — Emergency Comedy</h3><p>Which Open When letter activates the LizzyOS Emergency Comedy Protocol?</p>`,a:["need to laugh","laugh","open when you need to laugh"],hint:"😂"},
+{q:`<h3>Fragment IV — Colour Authentication</h3><p>Mr Perfect's favourite colour provides the final authentication fragment. Enter the colour.</p>`,a:["purple"],hint:"It's also in the Mikhail Quiz."},
+{q:`<h3>Reconstruct the Missing File</h3><div class="cipher">P • E • R • 16 &nbsp;&nbsp; + &nbsp;&nbsp; ???FECT</div><p>One fragment is pretending to be a number. A=1. Reconstruct the word LizzyOS associates with Mikael.</p>`,a:["mr perfect","perfect"],hint:"16=P. PERP + ... Think of Mikael's completely unbiased nickname."}
+]},
+3:{title:"📺 TV Multiverse Meltdown",reward:"MULTIVERSE RESTORED",stages:[
+{q:`<h3>Universe 1 — The Office</h3><p>Which paper company does Michael Scott manage a branch of?</p>`,a:["dunder mifflin"],hint:"Scranton's finest paper company."},
+{q:`<h3>Universe 2 — Brooklyn Nine-Nine</h3><p>Which precinct is the show centred around? Reduce its two digits: add them, then add the resulting digits until one digit remains.</p>`,a:["9"],hint:"99 → 18 → 9."},
+{q:`<h3>Universe 3 — Gilmore Girls</h3><p>Who says “I got hit by a deer!”? Convert her first name to A=1 and enter the smallest letter value.</p>`,a:["15"],hint:"Rory → R=18, O=15, R=18, Y=25."},
+{q:`<h3>Universe 4 — High School Musical</h3><p>The Wildcats represent which school?</p>`,a:["east high","east high school"],hint:"Troy Bolton's school."},
+{q:`<h3>Multiverse Lock</h3><p>Take <b>EAST</b> using A=1: 5+1+19+20. Reduce the total to one digit. Combine it with the reduced Brooklyn precinct digit.</p><p>Enter the two-digit code in universe order: B99 then HSM.</p>`,a:["99"],hint:"Both universes reduce to 9."}
+]},
+4:{title:"🌍 Agent General Knowledge Exam",reward:"GENERAL KNOWLEDGE CLEARANCE: APPROVED",stages:[
+{q:`<h3>Geography</h3><p>What is the largest country in the world by area? Enter the square of the number of letters in its English name.</p>`,a:["36"],hint:"Russia has 6 letters. 6²."},
+{q:`<h3>Science</h3><p>Au is the chemical symbol for which element? Enter its atomic number.</p>`,a:["79"],hint:"Gold."},
+{q:`<h3>History</h3><p>In what year did World War II end? Add all four digits and enter the result.</p>`,a:["19"],hint:"1945 → 1+9+4+5."},
+{q:`<h3>Space</h3><p>Which planet is known as the Red Planet? Convert its name with A=1, then subtract the smallest letter value from the largest.</p>`,a:["18"],hint:"MARS → 13,1,18,19 → 19−1."},
+{q:`<h3>Final Knowledge Lock</h3><div class="cipher">36 • 79 • 19 • 18</div><p>Only the last digit of each fragment survived. Enter the four-digit code.</p>`,a:["6998"],hint:"6 • 9 • 9 • 8."}
+]},
+5:{title:"❤️ LizzyOS Treasure Hunt",reward:"LEGENDARY TREASURE UNLOCKED",stages:[
+{q:`<h3>Key I — Postponement Department 📅</h3><p>Where does Lizzy keep postponing Mr Perfect? Enter the name of the desktop feature.</p>`,a:["calendar","calender"],hint:"Dates and times live here."},
+{q:`<h3>Key II — Forbidden Names 🗑️</h3><p>Find the place containing things Mikael isn't supposed to call Lizzy. Which banned nickname is specifically about her eyesight?</p>`,a:["four eyes","4 eyes"],hint:"👓"},
+{q:`<h3>Key III — Television Intercept 📺</h3><p>“That's what she said!” belongs to which show? Then enter the number of letters in the word OFFICE.</p>`,a:["6"],hint:"The Office → OFFICE has 6 letters."},
+{q:`<h3>Key IV — Mr Perfect Authentication 🏀</h3><p>Enter the number Mikael wore on his high-school basketball jersey.</p>`,a:["4"],hint:"It's in the hard Mikhail Quiz."},
+{q:`<h3>Final Treasure Lock</h3><p>Three symbols point to the final location:</p><div class="cipher">🌸 + 💌 + 🫂</div><p>Which Open When letter does the final symbol point to?</p>`,a:["need a hug","hug","open when you need a hug"],hint:"The 🫂 animation gives it away."}
+]}};
+let mid=1,stage=0,attempts=0;
+function norm(v){return v.toLowerCase().trim().replace(/[^\w\s]/g,"").replace(/\s+/g," ")}
+function menu(){$("crackMenu").classList.remove("hidden");$("crackPlay").classList.add("hidden");$("crackComplete").classList.add("hidden")}
+function start(id){mid=Number(id);stage=0;attempts=0;$("crackMenu").classList.add("hidden");$("crackComplete").classList.add("hidden");$("crackPlay").classList.remove("hidden");render()}
+function render(){let m=missions[mid],s=m.stages[stage];$("crackMissionTitle").textContent=m.title;$("crackStage").textContent=`Stage ${stage+1}/${m.stages.length}`;$("crackPuzzle").innerHTML=s.q;$("crackAnswer").value="";$("crackFeedback").textContent="";$("crackAnswer").focus()}
+function submit(){let s=missions[mid].stages[stage],v=norm($("crackAnswer").value);if(s.a.some(a=>norm(a)===v)){attempts=0;$("crackFeedback").textContent="✅ DECRYPTED. Accessing next layer...";setTimeout(()=>{stage++;stage<missions[mid].stages.length?render():complete()},650)}else{attempts++;$("crackFeedback").textContent=attempts>=3?"🚨 INTRUDER DETECTED. Agent clearance temporarily questioned. Try the hint. 😭":"❌ ACCESS DENIED. Incorrect code."}}
+function complete(){let m=missions[mid];$("crackPlay").classList.add("hidden");$("crackComplete").classList.remove("hidden");$("crackCompleteTitle").textContent=`🔓 ${m.reward}`;$("crackCompleteText").textContent=mid===5?"You actually went through all of that just to see what was in here? 😂 Agent Yelizaveta has earned a LEGENDARY Mystery Reward. ❤️":"Mission complete. Mr Perfect would like it recorded that your security clearance is becoming concerning. 😂❤️";localStorage.setItem(`crackMission${mid}`,"complete")}
+$("crackCodeIcon")?.addEventListener("click",()=>{$("crackCodeWindow").classList.remove("hidden");menu()});
+$("crackCodeClose")?.addEventListener("click",()=>$("crackCodeWindow").classList.add("hidden"));$("closeCrackCode")?.addEventListener("click",()=>$("crackCodeWindow").classList.add("hidden"));
+document.querySelectorAll("[data-mission]").forEach(b=>b.addEventListener("click",()=>start(b.dataset.mission)));
+$("crackSubmit")?.addEventListener("click",submit);$("crackAnswer")?.addEventListener("keydown",e=>{if(e.key==="Enter")submit()});
+$("crackHint")?.addEventListener("click",()=>{$("crackFeedback").textContent="💡 "+missions[mid].stages[stage].hint});
+$("crackBack")?.addEventListener("click",menu);$("crackAnother")?.addEventListener("click",menu);
+})();
+
+
+// DAILY REWARDS + STRICT CONSECUTIVE STREAK
+(()=>{
+const $=id=>document.getElementById(id);
+const normal=[
+["Common","💌","Secret Compliment","LizzyOS confirms you are dangerously adorable today."],["Common","🌸","Digital Flower","One completely unnecessary but deserved digital flower."],["Common","🫂","Hug Token","Redeem for one proper hug."],["Common","🎵","Song of the Day","Ask Mr Perfect to choose one song for you today."],["Common","☕","Mini Treat Token","Redeem for one small snack or drink."],
+["Rare","😂","Roast Mr Perfect","One consequence-free roast."],["Rare","👓","Nickname Immunity","Choose one banned nickname Mikael cannot use today."],["Rare","😈","Little Miss Attitude Pass","Unlimited attitude today."],["Rare","💬","Make Mikael Say It","Choose one ridiculous sentence Mr Perfect must say."],["Rare","🎲","Double Mystery","Demand one extra LizzyOS-style surprise."],
+["Epic","⚖️","Argument Winner Pass","Automatically win one harmless argument."],["Epic","🍝","Pasta Emergency Pass","Redeem for one pasta-related request or mini pasta date."],["Epic","👑","Princess Treatment Pass","One reasonable princess-treatment request."],["Epic","🎳","Activity Date Token","Choose a fun activity for a future date."],["Epic","💌","Personal Paragraph","Mr Perfect owes you one properly thoughtful paragraph."],["Epic","🔐","Agent Advantage","Claim one extra hint in a Crack the Code mission."]
+];
+const legends=[["LEGENDARY","🎟️","Golden Date Ticket","Choose one date or activity with Mikael a.k.a Mr Perfect. ❤️"],["LEGENDARY","👑","Ultimate Princess Day","One full day of upgraded princess treatment."],["LEGENDARY","💖","Your Choice Voucher","Choose one reasonable cute or fun thing to do together."],["LEGENDARY","🌹","Mr Perfect Surprise","Mikael owes you one proper surprise."],["LEGENDARY","🏆","Agent Yelizaveta VIP Pass","Choose the next date activity AND claim a proper hug."]];
+function key(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function dn(k){let a=k.split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/86400000)}
+function ix(s,n){let x=0;for(const ch of s)x=(x*31+ch.charCodeAt(0))>>>0;return x%n}
+function st(){return Number(localStorage.getItem("lizzyMysteryStreak")||0)}
+function reward(){try{return JSON.parse(localStorage.getItem("lizzyMysteryReward")||"null")}catch(e){return null}}
+function track(n){let p=n%7;$("streakTrack").innerHTML=Array.from({length:7},(_,i)=>`<span class="${((p===0&&n>0)||i<p)?"done":""}">${i+1}</span>`).join("")}
+function refresh(){let today=key(),opened=localStorage.getItem("lizzyMysteryOpened")===today,n=st(),r=reward();$("mysteryGift").textContent=opened&&r&&r[0]==="LEGENDARY"?"🏆":opened?"✨":"🎁";$("mysteryReward").classList.toggle("hidden",!opened);if(opened&&r)$("mysteryReward").innerHTML=`<div class="rewardRarity">${r[0]}</div><div class="rewardIcon">${r[1]}</div><strong>${r[2]}</strong><p>${r[3]}</p>`;$("openMysteryBox").disabled=opened;$("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";$("mysteryCountdown").textContent=opened?"Today's reward is claimed. Open tomorrow to keep the streak alive.":"";$("mysteryStreak").textContent=`🔥 ${n} Day${n===1?"":"s"} Streak`;let left=n?7-(n%7||7):7;$("mysteryStreakSub").textContent=(n>0&&n%7===0)?"Legendary milestone reached! Tomorrow starts the next 7-day run.":`${left} consecutive day${left===1?"":"s"} until guaranteed Legendary.`;track(n)}
+function claim(){let today=key();if(localStorage.getItem("lizzyMysteryOpened")===today)return;let last=localStorage.getItem("lizzyMysteryLastDate")||"",old=st(),n=1;if(last){let diff=dn(today)-dn(last);n=diff===1?old+1:1}let leg=n%7===0,r;if(leg)r=legends[ix(today+n,legends.length)];else{let roll=ix(today+"rarity",100),rar=roll<55?"Common":roll<85?"Rare":"Epic",pool=normal.filter(x=>x[0]===rar);r=pool[ix(today+"reward",pool.length)]}localStorage.setItem("lizzyMysteryLastDate",today);localStorage.setItem("lizzyMysteryStreak",String(n));localStorage.setItem("lizzyMysteryOpened",today);localStorage.setItem("lizzyMysteryReward",JSON.stringify(r));refresh();if(leg){$("mysteryReward").classList.add("legendaryBurst");setTimeout(()=>$("mysteryReward").classList.remove("legendaryBurst"),1600);if(typeof confetti==="function")confetti({particleCount:180,spread:110,origin:{y:.6}})}}
+function open(){$("mysteryBoxWindow").classList.remove("hidden");refresh()}function close(){$("mysteryBoxWindow").classList.add("hidden")}
+$("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEventListener("click",close);$("closeMysteryBox")?.addEventListener("click",close);$("openMysteryBox")?.addEventListener("click",claim);
 })();
