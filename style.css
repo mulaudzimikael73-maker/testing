@@ -2709,9 +2709,16 @@ color:#ff5ca8;
 }
 
 
+/* ===== Personality + Lock Screen + Games Folder ===== */\n.lizzyLockScreen{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 30%,rgba(255,191,218,.24),rgba(25,11,31,.96) 55%),#170d1d;transition:opacity .55s,visibility .55s}.lizzyLockScreen.unlocked{opacity:0;visibility:hidden;pointer-events:none}.lockCard{width:min(650px,94vw);max-height:94vh;overflow:auto;padding:30px;border-radius:26px;text-align:center;background:rgba(34,18,40,.94);border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 90px rgba(0,0,0,.45);backdrop-filter:blur(18px)}.lockIcon{font-size:50px}.lockEyebrow{font-size:11px;letter-spacing:2.5px;font-weight:900;opacity:.7}.personaChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.personaChoices button{min-height:95px;border-radius:17px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:inherit;padding:12px;cursor:pointer}.personaChoices button strong,.personaChoices button small{display:block;margin-top:5px}.personaChoices button small{opacity:.6}.personaChoices button.selected{background:rgba(255,178,211,.22);border-color:rgba(255,208,228,.8);transform:translateY(-2px)}.lockIdentity{font-size:11px;letter-spacing:1px;opacity:.75;margin:15px}.lockIdentity span{padding:0 8px}.lockCard input{width:min(420px,100%);display:block;margin:12px auto;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.2);color:#fff;text-align:center}.unlockLizzyOS{width:min(420px,100%);padding:14px;border:0;border-radius:12px;font-weight:900;cursor:pointer}.forgotLizzyCode{display:block;margin:13px auto;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;opacity:.8}.lockHint,.lockStatus{min-height:20px;font-size:12px;line-height:1.5}.lockStatus{font-weight:700}.wrongShake{animation:wrongShake .4s}@keyframes wrongShake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}\n.gamesFolderWindow:not(.hidden){display:flex!important;position:fixed!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;width:min(900px,94vw)!important;max-height:88vh!important;z-index:10100!important;flex-direction:column!important}.gamesFolderBody{padding:18px;overflow:auto}.gamesFolderGrid{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));gap:18px;padding:10px}.gamesFolderGrid .desktopIcon{position:relative!important;inset:auto!important;transform:none!important;width:auto!important;min-height:135px!important;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:18px!important;border-radius:18px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.12)!important}.gamesFolderGrid .desktopIcon:hover{background:rgba(255,255,255,.16)!important;transform:translateY(-3px)!important}.gamesFolderGrid .desktopEmoji{font-size:42px!important}.gamesFolderGrid .desktopIcon>span{white-space:normal!important;text-align:center!important;margin-top:8px!important}\nbody[data-lizzy-persona="attitude"] #desktop{filter:saturate(.92)}body[data-lizzy-persona="agent"] #desktop{filter:saturate(.8) contrast(1.05)}\n@media(max-width:700px){.personaChoices{grid-template-columns:1fr}.personaChoices button{min-height:70px}.gamesFolderGrid{grid-template-columns:repeat(2,1fr);gap:12px}.lockCard{padding:22px}}\n
+
+
+
 /* =========================================================
-   PASSWORD GATE ONLY — desktop sizing intentionally untouched
+   FINAL DESKTOP LAYOUT REBUILD
+   Keeps original/current desktop icon sizes.
    ========================================================= */
+
+/* ---------- Password / final scene ---------- */
 #lizzyLockScreen.hidden,
 #lizzyLockScreen.unlocked,
 #desktop.hidden {
@@ -2724,70 +2731,309 @@ color:#ff5ca8;
     width: 100vw !important;
     height: 100vh !important;
     min-height: 100vh !important;
-    margin: 0 !important;
     padding: 0 !important;
+    margin: 0 !important;
     overflow: hidden !important;
     z-index: 19000 !important;
 }
 
+/* Password page only. */
 #secretEnding:not(.hidden) #lizzyLockScreen:not(.hidden):not(.unlocked) {
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    margin: 0 !important;
     padding: 24px !important;
-    box-sizing: border-box !important;
+    margin: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    box-sizing: border-box !important;
     overflow: auto !important;
-    z-index: 20000 !important;
+    z-index: 21000 !important;
 }
 
 #secretEnding #lizzyLockScreen .lockCard {
     position: relative !important;
     inset: auto !important;
     transform: none !important;
-    margin: auto !important;
+    width: min(650px, 94vw) !important;
     max-height: calc(100vh - 48px) !important;
-    overflow: auto !important;
+    margin: auto !important;
 }
 
-/* Windows must stay above desktop icons when opened. */
-#desktop .desktopWindow:not(.hidden),
-#desktop #finderWindow:not(.hidden),
-#desktop #readMeWindow:not(.hidden) {
-    z-index: 10050 !important;
-}
-
-/* Keep every direct desktop icon in a clean grid slot. */
-#desktopArea:not(.hidden) > .desktopIcon {
-    min-width: 0 !important;
+/* Full viewport desktop after correct password.
+   This changes only the OUTER desktop viewport, not icon sizes. */
+body.lizzyosUnlocked #desktop:not(.hidden) {
+    position: absolute !important;
+    inset: 0 !important;
     width: 100% !important;
-    max-width: 150px !important;
-    justify-self: center !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
-/* The calendar/Our Date icon had old absolute-position remnants. */
-#desktopArea:not(.hidden) > .desktopIcon .calendarFolderEmoji {
+/* ---------- Restore original desktop sizing ---------- */
+/* Current CSS's intended size:
+   desktop icon = 120px
+   emoji = 70px
+   desktop padding = 40px
+*/
+#desktopArea:not(.hidden) {
+    display: grid !important;
+    grid-template-columns: repeat(5, 120px) !important;
+    grid-auto-rows: 165px !important;
+    column-gap: clamp(34px, 5.2vw, 88px) !important;
+    row-gap: 18px !important;
+    justify-content: start !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding: 40px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Every TOP-LEVEL icon gets one isolated grid cell. */
+#desktopArea > .desktopIcon {
     position: relative !important;
     inset: auto !important;
     transform: none !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    width: 120px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+    height: 150px !important;
+    min-height: 150px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    text-align: center !important;
+    overflow: visible !important;
+}
+
+/* Restore the original emoji size from the supplied CSS. */
+#desktopArea > .desktopIcon > .desktopEmoji {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100px !important;
+    height: 88px !important;
+    min-height: 88px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 70px !important;
+    line-height: 1 !important;
+    flex: 0 0 88px !important;
+}
+
+/* Labels get their own reserved area and can never sit on the emoji. */
+#desktopArea > .desktopIcon > span {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    display: block !important;
+    width: 120px !important;
+    min-height: 42px !important;
+    margin: 0 !important;
+    padding: 0 2px !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* Calendar icon: kill the old folder/badge positioning that caused text overlap. */
+#desktopArea > #calendarIcon .calendarFolderEmoji {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 72px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    flex-basis: 88px !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
+}
+
+#desktopArea > #calendarIcon .folderCalendarBadge {
+    position: absolute !important;
+    right: -8px !important;
+    bottom: 5px !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+}
+
+/* ---------- Games folder ---------- */
+/* Previously the window itself did not have a proper opaque panel,
+   so desktop icons visibly bled through it. */
+#gamesFolderWindow:not(.hidden) {
+    display: flex !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(880px, 92vw) !important;
+    height: min(680px, 86vh) !important;
+    max-height: 86vh !important;
+    padding: 0 0 20px !important;
+    flex-direction: column !important;
+    border-radius: 28px !important;
+    overflow: hidden !important;
+    color: white !important;
+    background: linear-gradient(
+        180deg,
+        rgba(238, 145, 192, .98),
+        rgba(195, 101, 169, .98)
+    ) !important;
+    border: 1px solid rgba(255,255,255,.38) !important;
+    box-shadow: 0 30px 90px rgba(60, 20, 55, .42) !important;
+    backdrop-filter: blur(24px) !important;
+    z-index: 30000 !important;
+}
+
+#gamesFolderWindow .windowTop {
+    flex: 0 0 auto !important;
+    background: rgba(255,255,255,.16) !important;
+}
+
+#gamesFolderWindow .gamesFolderBody {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    padding: 22px 28px !important;
+    overflow-y: auto !important;
+}
+
+#gamesFolderWindow .gamesFolderGrid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    padding: 8px !important;
+    margin: 0 !important;
+}
+
+#gamesFolderWindow .gamesFolderGrid > .desktopIcon {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 150px !important;
+    min-height: 150px !important;
+    margin: 0 !important;
+    padding: 16px 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,.12) !important;
+    border: 1px solid rgba(255,255,255,.20) !important;
+    overflow: hidden !important;
+}
+
+#gamesFolderWindow .gamesFolderGrid > .desktopIcon > .desktopEmoji {
+    width: auto !important;
+    height: auto !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    font-size: 48px !important;
+    line-height: 1 !important;
+}
+
+#gamesFolderWindow .gamesFolderGrid > .desktopIcon > span {
+    position: static !important;
+    width: 100% !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* Opened windows always cover the desktop instead of visually mixing with it. */
+#desktop .desktopWindow:not(.hidden),
+#desktop #finderWindow:not(.hidden),
+#desktop #readMeWindow:not(.hidden),
+#desktop #recycleBinWindow:not(.hidden),
+#desktop #calendarWindow:not(.hidden),
+#desktop #funQuizWindow:not(.hidden),
+#desktop #heartCatchWindow:not(.hidden),
+#desktop #mikhailQuizWindow:not(.hidden),
+#desktop #mysteryBoxWindow:not(.hidden),
+#desktop #wouldMikaelRatherWindow:not(.hidden),
+#desktop #ticTacToeWindow:not(.hidden),
+#desktop #crackCodeWindow:not(.hidden) {
+    z-index: 30000 !important;
+}
+
+/* ---------- Responsive desktop ---------- */
+@media (max-width: 1050px) {
+    #desktopArea:not(.hidden) {
+        grid-template-columns: repeat(4, 120px) !important;
+        column-gap: clamp(28px, 6vw, 65px) !important;
+    }
+}
+
+@media (max-width: 760px) {
+    #desktopArea:not(.hidden) {
+        grid-template-columns: repeat(3, 112px) !important;
+        grid-auto-rows: 155px !important;
+        gap: 16px 20px !important;
+        padding: 28px 20px 95px !important;
+    }
+    #desktopArea > .desktopIcon {
+        width: 112px !important;
+        min-width: 112px !important;
+        max-width: 112px !important;
+        height: 145px !important;
+    }
+    #desktopArea > .desktopIcon > span {
+        width: 112px !important;
+        font-size: 14px !important;
+    }
+    #gamesFolderWindow .gamesFolderGrid {
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    }
+}
+
+@media (max-width: 520px) {
+    #desktopArea:not(.hidden) {
+        grid-template-columns: repeat(2, 108px) !important;
+        justify-content: space-around !important;
+        gap: 14px !important;
+        padding: 24px 12px 95px !important;
+    }
+    #desktopArea > .desktopIcon {
+        width: 108px !important;
+        min-width: 108px !important;
+        max-width: 108px !important;
+    }
+    #desktopArea > .desktopIcon > span {
+        width: 108px !important;
+    }
+    #gamesFolderWindow:not(.hidden) {
+        width: 95vw !important;
+        height: 88vh !important;
+    }
+    #gamesFolderWindow .gamesFolderBody {
+        padding: 16px !important;
+    }
 }
 
 body.lizzyLockActive,
 body.lizzyosUnlocked {
     overflow: hidden !important;
-}
-
-@media (max-width: 600px) {
-    #secretEnding:not(.hidden) #lizzyLockScreen:not(.hidden):not(.unlocked) {
-        padding: 12px !important;
-    }
-    #secretEnding #lizzyLockScreen .lockCard {
-        max-height: calc(100vh - 24px) !important;
-    }
 }
