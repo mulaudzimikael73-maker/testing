@@ -639,7 +639,10 @@ secretButton.addEventListener("click", () => {
 
     progressFill.style.width = "100%";
 
-    startTerminal();
+    // Desktop remains completely locked until the access code is accepted.
+    terminal.classList.add("hidden");
+    terminal.style.display = "";
+    desktopArea.classList.add("hidden");
 
 });
 
@@ -2309,7 +2312,30 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  function applyPersona(p){persona=p in profiles?p:"lizzy";localStorage.setItem("lizzyPersona",persona);const x=profiles[persona];document.body.dataset.lizzyPersona=persona;document.querySelectorAll("[data-persona]").forEach(b=>b.classList.toggle("selected",b.dataset.persona===persona));setText("lockPersonaName",x.name);setText("gamesFolderLabel",x.desktop.games);setText("gamesWindowTitle",x.gameTitle);setText("gamesFolderIntro",x.gameIntro);const map={folderIcon:"archive",readMeIcon:"read",missionIcon:"mission",openWhenIcon:"open",recycleBinIcon:"bin",calendarIcon:"date",mysteryBoxIcon:"mystery"};Object.entries(map).forEach(([id,key])=>{const e=$(id)?.querySelector("span:last-child");if(e)e.textContent=x.desktop[key]});
   const gameNames={lizzy:{funQuizIcon:"Lizzy Quiz",heartGameIcon:"Heart Catch",mikhailQuizIcon:"Mikhail Quiz",wouldMikaelRatherIcon:"Would Mikael Rather?",ticTacToeIcon:"Tic-Tac-Toe",crackCodeIcon:"Crack the Code"},attitude:{funQuizIcon:"Obviously I Know Me",heartGameIcon:"Catch Feelings, Apparently",mikhailQuizIcon:"How Well Do I Know This Man?",wouldMikaelRatherIcon:"Questionable Mikael Decisions",ticTacToeIcon:"Humble Mr Perfect",crackCodeIcon:"Make Him Explain Himself"},agent:{funQuizIcon:"Identity Verification",heartGameIcon:"Operation: Catch Heart",mikhailQuizIcon:"Mikhail Intelligence Exam",wouldMikaelRatherIcon:"Subject Preference Analysis",ticTacToeIcon:"Tactical Grid",crackCodeIcon:"Code Division"}}[persona];Object.entries(gameNames).forEach(([id,name])=>{const e=$(id)?.querySelector("span:last-child");if(e)e.textContent=name});
  }
- function unlock(){const code=$("lizzyAccessCode")?.value.trim().toLowerCase().replace(/\s+/g," ");if(code==="mr perfect"||code==="mrperfect"){setText("lockClearance","APPROVED");setText("lockStatus",profiles[persona].welcome+" ACCESS GRANTED ✅ So you do remember. Mikael will unfortunately use this as evidence forever. 😌");setTimeout(()=>$("lizzyLockScreen")?.classList.add("unlocked"),650);localStorage.setItem("lizzyUnlockedSession","yes");return}fails++;setText("lockStatus",profiles[persona].wrong[Math.min(fails-1,2)]);$("lizzyAccessCode")?.classList.add("wrongShake");setTimeout(()=>$("lizzyAccessCode")?.classList.remove("wrongShake"),450)}
+ function unlock(){
+  const code=$("lizzyAccessCode")?.value.trim().toLowerCase().replace(/\s+/g," ");
+  if(code==="mr perfect"||code==="mrperfect"){
+    setText("lockClearance","APPROVED");
+    setText("lockStatus",profiles[persona].welcome+" ACCESS GRANTED ✅ So you do remember. Mikael will unfortunately use this as evidence forever. 😌");
+    const desktop=$("desktop");
+    setTimeout(()=>{
+      // The lock is the ONLY entry point. Reveal a clean, full-size LizzyOS only now.
+      $("lizzyLockScreen")?.classList.add("unlocked");
+      desktop?.classList.remove("hidden");
+      document.body.classList.add("lizzyosUnlocked");
+      // Reset any old/partial desktop state before the normal LizzyOS boot sequence.
+      if(terminal){ terminal.style.display=""; terminal.classList.remove("hidden"); }
+      desktopArea?.classList.add("hidden");
+      if(terminalText) terminalText.innerHTML="";
+      startTerminal();
+    },650);
+    return;
+  }
+  fails++;
+  setText("lockStatus",profiles[persona].wrong[Math.min(fails-1,2)]);
+  $("lizzyAccessCode")?.classList.add("wrongShake");
+  setTimeout(()=>$("lizzyAccessCode")?.classList.remove("wrongShake"),450);
+}
  document.querySelectorAll("[data-persona]").forEach(b=>b.addEventListener("click",()=>applyPersona(b.dataset.persona)));
  $("unlockLizzyOS")?.addEventListener("click",unlock);$("lizzyAccessCode")?.addEventListener("keydown",e=>{if(e.key==="Enter")unlock()});
  $("forgotLizzyCode")?.addEventListener("click",()=>{setText("lockHint",hints[Math.min(hint,hints.length-1)]);hint++});
