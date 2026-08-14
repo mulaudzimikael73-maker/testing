@@ -2717,3 +2717,142 @@ color:#ff5ca8;
 .lizzyLockScreen{width:100vw!important;height:100vh!important;box-sizing:border-box!important;}
 body.lizzyosUnlocked #secretEnding{overflow:hidden!important;}
 body.lizzyosUnlocked #desktop{inset:0!important;}
+
+
+/* =========================================================
+   LIZZYOS — CENTERED PASSWORD GATE + TRUE FULLSCREEN DESKTOP
+   Final authoritative layout overrides
+   ========================================================= */
+
+/* The security gate owns the whole viewport while locked. */
+#lizzyLockScreen,
+#lockScreen,
+.lizzy-lock-screen,
+.lock-screen,
+.security-screen,
+.password-gate {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    box-sizing: border-box !important;
+    z-index: 2147483000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: auto !important;
+}
+
+/* Center the actual password card instead of leaving it on the left. */
+#lizzyLockScreen > *,
+#lockScreen > *,
+.lizzy-lock-screen > *,
+.lock-screen > *,
+.security-screen > *,
+.password-gate > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#lizzyLockCard,
+#lockCard,
+.lock-card,
+.security-card,
+.password-card {
+    position: relative !important;
+    width: min(920px, calc(100vw - 48px)) !important;
+    max-width: 920px !important;
+    height: auto !important;
+    max-height: calc(100dvh - 48px) !important;
+    margin: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+}
+
+/* Nothing from LizzyOS may remain in a side-by-side/flex layout after unlock. */
+html,
+body {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+}
+
+body.lizzy-unlocked,
+body.desktop-unlocked,
+body[data-lizzy-unlocked="true"] {
+    display: block !important;
+    width: 100vw !important;
+    max-width: none !important;
+}
+
+/* Desktop always retakes the entire viewport. */
+#desktop,
+#lizzyDesktop,
+.desktop,
+.lizzy-desktop,
+#desktopScreen {
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+}
+
+/* When the gate is gone, it is genuinely gone and cannot reserve layout space. */
+#lizzyLockScreen.hidden,
+#lockScreen.hidden,
+.lizzy-lock-screen.hidden,
+.lock-screen.hidden,
+.security-screen.hidden,
+.password-gate.hidden,
+html.lizzy-unlocked #lizzyLockScreen,
+html.lizzy-unlocked #lockScreen,
+body.lizzy-unlocked #lizzyLockScreen,
+body.lizzy-unlocked #lockScreen {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Mobile/tablet security screen remains centered. */
+@media (max-width: 900px) {
+    #lizzyLockScreen,
+    #lockScreen,
+    .lizzy-lock-screen,
+    .lock-screen,
+    .security-screen,
+    .password-gate {
+        padding: 12px !important;
+    }
+
+    #lizzyLockCard,
+    #lockCard,
+    .lock-card,
+    .security-card,
+    .password-card {
+        width: min(680px, calc(100vw - 24px)) !important;
+        max-height: calc(100dvh - 24px) !important;
+    }
+}

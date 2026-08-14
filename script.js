@@ -2345,3 +2345,132 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  ["funQuizIcon","heartGameIcon","mikhailQuizIcon","wouldMikaelRatherIcon","ticTacToeIcon","crackCodeIcon"].forEach(id=>$(id)?.addEventListener("click",()=>setTimeout(closeGames,50)));
  applyPersona(persona);
 })();
+
+
+// =========================================================
+// LIZZYOS — FINAL VIEWPORT NORMALIZER
+// Ensures the password gate is centered and the desktop
+// becomes true fullscreen after successful authentication.
+// =========================================================
+(() => {
+  const lockSelectors = [
+    "#lizzyLockScreen", "#lockScreen", ".lizzy-lock-screen",
+    ".lock-screen", ".security-screen", ".password-gate"
+  ];
+  const desktopSelectors = [
+    "#desktop", "#lizzyDesktop", ".desktop", ".lizzy-desktop", "#desktopScreen"
+  ];
+
+  function lockNode() {
+    for (const s of lockSelectors) {
+      const n = document.querySelector(s);
+      if (n) return n;
+    }
+    return null;
+  }
+
+  function desktopNode() {
+    for (const s of desktopSelectors) {
+      const n = document.querySelector(s);
+      if (n) return n;
+    }
+    return null;
+  }
+
+  function forceFullDesktop() {
+    const lock = lockNode();
+    if (lock) {
+      lock.classList.add("hidden");
+      lock.style.setProperty("display", "none", "important");
+      lock.style.setProperty("width", "0", "important");
+      lock.style.setProperty("height", "0", "important");
+    }
+
+    document.documentElement.classList.add("lizzy-unlocked");
+    document.body.classList.add("lizzy-unlocked");
+    document.body.dataset.lizzyUnlocked = "true";
+
+    // Remove accidental split-screen styles left by the lock screen.
+    for (const el of [document.documentElement, document.body]) {
+      el.style.removeProperty("grid-template-columns");
+      el.style.removeProperty("grid-template-areas");
+      el.style.removeProperty("transform");
+      el.style.setProperty("width", "100%", "important");
+      el.style.setProperty("max-width", "none", "important");
+    }
+
+    const desk = desktopNode();
+    if (desk) {
+      desk.style.setProperty("width", "100vw", "important");
+      desk.style.setProperty("min-width", "100vw", "important");
+      desk.style.setProperty("max-width", "none", "important");
+      desk.style.setProperty("min-height", "100dvh", "important");
+      desk.style.setProperty("margin", "0", "important");
+      desk.style.setProperty("left", "0", "important");
+      desk.style.setProperty("right", "auto", "important");
+      desk.style.setProperty("transform", "none", "important");
+    }
+
+    window.scrollTo(0, 0);
+    setTimeout(() => window.dispatchEvent(new Event("resize")), 30);
+    setTimeout(() => window.dispatchEvent(new Event("resize")), 250);
+  }
+
+  function isLockGone() {
+    const lock = lockNode();
+    if (!lock) return false;
+    const cs = getComputedStyle(lock);
+    return lock.classList.contains("hidden") ||
+           cs.display === "none" ||
+           cs.visibility === "hidden";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const lock = lockNode();
+    if (lock) {
+      // Prevent the desktop from influencing the lock-screen layout.
+      lock.style.setProperty("position", "fixed", "important");
+      lock.style.setProperty("inset", "0", "important");
+      lock.style.setProperty("width", "100vw", "important");
+      lock.style.setProperty("height", "100dvh", "important");
+    }
+
+    // Observe the existing password code. The instant it successfully hides
+    // the lock screen, normalize the desktop to full viewport.
+    if (lock) {
+      const observer = new MutationObserver(() => {
+        if (isLockGone()) {
+          forceFullDesktop();
+          observer.disconnect();
+        }
+      });
+      observer.observe(lock, {
+        attributes: true,
+        attributeFilter: ["class", "style", "hidden"]
+      });
+    }
+
+    // Catch common unlock buttons/forms without changing validation.
+    document.addEventListener("click", () => {
+      setTimeout(() => {
+        if (isLockGone()) forceFullDesktop();
+      }, 80);
+    }, true);
+
+    document.addEventListener("submit", () => {
+      setTimeout(() => {
+        if (isLockGone()) forceFullDesktop();
+      }, 80);
+    }, true);
+  });
+
+  window.addEventListener("resize", () => {
+    if (document.body.classList.contains("lizzy-unlocked")) {
+      const desk = desktopNode();
+      if (desk) {
+        desk.style.setProperty("width", "100vw", "important");
+        desk.style.setProperty("min-height", "100dvh", "important");
+      }
+    }
+  });
+})();
