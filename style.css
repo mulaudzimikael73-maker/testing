@@ -2969,3 +2969,89 @@ body > #desktop #terminal {
         max-height: calc(100dvh - 24px) !important;
     }
 }
+
+
+/* =========================================================
+   DEFINITIVE LIZZYOS ENTRY FLOW LAYOUT
+   ========================================================= */
+
+#lizzyLockScreen.hidden,
+#lizzyLockScreen.unlocked {
+    display: none !important;
+}
+
+body > #lizzyLockScreen:not(.hidden):not(.unlocked) {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: auto !important;
+    z-index: 2147483640 !important;
+}
+
+body > #lizzyLockScreen:not(.hidden):not(.unlocked) > .lockCard {
+    position: relative !important;
+    inset: auto !important;
+    width: min(920px, calc(100vw - 48px)) !important;
+    max-width: 920px !important;
+    height: auto !important;
+    max-height: calc(100dvh - 48px) !important;
+    margin: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+body.lizzyLockActive {
+    overflow: hidden !important;
+}
+
+body > #desktop.hidden {
+    display: none !important;
+}
+
+body.lizzyosUnlocked > #desktop:not(.hidden) {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    overflow: hidden !important;
+    z-index: 1000 !important;
+}
+
+body.lizzyosUnlocked {
+    width: 100vw !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+}
+
+body.lizzyosUnlocked > #desktop #terminal,
+body.lizzyosUnlocked > #desktop #desktopArea {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+    body > #lizzyLockScreen:not(.hidden):not(.unlocked) {
+        padding: 12px !important;
+    }
+
+    body > #lizzyLockScreen:not(.hidden):not(.unlocked) > .lockCard {
+        width: calc(100vw - 24px) !important;
+        max-height: calc(100dvh - 24px) !important;
+    }
+}

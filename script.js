@@ -2477,89 +2477,119 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
 
 
 // =========================================================
-// FINAL DOM FIX
-// The old build placed both the password gate and desktop
-// inside #secretEnding. That parent was constraining fixed
-// positioning on some browsers. Move both directly to BODY.
+// LIZZYOS — DEFINITIVE ENTRY FLOW + VIEWPORT FIX
+// Storyline -> centered password gate -> fullscreen desktop
 // =========================================================
 (() => {
-    function mountLizzyOSAtViewportRoot() {
-        const lock = document.getElementById("lizzyLockScreen");
-        const desktop = document.getElementById("desktop");
+    const $ = (id) => document.getElementById(id);
 
-        if (lock && lock.parentElement !== document.body) {
-            document.body.appendChild(lock);
-        }
-
-        if (desktop && desktop.parentElement !== document.body) {
-            document.body.appendChild(desktop);
-        }
-
-        // Locked by default: desktop cannot be seen or clicked.
-        if (lock && !lock.classList.contains("unlocked")) {
-            desktop?.classList.add("hidden");
+    function moveToViewportRoot(el) {
+        if (el && el.parentElement !== document.body) {
+            document.body.appendChild(el);
         }
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", mountLizzyOSAtViewportRoot);
-    } else {
-        mountLizzyOSAtViewportRoot();
-    }
+    function prepareViewportElements() {
+        const lock = $("lizzyLockScreen");
+        const desktop = $("desktop");
 
-    // Re-run when the storyline reaches the final scene, just in case.
-    document.getElementById("secretButton")?.addEventListener("click", () => {
-        mountLizzyOSAtViewportRoot();
-        const lock = document.getElementById("lizzyLockScreen");
-        const desktop = document.getElementById("desktop");
+        // Moving these out of #secretEnding prevents that scene from
+        // constraining their fixed/fullscreen dimensions.
+        moveToViewportRoot(lock);
+        moveToViewportRoot(desktop);
 
-        lock?.classList.remove("hidden", "unlocked");
-        lock?.style.removeProperty("display");
+        // IMPORTANT: on a fresh page load, neither may be visible.
+        lock?.classList.add("hidden");
+        lock?.classList.remove("unlocked");
         desktop?.classList.add("hidden");
 
         document.body.classList.remove("lizzyosUnlocked", "lizzy-unlocked");
+        document.documentElement.classList.remove("lizzy-unlocked");
         document.body.removeAttribute("data-lizzy-unlocked");
-    }, true);
+    }
 
-    // After successful unlock, enforce a true full-screen desktop.
-    const unlockObserver = new MutationObserver(() => {
-        const lock = document.getElementById("lizzyLockScreen");
-        const desktop = document.getElementById("desktop");
+    function showCenteredLock() {
+        const lock = $("lizzyLockScreen");
+        const desktop = $("desktop");
 
-        if (lock?.classList.contains("unlocked")) {
-            lock.classList.add("hidden");
-            desktop?.classList.remove("hidden");
+        moveToViewportRoot(lock);
+        moveToViewportRoot(desktop);
 
-            document.body.classList.add("lizzyosUnlocked");
-            document.documentElement.classList.add("lizzy-unlocked");
+        desktop?.classList.add("hidden");
 
-            if (desktop) {
-                desktop.style.setProperty("position", "fixed", "important");
-                desktop.style.setProperty("inset", "0", "important");
-                desktop.style.setProperty("width", "100vw", "important");
-                desktop.style.setProperty("height", "100dvh", "important");
-                desktop.style.setProperty("margin", "0", "important");
-                desktop.style.setProperty("transform", "none", "important");
-            }
-
-            window.scrollTo(0, 0);
-            requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
-        }
-    });
-
-    const startObserver = () => {
-        const lock = document.getElementById("lizzyLockScreen");
         if (lock) {
-            unlockObserver.observe(lock, {
+            lock.classList.remove("hidden", "unlocked");
+            lock.style.removeProperty("display");
+            lock.style.removeProperty("visibility");
+            lock.style.removeProperty("opacity");
+            lock.scrollTop = 0;
+        }
+
+        document.body.classList.add("lizzyLockActive");
+        document.body.classList.remove("lizzyosUnlocked", "lizzy-unlocked");
+        window.scrollTo(0, 0);
+
+        setTimeout(() => $("lizzyAccessCode")?.focus(), 100);
+    }
+
+    function showFullscreenDesktop() {
+        const lock = $("lizzyLockScreen");
+        const desktop = $("desktop");
+
+        moveToViewportRoot(desktop);
+
+        if (lock) {
+            lock.classList.add("hidden", "unlocked");
+            lock.style.setProperty("display", "none", "important");
+        }
+
+        if (desktop) {
+            desktop.classList.remove("hidden");
+            desktop.style.setProperty("position", "fixed", "important");
+            desktop.style.setProperty("inset", "0", "important");
+            desktop.style.setProperty("width", "100vw", "important");
+            desktop.style.setProperty("height", "100dvh", "important");
+            desktop.style.setProperty("max-width", "none", "important");
+            desktop.style.setProperty("margin", "0", "important");
+            desktop.style.setProperty("transform", "none", "important");
+        }
+
+        document.body.classList.remove("lizzyLockActive");
+        document.body.classList.add("lizzyosUnlocked");
+        document.documentElement.classList.add("lizzy-unlocked");
+        document.body.dataset.lizzyUnlocked = "true";
+
+        window.scrollTo(0, 0);
+        requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
+        setTimeout(() => window.dispatchEvent(new Event("resize")), 250);
+    }
+
+    function init() {
+        prepareViewportElements();
+
+        // Only the end-of-story button is allowed to reveal the password page.
+        $("secretButton")?.addEventListener("click", () => {
+            setTimeout(showCenteredLock, 0);
+        });
+
+        // Observe the EXISTING password validator. It adds "unlocked"
+        // only after the correct password is entered.
+        const lock = $("lizzyLockScreen");
+        if (lock) {
+            new MutationObserver(() => {
+                if (lock.classList.contains("unlocked")) {
+                    showFullscreenDesktop();
+                }
+            }).observe(lock, {
                 attributes: true,
-                attributeFilter: ["class", "style"]
+                attributeFilter: ["class"]
             });
         }
-    };
+    }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", startObserver);
+        document.addEventListener("DOMContentLoaded", init, { once: true });
     } else {
-        startObserver();
+        init();
     }
 })();
