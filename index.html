@@ -1174,5 +1174,82 @@ if (window.netlifyIdentity) {
 
 <script src="script.js"></script>
 
+
+<!-- ===== Living Desktop Update ===== -->
+<div id="livingDesktopControls" class="livingDesktopControls">
+  <button id="nightModeToggle" class="livingControl" title="Toggle Night Mode">🌙</button>
+  <button id="desktopMoodButton" class="livingControl" title="Change Desktop Mood">🎨</button>
+  <button id="warningsButton" class="livingControl" title="LizzyOS System Alert">🚨</button>
+</div>
+
+<div id="livingStatusBar" class="livingStatusBar">
+  <span id="lastLoginDisplay">Last login: First visit 💗</span>
+  <span class="livingStatusDot">•</span>
+  <span id="liveClockDisplay">--:--</span>
+  <span id="liveDateDisplay">---</span>
+</div>
+
+<div id="aboutLizzyWindow" class="desktopWindow livingWindow hidden">
+  <div class="windowTop">
+    <div class="traffic"><span></span><span></span><span></span></div>
+    <strong>💗 About This Lizzy</strong>
+    <button class="livingClose" data-close-living="aboutLizzyWindow">×</button>
+  </div>
+  <div class="livingWindowBody">
+    <div class="aboutLizzyHero">💗</div>
+    <h2>About This Lizzy</h2>
+    <p id="aboutLizzyIntro">A highly classified collection of things that make Lizzy, Lizzy.</p>
+    <div class="aboutLizzyFacts">
+      <div><b>Favourite colour</b><span>Pink — all shades 💗</span></div>
+      <div><b>Known aliases</b><span>Lizzy · Little Miss Attitude · Agent Yelizaveta</span></div>
+      <div><b>Important information</b><span>Likes pasta. Has attitude. Somehow tolerates Mikael.</span></div>
+      <div><b>System status</b><span id="aboutLizzyStatus">Certified LizzyOS VIP ✨</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="lizzyMailWindow" class="desktopWindow livingWindow hidden">
+  <div class="windowTop">
+    <div class="traffic"><span></span><span></span><span></span></div>
+    <strong id="lizzyMailWindowTitle">💌 Lizzy Mail</strong>
+    <button class="livingClose" data-close-living="lizzyMailWindow">×</button>
+  </div>
+  <div class="livingWindowBody mailBody">
+    <div class="mailHeader">
+      <div>
+        <h2 id="mailGreeting">Send Mikael a message 💌</h2>
+        <p>Messages are saved in LizzyOS on this device.</p>
+      </div>
+      <span id="mailUnreadPill" class="unreadPill hidden">NEW</span>
+    </div>
+    <textarea id="lizzyMailMessage" maxlength="800" placeholder="Type something here..."></textarea>
+    <div class="mailActions">
+      <span id="mailCharacterCount">0 / 800</span>
+      <button id="sendLizzyMail" class="primaryLivingButton">Send Message 💗</button>
+    </div>
+    <div id="mailSentStatus" class="mailSentStatus"></div>
+    <div class="mailHistoryTitle">Recent messages on this device</div>
+    <div id="lizzyMailHistory" class="mailHistory"></div>
+  </div>
+</div>
+
+<div id="lizzyWarningToast" class="lizzyWarningToast hidden">
+  <div class="warningIcon">🚨</div>
+  <div>
+    <strong id="warningTitle">LIZZYOS WARNING</strong>
+    <p id="warningMessage"></p>
+  </div>
+  <button id="warningDismiss">×</button>
+</div>
+
+<div id="moodPicker" class="moodPicker hidden">
+  <strong>Desktop Mood</strong>
+  <button data-mood="pink">💗 Classic Pink</button>
+  <button data-mood="soft">🌸 Soft</button>
+  <button data-mood="sunset">🌅 Sunset</button>
+  <button data-mood="midnight">🌙 Midnight</button>
+</div>
+<!-- ===== End Living Desktop Update ===== -->
+
 </body>
 </html>

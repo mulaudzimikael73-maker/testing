@@ -3037,3 +3037,127 @@ body.lizzyLockActive,
 body.lizzyosUnlocked {
     overflow: hidden !important;
 }
+
+
+/* =========================================================
+   LIVING DESKTOP UPDATE
+   Does NOT alter the established desktop grid/icon dimensions.
+   ========================================================= */
+.livingDesktopControls{
+  position:fixed;top:18px;right:22px;z-index:25000;
+  display:flex;gap:8px;
+}
+.livingControl{
+  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.22);backdrop-filter:blur(16px);
+  font-size:20px;cursor:pointer;box-shadow:0 8px 25px rgba(80,30,70,.16);
+}
+.livingStatusBar{
+  position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
+  z-index:25000;display:flex;align-items:center;gap:10px;
+  padding:9px 16px;border-radius:999px;color:#fff;font-size:13px;font-weight:600;
+  background:rgba(68,25,65,.34);border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(18px);white-space:nowrap;
+}
+.livingStatusDot{opacity:.6}
+.livingWindow{
+  position:fixed!important;top:50%!important;left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  width:min(720px,92vw)!important;max-height:84vh!important;
+  border-radius:26px!important;overflow:hidden!important;
+  background:rgba(247,166,205,.97)!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  box-shadow:0 30px 100px rgba(70,25,65,.4)!important;
+  backdrop-filter:blur(26px)!important;z-index:32000!important;color:#fff;
+}
+.livingWindow.hidden{display:none!important}
+.livingWindow .windowTop{
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:rgba(255,255,255,.15);
+}
+.livingWindow .windowTop strong{flex:1}
+.livingClose{
+  border:0;background:rgba(255,255,255,.2);color:#fff;width:32px;height:32px;
+  border-radius:50%;font-size:22px;cursor:pointer;
+}
+.livingWindowBody{padding:26px;overflow:auto;max-height:calc(84vh - 62px)}
+.aboutLizzyHero{font-size:72px;text-align:center}
+.aboutLizzyFacts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.aboutLizzyFacts>div{
+  padding:16px;border-radius:18px;background:rgba(255,255,255,.14);
+  display:flex;flex-direction:column;gap:6px;
+}
+.aboutLizzyFacts span{opacity:.9}
+.mailHeader{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.mailBody textarea{
+  width:100%;min-height:170px;resize:vertical;margin-top:14px;padding:16px;
+  box-sizing:border-box;border-radius:18px;border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.18);color:#fff;font:inherit;outline:none;
+}
+.mailBody textarea::placeholder{color:rgba(255,255,255,.7)}
+.mailActions{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.primaryLivingButton{
+  border:0;border-radius:999px;padding:12px 18px;background:#fff;color:#c54f8f;
+  font-weight:800;cursor:pointer;
+}
+.mailSentStatus{min-height:24px;margin-top:10px;font-weight:700}
+.mailHistoryTitle{margin-top:20px;font-weight:800}
+.mailHistory{display:grid;gap:9px;margin-top:9px}
+.mailHistoryItem{padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.13)}
+.mailHistoryItem small{display:block;opacity:.7;margin-top:5px}
+.unreadPill,.unreadBadge{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#ff3b88;color:white;font-size:10px;font-weight:900;
+  min-width:20px;height:20px;padding:0 6px;border-radius:999px;
+}
+.unreadPill.hidden,.unreadBadge.hidden{display:none!important}
+.desktopIcon{position:relative}
+.desktopIcon .unreadBadge{
+  position:absolute;top:0;right:4px;z-index:5;box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+.lizzyWarningToast{
+  position:fixed;right:22px;bottom:74px;z-index:40000;width:min(390px,calc(100vw - 44px));
+  padding:16px;border-radius:20px;background:rgba(51,19,50,.94);color:#fff;
+  display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);backdrop-filter:blur(20px);
+}
+.lizzyWarningToast.hidden{display:none!important}
+.warningIcon{font-size:30px}.lizzyWarningToast p{margin:5px 0 0}
+#warningDismiss{margin-left:auto;border:0;background:none;color:white;font-size:22px;cursor:pointer}
+.moodPicker{
+  position:fixed;right:22px;top:72px;z-index:35000;padding:14px;width:210px;
+  border-radius:18px;background:rgba(63,25,61,.9);color:#fff;
+  backdrop-filter:blur(18px);box-shadow:0 16px 50px rgba(0,0,0,.25);
+}
+.moodPicker.hidden{display:none!important}
+.moodPicker strong{display:block;margin:3px 5px 10px}
+.moodPicker button{
+  width:100%;display:block;text-align:left;padding:10px;border:0;border-radius:12px;
+  background:transparent;color:#fff;cursor:pointer;
+}
+.moodPicker button:hover{background:rgba(255,255,255,.12)}
+
+/* Mood palettes */
+body[data-desktop-mood="soft"] #desktopArea{background:linear-gradient(180deg,#ffd9e9,#e8b7d4)!important}
+body[data-desktop-mood="sunset"] #desktopArea{background:linear-gradient(180deg,#ffc7c7,#d990bd)!important}
+body[data-desktop-mood="midnight"] #desktopArea{background:linear-gradient(180deg,#38233f,#74446f)!important}
+
+/* Night mode */
+body.lizzyNightMode #desktopArea{
+  background:linear-gradient(180deg,#25152d,#573452)!important;
+}
+body.lizzyNightMode .desktopIcon,
+body.lizzyNightMode .livingStatusBar{color:#fff!important}
+body.lizzyNightMode .livingWindow{
+  background:rgba(69,35,70,.97)!important;
+}
+
+/* Controls/status should only exist once LizzyOS is unlocked. */
+body:not(.lizzyosUnlocked) .livingDesktopControls,
+body:not(.lizzyosUnlocked) .livingStatusBar{display:none!important}
+
+@media(max-width:650px){
+  .aboutLizzyFacts{grid-template-columns:1fr}
+  .livingStatusBar{font-size:11px;max-width:90vw;overflow:hidden}
+  .livingDesktopControls{top:10px;right:10px}
+}

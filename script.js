@@ -2337,3 +2337,179 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  ["funQuizIcon","heartGameIcon","mikhailQuizIcon","wouldMikaelRatherIcon","ticTacToeIcon","crackCodeIcon"].forEach(id=>$(id)?.addEventListener("click",()=>setTimeout(closeGames,50)));
  applyPersona(persona);
 })();
+
+
+// =========================================================
+// LIVING DESKTOP UPDATE
+// Night Mode • About Lizzy • Lizzy Mail • Warnings • Moods
+// Live clock/date • Last login • Unread indicators
+// =========================================================
+(() => {
+  const $ = id => document.getElementById(id);
+  const store = {
+    get(k, fallback=null){ try { const v=localStorage.getItem(k); return v===null?fallback:JSON.parse(v); } catch { return fallback; } },
+    set(k,v){ try { localStorage.setItem(k,JSON.stringify(v)); } catch {} }
+  };
+
+  const personality = () => localStorage.getItem("lizzyPersonality") || "lizzy";
+
+  const personaCopy = {
+    lizzy:{
+      mail:"💌 Lizzy Mail", greeting:"Send Mikael a message 💌",
+      about:"Certified LizzyOS VIP ✨"
+    },
+    attitude:{
+      mail:"💌 Bother Mikael", greeting:"Fine. Say what you need to say 🙄",
+      about:"Attitude: MAXIMUM · Patience with Mikael: questionable."
+    },
+    agent:{
+      mail:"📡 Secure Comms", greeting:"Transmit secure message to Agent M. Petrov",
+      about:"Clearance verified. Agent Yelizaveta is operational."
+    }
+  };
+
+  function updatePersonaLivingUI(){
+    const p = personaCopy[personality()] || personaCopy.lizzy;
+    if($("lizzyMailWindowTitle")) $("lizzyMailWindowTitle").textContent=p.mail;
+    if($("mailGreeting")) $("mailGreeting").textContent=p.greeting;
+    if($("aboutLizzyStatus")) $("aboutLizzyStatus").textContent=p.about;
+  }
+
+  // Night Mode
+  function applyNight(){
+    const on=store.get("lizzyNightMode",false);
+    document.body.classList.toggle("lizzyNightMode",!!on);
+    if($("nightModeToggle")) $("nightModeToggle").textContent=on?"☀️":"🌙";
+  }
+  $("nightModeToggle")?.addEventListener("click",()=>{
+    store.set("lizzyNightMode",!store.get("lizzyNightMode",false));
+    applyNight();
+  });
+
+  // Desktop moods
+  function applyMood(){
+    document.body.dataset.desktopMood=store.get("lizzyDesktopMood","pink");
+  }
+  $("desktopMoodButton")?.addEventListener("click",()=>$("moodPicker")?.classList.toggle("hidden"));
+  document.querySelectorAll("#moodPicker [data-mood]").forEach(btn=>btn.addEventListener("click",()=>{
+    store.set("lizzyDesktopMood",btn.dataset.mood);
+    applyMood();
+    $("moodPicker")?.classList.add("hidden");
+  }));
+
+  // Fake warnings
+  const warnings = {
+    lizzy:[
+      ["LIZZYOS NOTICE","Excessive cuteness detected. System stability remains questionable."],
+      ["SYSTEM UPDATE","Lizzy has entered the building. Productivity has been suspended."],
+      ["SECURITY ALERT","Someone appears to be thinking about Mikael. Investigation pending."]
+    ],
+    attitude:[
+      ["ATTITUDE WARNING","Maximum sass detected. Mikael has been advised to proceed carefully."],
+      ["SYSTEM ERROR","Patience with men has reached critically low levels."],
+      ["LIZZYOS NOTICE","Four eyes detected. Still somehow missing the obvious. Interesting. 🙄"]
+    ],
+    agent:[
+      ["CLASSIFIED ALERT","Agent Yelizaveta activity detected. Clearance confirmed."],
+      ["INTELLIGENCE UPDATE","Subject M. Petrov remains under observation."],
+      ["SECURITY NOTICE","Secure channel active. Suspiciously romantic activity detected."]
+    ]
+  };
+  function showWarning(){
+    const pool=warnings[personality()]||warnings.lizzy;
+    const [title,msg]=pool[Math.floor(Math.random()*pool.length)];
+    $("warningTitle").textContent=title;$("warningMessage").textContent=msg;
+    $("lizzyWarningToast").classList.remove("hidden");
+  }
+  $("warningsButton")?.addEventListener("click",showWarning);
+  $("warningDismiss")?.addEventListener("click",()=>$("lizzyWarningToast")?.classList.add("hidden"));
+
+  // Live clock/date
+  function tick(){
+    const now=new Date();
+    if($("liveClockDisplay")) $("liveClockDisplay").textContent=now.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+    if($("liveDateDisplay")) $("liveDateDisplay").textContent=now.toLocaleDateString([], {weekday:"short",day:"numeric",month:"short"});
+  }
+  tick(); setInterval(tick,1000);
+
+  // Last login: capture previous login, then store this login.
+  const previousLogin=store.get("lizzyLastLogin",null);
+  if($("lastLoginDisplay")){
+    $("lastLoginDisplay").textContent=previousLogin
+      ? "Last login: "+new Date(previousLogin).toLocaleString([], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})
+      : "Last login: First visit 💗";
+  }
+  let loginRecorded=false;
+  function recordLoginOnce(){
+    if(loginRecorded || !document.body.classList.contains("lizzyosUnlocked")) return;
+    loginRecorded=true; store.set("lizzyLastLogin",new Date().toISOString());
+  }
+  new MutationObserver(recordLoginOnce).observe(document.body,{attributes:true,attributeFilter:["class"]});
+  recordLoginOnce();
+
+  // About This Lizzy: attach to Read Me icon via double-click modifier,
+  // plus create a dedicated launcher if one doesn't already exist.
+  function createLauncher(id,emoji,label,handler){
+    const area=$("desktopArea"); if(!area || $(id)) return;
+    const d=document.createElement("div");
+    d.id=id; d.className="desktopIcon livingLauncher";
+    d.innerHTML=`<div class="desktopEmoji">${emoji}</div><span>${label}</span>`;
+    d.addEventListener("click",handler); area.appendChild(d);
+  }
+  createLauncher("aboutLizzyIcon","💗","About This Lizzy",()=>{
+    updatePersonaLivingUI();$("aboutLizzyWindow")?.classList.remove("hidden");
+  });
+  createLauncher("lizzyMailIcon","💌","Lizzy Mail",()=>{
+    updatePersonaLivingUI();$("lizzyMailWindow")?.classList.remove("hidden");
+    markMailRead();
+  });
+
+  document.querySelectorAll("[data-close-living]").forEach(b=>b.addEventListener("click",()=>{
+    $(b.dataset.closeLiving)?.classList.add("hidden");
+  }));
+
+  // Lizzy Mail local inbox/outbox.
+  const msg=$("lizzyMailMessage");
+  msg?.addEventListener("input",()=>{$("mailCharacterCount").textContent=`${msg.value.length} / 800`;});
+  function messages(){ return store.get("lizzyMailMessages",[]); }
+  function renderMessages(){
+    const host=$("lizzyMailHistory"); if(!host)return;
+    const list=messages().slice().reverse().slice(0,8);
+    host.innerHTML=list.length?list.map(m=>`<div class="mailHistoryItem">${escapeHtml(m.text)}<small>${new Date(m.time).toLocaleString()}</small></div>`).join("")
+      : `<div class="mailHistoryItem">No messages yet. LizzyOS is suspiciously quiet.</div>`;
+  }
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+  $("sendLizzyMail")?.addEventListener("click",()=>{
+    const text=msg?.value.trim(); if(!text)return;
+    const list=messages(); list.push({text,time:new Date().toISOString()}); store.set("lizzyMailMessages",list);
+    store.set("lizzyMailUnread",true);
+    msg.value="";$("mailCharacterCount").textContent="0 / 800";
+    $("mailSentStatus").textContent="Message saved 💗";
+    renderMessages(); updateUnread();
+  });
+
+  // Unread indicator system.
+  function ensureBadge(iconId,badgeId){
+    const icon=$(iconId); if(!icon || $(badgeId))return;
+    const b=document.createElement("span");b.id=badgeId;b.className="unreadBadge hidden";b.textContent="1";icon.appendChild(b);
+  }
+  function markMailRead(){store.set("lizzyMailUnread",false);updateUnread();}
+  function updateUnread(){
+    ensureBadge("lizzyMailIcon","lizzyMailUnreadBadge");
+    const unread=!!store.get("lizzyMailUnread",false);
+    $("lizzyMailUnreadBadge")?.classList.toggle("hidden",!unread);
+    $("mailUnreadPill")?.classList.toggle("hidden",!unread);
+  }
+
+  applyNight(); applyMood(); updatePersonaLivingUI(); renderMessages(); updateUnread();
+
+  // Small welcome warning after successful boot, once per page visit.
+  let welcomed=false;
+  const welcomeObserver=new MutationObserver(()=>{
+    if(!welcomed && document.body.classList.contains("lizzyosUnlocked")){
+      welcomed=true;
+      setTimeout(showWarning,2200);
+    }
+  });
+  welcomeObserver.observe(document.body,{attributes:true,attributeFilter:["class"]});
+})();
