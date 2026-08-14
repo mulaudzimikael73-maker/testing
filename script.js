@@ -2351,7 +2351,7 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     set(k,v){ try { localStorage.setItem(k,JSON.stringify(v)); } catch {} }
   };
 
-  const personality = () => localStorage.getItem("lizzyPersonality") || "lizzy";
+  const personality = () => localStorage.getItem("lizzyPersona") || "lizzy";
 
   const personaCopy = {
     lizzy:{
@@ -2400,19 +2400,25 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
   // Fake warnings
   const warnings = {
     lizzy:[
-      ["LIZZYOS NOTICE","Excessive cuteness detected. System stability remains questionable."],
-      ["SYSTEM UPDATE","Lizzy has entered the building. Productivity has been suspended."],
-      ["SECURITY ALERT","Someone appears to be thinking about Mikael. Investigation pending."]
+      ["💗 LIZZYOS NOTICE","Excessive cuteness detected. System stability remains questionable."],
+      ["🌸 SYSTEM UPDATE","Lizzy has entered the building. Productivity has officially been suspended."],
+      ["💌 SECURITY ALERT","Someone appears to be thinking about Mikael. LizzyOS refuses to comment further."],
+      ["🍝 PRIORITY NOTICE","Pasta levels are below recommended LizzyOS operating requirements."],
+      ["✨ SYSTEM CHECK","Smile detected. LizzyOS performance increased by 47%."]
     ],
     attitude:[
-      ["ATTITUDE WARNING","Maximum sass detected. Mikael has been advised to proceed carefully."],
-      ["SYSTEM ERROR","Patience with men has reached critically low levels."],
-      ["LIZZYOS NOTICE","Four eyes detected. Still somehow missing the obvious. Interesting. 🙄"]
+      ["🙄 ATTITUDE WARNING","Maximum sass detected. Mikael has been advised to proceed at his own risk."],
+      ["🚫 SYSTEM ERROR","Patience with men has reached critically low levels."],
+      ["👓 VISUAL ALERT","Four eyes detected. Still somehow missing the obvious. Interesting."],
+      ["📉 MIKAEL STATUS","Mikael's argument success rate has dropped to 2%. Please do not assist him."],
+      ["⚠️ LITTLE MISS ATTITUDE","Tone detected. LizzyOS has decided not to challenge it."]
     ],
     agent:[
-      ["CLASSIFIED ALERT","Agent Yelizaveta activity detected. Clearance confirmed."],
-      ["INTELLIGENCE UPDATE","Subject M. Petrov remains under observation."],
-      ["SECURITY NOTICE","Secure channel active. Suspiciously romantic activity detected."]
+      ["🕵️ CLASSIFIED ALERT","Agent Yelizaveta activity detected. Clearance confirmed."],
+      ["📡 INTELLIGENCE UPDATE","Subject M. Petrov remains under observation."],
+      ["🔐 SECURITY NOTICE","Secure channel active. Suspiciously romantic activity detected."],
+      ["📁 CLASSIFIED FILE","New intelligence suggests Agent Mikhail is still calling himself Mr Perfect."],
+      ["🎯 MISSION UPDATE","Primary objective unchanged: maintain operational superiority over Mikael."]
     ]
   };
   function showWarning(){

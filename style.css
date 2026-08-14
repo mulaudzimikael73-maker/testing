@@ -3161,3 +3161,122 @@ body:not(.lizzyosUnlocked) .livingStatusBar{display:none!important}
   .livingStatusBar{font-size:11px;max-width:90vw;overflow:hidden}
   .livingDesktopControls{top:10px;right:10px}
 }
+
+
+/* =========================================================
+   LIVING DESKTOP INTERACTION FIXES
+   ========================================================= */
+
+/* Ensure toolbar controls are always clickable above desktop content/windows. */
+.livingDesktopControls{
+    pointer-events:auto !important;
+    z-index:50000 !important;
+}
+.livingDesktopControls .livingControl{
+    pointer-events:auto !important;
+    position:relative !important;
+    z-index:50001 !important;
+    margin:0 !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+}
+.moodPicker{
+    z-index:51000 !important;
+    pointer-events:auto !important;
+}
+.moodPicker button{
+    pointer-events:auto !important;
+    margin:2px 0 !important;
+}
+.livingClose,
+#warningDismiss{
+    pointer-events:auto !important;
+    position:relative !important;
+    z-index:2 !important;
+    margin:0 !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+}
+.lizzyWarningToast{
+    z-index:52000 !important;
+    pointer-events:auto !important;
+}
+
+/* Mood changes must hit the actual wallpaper layers. */
+body[data-desktop-mood="pink"] #desktop,
+body[data-desktop-mood="pink"] #desktopArea{
+    background:linear-gradient(180deg,#ffb6d5,#ff9ac7,#f57bb5,#7b4b9f) !important;
+}
+body[data-desktop-mood="soft"] #desktop,
+body[data-desktop-mood="soft"] #desktopArea{
+    background:linear-gradient(180deg,#ffddea 0%,#f6bfd9 48%,#c894bd 100%) !important;
+}
+body[data-desktop-mood="sunset"] #desktop,
+body[data-desktop-mood="sunset"] #desktopArea{
+    background:linear-gradient(180deg,#ffc2c9 0%,#f2a4bb 42%,#ca7ead 72%,#76518d 100%) !important;
+}
+body[data-desktop-mood="midnight"] #desktop,
+body[data-desktop-mood="midnight"] #desktopArea{
+    background:linear-gradient(180deg,#21142d 0%,#352044 45%,#55345f 72%,#24172f 100%) !important;
+}
+
+body[data-desktop-mood="soft"] #wallpaperOverlay{
+    background:rgba(255,255,255,.09) !important;
+}
+body[data-desktop-mood="sunset"] #wallpaperOverlay{
+    background:rgba(255,180,190,.07) !important;
+}
+body[data-desktop-mood="midnight"] #wallpaperOverlay{
+    background:rgba(20,8,30,.16) !important;
+}
+
+/* Night mode overrides any selected mood. */
+body.lizzyNightMode #desktop,
+body.lizzyNightMode #desktopArea{
+    background:linear-gradient(180deg,#170f22 0%,#281830 42%,#432747 72%,#160f21 100%) !important;
+}
+body.lizzyNightMode #wallpaperOverlay{
+    background:rgba(10,5,17,.23) !important;
+}
+body.lizzyNightMode .livingStatusBar{
+    background:rgba(18,10,25,.68) !important;
+}
+body.lizzyNightMode .livingControl{
+    background:rgba(30,18,38,.72) !important;
+}
+body.lizzyNightMode .moodPicker{
+    background:rgba(28,15,36,.96) !important;
+}
+
+/* Make close buttons sane despite the site's broad global button styling. */
+.livingClose,
+#warningDismiss{
+    width:34px !important;
+    height:34px !important;
+    min-width:34px !important;
+    min-height:34px !important;
+    border-radius:50% !important;
+    font-size:20px !important;
+    line-height:1 !important;
+    box-shadow:none !important;
+    transform:none !important;
+}
+.livingClose:hover,
+#warningDismiss:hover{
+    transform:scale(1.06) !important;
+}
+
+/* Warning text should fit cleanly. */
+.lizzyWarningToast > div:nth-child(2){
+    flex:1 1 auto !important;
+    min-width:0 !important;
+}
+.lizzyWarningToast p{
+    line-height:1.5 !important;
+    font-size:15px !important;
+    margin:5px 0 0 !important;
+}
