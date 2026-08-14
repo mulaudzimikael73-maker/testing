@@ -2709,349 +2709,80 @@ color:#ff5ca8;
 }
 \n\n/* ===== Personality + Lock Screen + Games Folder ===== */\n.lizzyLockScreen{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 30%,rgba(255,191,218,.24),rgba(25,11,31,.96) 55%),#170d1d;transition:opacity .55s,visibility .55s}.lizzyLockScreen.unlocked{opacity:0;visibility:hidden;pointer-events:none}.lockCard{width:min(650px,94vw);max-height:94vh;overflow:auto;padding:30px;border-radius:26px;text-align:center;background:rgba(34,18,40,.94);border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 90px rgba(0,0,0,.45);backdrop-filter:blur(18px)}.lockIcon{font-size:50px}.lockEyebrow{font-size:11px;letter-spacing:2.5px;font-weight:900;opacity:.7}.personaChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.personaChoices button{min-height:95px;border-radius:17px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:inherit;padding:12px;cursor:pointer}.personaChoices button strong,.personaChoices button small{display:block;margin-top:5px}.personaChoices button small{opacity:.6}.personaChoices button.selected{background:rgba(255,178,211,.22);border-color:rgba(255,208,228,.8);transform:translateY(-2px)}.lockIdentity{font-size:11px;letter-spacing:1px;opacity:.75;margin:15px}.lockIdentity span{padding:0 8px}.lockCard input{width:min(420px,100%);display:block;margin:12px auto;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.2);color:#fff;text-align:center}.unlockLizzyOS{width:min(420px,100%);padding:14px;border:0;border-radius:12px;font-weight:900;cursor:pointer}.forgotLizzyCode{display:block;margin:13px auto;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;opacity:.8}.lockHint,.lockStatus{min-height:20px;font-size:12px;line-height:1.5}.lockStatus{font-weight:700}.wrongShake{animation:wrongShake .4s}@keyframes wrongShake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}\n.gamesFolderWindow:not(.hidden){display:flex!important;position:fixed!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;width:min(900px,94vw)!important;max-height:88vh!important;z-index:10100!important;flex-direction:column!important}.gamesFolderBody{padding:18px;overflow:auto}.gamesFolderGrid{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));gap:18px;padding:10px}.gamesFolderGrid .desktopIcon{position:relative!important;inset:auto!important;transform:none!important;width:auto!important;min-height:135px!important;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:18px!important;border-radius:18px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.12)!important}.gamesFolderGrid .desktopIcon:hover{background:rgba(255,255,255,.16)!important;transform:translateY(-3px)!important}.gamesFolderGrid .desktopEmoji{font-size:42px!important}.gamesFolderGrid .desktopIcon>span{white-space:normal!important;text-align:center!important;margin-top:8px!important}\nbody[data-lizzy-persona="attitude"] #desktop{filter:saturate(.92)}body[data-lizzy-persona="agent"] #desktop{filter:saturate(.8) contrast(1.05)}\n@media(max-width:700px){.personaChoices{grid-template-columns:1fr}.personaChoices button{min-height:70px}.gamesFolderGrid{grid-template-columns:repeat(2,1fr);gap:12px}.lockCard{padding:22px}}\n
 
-/* ===== PASSWORD GATE / FULL DESKTOP FIX ===== */
-#secretEnding{padding:0!important;display:block!important;width:100%!important;min-height:100vh!important;text-align:initial!important;}
-#secretEnding.hidden{display:none!important;}
-#desktop{width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;position:relative!important;}
-#desktop.hidden{display:none!important;}
-.lizzyLockScreen{width:100vw!important;height:100vh!important;box-sizing:border-box!important;}
-body.lizzyosUnlocked #secretEnding{overflow:hidden!important;}
-body.lizzyosUnlocked #desktop{inset:0!important;}
-
-
-/* =========================================================
-   LIZZYOS — CENTERED PASSWORD GATE + TRUE FULLSCREEN DESKTOP
-   Final authoritative layout overrides
-   ========================================================= */
-
-/* The security gate owns the whole viewport while locked. */
-#lizzyLockScreen,
-#lockScreen,
-.lizzy-lock-screen,
-.lock-screen,
-.security-screen,
-.password-gate {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    min-width: 100vw !important;
-    min-height: 100dvh !important;
-    margin: 0 !important;
-    padding: 24px !important;
-    box-sizing: border-box !important;
-    z-index: 2147483000 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: auto !important;
-}
-
-/* Center the actual password card instead of leaving it on the left. */
-#lizzyLockScreen > *,
-#lockScreen > *,
-.lizzy-lock-screen > *,
-.lock-screen > *,
-.security-screen > *,
-.password-gate > * {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-#lizzyLockCard,
-#lockCard,
-.lock-card,
-.security-card,
-.password-card {
-    position: relative !important;
-    width: min(920px, calc(100vw - 48px)) !important;
-    max-width: 920px !important;
-    height: auto !important;
-    max-height: calc(100dvh - 48px) !important;
-    margin: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box !important;
-    transform: none !important;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-}
-
-/* Nothing from LizzyOS may remain in a side-by-side/flex layout after unlock. */
-html,
-body {
-    width: 100% !important;
-    min-width: 100% !important;
-    max-width: none !important;
-    min-height: 100% !important;
-    margin: 0 !important;
-    overflow-x: hidden !important;
-}
-
-body.lizzy-unlocked,
-body.desktop-unlocked,
-body[data-lizzy-unlocked="true"] {
-    display: block !important;
-    width: 100vw !important;
-    max-width: none !important;
-}
-
-/* Desktop always retakes the entire viewport. */
-#desktop,
-#lizzyDesktop,
-.desktop,
-.lizzy-desktop,
-#desktopScreen {
-    width: 100vw !important;
-    max-width: none !important;
-    min-width: 100vw !important;
-    min-height: 100dvh !important;
-    margin: 0 !important;
-    left: 0 !important;
-    right: auto !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-}
-
-/* When the gate is gone, it is genuinely gone and cannot reserve layout space. */
+/* ===== CLEAN LOCK GATE / FULLSCREEN DESKTOP FIX ===== */
 #lizzyLockScreen.hidden,
-#lockScreen.hidden,
-.lizzy-lock-screen.hidden,
-.lock-screen.hidden,
-.security-screen.hidden,
-.password-gate.hidden,
-html.lizzy-unlocked #lizzyLockScreen,
-html.lizzy-unlocked #lockScreen,
-body.lizzy-unlocked #lizzyLockScreen,
-body.lizzy-unlocked #lockScreen {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
+#lizzyLockScreen.unlocked,
+#desktop.hidden { display:none !important; }
+
+#secretEnding:not(.hidden){
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100dvh !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  z-index:19000 !important;
 }
 
-/* Mobile/tablet security screen remains centered. */
-@media (max-width: 900px) {
-    #lizzyLockScreen,
-    #lockScreen,
-    .lizzy-lock-screen,
-    .lock-screen,
-    .security-screen,
-    .password-gate {
-        padding: 12px !important;
-    }
-
-    #lizzyLockCard,
-    #lockCard,
-    .lock-card,
-    .security-card,
-    .password-card {
-        width: min(680px, calc(100vw - 24px)) !important;
-        max-height: calc(100dvh - 24px) !important;
-    }
+#secretEnding:not(.hidden) #lizzyLockScreen:not(.hidden):not(.unlocked){
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  margin:0 !important;
+  padding:24px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:auto !important;
+  z-index:20000 !important;
 }
 
-
-/* =========================================================
-   FINAL TRUE-VIEWPORT FIX — uses the REAL LizzyOS elements
-   ========================================================= */
-
-html, body {
-    width: 100% !important;
-    min-width: 100% !important;
-    max-width: none !important;
-    min-height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+#secretEnding #lizzyLockScreen .lockCard{
+  position:relative !important;
+  inset:auto !important;
+  width:min(720px,calc(100vw - 48px)) !important;
+  max-width:720px !important;
+  max-height:calc(100dvh - 48px) !important;
+  margin:auto !important;
+  padding:28px !important;
+  transform:none !important;
+  overflow:auto !important;
+  box-sizing:border-box !important;
 }
 
-/* Lock screen is now re-parented directly under BODY by JS,
-   so no storyline/scene container can constrain its width. */
-body > #lizzyLockScreen {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100dvh !important;
-    min-width: 100% !important;
-    min-height: 100dvh !important;
-    padding: 24px !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: auto !important;
-    box-sizing: border-box !important;
-    z-index: 2147483640 !important;
+body.lizzyosUnlocked #secretEnding:not(.hidden) #desktop:not(.hidden){
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  transform:none !important;
+  overflow:hidden !important;
+  z-index:19500 !important;
 }
 
-body > #lizzyLockScreen .lockCard {
-    position: relative !important;
-    inset: auto !important;
-    width: min(760px, calc(100vw - 48px)) !important;
-    max-width: 760px !important;
-    height: auto !important;
-    max-height: calc(100dvh - 48px) !important;
-    margin: auto !important;
-    transform: none !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    box-sizing: border-box !important;
+body.lizzyLockActive,
+body.lizzyosUnlocked{overflow:hidden !important;}
+
+body.lizzyosUnlocked #desktop #terminal,
+body.lizzyosUnlocked #desktop #desktopArea{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
 }
 
-/* Once unlocked the gate must occupy ZERO layout/visual space. */
-body > #lizzyLockScreen.unlocked,
-body > #lizzyLockScreen.hidden {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-
-/* Desktop is also re-parented directly under BODY. */
-body > #desktop {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    min-width: 100vw !important;
-    min-height: 100dvh !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transform: none !important;
-    overflow: hidden !important;
-    z-index: 100 !important;
-}
-
-body > #desktop.hidden {
-    display: none !important;
-}
-
-body.lizzyosUnlocked {
-    width: 100vw !important;
-    height: 100dvh !important;
-    overflow: hidden !important;
-}
-
-body.lizzyosUnlocked #secretEnding {
-    display: none !important;
-}
-
-/* The visible desktop workspace fills the desktop shell. */
-body > #desktop #desktopArea:not(.hidden) {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 100% !important;
-    margin: 0 !important;
-}
-
-/* Terminal/boot sequence also uses the entire desktop viewport. */
-body > #desktop #terminal {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-}
-
-@media (max-width: 700px) {
-    body > #lizzyLockScreen {
-        padding: 12px !important;
-    }
-
-    body > #lizzyLockScreen .lockCard {
-        width: calc(100vw - 24px) !important;
-        max-height: calc(100dvh - 24px) !important;
-    }
-}
-
-
-/* =========================================================
-   DEFINITIVE LIZZYOS ENTRY FLOW LAYOUT
-   ========================================================= */
-
-#lizzyLockScreen.hidden,
-#lizzyLockScreen.unlocked {
-    display: none !important;
-}
-
-body > #lizzyLockScreen:not(.hidden):not(.unlocked) {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    margin: 0 !important;
-    padding: 24px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: auto !important;
-    z-index: 2147483640 !important;
-}
-
-body > #lizzyLockScreen:not(.hidden):not(.unlocked) > .lockCard {
-    position: relative !important;
-    inset: auto !important;
-    width: min(920px, calc(100vw - 48px)) !important;
-    max-width: 920px !important;
-    height: auto !important;
-    max-height: calc(100dvh - 48px) !important;
-    margin: auto !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-}
-
-body.lizzyLockActive {
-    overflow: hidden !important;
-}
-
-body > #desktop.hidden {
-    display: none !important;
-}
-
-body.lizzyosUnlocked > #desktop:not(.hidden) {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    min-width: 100vw !important;
-    min-height: 100dvh !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transform: none !important;
-    overflow: hidden !important;
-    z-index: 1000 !important;
-}
-
-body.lizzyosUnlocked {
-    width: 100vw !important;
-    height: 100dvh !important;
-    overflow: hidden !important;
-}
-
-body.lizzyosUnlocked > #desktop #terminal,
-body.lizzyosUnlocked > #desktop #desktopArea {
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-}
-
-@media (max-width: 700px) {
-    body > #lizzyLockScreen:not(.hidden):not(.unlocked) {
-        padding: 12px !important;
-    }
-
-    body > #lizzyLockScreen:not(.hidden):not(.unlocked) > .lockCard {
-        width: calc(100vw - 24px) !important;
-        max-height: calc(100dvh - 24px) !important;
-    }
+@media(max-width:760px){
+  #secretEnding:not(.hidden) #lizzyLockScreen:not(.hidden):not(.unlocked){padding:12px !important;}
+  #secretEnding #lizzyLockScreen .lockCard{
+    width:calc(100vw - 24px) !important;
+    max-height:calc(100dvh - 24px) !important;
+    padding:20px !important;
+  }
 }
