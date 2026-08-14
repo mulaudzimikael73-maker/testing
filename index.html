@@ -474,6 +474,25 @@
 
 <section id="secretEnding" class="scene hidden">
 
+    <div id="lizzyLockScreen" class="lizzyLockScreen">
+        <div class="lockCard">
+            <div class="lockIcon">🔐</div>
+            <p class="lockEyebrow">LIZZYOS SECURITY CHECK</p>
+            <h2>Who is attempting to access LizzyOS?</h2>
+            <div class="personaChoices">
+                <button type="button" data-persona="lizzy">💗 <strong>Lizzy</strong><small>Soft Mode</small></button>
+                <button type="button" data-persona="attitude">🙄 <strong>Little Miss Attitude</strong><small>Maximum Sass</small></button>
+                <button type="button" data-persona="agent">🕵️ <strong>Agent Yelizaveta</strong><small>Classified Mode</small></button>
+            </div>
+            <div class="lockIdentity">USER: <b id="lockPersonaName">Lizzy</b> <span>•</span> CLEARANCE: <b id="lockClearance">PENDING</b></div>
+            <input id="lizzyAccessCode" type="password" autocomplete="off" placeholder="Enter access code">
+            <button type="button" id="unlockLizzyOS" class="unlockLizzyOS">UNLOCK LIZZYOS</button>
+            <button type="button" id="forgotLizzyCode" class="forgotLizzyCode">Forgot Access Code?</button>
+            <p id="lockHint" class="lockHint">Hint available — but LizzyOS may judge you.</p>
+            <p id="lockStatus" class="lockStatus"></p>
+        </div>
+    </div>
+
     <div id="desktop">
 
         <!-- Wallpaper Overlay -->
@@ -536,6 +555,27 @@
                 <span>Recycle Bin</span>
             </div>
 
+            <div class="desktopIcon" id="gamesFolderIcon">
+                <div class="desktopEmoji">🎮</div>
+                <span id="gamesFolderLabel">Games</span>
+            </div>
+
+            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
+                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
+                <span>Our Date</span>
+            </div>
+
+        </div>
+
+
+        <div id="gamesFolderWindow" class="gamesFolderWindow hidden">
+            <div class="windowTop">
+                <div class="windowDots"><span class="windowCloseDot" id="gamesFolderRedClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div>
+                <h2 id="gamesWindowTitle">🎮 Games</h2>
+            </div>
+            <div class="gamesFolderBody">
+                <p id="gamesFolderIntro" class="memoryMessage">Choose your game 💗</p>
+                <div class="gamesFolderGrid">
             <div class="desktopIcon" id="funQuizIcon">
                 <div class="desktopEmoji">🧠</div>
                 <span>Lizzy Quiz</span>
@@ -558,13 +598,10 @@
             <div class="desktopIcon" id="wouldMikaelRatherIcon"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
             <div class="desktopIcon" id="ticTacToeIcon"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
             <div class="desktopIcon" id="crackCodeIcon"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
-            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
-                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
-                <span>Our Date</span>
+                </div>
             </div>
-
+            <button id="closeGamesFolder" class="windowCloseButton">Close</button>
         </div>
-
 
         <!-- Finder Window -->
 
