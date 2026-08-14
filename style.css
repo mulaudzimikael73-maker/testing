@@ -2856,3 +2856,116 @@ body.lizzy-unlocked #lockScreen {
         max-height: calc(100dvh - 24px) !important;
     }
 }
+
+
+/* =========================================================
+   FINAL TRUE-VIEWPORT FIX — uses the REAL LizzyOS elements
+   ========================================================= */
+
+html, body {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Lock screen is now re-parented directly under BODY by JS,
+   so no storyline/scene container can constrain its width. */
+body > #lizzyLockScreen {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    min-width: 100% !important;
+    min-height: 100dvh !important;
+    padding: 24px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: auto !important;
+    box-sizing: border-box !important;
+    z-index: 2147483640 !important;
+}
+
+body > #lizzyLockScreen .lockCard {
+    position: relative !important;
+    inset: auto !important;
+    width: min(760px, calc(100vw - 48px)) !important;
+    max-width: 760px !important;
+    height: auto !important;
+    max-height: calc(100dvh - 48px) !important;
+    margin: auto !important;
+    transform: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* Once unlocked the gate must occupy ZERO layout/visual space. */
+body > #lizzyLockScreen.unlocked,
+body > #lizzyLockScreen.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Desktop is also re-parented directly under BODY. */
+body > #desktop {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    overflow: hidden !important;
+    z-index: 100 !important;
+}
+
+body > #desktop.hidden {
+    display: none !important;
+}
+
+body.lizzyosUnlocked {
+    width: 100vw !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+}
+
+body.lizzyosUnlocked #secretEnding {
+    display: none !important;
+}
+
+/* The visible desktop workspace fills the desktop shell. */
+body > #desktop #desktopArea:not(.hidden) {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+}
+
+/* Terminal/boot sequence also uses the entire desktop viewport. */
+body > #desktop #terminal {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+    body > #lizzyLockScreen {
+        padding: 12px !important;
+    }
+
+    body > #lizzyLockScreen .lockCard {
+        width: calc(100vw - 24px) !important;
+        max-height: calc(100dvh - 24px) !important;
+    }
+}

@@ -2474,3 +2474,92 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     }
   });
 })();
+
+
+// =========================================================
+// FINAL DOM FIX
+// The old build placed both the password gate and desktop
+// inside #secretEnding. That parent was constraining fixed
+// positioning on some browsers. Move both directly to BODY.
+// =========================================================
+(() => {
+    function mountLizzyOSAtViewportRoot() {
+        const lock = document.getElementById("lizzyLockScreen");
+        const desktop = document.getElementById("desktop");
+
+        if (lock && lock.parentElement !== document.body) {
+            document.body.appendChild(lock);
+        }
+
+        if (desktop && desktop.parentElement !== document.body) {
+            document.body.appendChild(desktop);
+        }
+
+        // Locked by default: desktop cannot be seen or clicked.
+        if (lock && !lock.classList.contains("unlocked")) {
+            desktop?.classList.add("hidden");
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", mountLizzyOSAtViewportRoot);
+    } else {
+        mountLizzyOSAtViewportRoot();
+    }
+
+    // Re-run when the storyline reaches the final scene, just in case.
+    document.getElementById("secretButton")?.addEventListener("click", () => {
+        mountLizzyOSAtViewportRoot();
+        const lock = document.getElementById("lizzyLockScreen");
+        const desktop = document.getElementById("desktop");
+
+        lock?.classList.remove("hidden", "unlocked");
+        lock?.style.removeProperty("display");
+        desktop?.classList.add("hidden");
+
+        document.body.classList.remove("lizzyosUnlocked", "lizzy-unlocked");
+        document.body.removeAttribute("data-lizzy-unlocked");
+    }, true);
+
+    // After successful unlock, enforce a true full-screen desktop.
+    const unlockObserver = new MutationObserver(() => {
+        const lock = document.getElementById("lizzyLockScreen");
+        const desktop = document.getElementById("desktop");
+
+        if (lock?.classList.contains("unlocked")) {
+            lock.classList.add("hidden");
+            desktop?.classList.remove("hidden");
+
+            document.body.classList.add("lizzyosUnlocked");
+            document.documentElement.classList.add("lizzy-unlocked");
+
+            if (desktop) {
+                desktop.style.setProperty("position", "fixed", "important");
+                desktop.style.setProperty("inset", "0", "important");
+                desktop.style.setProperty("width", "100vw", "important");
+                desktop.style.setProperty("height", "100dvh", "important");
+                desktop.style.setProperty("margin", "0", "important");
+                desktop.style.setProperty("transform", "none", "important");
+            }
+
+            window.scrollTo(0, 0);
+            requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
+        }
+    });
+
+    const startObserver = () => {
+        const lock = document.getElementById("lizzyLockScreen");
+        if (lock) {
+            unlockObserver.observe(lock, {
+                attributes: true,
+                attributeFilter: ["class", "style"]
+            });
+        }
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", startObserver);
+    } else {
+        startObserver();
+    }
+})();
