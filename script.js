@@ -2408,7 +2408,11 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         moonflower:  {name:"Moonflower",emoji:"🌙",type:"flower",rarity:"Legendary"},
         starBloom:   {name:"Star Bloom",emoji:"✨",type:"flower",rarity:"Legendary"},
         gardenCrown: {name:"Garden Crown",emoji:"👑",type:"flower",rarity:"Legendary"},
-        bananaTree:  {name:"Suspicious Banana Tree",emoji:"🍌",type:"tree",rarity:"Secret"}
+        bananaTree:  {name:"Suspicious Banana Tree",emoji:"🍌",type:"tree",rarity:"Secret"},
+        jacaranda:    {name:"Jacaranda Tree",emoji:"🌳",type:"tree",rarity:"Uncommon"},
+        willow:       {name:"Willow Tree",emoji:"🌳",type:"tree",rarity:"Rare"},
+        cherryTree:   {name:"Cherry Blossom Tree",emoji:"🌸",type:"tree",rarity:"Rare"},
+        lemonTree:    {name:"Lemon Tree",emoji:"🍋",type:"tree",rarity:"Uncommon"}
     };
 
     const STANDARD_FLOWERS = [
@@ -2428,7 +2432,11 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         orchidSeed:{name:"Orchid Seed",emoji:"🌸",plant:"orchid"},
         mysterySeed:{name:"Mystery Seed",emoji:"❓",plant:"mysteryBloom"},
         moonSeed:{name:"Moonflower Seed",emoji:"🌙",plant:"moonflower"},
-        mikaelSeed:{name:"UNKNOWN_SEED.exe",emoji:"❓",plant:"bananaTree",secret:true}
+        mikaelSeed:{name:"UNKNOWN_SEED.exe",emoji:"❓",plant:"bananaTree",secret:true},
+        jacarandaSeed:{name:"Jacaranda Sapling",emoji:"🌳",plant:"jacaranda"},
+        willowSeed:{name:"Willow Sapling",emoji:"🌳",plant:"willow"},
+        cherryTreeSeed:{name:"Cherry Blossom Sapling",emoji:"🌸",plant:"cherryTree"},
+        lemonTreeSeed:{name:"Lemon Tree Sapling",emoji:"🍋",plant:"lemonTree"}
     };
     const COMMON_SEEDS = ["tulipSeed","roseSeed","snapdragonSeed","sunflowerSeed","lavenderSeed"];
     const GAME_SEEDS   = ["lilySeed","cryingLilySeed","orchidSeed","mysterySeed"];
@@ -2552,6 +2560,7 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         // Give the Garden a small starter pack, without affecting any previous reward.
         garden.seeds.tulipSeed = Math.max(1, Number(garden.seeds.tulipSeed||0));
         garden.seeds.roseSeed = Math.max(1, Number(garden.seeds.roseSeed||0));
+        garden.seeds.jacarandaSeed = Math.max(1, Number(garden.seeds.jacarandaSeed||0));
 
         saveGarden(); saveTokens();
         localStorage.setItem(KEYS.migration, "done");
@@ -2589,6 +2598,10 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
 
     function plantWeatherMultiplier(plant,w){
         let mult=w.decay;
+        const matureShadeTrees=garden.plants.filter(p=>["jacaranda","willow","cherryTree","lemonTree","bananaTree"].includes(p.flowerId) && growthStage(p)>=3).length;
+        if(matureShadeTrees>0 && ["heat","severeHeat","sunny"].includes(w.id)){
+            mult*=Math.max(.55,1-(matureShadeTrees*.08));
+        }
         const id=plant.flowerId;
         if(id==="tulip" && w.id==="cold") mult*=0.55;
         if(id==="lilyValley" && ["rain","mist","heavyRain"].includes(w.id)) mult*=0.58;
@@ -2624,9 +2637,9 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     function stageVisual(plant){
         const f=FLOWERS[plant.flowerId]||FLOWERS.tulip;
         const stage=growthStage(plant);
-        if(plant.flowerId==="bananaTree"){
-            return ["🫘","🌱","🌿","🌴","🍌"][stage];
-        }
+        if(plant.flowerId==="bananaTree") return ["🫘","🌱","🌿","🌴","🍌"][stage];
+        if(["jacaranda","willow","cherryTree","lemonTree"].includes(plant.flowerId))
+            return ["🫘","🌱","🌿","🌳",f.emoji][stage];
         return ["🫘","🌱","🌿","🪴",f.emoji][stage];
     }
 
@@ -2677,7 +2690,8 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         const w=weatherFor(new Date());
         $("gardenWeatherEmoji").textContent=w.emoji;
         $("gardenWeatherName").textContent=w.name;
-        $("gardenWeatherDescription").textContent=w.desc;
+        const shadeTrees=garden.plants.filter(p=>["jacaranda","willow","cherryTree","lemonTree","bananaTree"].includes(p.flowerId) && growthStage(p)>=3).length;
+        $("gardenWeatherDescription").textContent=w.desc+(shadeTrees?` 🌳 ${shadeTrees} mature shade tree${shadeTrees===1?"":"s"} protecting the Garden.`:"");
         const alert=$("gardenWeatherAlert");
         if(w.severe){
             alert.classList.remove("hidden");
@@ -2748,7 +2762,7 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
                 continue;
             }
             const health=currentHealth(p),state=plantState(health),f=FLOWERS[p.flowerId];
-            cards.push(`<div class="gardenPlot" data-plant="${p.id}">
+            cards.push(`<div class="gardenPlot ${f.type==="tree"?"gardenTreePlot":""}" data-plant="${p.id}">
                 <div class="plantVisual ${state}">${stageVisual(p)}</div>
                 <div class="plantMeta">
                     <strong>${p.flowerId==="bananaTree"&&growthStage(p)<4?"UNKNOWN PLANT":f.name}</strong>
@@ -2956,24 +2970,27 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         $("tokenRedeemWindow").classList.remove("hidden");
     }
     async function notifyRedemption(payload){
-        const endpoint=localStorage.getItem(KEYS.notificationEndpoint)||"";
-        if(!endpoint){
-            const q=safeRead(KEYS.pendingNotify,[]);
-            q.push(payload);safeWrite(KEYS.pendingNotify,q);
-            return "Queued for Telegram";
-        }
+        // Temporary notification route while Telegram/Cloudflare is unfinished.
+        // No delivery details are shown anywhere in Lizzy's Token Jar UI.
         try{
-            const res=await fetch(endpoint,{
+            const body=new FormData();
+            body.append("event","LizzyOS Token Redeemed");
+            body.append("token",payload.token||"Unknown Token");
+            body.append("emoji",payload.emoji||"🎟️");
+            body.append("description",payload.description||"No description available.");
+            body.append("redeemed_at",payload.redeemed_at||new Date().toLocaleString());
+            body.append("message",`Lizzy redeemed: ${payload.emoji||"🎟️"} ${payload.token||"Unknown Token"}\nWhat it means: ${payload.description||"No description available."}`);
+            const res=await fetch("https://formspree.io/f/mvkpbgqa",{
                 method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({type:"token_redeemed",...payload})
+                body,
+                headers:{"Accept":"application/json"}
             });
-            if(!res.ok)throw new Error("Worker response not OK");
-            return "Mikael notified";
+            if(!res.ok)throw new Error("Formspree notification failed");
+            return "Recorded";
         }catch(e){
             const q=safeRead(KEYS.pendingNotify,[]);
             q.push(payload);safeWrite(KEYS.pendingNotify,q);
-            return "Notification queued";
+            return "Recorded";
         }
     }
     async function confirmRedeem(){
@@ -2981,13 +2998,13 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         const name=redeeming,d=TOKEN_DEFS[name];
         tokens.inventory[name]--;
         if(name==="Second Chance Token")tokens.rerollCredits=(tokens.rerollCredits||0)+1;
-        const payload={token:name,emoji:d.emoji,redeemed_at:new Date().toLocaleString(),redeemed_at_iso:nowISO()};
+        const payload={token:name,emoji:d.emoji,description:d.desc,redeemed_at:new Date().toLocaleString(),redeemed_at_iso:nowISO()};
         const entry={name,emoji:d.emoji,redeemedAt:payload.redeemed_at_iso,notifyStatus:"Sending..."};
         tokens.history.unshift(entry);saveTokens();renderTokens();
-        $("tokenRedeemStatus").textContent="Redeemed 💗 Preparing Mikael notification...";
+        $("tokenRedeemStatus").textContent="Redeemed 💗";
         entry.notifyStatus=await notifyRedemption(payload);
         saveTokens();renderTokens();
-        $("tokenRedeemStatus").textContent=`✅ ${name} redeemed. ${entry.notifyStatus}.`;
+        $("tokenRedeemStatus").textContent=`✅ ${name} redeemed successfully. 💗`;
         redeeming=null;
     }
 
@@ -3115,4 +3132,96 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     window.LizzyGarden = {render:renderGarden,addSeed,addFlower,addToken};
 
     renderTokens();
+})();
+
+// ===== Games Folder Organizer =====
+(() => {
+ const $=id=>document.getElementById(id);
+ const candidates=[
+  ["funQuizIcon","💗","Lizzy Quiz"],
+  ["mikhailQuizIcon","🧠","Mikhail Quiz"],
+  ["wouldMikaelRatherIcon","🤔","Would Mikael Rather?"],
+  ["crackCodeIcon","🔐","Crack the Code"],
+  ["dailyMysteryIcon","🎁","Daily Mystery"],
+  ["memoryMatchIcon","🧩","Memory Match"],
+  ["thisOrThatIcon","⚡","This or That"]
+ ];
+ const found=candidates.filter(([id])=>$(id));
+ if(!found.length)return;
+ const desktop=found[0][0] && $(found[0][0])?.parentElement;
+ if(!desktop)return;
+ found.forEach(([id])=>$(id).style.display="none");
+ const folder=document.createElement("div");
+ folder.className="desktopIcon";folder.id="gamesFolderIcon";
+ folder.innerHTML='<div class="desktopEmoji">🎮</div><span>Games</span>';
+ desktop.appendChild(folder);
+ const win=document.createElement("div");
+ win.id="gamesFolderWindow";win.className="desktopWindow hidden gamesFolderWindow";
+ win.innerHTML=`<div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="gamesFolderClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🎮 LizzyOS Games</h2></div>
+ <div class="windowScroll"><div class="gamesFolderIntro"><span>🎮</span><div><small>FUN, QUIZZES & CHAOS</small><h3>Choose your game</h3><p>Perfect performances can earn special Garden seeds. 🌱</p></div></div><div id="gamesFolderGrid" class="gamesFolderGrid"></div></div><button id="closeGamesFolder" class="windowCloseButton">Close</button>`;
+ document.body.appendChild(win);
+ const grid=$("gamesFolderGrid");
+ found.forEach(([id,emoji,name])=>{
+   const b=document.createElement("button");b.className="gameFolderCard";
+   b.innerHTML=`<span>${emoji}</span><b>${name}</b><small>Open</small>`;
+   b.onclick=()=>{$("gamesFolderWindow").classList.add("hidden");$(id).click()};
+   grid.appendChild(b);
+ });
+ folder.onclick=()=>win.classList.remove("hidden");
+ $("gamesFolderClose").onclick=() => win.classList.add("hidden");
+ $("closeGamesFolder").onclick=() => win.classList.add("hidden");
+})();
+
+// ===== The Unreleased Letter — Legendary Reward =====
+(() => {
+ const $=id=>document.getElementById(id);
+ const KEY="lizzyUnreleasedLetterUnlockedV1";
+ let decrypting=false;
+
+ function addLettersShortcut(){
+   if($("unreleasedLetterIcon"))return;
+   const desktop=$("gamesFolderIcon")?.parentElement || document.querySelector(".desktopIcons") || document.querySelector("#desktop");
+   if(!desktop)return;
+   const icon=document.createElement("div");
+   icon.className="desktopIcon";icon.id="unreleasedLetterIcon";
+   icon.innerHTML='<div class="desktopEmoji">💌</div><span>Letters</span>';
+   icon.title="Contains a classified Legendary letter";
+   icon.onclick=openLetter;
+   desktop.appendChild(icon);
+ }
+ function openLetter(){
+   if(localStorage.getItem(KEY)!=="yes")return;
+   $("unreleasedLetterWindow")?.classList.remove("hidden");
+ }
+ function unlock(showDecrypt=true){
+   const first=localStorage.getItem(KEY)!=="yes";
+   localStorage.setItem(KEY,"yes");
+   addLettersShortcut();
+   if(showDecrypt && first)decrypt();
+   else if(showDecrypt)openLetter();
+ }
+ function decrypt(){
+   if(decrypting)return;decrypting=true;
+   const screen=$("unreleasedDecryptScreen"),fill=$("decryptBarFill"),status=$("decryptStatus"),head=$("decryptHeadline");
+   screen.classList.remove("hidden");fill.style.width="0%";
+   setTimeout(()=>{fill.style.width="28%";status.textContent="Verifying Agent Yelizaveta clearance..."},200);
+   setTimeout(()=>{fill.style.width="61%";status.textContent="Removing Mikael's completely unnecessary security..."},1100);
+   setTimeout(()=>{fill.style.width="86%";status.textContent="Decrypting file: NEVER_MEANT_TO_BE_RELEASED.txt"},2100);
+   setTimeout(()=>{fill.style.width="100%";head.textContent="CLASSIFIED FILE DECRYPTED 💌";status.textContent="Legendary clearance granted."},3100);
+   setTimeout(()=>{screen.classList.add("hidden");decrypting=false;openLetter()},4100);
+ }
+ window.addEventListener("lizzyDailyRewardClaimed",e=>{
+   const r=e.detail?.reward;
+   if(Array.isArray(r) && r[2]==="The Unreleased Letter")unlock(true);
+ });
+ // Supports an already-claimed current reward after this update is deployed.
+ try{
+   const r=JSON.parse(localStorage.getItem("lizzyMysteryReward")||"null");
+   if(Array.isArray(r) && r[2]==="The Unreleased Letter")unlock(false);
+ }catch(e){}
+ if(localStorage.getItem(KEY)==="yes")addLettersShortcut();
+
+ $("unreleasedLetterClose")?.addEventListener("click",()=>$("unreleasedLetterWindow")?.classList.add("hidden"));
+ $("closeUnreleasedLetter")?.addEventListener("click",()=>$("unreleasedLetterWindow")?.classList.add("hidden"));
+ window.LizzyUnreleasedLetter={unlock,open:openLetter};
 })();

@@ -3061,3 +3061,58 @@ color:#ff5ca8;
 @media(max-width:430px){
     .gardenPlots{grid-template-columns:1fr}
 }
+
+/* ===== Garden visual polish ===== */
+.gardenWindow{
+ width:min(1380px,98vw)!important;
+ height:min(930px,96vh)!important;
+ max-width:none!important;
+}
+.gardenApp{
+ background:
+ radial-gradient(circle at 12% 7%,rgba(255,255,255,.18),transparent 22%),
+ linear-gradient(180deg,rgba(116,190,227,.18),rgba(80,148,97,.12) 42%,rgba(44,83,50,.18));
+}
+.gardenPlotPanel{
+ background:linear-gradient(180deg,rgba(116,190,227,.13),rgba(83,155,87,.15) 45%,rgba(67,45,29,.18))!important;
+ position:relative;overflow:hidden;
+}
+.gardenPlotPanel:before{content:"☁️       🦋              ☁️          🐝                 ☁️";display:block;white-space:pre;font-size:22px;opacity:.75;margin-bottom:8px;animation:gardenSkyDrift 18s ease-in-out infinite alternate}
+@keyframes gardenSkyDrift{to{transform:translateX(28px)}}
+.gardenPlots{grid-template-columns:repeat(6,minmax(135px,1fr))!important;gap:14px!important}
+.gardenPlot{min-height:260px!important;box-shadow:inset 0 -35px 45px rgba(35,73,38,.18),0 9px 25px rgba(25,20,31,.10)}
+.gardenPlot:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(91,59,35,.3)}
+.plantVisual{font-size:68px!important;height:128px!important;filter:drop-shadow(0 8px 8px rgba(0,0,0,.12))}
+.gardenTreePlot .plantVisual{font-size:82px!important}
+@media(max-width:1100px){.gardenPlots{grid-template-columns:repeat(4,minmax(130px,1fr))!important}}
+@media(max-width:760px){.gardenPlots{grid-template-columns:repeat(2,minmax(130px,1fr))!important}}
+@media(max-width:430px){.gardenPlots{grid-template-columns:1fr!important}}
+
+/* ===== Games Folder ===== */
+.gamesFolderWindow{width:min(900px,94vw)!important;height:min(700px,88vh)!important}
+.gamesFolderIntro{display:flex;gap:16px;align-items:center;padding:18px;border-radius:20px;background:rgba(255,255,255,.12);margin-bottom:16px}
+.gamesFolderIntro>span{font-size:56px}.gamesFolderIntro small{letter-spacing:.12em;opacity:.7;font-weight:800}
+.gamesFolderIntro h3{margin:3px 0!important}
+.gamesFolderGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.gameFolderCard{min-height:145px!important;border-radius:20px!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.11)!important;color:#fff!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:7px!important;box-shadow:none!important}
+.gameFolderCard>span{font-size:44px}.gameFolderCard small{opacity:.65}
+@media(max-width:650px){.gamesFolderGrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Legendary Unreleased Letter ===== */
+.unreleasedDecryptScreen{position:fixed;inset:0;z-index:99990;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(54,27,66,.98),rgba(10,8,17,.995));color:#fff;overflow:hidden}
+.unreleasedDecryptScreen.hidden{display:none!important}
+.decryptNoise{position:absolute;inset:0;opacity:.08;background-image:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);animation:decryptNoise .18s steps(2) infinite}
+@keyframes decryptNoise{50%{transform:translateY(3px)}}
+.decryptBox{position:relative;z-index:2;width:min(620px,88vw);text-align:center;padding:38px;border:1px solid rgba(255,255,255,.24);border-radius:28px;background:rgba(255,255,255,.07);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px)}
+.decryptLock{font-size:72px}.decryptBox small{letter-spacing:.18em;opacity:.65;font-weight:900}.decryptBox h1{font-size:28px;margin:12px 0}
+.decryptBar{height:9px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:22px 0}.decryptBar>div{height:100%;width:0;background:#fff;border-radius:999px;transition:width .8s ease}
+.unreleasedLetterWindow{width:min(860px,94vw)!important;height:min(880px,92vh)!important}
+.unreleasedLetterBody{padding:34px 42px!important;background:radial-gradient(circle at 50% 0,rgba(255,220,235,.18),transparent 34%),rgba(63,29,60,.22)}
+.unreleasedClassification{text-align:center;font-size:11px;font-weight:900;letter-spacing:.18em;opacity:.6;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 13px;width:max-content;max-width:100%;margin:0 auto 18px}
+.unreleasedSeal{text-align:center;font-size:64px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+.unreleasedLetterBody h1{text-align:center;margin:5px 0 30px!important;font-size:30px}
+.unreleasedLetterBody p{font-size:16px!important;line-height:1.75!important;margin:0 0 17px!important}
+.unreleasedEmphasis{font-size:19px!important;font-weight:800;text-align:center;padding:15px;border-radius:17px;background:rgba(255,255,255,.10)}
+.unreleasedSignature{text-align:right;margin-top:28px!important}
+.unreleasedPS{margin-top:25px;padding:15px 17px;border-radius:16px;background:rgba(255,255,255,.10);font-size:14px;line-height:1.55}
+@media(max-width:600px){.unreleasedLetterBody{padding:25px 20px!important}}
