@@ -3183,3 +3183,30 @@ color:#ff5ca8;
 .tttCell:hover{background:rgba(255,255,255,.2)!important;transform:translateY(-2px)}
 .ticTacToeStatus{font-weight:800;min-height:28px}
 #ticTacToeRestart{border-radius:999px!important}
+
+/* ===== VISIBLE FIX: one real Games folder ===== */
+#funQuizIcon,#heartGameIcon,#mikhailQuizIcon,#mysteryBoxIcon,#wouldMikaelRatherIcon,#ticTacToeIcon,#crackCodeIcon{display:none!important}
+#gamesFolderIcon{display:none!important}
+#gamesFolderStaticIcon{display:flex!important}
+#gamesFolderStaticWindow{width:min(900px,94vw)!important;height:min(700px,88vh)!important}
+#gamesFolderStaticWindow .gameFolderCard{cursor:pointer}
+
+/* ===== VISIBLE FIX: original Garden window size + prettier scene ===== */
+.gardenWindow{width:min(1050px,94vw)!important;height:min(820px,90vh)!important;max-width:1050px!important}
+.gardenPlotPanel{
+  position:relative!important;overflow:hidden!important;
+  background:
+    linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),
+    linear-gradient(180deg,rgba(119,199,238,.28) 0 27%,rgba(114,184,101,.24) 27% 55%,rgba(91,59,39,.24) 55% 100%)!important;
+}
+.gardenPlotPanel .gardenPanelHeading{position:relative;z-index:6}
+.gardenAmbient{position:absolute!important;inset:65px 0 0!important;z-index:5!important;display:block!important;pointer-events:none!important}
+.gardenBug{display:block!important;position:absolute!important;font-size:24px!important;opacity:.95!important}
+.gardenPlots{position:relative!important;z-index:3!important}
+.gardenPlot{
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(86,137,77,.14) 48%,rgba(94,61,39,.30) 49%)!important;
+  border:1px solid rgba(255,255,255,.24)!important;
+}
+.plantVisual{transition:transform .2s ease,filter .2s ease!important;cursor:pointer!important}
+.plantVisual:hover{transform:scale(1.12) rotate(2deg)!important;filter:drop-shadow(0 10px 10px rgba(0,0,0,.2))!important}
+.gardenBugMessage{z-index:8!important}

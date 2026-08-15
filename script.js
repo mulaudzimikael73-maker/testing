@@ -3134,8 +3134,8 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     renderTokens();
 })();
 
-// ===== Games Folder Organizer =====
-(() => {
+// ===== Games Folder Organizer (superseded by static folder) =====
+if(false)(() => {
  const $=id=>document.getElementById(id);
  const candidates=[
   ["funQuizIcon","💗","Lizzy Quiz"],
@@ -3292,4 +3292,20 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  $("ticTacToeClose")?.addEventListener("click",()=>$("ticTacToeWindow")?.classList.add("hidden"));
  $("closeTicTacToe")?.addEventListener("click",()=>$("ticTacToeWindow")?.classList.add("hidden"));
  reset();
+})();
+
+// ===== Static Games Folder — reliable desktop organizer =====
+(() => {
+ const $=id=>document.getElementById(id);
+ const win=$("gamesFolderStaticWindow");
+ $("gamesFolderStaticIcon")?.addEventListener("click",()=>win?.classList.remove("hidden"));
+ $("gamesFolderStaticClose")?.addEventListener("click",()=>win?.classList.add("hidden"));
+ $("closeGamesFolderStatic")?.addEventListener("click",()=>win?.classList.add("hidden"));
+ document.querySelectorAll("#gamesFolderStaticWindow [data-open-game]").forEach(btn=>{
+   btn.addEventListener("click",()=>{
+     const target=$(btn.dataset.openGame);
+     win?.classList.add("hidden");
+     target?.click();
+   });
+ });
 })();
