@@ -536,7 +536,10 @@
                 <span>Recycle Bin</span>
             </div>
 
-            <div class="desktopIcon" id="gamesFolderStaticIcon">
+            <div class="desktopIcon" id="gamesFolderStaticIcon"
+         role="button" tabindex="0"
+         onclick="document.getElementById('gamesFolderStaticWindow').classList.remove('hidden');"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('gamesFolderStaticWindow').classList.remove('hidden');}">
                 <div class="desktopEmoji">🎮</div>
                 <span>Games</span>
             </div>
@@ -586,7 +589,8 @@
         <div id="gamesFolderStaticWindow" class="desktopWindow hidden gamesFolderWindow">
             <div class="windowTop">
                 <div class="windowDots">
-                    <span class="windowCloseDot" id="gamesFolderStaticClose"></span>
+                    <span class="windowCloseDot" id="gamesFolderStaticClose"
+          onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');"></span>
                     <span class="windowMinDot"></span><span class="windowMaxDot"></span>
                 </div>
                 <h2>🎮 Games & Quizzes</h2>
@@ -594,16 +598,17 @@
             <div class="windowScroll">
                 <div class="gamesFolderIntro"><span>🎮</span><div><small>LIZZYOS ARCADE</small><h3>Games, quizzes & unnecessary competition</h3><p>Win big, get perfect scores, and you may earn Garden seeds. 🌱</p></div></div>
                 <div class="gamesFolderGrid">
-                    <button class="gameFolderCard" data-open-game="funQuizIcon"><span>🧠</span><b>Lizzy Quiz</b><small>How well do you know yourself?</small></button>
-                    <button class="gameFolderCard" data-open-game="mikhailQuizIcon"><span>🧠</span><b>Mikhail Quiz</b><small>Prove you actually listen.</small></button>
-                    <button class="gameFolderCard" data-open-game="wouldMikaelRatherIcon"><span>🤔</span><b>Would Mikael Rather?</b><small>Choose wisely.</small></button>
-                    <button class="gameFolderCard" data-open-game="heartGameIcon"><span>💗</span><b>Heart Catch</b><small>Catch them before they escape.</small></button>
-                    <button class="gameFolderCard" data-open-game="mysteryBoxIcon"><span>🎁</span><b>Daily Mystery</b><small>Your daily classified reward.</small></button>
-                    <button class="gameFolderCard" data-open-game="ticTacToeIcon"><span>❌⭕</span><b>Tic-Tac-Toe</b><small>Lizzy vs Mikael.</small></button>
-                    <button class="gameFolderCard" data-open-game="crackCodeIcon"><span>🔐</span><b>Crack the Code</b><small>Agent-level puzzles.</small></button>
+                    <button class="gameFolderCard" data-open-game="funQuizIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('funQuizWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('funQuizIcon');if(i)i.click();}"><span>🧠</span><b>Lizzy Quiz</b><small>How well do you know yourself?</small></button>
+                    <button class="gameFolderCard" data-open-game="mikhailQuizIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('mikhailQuizWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('mikhailQuizIcon');if(i)i.click();}"><span>🧠</span><b>Mikhail Quiz</b><small>Prove you actually listen.</small></button>
+                    <button class="gameFolderCard" data-open-game="wouldMikaelRatherIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('wouldMikaelRatherWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('wouldMikaelRatherIcon');if(i)i.click();}"><span>🤔</span><b>Would Mikael Rather?</b><small>Choose wisely.</small></button>
+                    <button class="gameFolderCard" data-open-game="heartGameIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('heartGameWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('heartGameIcon');if(i)i.click();}"><span>💗</span><b>Heart Catch</b><small>Catch them before they escape.</small></button>
+                    <button class="gameFolderCard" data-open-game="mysteryBoxIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('mysteryBoxWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('mysteryBoxIcon');if(i)i.click();}"><span>🎁</span><b>Daily Mystery</b><small>Your daily classified reward.</small></button>
+                    <button class="gameFolderCard" data-open-game="ticTacToeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('ticTacToeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('ticTacToeIcon');if(i)i.click();}"><span>❌⭕</span><b>Tic-Tac-Toe</b><small>Lizzy vs Mikael.</small></button>
+                    <button class="gameFolderCard" data-open-game="crackCodeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('crackCodeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('crackCodeIcon');if(i)i.click();}"><span>🔐</span><b>Crack the Code</b><small>Agent-level puzzles.</small></button>
                 </div>
             </div>
-            <button id="closeGamesFolderStatic" class="windowCloseButton">Close</button>
+            <button id="closeGamesFolderStatic" class="windowCloseButton"
+          onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');">Close</button>
         </div>
 
         <!-- Finder Window -->

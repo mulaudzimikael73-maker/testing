@@ -3221,3 +3221,55 @@ color:#ff5ca8;
 .gardenUpgradeChoice:hover span{background:rgba(255,255,255,.15);transform:translateY(-1px)}
 .gardenUpgradeChoice input:checked+span{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.65);box-shadow:0 0 0 2px rgba(255,255,255,.08)}
 @media(max-width:580px){.gardenUpgradeChoices{grid-template-columns:1fr}}
+
+/* =========================================================
+   DEFINITIVE GAMES FOLDER FIX
+   ========================================================= */
+#gamesFolderStaticIcon{
+    display:flex!important;
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    position:relative!important;
+    z-index:100!important;
+}
+#gamesFolderStaticIcon *{
+    pointer-events:none!important;
+}
+#gamesFolderStaticWindow:not(.hidden){
+    display:flex!important;
+    position:fixed!important;
+    top:50%!important;
+    left:50%!important;
+    transform:translate(-50%,-50%)!important;
+    z-index:999999!important;
+    width:min(900px,94vw)!important;
+    height:min(700px,88vh)!important;
+    flex-direction:column!important;
+    background:linear-gradient(180deg,rgba(231,137,190,.99),rgba(164,92,161,.99))!important;
+    border:1px solid rgba(255,255,255,.42)!important;
+    box-shadow:0 32px 110px rgba(45,19,52,.48)!important;
+    backdrop-filter:blur(26px)!important;
+    pointer-events:auto!important;
+}
+#gamesFolderStaticWindow .windowScroll{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    padding:22px!important;
+}
+#gamesFolderStaticWindow .gamesFolderGrid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:14px!important;
+}
+#gamesFolderStaticWindow .gameFolderCard{
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    min-height:145px!important;
+    margin:0!important;
+}
+@media(max-width:650px){
+    #gamesFolderStaticWindow .gamesFolderGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+}
