@@ -2707,3 +2707,569 @@ color:#ff5ca8;
         padding:20px!important;
     }
 }
+
+
+/* =========================================================
+   LIZZY'S GARDEN + TOKEN JAR UPDATE
+   Existing desktop sizing/streak layout intentionally untouched.
+   ========================================================= */
+
+.gardenWindow,
+.tokenJarWindow{
+    width:min(1050px,94vw)!important;
+    height:min(820px,90vh)!important;
+}
+.gardenUpgradeWindow,
+.tokenRedeemWindow{
+    width:min(680px,92vw)!important;
+    height:auto!important;
+    max-height:88vh!important;
+}
+
+.gardenApp,
+.tokenJarApp{
+    padding:22px!important;
+}
+
+.gardenTopGrid{
+    display:grid;
+    grid-template-columns:1.35fr 1fr;
+    gap:16px;
+}
+.gardenWeatherCard,
+.gardenSummaryCard,
+.gardenInventoryPanel,
+.gardenPlotPanel,
+.gardenCollectionPanel,
+.tokenJarHero,
+.tokenJarNotice,
+.tokenHistorySection{
+    border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.12);
+    border-radius:22px;
+    padding:18px;
+}
+.weatherHeadline{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+#gardenWeatherEmoji{
+    font-size:54px;
+}
+.weatherHeadline small,
+.gardenSummaryCard small,
+.gardenPanelHeading small,
+.tokenJarHero small{
+    letter-spacing:.12em;
+    font-weight:800;
+    opacity:.72;
+}
+.weatherHeadline h3,
+.gardenSummaryCard h3,
+.gardenPanelHeading h3,
+.tokenJarHero h3{
+    margin:3px 0!important;
+}
+.gardenWeatherAlert{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:15px;
+    background:rgba(117,28,54,.34);
+    border:1px solid rgba(255,255,255,.25);
+    font-weight:700;
+}
+.gardenWeatherAlert.hidden{display:none!important}
+
+.gardenForecast{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:14px;
+}
+.forecastDay{
+    padding:10px;
+    border-radius:14px;
+    background:rgba(255,255,255,.10);
+    text-align:center;
+}
+.forecastDay span{display:block;font-size:26px}
+.forecastDay small{display:block;opacity:.72}
+.gardenStats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    margin:15px 0;
+}
+.gardenStats span{
+    padding:10px;
+    border-radius:14px;
+    background:rgba(255,255,255,.10);
+}
+.gardenStats b{display:block;font-size:20px}
+#openGardenUpgrade,
+#waterAllPlants{
+    border:0!important;
+    border-radius:999px!important;
+    padding:11px 15px!important;
+    margin:0!important;
+    background:rgba(255,255,255,.18)!important;
+    color:#fff!important;
+    font-weight:800!important;
+    box-shadow:none!important;
+}
+.gardenInventoryPanel,
+.gardenPlotPanel,
+.gardenCollectionPanel{
+    margin-top:16px;
+}
+.gardenPanelHeading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+}
+.gardenSeedInventory,
+.gardenFlowerCollection{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+.seedChip,
+.flowerCollectionChip{
+    border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.10);
+    border-radius:16px;
+    padding:10px 12px;
+    color:#fff;
+}
+.seedChip{
+    cursor:pointer;
+}
+.seedChip.selected{
+    background:rgba(255,255,255,.25);
+    transform:translateY(-2px);
+}
+.seedChip b,
+.flowerCollectionChip b{
+    display:block;
+}
+.seedChip small,
+.flowerCollectionChip small{
+    opacity:.72;
+}
+
+.gardenPlots{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:13px;
+}
+.gardenPlot{
+    min-height:235px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.24);
+    background:
+      linear-gradient(180deg,rgba(152,213,255,.13) 0 45%,rgba(77,43,28,.28) 46% 100%);
+    position:relative;
+    overflow:hidden;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+}
+.gardenPlot.empty{
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:.82;
+    cursor:pointer;
+}
+.gardenPlot.empty .emptySoil{font-size:44px}
+.plantVisual{
+    height:112px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    font-size:58px;
+    transition:.35s;
+}
+.plantVisual.thirsty{filter:saturate(.65);transform:rotate(-4deg)}
+.plantVisual.wilting{filter:saturate(.35);transform:rotate(8deg) translateY(6px)}
+.plantVisual.critical{filter:grayscale(.45) saturate(.2);transform:rotate(14deg) translateY(12px)}
+.plantMeta{
+    margin-top:auto;
+    border-radius:14px;
+    padding:10px;
+    background:rgba(33,18,35,.22);
+}
+.plantMeta strong{display:block}
+.plantMeta small{display:block;opacity:.72;margin-top:3px}
+.plantHealthBar{
+    height:7px;
+    background:rgba(255,255,255,.16);
+    border-radius:999px;
+    overflow:hidden;
+    margin:8px 0;
+}
+.plantHealthFill{
+    height:100%;
+    background:#fff;
+    border-radius:999px;
+}
+.plantActions{
+    display:flex;
+    gap:7px;
+}
+.plantActions button{
+    flex:1;
+    border:0!important;
+    margin:0!important;
+    padding:8px!important;
+    border-radius:11px!important;
+    background:rgba(255,255,255,.17)!important;
+    color:#fff!important;
+    font-size:12px!important;
+    box-shadow:none!important;
+}
+.gardenMikaelComment{
+    min-height:52px;
+    margin-top:16px;
+    padding:14px 16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.12);
+    font-weight:650;
+}
+
+/* Animated weather */
+.gardenRainDrop{
+    position:absolute;
+    pointer-events:none;
+    animation:gardenRain .8s linear forwards;
+}
+@keyframes gardenRain{
+    from{transform:translateY(-30px);opacity:.9}
+    to{transform:translateY(250px);opacity:0}
+}
+.waterSplash{
+    animation:waterSplash .65s ease;
+}
+@keyframes waterSplash{
+    40%{filter:brightness(1.35);transform:scale(1.06)}
+}
+
+/* Garden upgrade */
+.upgradeLockEmoji{text-align:center;font-size:66px}
+.gardenUpgradeProgress{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin:14px 0;
+}
+.gardenUpgradeProgress span{
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.12);
+}
+.gardenUpgradeProgress span.done{background:rgba(255,255,255,.32)}
+.gardenUpgradeQuestion{
+    padding:15px;
+    border-radius:16px;
+    background:rgba(255,255,255,.11);
+    font-weight:700;
+}
+#gardenUpgradeAnswer{
+    width:100%;
+    padding:14px 16px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.30);
+    background:rgba(255,255,255,.15);
+    color:#fff;
+    outline:none;
+    font:inherit;
+}
+#gardenUpgradeAnswer::placeholder{color:rgba(255,255,255,.62)}
+#submitGardenUpgradeAnswer{
+    margin-top:12px!important;
+}
+
+/* Token Jar */
+.tokenJarHero{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+.tokenJarEmoji{font-size:64px}
+.tokenJarNotice{
+    margin-top:14px;
+    font-size:13px;
+}
+.tokenJarList{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    margin:16px 0;
+}
+.tokenCard{
+    padding:15px;
+    border-radius:18px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.22);
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:12px;
+    align-items:center;
+}
+.tokenCardEmoji{font-size:34px}
+.tokenCard strong{display:block}
+.tokenCard p{margin:3px 0!important;font-size:13px!important;line-height:1.4!important;opacity:.82}
+.tokenCount{
+    min-width:28px;height:28px;border-radius:999px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.20);font-weight:900;
+}
+.tokenCard button{
+    grid-column:1/-1;
+    margin:0!important;
+    padding:9px!important;
+    border:0!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.18)!important;
+    color:#fff!important;
+    box-shadow:none!important;
+}
+.tokenHistorySection{margin-top:12px}
+.tokenRedeemHistory{display:grid;gap:8px}
+.tokenHistoryItem{
+    padding:10px 12px;
+    border-radius:13px;
+    background:rgba(255,255,255,.09);
+}
+.tokenHistoryItem small{display:block;opacity:.65}
+.tokenRedeemEmoji{text-align:center;font-size:62px}
+.tokenRedeemActions{display:flex;gap:10px}
+.tokenRedeemActions button{flex:1;margin-top:10px!important}
+
+@media(max-width:850px){
+    .gardenTopGrid{grid-template-columns:1fr}
+    .gardenPlots{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:650px){
+    .gardenPlots{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .tokenJarList{grid-template-columns:1fr}
+    .gardenForecast{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:430px){
+    .gardenPlots{grid-template-columns:1fr}
+}
+
+/* ===== Garden visual polish ===== */
+.gardenWindow{
+ width:min(1380px,98vw)!important;
+ height:min(930px,96vh)!important;
+ max-width:none!important;
+}
+.gardenApp{
+ background:
+ radial-gradient(circle at 12% 7%,rgba(255,255,255,.18),transparent 22%),
+ linear-gradient(180deg,rgba(116,190,227,.18),rgba(80,148,97,.12) 42%,rgba(44,83,50,.18));
+}
+.gardenPlotPanel{
+ background:linear-gradient(180deg,rgba(116,190,227,.13),rgba(83,155,87,.15) 45%,rgba(67,45,29,.18))!important;
+ position:relative;overflow:hidden;
+}
+.gardenPlotPanel:before{content:"☁️       🦋              ☁️          🐝                 ☁️";display:block;white-space:pre;font-size:22px;opacity:.75;margin-bottom:8px;animation:gardenSkyDrift 18s ease-in-out infinite alternate}
+@keyframes gardenSkyDrift{to{transform:translateX(28px)}}
+.gardenPlots{grid-template-columns:repeat(6,minmax(135px,1fr))!important;gap:14px!important}
+.gardenPlot{min-height:260px!important;box-shadow:inset 0 -35px 45px rgba(35,73,38,.18),0 9px 25px rgba(25,20,31,.10)}
+.gardenPlot:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(91,59,35,.3)}
+.plantVisual{font-size:68px!important;height:128px!important;filter:drop-shadow(0 8px 8px rgba(0,0,0,.12))}
+.gardenTreePlot .plantVisual{font-size:82px!important}
+@media(max-width:1100px){.gardenPlots{grid-template-columns:repeat(4,minmax(130px,1fr))!important}}
+@media(max-width:760px){.gardenPlots{grid-template-columns:repeat(2,minmax(130px,1fr))!important}}
+@media(max-width:430px){.gardenPlots{grid-template-columns:1fr!important}}
+
+/* ===== Games Folder ===== */
+.gamesFolderWindow{width:min(900px,94vw)!important;height:min(700px,88vh)!important}
+.gamesFolderIntro{display:flex;gap:16px;align-items:center;padding:18px;border-radius:20px;background:rgba(255,255,255,.12);margin-bottom:16px}
+.gamesFolderIntro>span{font-size:56px}.gamesFolderIntro small{letter-spacing:.12em;opacity:.7;font-weight:800}
+.gamesFolderIntro h3{margin:3px 0!important}
+.gamesFolderGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.gameFolderCard{min-height:145px!important;border-radius:20px!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.11)!important;color:#fff!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:7px!important;box-shadow:none!important}
+.gameFolderCard>span{font-size:44px}.gameFolderCard small{opacity:.65}
+@media(max-width:650px){.gamesFolderGrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Legendary Unreleased Letter ===== */
+.unreleasedDecryptScreen{position:fixed;inset:0;z-index:99990;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(54,27,66,.98),rgba(10,8,17,.995));color:#fff;overflow:hidden}
+.unreleasedDecryptScreen.hidden{display:none!important}
+.decryptNoise{position:absolute;inset:0;opacity:.08;background-image:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);animation:decryptNoise .18s steps(2) infinite}
+@keyframes decryptNoise{50%{transform:translateY(3px)}}
+.decryptBox{position:relative;z-index:2;width:min(620px,88vw);text-align:center;padding:38px;border:1px solid rgba(255,255,255,.24);border-radius:28px;background:rgba(255,255,255,.07);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px)}
+.decryptLock{font-size:72px}.decryptBox small{letter-spacing:.18em;opacity:.65;font-weight:900}.decryptBox h1{font-size:28px;margin:12px 0}
+.decryptBar{height:9px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:22px 0}.decryptBar>div{height:100%;width:0;background:#fff;border-radius:999px;transition:width .8s ease}
+.unreleasedLetterWindow{width:min(860px,94vw)!important;height:min(880px,92vh)!important}
+.unreleasedLetterBody{padding:34px 42px!important;background:radial-gradient(circle at 50% 0,rgba(255,220,235,.18),transparent 34%),rgba(63,29,60,.22)}
+.unreleasedClassification{text-align:center;font-size:11px;font-weight:900;letter-spacing:.18em;opacity:.6;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 13px;width:max-content;max-width:100%;margin:0 auto 18px}
+.unreleasedSeal{text-align:center;font-size:64px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+.unreleasedLetterBody h1{text-align:center;margin:5px 0 30px!important;font-size:30px}
+.unreleasedLetterBody p{font-size:16px!important;line-height:1.75!important;margin:0 0 17px!important}
+.unreleasedEmphasis{font-size:19px!important;font-weight:800;text-align:center;padding:15px;border-radius:17px;background:rgba(255,255,255,.10)}
+.unreleasedSignature{text-align:right;margin-top:28px!important}
+.unreleasedPS{margin-top:25px;padding:15px 17px;border-radius:16px;background:rgba(255,255,255,.10);font-size:14px;line-height:1.55}
+@media(max-width:600px){.unreleasedLetterBody{padding:25px 20px!important}}
+
+/* ===== Garden size restored to original update dimensions ===== */
+.gardenWindow{
+    width:min(1050px,94vw)!important;
+    height:min(820px,90vh)!important;
+    max-width:1050px!important;
+}
+.gardenPlots{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+@media(max-width:850px){.gardenPlots{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:650px){.gardenPlots{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:430px){.gardenPlots{grid-template-columns:1fr!important}}
+
+/* ===== Living Garden visual layer ===== */
+.gardenPlotPanel{position:relative;isolation:isolate}
+.gardenPlotPanel:after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+ background:
+ radial-gradient(circle at 15% 16%,rgba(255,255,255,.16) 0 2px,transparent 3px),
+ radial-gradient(circle at 78% 24%,rgba(255,255,255,.12) 0 2px,transparent 3px);
+ background-size:62px 62px,87px 87px;
+}
+.gardenAmbient{position:absolute;inset:58px 0 0;pointer-events:none;overflow:hidden;z-index:4}
+.gardenBug{position:absolute;font-size:18px;filter:drop-shadow(0 4px 5px rgba(0,0,0,.15));animation:gardenBugFly var(--flyTime,12s) ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+.gardenBug:nth-child(even){animation-name:gardenBugFlyReverse}
+@keyframes gardenBugFly{
+ 0%{transform:translate(-30px,30px) rotate(-8deg)}
+ 25%{transform:translate(210px,5px) rotate(10deg)}
+ 50%{transform:translate(460px,90px) rotate(-5deg)}
+ 75%{transform:translate(720px,25px) rotate(12deg)}
+ 100%{transform:translate(980px,105px) rotate(-8deg)}
+}
+@keyframes gardenBugFlyReverse{
+ 0%{transform:translate(980px,80px) rotate(8deg)}
+ 30%{transform:translate(710px,15px) rotate(-10deg)}
+ 65%{transform:translate(350px,95px) rotate(8deg)}
+ 100%{transform:translate(-40px,20px) rotate(-5deg)}
+}
+.plantVisual{cursor:pointer;transform-origin:50% 100%}
+.plantVisual:not(.thirsty):not(.wilting):not(.critical){animation:flowerSway 3.8s ease-in-out infinite alternate}
+@keyframes flowerSway{from{transform:rotate(-2deg)}to{transform:rotate(3deg)}}
+.plantVisual.gardenHello{animation:flowerHello .8s ease!important}
+@keyframes flowerHello{
+ 0%,100%{transform:rotate(0) scale(1)}
+ 25%{transform:rotate(-12deg) scale(1.1)}
+ 55%{transform:rotate(12deg) scale(1.14)}
+ 80%{transform:rotate(-5deg) scale(1.05)}
+}
+.gardenBugMessage{
+ position:absolute;z-index:7;left:50%;top:72px;transform:translateX(-50%);
+ padding:8px 12px;border-radius:999px;background:rgba(40,27,45,.78);
+ color:#fff;font-size:12px;font-weight:750;backdrop-filter:blur(8px);
+ opacity:0;transition:.2s;pointer-events:none
+}
+.gardenBugMessage.show{opacity:1}
+
+/* ===== Tic Tac Toe ===== */
+.ticTacToeWindow{width:min(560px,92vw)!important;height:auto!important;max-height:88vh!important}
+.ticTacToeApp{text-align:center;padding:24px!important}
+.tttHero{padding:14px;border-radius:18px;background:rgba(255,255,255,.1);margin-bottom:16px}
+.tttFaces{font-size:20px;font-weight:900}.tttFaces span{font-size:11px;opacity:.55;margin:0 8px}
+.ticTacToeBoard{width:min(360px,78vw);aspect-ratio:1;margin:14px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tttCell{border:1px solid rgba(255,255,255,.25)!important;border-radius:18px!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:44px!important;margin:0!important;padding:0!important;box-shadow:none!important;min-height:0!important}
+.tttCell:hover{background:rgba(255,255,255,.2)!important;transform:translateY(-2px)}
+.ticTacToeStatus{font-weight:800;min-height:28px}
+#ticTacToeRestart{border-radius:999px!important}
+
+/* ===== VISIBLE FIX: one real Games folder ===== */
+#funQuizIcon,#heartGameIcon,#mikhailQuizIcon,#mysteryBoxIcon,#wouldMikaelRatherIcon,#ticTacToeIcon,#crackCodeIcon{display:none!important}
+#gamesFolderIcon{display:none!important}
+#gamesFolderStaticIcon{display:flex!important}
+#gamesFolderStaticWindow{width:min(900px,94vw)!important;height:min(700px,88vh)!important}
+#gamesFolderStaticWindow .gameFolderCard{cursor:pointer}
+
+/* ===== VISIBLE FIX: original Garden window size + prettier scene ===== */
+.gardenWindow{width:min(1050px,94vw)!important;height:min(820px,90vh)!important;max-width:1050px!important}
+.gardenPlotPanel{
+  position:relative!important;overflow:hidden!important;
+  background:
+    linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),
+    linear-gradient(180deg,rgba(119,199,238,.28) 0 27%,rgba(114,184,101,.24) 27% 55%,rgba(91,59,39,.24) 55% 100%)!important;
+}
+.gardenPlotPanel .gardenPanelHeading{position:relative;z-index:6}
+.gardenAmbient{position:absolute!important;inset:65px 0 0!important;z-index:5!important;display:block!important;pointer-events:none!important}
+.gardenBug{display:block!important;position:absolute!important;font-size:24px!important;opacity:.95!important}
+.gardenPlots{position:relative!important;z-index:3!important}
+.gardenPlot{
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(86,137,77,.14) 48%,rgba(94,61,39,.30) 49%)!important;
+  border:1px solid rgba(255,255,255,.24)!important;
+}
+.plantVisual{transition:transform .2s ease,filter .2s ease!important;cursor:pointer!important}
+.plantVisual:hover{transform:scale(1.12) rotate(2deg)!important;filter:drop-shadow(0 10px 10px rgba(0,0,0,.2))!important}
+.gardenBugMessage{z-index:8!important}
+
+#gamesFolderStaticIcon{pointer-events:auto!important;cursor:pointer!important;z-index:30!important}
+#gamesFolderStaticWindow{z-index:9999!important;pointer-events:auto!important}
+.blueGardenButterfly{filter:hue-rotate(150deg) saturate(3) brightness(1.15) drop-shadow(0 4px 5px rgba(0,0,0,.18))!important;font-size:27px!important}
+.gardenUpgradeChoices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}
+.gardenUpgradeChoice{cursor:pointer}
+.gardenUpgradeChoice input{position:absolute;opacity:0}
+.gardenUpgradeChoice span{display:block;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);transition:.15s}
+.gardenUpgradeChoice:hover span{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+.gardenUpgradeChoice input:checked+span{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.65);box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+@media(max-width:580px){.gardenUpgradeChoices{grid-template-columns:1fr}}
+
+/* =========================================================
+   DEFINITIVE GAMES FOLDER FIX
+   ========================================================= */
+#gamesFolderStaticIcon{
+    display:flex!important;
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    position:relative!important;
+    z-index:100!important;
+}
+#gamesFolderStaticIcon *{
+    pointer-events:none!important;
+}
+#gamesFolderStaticWindow:not(.hidden){
+    display:flex!important;
+    position:fixed!important;
+    top:50%!important;
+    left:50%!important;
+    transform:translate(-50%,-50%)!important;
+    z-index:999999!important;
+    width:min(900px,94vw)!important;
+    height:min(700px,88vh)!important;
+    flex-direction:column!important;
+    background:linear-gradient(180deg,rgba(231,137,190,.99),rgba(164,92,161,.99))!important;
+    border:1px solid rgba(255,255,255,.42)!important;
+    box-shadow:0 32px 110px rgba(45,19,52,.48)!important;
+    backdrop-filter:blur(26px)!important;
+    pointer-events:auto!important;
+}
+#gamesFolderStaticWindow .windowScroll{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    padding:22px!important;
+}
+#gamesFolderStaticWindow .gamesFolderGrid{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:14px!important;
+}
+#gamesFolderStaticWindow .gameFolderCard{
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    min-height:145px!important;
+    margin:0!important;
+}
+@media(max-width:650px){
+    #gamesFolderStaticWindow .gamesFolderGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+}

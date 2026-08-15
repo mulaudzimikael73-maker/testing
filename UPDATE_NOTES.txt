@@ -18,3 +18,12 @@ NEW STORAGE
 
 Token redemption notifications are queued locally until the Telegram
 Cloudflare Worker URL is connected.
+
+
+TELEGRAM + ARGUMENT TOKEN UPDATE
+- Connected to the working Cloudflare Telegram Worker.
+- Telegram alerts added for Mikhail Quiz, Would Mikael Rather, Crack the Code, Calendar, Daily Rewards and Token Jar redemptions.
+- Argument Winner Pass now enters the Token Jar as a redeemable token.
+- Argument Voucher is also recognised by the Token Jar.
+- Argument token redemptions send a dedicated Telegram alert.
+- Bot token and Chat ID remain private in Cloudflare; they are not exposed in this website.
