@@ -3144,13 +3144,14 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
   ["crackCodeIcon","🔐","Crack the Code"],
   ["dailyMysteryIcon","🎁","Daily Mystery"],
   ["memoryMatchIcon","🧩","Memory Match"],
-  ["thisOrThatIcon","⚡","This or That"]
+  ["thisOrThatIcon","⚡","This or That"],
+  ["ticTacToeVirtual","❌⭕","Tic Tac Toe"]
  ];
- const found=candidates.filter(([id])=>$(id));
+ const found=candidates.filter(([id])=>id==="ticTacToeVirtual" || $(id));
  if(!found.length)return;
- const desktop=found[0][0] && $(found[0][0])?.parentElement;
+ const firstReal=found.find(([id])=>id!=="ticTacToeVirtual" && $(id)); const desktop=firstReal && $(firstReal[0])?.parentElement;
  if(!desktop)return;
- found.forEach(([id])=>$(id).style.display="none");
+ found.forEach(([id])=>{if(id!=="ticTacToeVirtual" && $(id))$(id).style.display="none"});
  const folder=document.createElement("div");
  folder.className="desktopIcon";folder.id="gamesFolderIcon";
  folder.innerHTML='<div class="desktopEmoji">🎮</div><span>Games</span>';
@@ -3164,7 +3165,7 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  found.forEach(([id,emoji,name])=>{
    const b=document.createElement("button");b.className="gameFolderCard";
    b.innerHTML=`<span>${emoji}</span><b>${name}</b><small>Open</small>`;
-   b.onclick=()=>{$("gamesFolderWindow").classList.add("hidden");$(id).click()};
+   b.onclick=()=>{$("gamesFolderWindow").classList.add("hidden");if(id==="ticTacToeVirtual")$("ticTacToeWindow")?.classList.remove("hidden");else $(id)?.click()};
    grid.appendChild(b);
  });
  folder.onclick=()=>win.classList.remove("hidden");
@@ -3224,4 +3225,71 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
  $("unreleasedLetterClose")?.addEventListener("click",()=>$("unreleasedLetterWindow")?.classList.add("hidden"));
  $("closeUnreleasedLetter")?.addEventListener("click",()=>$("unreleasedLetterWindow")?.classList.add("hidden"));
  window.LizzyUnreleasedLetter={unlock,open:openLetter};
+})();
+
+// ===== Living Garden Interactions =====
+(() => {
+ const $=id=>document.getElementById(id);
+ const comments=[
+  "The butterfly has chosen this flower. Very prestigious. 🦋",
+  "A bee has arrived for quality control. 🐝",
+  "The ladybug says your Garden is acceptable. Barely. 🐞",
+  "Your flower just moved. Either it's happy or Mikael broke the code again.",
+  "Botanical evidence confirms: this one likes attention."
+ ];
+ document.addEventListener("click",e=>{
+   const v=e.target.closest(".plantVisual");
+   if(v){
+     v.classList.remove("gardenHello");void v.offsetWidth;v.classList.add("gardenHello");
+     const msg=$("gardenBugMessage");
+     if(msg){msg.textContent=comments[Math.floor(Math.random()*comments.length)];msg.classList.add("show");setTimeout(()=>msg.classList.remove("show"),1900)}
+   }
+ });
+})();
+
+// ===== Tic Tac Toe: Lizzy vs Mikael =====
+(() => {
+ const $=id=>document.getElementById(id);
+ let board=Array(9).fill(""),over=false;
+ const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+ const winner=p=>wins.some(c=>c.every(i=>board[i]===p));
+ function render(){
+  const host=$("ticTacToeBoard");if(!host)return;
+  host.innerHTML=board.map((v,i)=>`<button class="tttCell" data-ttt="${i}">${v==="X"?"❌":v==="O"?"⭕":""}</button>`).join("");
+  host.querySelectorAll("[data-ttt]").forEach(b=>b.onclick=()=>move(Number(b.dataset.ttt)));
+ }
+ function finish(text){over=true;$("ticTacToeStatus").textContent=text}
+ function move(i){
+  if(over||board[i])return;
+  board[i]="X";render();
+  if(winner("X")){
+   finish("YOU BEAT MIKAEL 😭 Fine. Take the win.");
+   window.dispatchEvent(new CustomEvent("lizzyPerfectGame",{detail:{game:"Tic Tac Toe",key:"ticTacToe",score:"WIN"}}));
+   return;
+  }
+  if(board.every(Boolean)){finish("Draw. Mikael is calling this a moral victory.");return}
+  $("ticTacToeStatus").textContent="Mikael is thinking... allegedly.";
+  setTimeout(aiMove,420);
+ }
+ function aiMove(){
+  if(over)return;
+  const empty=board.map((v,i)=>v?null:i).filter(i=>i!==null);
+  const findWin=p=>empty.find(i=>{board[i]=p;const w=winner(p);board[i]="";return w});
+  let pick=findWin("O");
+  if(pick===undefined)pick=findWin("X");
+  if(pick===undefined && !board[4])pick=4;
+  if(pick===undefined){
+    const corners=empty.filter(i=>[0,2,6,8].includes(i));
+    pick=(corners.length?corners:empty)[Math.floor(Math.random()*(corners.length?corners.length:empty.length))];
+  }
+  board[pick]="O";render();
+  if(winner("O")){finish("Mikael wins 😏 Please direct complaints to management.");return}
+  if(board.every(Boolean)){finish("Draw. The hater survives.");return}
+  $("ticTacToeStatus").textContent="Your move, Hater.";
+ }
+ function reset(){board=Array(9).fill("");over=false;$("ticTacToeStatus").textContent="Your move, Hater.";render()}
+ $("ticTacToeRestart")?.addEventListener("click",reset);
+ $("ticTacToeClose")?.addEventListener("click",()=>$("ticTacToeWindow")?.classList.add("hidden"));
+ $("closeTicTacToe")?.addEventListener("click",()=>$("ticTacToeWindow")?.classList.add("hidden"));
+ reset();
 })();

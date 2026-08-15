@@ -3116,3 +3116,70 @@ color:#ff5ca8;
 .unreleasedSignature{text-align:right;margin-top:28px!important}
 .unreleasedPS{margin-top:25px;padding:15px 17px;border-radius:16px;background:rgba(255,255,255,.10);font-size:14px;line-height:1.55}
 @media(max-width:600px){.unreleasedLetterBody{padding:25px 20px!important}}
+
+/* ===== Garden size restored to original update dimensions ===== */
+.gardenWindow{
+    width:min(1050px,94vw)!important;
+    height:min(820px,90vh)!important;
+    max-width:1050px!important;
+}
+.gardenPlots{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+@media(max-width:850px){.gardenPlots{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:650px){.gardenPlots{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:430px){.gardenPlots{grid-template-columns:1fr!important}}
+
+/* ===== Living Garden visual layer ===== */
+.gardenPlotPanel{position:relative;isolation:isolate}
+.gardenPlotPanel:after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+ background:
+ radial-gradient(circle at 15% 16%,rgba(255,255,255,.16) 0 2px,transparent 3px),
+ radial-gradient(circle at 78% 24%,rgba(255,255,255,.12) 0 2px,transparent 3px);
+ background-size:62px 62px,87px 87px;
+}
+.gardenAmbient{position:absolute;inset:58px 0 0;pointer-events:none;overflow:hidden;z-index:4}
+.gardenBug{position:absolute;font-size:18px;filter:drop-shadow(0 4px 5px rgba(0,0,0,.15));animation:gardenBugFly var(--flyTime,12s) ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+.gardenBug:nth-child(even){animation-name:gardenBugFlyReverse}
+@keyframes gardenBugFly{
+ 0%{transform:translate(-30px,30px) rotate(-8deg)}
+ 25%{transform:translate(210px,5px) rotate(10deg)}
+ 50%{transform:translate(460px,90px) rotate(-5deg)}
+ 75%{transform:translate(720px,25px) rotate(12deg)}
+ 100%{transform:translate(980px,105px) rotate(-8deg)}
+}
+@keyframes gardenBugFlyReverse{
+ 0%{transform:translate(980px,80px) rotate(8deg)}
+ 30%{transform:translate(710px,15px) rotate(-10deg)}
+ 65%{transform:translate(350px,95px) rotate(8deg)}
+ 100%{transform:translate(-40px,20px) rotate(-5deg)}
+}
+.plantVisual{cursor:pointer;transform-origin:50% 100%}
+.plantVisual:not(.thirsty):not(.wilting):not(.critical){animation:flowerSway 3.8s ease-in-out infinite alternate}
+@keyframes flowerSway{from{transform:rotate(-2deg)}to{transform:rotate(3deg)}}
+.plantVisual.gardenHello{animation:flowerHello .8s ease!important}
+@keyframes flowerHello{
+ 0%,100%{transform:rotate(0) scale(1)}
+ 25%{transform:rotate(-12deg) scale(1.1)}
+ 55%{transform:rotate(12deg) scale(1.14)}
+ 80%{transform:rotate(-5deg) scale(1.05)}
+}
+.gardenBugMessage{
+ position:absolute;z-index:7;left:50%;top:72px;transform:translateX(-50%);
+ padding:8px 12px;border-radius:999px;background:rgba(40,27,45,.78);
+ color:#fff;font-size:12px;font-weight:750;backdrop-filter:blur(8px);
+ opacity:0;transition:.2s;pointer-events:none
+}
+.gardenBugMessage.show{opacity:1}
+
+/* ===== Tic Tac Toe ===== */
+.ticTacToeWindow{width:min(560px,92vw)!important;height:auto!important;max-height:88vh!important}
+.ticTacToeApp{text-align:center;padding:24px!important}
+.tttHero{padding:14px;border-radius:18px;background:rgba(255,255,255,.1);margin-bottom:16px}
+.tttFaces{font-size:20px;font-weight:900}.tttFaces span{font-size:11px;opacity:.55;margin:0 8px}
+.ticTacToeBoard{width:min(360px,78vw);aspect-ratio:1;margin:14px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tttCell{border:1px solid rgba(255,255,255,.25)!important;border-radius:18px!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:44px!important;margin:0!important;padding:0!important;box-shadow:none!important;min-height:0!important}
+.tttCell:hover{background:rgba(255,255,255,.2)!important;transform:translateY(-2px)}
+.ticTacToeStatus{font-weight:800;min-height:28px}
+#ticTacToeRestart{border-radius:999px!important}
