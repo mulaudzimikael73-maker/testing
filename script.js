@@ -1,26 +1,29 @@
 
 // =====================================================
 // LIZZYOS TELEGRAM NOTIFICATION BRIDGE
+// Uses text/plain to avoid browser CORS preflight failures.
 // =====================================================
-const LIZZY_TELEGRAM_WORKER_URL =
-  "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
+const LIZZY_TELEGRAM_WORKER_URL = "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
 
 async function lizzyTelegramNotify(type, title, details) {
   try {
+    const payload = JSON.stringify({
+      type: type || "LizzyOS Activity",
+      title: title || "New Activity",
+      details: details || "No additional details."
+    });
+
     const response = await fetch(LIZZY_TELEGRAM_WORKER_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: type || "LizzyOS Activity",
-        title: title || "New Activity",
-        details: details || "No additional details."
-      })
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: payload
     });
 
     if (!response.ok) {
-      console.error("LizzyOS Telegram Worker returned", response.status);
+      console.error("Telegram Worker error:", response.status, await response.text());
       return false;
     }
+    console.log("LizzyOS Telegram notification sent:", type);
     return true;
   } catch (error) {
     console.error("LizzyOS Telegram notification failed:", error);
@@ -2532,6 +2535,7 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
 
     const TOKEN_DEFS = {
         "Hug Token":{emoji:"🫂",desc:"One proper Mikael hug."},
+        "Argument Winner Pass":{emoji:"⚖️",desc:"Automatically win one harmless argument. Mikael\'s right to appeal: denied 😂."},
         "Argument Winner Pass":{emoji:"⚖️",desc:"Automatically win one harmless argument. Mikael's right to appeal: denied 😂."},
         "Mini Treat Token":{emoji:"☕",desc:"One small snack or drink."},
         "Coffee / Hot Chocolate Token":{emoji:"☕",desc:"One coffee or hot chocolate on Mikael."},
@@ -2602,6 +2606,16 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         localStorage.setItem(KEYS.migration, "done");
     }
     migrateOnce();
+
+    // One-time Argument Winner Pass migration for existing Token Jars.
+    // Separate key means users whose original migration already ran still receive it.
+    if(!localStorage.getItem("lizzyArgumentTokenMigrationV1")){
+        tokens.inventory["Argument Winner Pass"] =
+            Math.max(1, Number(tokens.inventory["Argument Winner Pass"] || 0));
+        saveTokens();
+        localStorage.setItem("lizzyArgumentTokenMigrationV1","done");
+    }
+
 
     function hash(text){
         let h=2166136261;
@@ -3372,4 +3386,20 @@ document.getElementById("sendDateButton")?.addEventListener("click", () => {
     localStorage.getItem("lizzySelectedDate") ||
     "Date not available";
   lizzyTelegramNotify("📅 DATE REQUEST", "LizzyOS Mission Date Update", `Selected date: ${date}`);
+});
+
+
+// One-time website -> Cloudflare -> Telegram verification for this repaired build.
+window.addEventListener("load", () => {
+  const k="lizzyTelegramFinalRepairTestV1";
+  if(!sessionStorage.getItem(k)){
+    sessionStorage.setItem(k,"sent");
+    setTimeout(() => {
+      lizzyTelegramNotify(
+        "🧪 WEBSITE CONNECTION TEST",
+        "LizzyOS website is connected",
+        "This message came from the actual LizzyOS website, not the Cloudflare dashboard."
+      );
+    }, 1200);
+  }
 });
