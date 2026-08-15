@@ -3210,3 +3210,14 @@ color:#ff5ca8;
 .plantVisual{transition:transform .2s ease,filter .2s ease!important;cursor:pointer!important}
 .plantVisual:hover{transform:scale(1.12) rotate(2deg)!important;filter:drop-shadow(0 10px 10px rgba(0,0,0,.2))!important}
 .gardenBugMessage{z-index:8!important}
+
+#gamesFolderStaticIcon{pointer-events:auto!important;cursor:pointer!important;z-index:30!important}
+#gamesFolderStaticWindow{z-index:9999!important;pointer-events:auto!important}
+.blueGardenButterfly{filter:hue-rotate(150deg) saturate(3) brightness(1.15) drop-shadow(0 4px 5px rgba(0,0,0,.18))!important;font-size:27px!important}
+.gardenUpgradeChoices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}
+.gardenUpgradeChoice{cursor:pointer}
+.gardenUpgradeChoice input{position:absolute;opacity:0}
+.gardenUpgradeChoice span{display:block;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);transition:.15s}
+.gardenUpgradeChoice:hover span{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+.gardenUpgradeChoice input:checked+span{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.65);box-shadow:0 0 0 2px rgba(255,255,255,.08)}
+@media(max-width:580px){.gardenUpgradeChoices{grid-template-columns:1fr}}

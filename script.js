@@ -2483,16 +2483,16 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     };
 
     const UPGRADE_QUESTIONS = [
-        {q:"What phrase does Mikael say way too often?",a:["oh wow","oh my days","oh wow oh my days"]},
-        {q:"What is Mikael's guilty-pleasure artist?",a:["tay tay","taylor swift","taytay"]},
-        {q:"If Mikael could eat one meal for an entire week, what would he choose?",a:["pasta","spaghetti bolognese","spaghetti bolognaise","spag bol"]},
-        {q:"What was the first sport Mikael played competitively?",a:["cricket"]},
-        {q:"What is one thing Mikael always loses or forgets?",a:["his windshields","windshields","glasses","his glasses"]},
-        {q:"What's the quickest way to annoy Mikael?",a:["say something stupid","saying something stupid","something stupid"]},
-        {q:"What is Mikael's dream car?",a:["porsche 911 gt3","911 gt3","porsche gt3"]},
-        {q:"If Mikael had to waste the first R10,000 of R1 million, what would he buy?",a:["a new console","new console","console"]},
-        {q:"What is something Mikael would never do, even for money?",a:["join the letters gang","letters gang","join letters gang"]},
-        {q:"What is Mikael's favourite thing about Lizzy that isn't physical? 😏",a:["her personality","personality","lizzy's personality"]}
+        {q:"Which phrase does Mikael say way too often?",options:["No ways","Oh wow / Oh My days","That's insane","You're joking"],correct:1},
+        {q:"What is Mikael's guilty-pleasure artist?",options:["Ariana Grande","Tay Tay (Taylor Swift)","Billie Eilish","SZA"],correct:1},
+        {q:"If Mikael could eat one meal for an entire week, what would he choose?",options:["Lasagne","Chicken Alfredo","Spaghetti Bolognaise","Mac & Cheese"],correct:2},
+        {q:"What was the first sport Mikael played competitively?",options:["Basketball","Soccer","Cricket","Tennis"],correct:2},
+        {q:"What is one thing Mikael always loses or forgets?",options:["His phone","His Windshields (glasses)","His wallet","His keys"],correct:1},
+        {q:"What's the quickest way to annoy Mikael?",options:["Ignore him","Beat him at a game","Say Something Stupid","Call him dramatic"],correct:2},
+        {q:"What is Mikael's exact dream car?",options:["Porsche 911 Turbo S","Porsche 911 GT3","Porsche 718 Cayman GT4 RS","Porsche Taycan Turbo GT"],correct:1},
+        {q:"If Mikael had to waste the first R10,000 of R1 million, what would he buy?",options:["New sneakers","A new console","A new phone","A ridiculous dinner"],correct:1},
+        {q:"What is something Mikael would never do, even for money?",options:["Join the Haters Club","Join the Letters Gang","Become a Swiftie publicly","Give up basketball"],correct:1},
+        {q:"What is Mikael's favourite thing about Lizzy that isn't physical? 😏",options:["Her music taste","Her intelligence","Her personality 😏","Her professional hating"],correct:2}
     ];
 
     const TOKEN_DEFS = {
@@ -2897,19 +2897,30 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     }
     function renderUpgradeQuestion(){
         if(!upgradeSession)return;
-        const n=upgradeSession.questions.length,i=upgradeSession.index;
+        const n=upgradeSession.questions.length,i=upgradeSession.index,q=upgradeSession.questions[i];
         $("gardenUpgradeProgress").innerHTML=Array.from({length:n},(_,x)=>`<span class="${x<i?"done":""}">${x+1}</span>`).join("");
-        $("gardenUpgradeQuestion").textContent=upgradeSession.questions[i].q;
-        $("gardenUpgradeAnswer").value="";
+        $("gardenUpgradeQuestion").textContent=q.q;
+        const answer=$("gardenUpgradeAnswer");
+        answer.style.display="none";
+        let choices=$("gardenUpgradeChoices");
+        if(!choices){
+            choices=document.createElement("div");choices.id="gardenUpgradeChoices";choices.className="gardenUpgradeChoices";
+            answer.parentNode.insertBefore(choices,answer);
+        }
+        choices.innerHTML=q.options.map((opt,oi)=>`<label class="gardenUpgradeChoice"><input type="radio" name="gardenUpgradeMC" value="${oi}"><span><b>${String.fromCharCode(65+oi)}.</b> ${opt}</span></label>`).join("");
         $("gardenUpgradeFeedback").textContent="";
-        setTimeout(()=>$("gardenUpgradeAnswer").focus(),60);
     }
     function submitUpgradeAnswer(){
         if(!upgradeSession)return;
-        const q=upgradeSession.questions[upgradeSession.index],v=normalizeAnswer($("gardenUpgradeAnswer").value);
-        const ok=q.a.some(a=>normalizeAnswer(a)===v);
+        const q=upgradeSession.questions[upgradeSession.index];
+        const selected=document.querySelector('input[name="gardenUpgradeMC"]:checked');
+        if(!selected){
+            $("gardenUpgradeFeedback").textContent="Pick an answer first, Agent 😏";
+            return;
+        }
+        const ok=Number(selected.value)===q.correct;
         if(!ok){
-            $("gardenUpgradeFeedback").textContent="❌ GARDEN EXPANSION DENIED. Apparently listening when Mikael speaks was optional. 😂";
+            $("gardenUpgradeFeedback").textContent="❌ GARDEN EXPANSION DENIED. That answer was believable... but wrong 😂";
             upgradeSession=null;
             return;
         }
@@ -3309,3 +3320,17 @@ if(false)(() => {
    });
  });
 })();
+
+// Definitive Games-folder opener (works even if other desktop handlers intercept clicks).
+document.addEventListener("click",e=>{
+ const open=e.target.closest("#gamesFolderStaticIcon");
+ if(open){e.preventDefault();e.stopImmediatePropagation();document.getElementById("gamesFolderStaticWindow")?.classList.remove("hidden");return;}
+ const close=e.target.closest("#gamesFolderStaticClose,#closeGamesFolderStatic");
+ if(close){e.preventDefault();document.getElementById("gamesFolderStaticWindow")?.classList.add("hidden");return;}
+ const card=e.target.closest("#gamesFolderStaticWindow [data-open-game]");
+ if(card){
+   e.preventDefault();document.getElementById("gamesFolderStaticWindow")?.classList.add("hidden");
+   if(card.dataset.openGame==="ticTacToeIcon")document.getElementById("ticTacToeWindow")?.classList.remove("hidden");
+   else {const t=document.getElementById(card.dataset.openGame); if(t){t.style.display="";t.click();t.style.display="none";}}
+ }
+},true);
