@@ -474,26 +474,7 @@
 
 <section id="secretEnding" class="scene hidden">
 
-    <div id="lizzyLockScreen" class="lizzyLockScreen hidden">
-        <div class="lockCard">
-            <div class="lockIcon">🔐</div>
-            <p class="lockEyebrow">LIZZYOS SECURITY CHECK</p>
-            <h2>Who is attempting to access LizzyOS?</h2>
-            <div class="personaChoices">
-                <button type="button" data-persona="lizzy">💗 <strong>Lizzy</strong><small>Soft Mode</small></button>
-                <button type="button" data-persona="attitude">🙄 <strong>Little Miss Attitude</strong><small>Maximum Sass</small></button>
-                <button type="button" data-persona="agent">🕵️ <strong>Agent Yelizaveta</strong><small>Classified Mode</small></button>
-            </div>
-            <div class="lockIdentity">USER: <b id="lockPersonaName">Lizzy</b> <span>•</span> CLEARANCE: <b id="lockClearance">PENDING</b></div>
-            <input id="lizzyAccessCode" type="password" autocomplete="off" placeholder="Enter access code">
-            <button type="button" id="unlockLizzyOS" class="unlockLizzyOS">UNLOCK LIZZYOS</button>
-            <button type="button" id="forgotLizzyCode" class="forgotLizzyCode">Forgot Access Code?</button>
-            <p id="lockHint" class="lockHint">Hint available — but LizzyOS may judge you.</p>
-            <p id="lockStatus" class="lockStatus"></p>
-        </div>
-    </div>
-
-    <div id="desktop" class="hidden">
+    <div id="desktop">
 
         <!-- Wallpaper Overlay -->
         <div id="wallpaperOverlay"></div>
@@ -555,27 +536,6 @@
                 <span>Recycle Bin</span>
             </div>
 
-            <div class="desktopIcon" id="gamesFolderIcon">
-                <div class="desktopEmoji">🎮</div>
-                <span id="gamesFolderLabel">Games</span>
-            </div>
-
-            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
-                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
-                <span>Our Date</span>
-            </div>
-
-        </div>
-
-
-        <div id="gamesFolderWindow" class="gamesFolderWindow hidden">
-            <div class="windowTop">
-                <div class="windowDots"><span class="windowCloseDot" id="gamesFolderRedClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div>
-                <h2 id="gamesWindowTitle">🎮 Games</h2>
-            </div>
-            <div class="gamesFolderBody">
-                <p id="gamesFolderIntro" class="memoryMessage">Choose your game 💗</p>
-                <div class="gamesFolderGrid">
             <div class="desktopIcon" id="funQuizIcon">
                 <div class="desktopEmoji">🧠</div>
                 <span>Lizzy Quiz</span>
@@ -598,10 +558,24 @@
             <div class="desktopIcon" id="wouldMikaelRatherIcon"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
             <div class="desktopIcon" id="ticTacToeIcon"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
             <div class="desktopIcon" id="crackCodeIcon"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
-                </div>
+
+            <div class="desktopIcon" id="lizzyGardenIcon">
+                <div class="desktopEmoji">🌷</div>
+                <span>Lizzy's Garden</span>
             </div>
-            <button id="closeGamesFolder" class="windowCloseButton">Close</button>
+
+            <div class="desktopIcon" id="tokenJarIcon">
+                <div class="desktopEmoji">🫙</div>
+                <span>Token Jar</span>
+            </div>
+
+            <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
+                <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
+                <span>Our Date</span>
+            </div>
+
         </div>
+
 
         <!-- Finder Window -->
 
@@ -1022,6 +996,160 @@
             <button id="closeMysteryBox" class="windowCloseButton">Close</button>
         </div>
 
+
+        <!-- Lizzy's Garden -->
+        <div id="lizzyGardenWindow" class="desktopWindow hidden gardenWindow">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="lizzyGardenClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🌷 Lizzy's Garden</h2>
+            </div>
+
+            <div class="windowScroll gardenApp">
+                <div class="gardenTopGrid">
+                    <section class="gardenWeatherCard">
+                        <div class="weatherHeadline">
+                            <span id="gardenWeatherEmoji">🌤️</span>
+                            <div>
+                                <small>LIZZYOS GARDEN WEATHER</small>
+                                <h3 id="gardenWeatherName">Loading forecast...</h3>
+                            </div>
+                        </div>
+                        <p id="gardenWeatherDescription"></p>
+                        <div id="gardenWeatherAlert" class="gardenWeatherAlert hidden"></div>
+                        <div id="gardenForecast" class="gardenForecast"></div>
+                    </section>
+
+                    <section class="gardenSummaryCard">
+                        <small>GARDEN STATUS</small>
+                        <h3 id="gardenTierName">Lizzy's Garden 🌷</h3>
+                        <div class="gardenStats">
+                            <span><b id="gardenPlotCount">0</b> Plots</span>
+                            <span><b id="gardenHealthyCount">0</b> Healthy</span>
+                            <span><b id="gardenThirstyCount">0</b> Need Water</span>
+                            <span><b id="gardenSeedCount">0</b> Seeds</span>
+                        </div>
+                        <button id="openGardenUpgrade">🏡 Upgrade Garden</button>
+                    </section>
+                </div>
+
+                <section class="gardenInventoryPanel">
+                    <div class="gardenPanelHeading">
+                        <div>
+                            <small>SEED INVENTORY</small>
+                            <h3>What should we plant? 🌱</h3>
+                        </div>
+                        <button id="waterAllPlants">💧 Water All</button>
+                    </div>
+                    <div id="gardenSeedInventory" class="gardenSeedInventory"></div>
+                </section>
+
+                <section class="gardenPlotPanel">
+                    <div class="gardenPanelHeading">
+                        <div>
+                            <small>YOUR GARDEN</small>
+                            <h3 id="gardenPlotHeading">Plant something and make it yours.</h3>
+                        </div>
+                    </div>
+                    <div id="gardenPlots" class="gardenPlots"></div>
+                </section>
+
+                <section class="gardenCollectionPanel">
+                    <div class="gardenPanelHeading">
+                        <div>
+                            <small>FLOWER COLLECTION</small>
+                            <h3>Flowers you've discovered 🌸</h3>
+                        </div>
+                    </div>
+                    <div id="gardenFlowerCollection" class="gardenFlowerCollection"></div>
+                </section>
+
+                <div id="gardenMikaelComment" class="gardenMikaelComment"></div>
+            </div>
+            <button id="closeLizzyGarden" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Garden Upgrade Security -->
+        <div id="gardenUpgradeWindow" class="desktopWindow hidden gardenUpgradeWindow">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="gardenUpgradeClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🔐 Garden Expansion Security</h2>
+            </div>
+            <div class="windowScroll gardenUpgradeBody">
+                <div class="upgradeLockEmoji">🏡</div>
+                <h3 id="gardenUpgradeTitle">Garden Expansion</h3>
+                <p id="gardenUpgradeIntro"></p>
+                <div id="gardenUpgradeProgress" class="gardenUpgradeProgress"></div>
+                <div id="gardenUpgradeQuiz">
+                    <p id="gardenUpgradeQuestion" class="gardenUpgradeQuestion"></p>
+                    <input id="gardenUpgradeAnswer" type="text" autocomplete="off" placeholder="Enter your answer...">
+                    <p id="gardenUpgradeFeedback" class="gameFeedback"></p>
+                    <button id="submitGardenUpgradeAnswer">Submit Answer 🔐</button>
+                </div>
+                <div id="gardenUpgradeComplete" class="hidden">
+                    <h3>ACCESS GRANTED 🌷</h3>
+                    <p id="gardenUpgradeCompleteText"></p>
+                </div>
+            </div>
+            <button id="closeGardenUpgrade" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Token Jar -->
+        <div id="tokenJarWindow" class="desktopWindow hidden tokenJarWindow">
+            <div class="windowTop">
+                <div class="windowDots">
+                    <span class="windowCloseDot" id="tokenJarClose" title="Close"></span>
+                    <span class="windowMinDot"></span>
+                    <span class="windowMaxDot"></span>
+                </div>
+                <h2>🫙 Lizzy's Token Jar</h2>
+            </div>
+            <div class="windowScroll tokenJarApp">
+                <div class="tokenJarHero">
+                    <div class="tokenJarEmoji">🫙</div>
+                    <div>
+                        <small>LIZZYOS REDEEMABLES</small>
+                        <h3>Your Unreasonably Powerful Collection</h3>
+                        <p>Tap a token to redeem it. Once confirmed, LizzyOS marks it as used and prepares a notification for Mikael.</p>
+                    </div>
+                </div>
+                <div id="tokenJarNotice" class="tokenJarNotice">
+                    📡 Telegram delivery will activate as soon as the LizzyOS Cloudflare notification endpoint is connected.
+                </div>
+                <div id="tokenJarList" class="tokenJarList"></div>
+                <div class="tokenHistorySection">
+                    <h3>Redeemed Tokens</h3>
+                    <div id="tokenRedeemHistory" class="tokenRedeemHistory"></div>
+                </div>
+            </div>
+            <button id="closeTokenJar" class="windowCloseButton">Close</button>
+        </div>
+
+        <!-- Token Redeem Confirmation -->
+        <div id="tokenRedeemWindow" class="desktopWindow hidden tokenRedeemWindow">
+            <div class="windowTop">
+                <h2>🎟️ Redeem Token?</h2>
+            </div>
+            <div class="windowScroll tokenRedeemBody">
+                <div id="tokenRedeemEmoji" class="tokenRedeemEmoji">🎟️</div>
+                <h3 id="tokenRedeemName"></h3>
+                <p id="tokenRedeemDescription"></p>
+                <p class="memoryMessage">This will remove one token from the Jar and mark it as redeemed.</p>
+                <div class="tokenRedeemActions">
+                    <button id="cancelTokenRedeem">Never Mind</button>
+                    <button id="confirmTokenRedeem">Redeem 💗</button>
+                </div>
+                <p id="tokenRedeemStatus"></p>
+            </div>
+        </div>
+
 <div id="calendarWindow" class="desktopWindow hidden">
             <div class="windowTop">
                 <div class="windowDots">
@@ -1172,86 +1300,7 @@ if (window.netlifyIdentity) {
 }
 </script>
 
-<!-- ===== Living Desktop Update ===== -->
-<div id="livingDesktopControls" class="livingDesktopControls">
-  <button id="nightModeToggle" class="livingControl" title="Toggle Night Mode">🌙</button>
-  <button id="desktopMoodButton" class="livingControl" title="Change Desktop Mood">🎨</button>
-  <button id="warningsButton" class="livingControl" title="LizzyOS System Alert">🚨</button>
-</div>
-
-<div id="livingStatusBar" class="livingStatusBar">
-  <span id="lastLoginDisplay">Last login: First visit 💗</span>
-  <span class="livingStatusDot">•</span>
-  <span id="liveClockDisplay">--:--</span>
-  <span id="liveDateDisplay">---</span>
-</div>
-
-<div id="aboutLizzyWindow" class="desktopWindow livingWindow hidden">
-  <div class="windowTop">
-    <div class="traffic"><span></span><span></span><span></span></div>
-    <strong>💗 About This Lizzy</strong>
-    <button class="livingClose" data-close-living="aboutLizzyWindow">×</button>
-  </div>
-  <div class="livingWindowBody">
-    <div class="aboutLizzyHero">💗</div>
-    <h2>About This Lizzy</h2>
-    <p id="aboutLizzyIntro">A highly classified collection of things that make Lizzy, Lizzy.</p>
-    <div class="aboutLizzyFacts">
-      <div><b>Favourite colour</b><span>Pink — all shades 💗</span></div>
-      <div><b>Known aliases</b><span>Lizzy · Little Miss Attitude · Agent Yelizaveta</span></div>
-      <div><b>Important information</b><span>Likes pasta. Has attitude. Somehow tolerates Mikael.</span></div>
-      <div><b>System status</b><span id="aboutLizzyStatus">Certified LizzyOS VIP ✨</span></div>
-    </div>
-  </div>
-</div>
-
-<div id="lizzyMailWindow" class="desktopWindow livingWindow hidden">
-  <div class="windowTop">
-    <div class="traffic"><span></span><span></span><span></span></div>
-    <strong id="lizzyMailWindowTitle">💌 Lizzy Mail</strong>
-    <button class="livingClose" data-close-living="lizzyMailWindow">×</button>
-  </div>
-  <div class="livingWindowBody mailBody">
-    <div class="mailHeader">
-      <div>
-        <h2 id="mailGreeting">Send Mikael a message 💌</h2>
-        <p>Messages are saved in LizzyOS on this device.</p>
-      </div>
-      <span id="mailUnreadPill" class="unreadPill hidden">NEW</span>
-    </div>
-    <textarea id="lizzyMailMessage" maxlength="800" placeholder="Type something here..."></textarea>
-    <div class="mailActions">
-      <span id="mailCharacterCount">0 / 800</span>
-      <button id="sendLizzyMail" class="primaryLivingButton">Send Message 💗</button>
-    </div>
-    <div id="mailSentStatus" class="mailSentStatus"></div>
-    <div class="mailHistoryTitle">Recent messages on this device</div>
-    <div id="lizzyMailHistory" class="mailHistory"></div>
-  </div>
-</div>
-
-<div id="lizzyWarningToast" class="lizzyWarningToast hidden">
-  <div class="warningIcon">🚨</div>
-  <div>
-    <strong id="warningTitle">LIZZYOS WARNING</strong>
-    <p id="warningMessage"></p>
-  </div>
-  <button id="warningDismiss">×</button>
-</div>
-
-<div id="moodPicker" class="moodPicker hidden">
-  <strong>Desktop Mood</strong>
-  <button data-mood="pink">💗 Classic Pink</button>
-  <button data-mood="soft">🌸 Soft</button>
-  <button data-mood="sunset">🌅 Sunset</button>
-  <button data-mood="midnight">🌙 Midnight</button>
-</div>
-<!-- ===== End Living Desktop Update ===== -->
-
 <script src="script.js"></script>
-
-
-
 
 </body>
 </html>

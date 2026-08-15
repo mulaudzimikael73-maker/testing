@@ -637,12 +637,6 @@ secretButton.addEventListener("click", () => {
 
     secretEnding.classList.remove("hidden");
 
-    // LizzyOS is locked here. Only the password screen is visible.
-    document.getElementById("desktop")?.classList.add("hidden");
-    document.getElementById("lizzyLockScreen")?.classList.remove("hidden", "unlocked");
-    document.body.classList.add("lizzyLockActive");
-    document.body.classList.remove("lizzyosUnlocked");
-
     progressFill.style.width = "100%";
 
     startTerminal();
@@ -1482,6 +1476,11 @@ document.addEventListener("keydown", (event) => {
             if (fqScore === lizzyQuizQuestions.length && typeof unlockAchievement === "function") {
                 unlockAchievement("Certified Lizzy Expert 💗");
             }
+            if (fqScore === lizzyQuizQuestions.length) {
+                window.dispatchEvent(new CustomEvent("lizzyPerfectGame", {
+                    detail:{game:"Lizzy Quiz", key:"funQuiz", score:`${fqScore}/${lizzyQuizQuestions.length}`}
+                }));
+            }
             return;
         }
 
@@ -1793,6 +1792,11 @@ document.addEventListener("keydown", (event) => {
         $("rewardTicketText").textContent=rewardText;
         const old=Number(localStorage.getItem(`mikhailQuizBest_${level}`)||0);
         localStorage.setItem(`mikhailQuizBest_${level}`,Math.max(old,p));
+        if(score===total){
+            window.dispatchEvent(new CustomEvent("lizzyPerfectGame", {
+                detail:{game:`Mikhail Quiz — ${labels[level]}`, key:`mikhail_${level}`, score:`${score}/${total}`}
+            }));
+        }
 
         const completedAt=new Date();
         const right=answerLog.filter(x=>x.correct);
@@ -2274,11 +2278,63 @@ $("crackBack")?.addEventListener("click",menu);$("crackAnother")?.addEventListen
 (()=>{
 const $=id=>document.getElementById(id);
 const normal=[
-["Common","💌","Secret Compliment","LizzyOS confirms you are dangerously adorable today."],["Common","🌷","Tulip Drop","A digital tulip has been added to Lizzy’s flower collection."],["Common","🌹","Rose Delivery","One digital rose, because apparently LizzyOS has standards."],["Common","🫂","Hug Token","Redeem for one proper hug."],["Common","🎵","Song of the Day","Ask Mr Perfect to choose one song for you today."],["Common","☕","Mini Treat Token","Redeem for one small snack or drink."],
-["Rare","🤍","Lily of the Valley","A rare Lily of the Valley has appeared in Lizzy’s Garden."],["Rare","🥀","Crying Lily","A rare Crying Lily — dramatic, pretty, and officially collected."],["Rare","🌺","Snapdragon","A rare Snapdragon has been delivered to Lizzy’s Garden."],["Rare","😂","Roast Mr Perfect","One consequence-free roast."],["Rare","👓","Nickname Immunity","Choose one banned nickname Mikael cannot use today."],["Rare","😈","Little Miss Attitude Pass","Unlimited attitude today."],["Rare","💬","Make Mikael Say It","Choose one ridiculous sentence Mr Perfect must say."],["Rare","🎲","Double Mystery","Demand one extra LizzyOS-style surprise."],
-["Epic","⚖️","Argument Winner Pass","Automatically win one harmless argument."],["Epic","🍝","Pasta Emergency Pass","Redeem for one pasta-related request or mini pasta date."],["Epic","👑","Princess Treatment Pass","One reasonable princess-treatment request."],["Epic","🎳","Activity Date Token","Choose a fun activity for a future date."],["Epic","💌","Personal Paragraph","Mr Perfect owes you one properly thoughtful paragraph."],["Epic","🔐","Agent Advantage","Claim one extra hint in a Crack the Code mission."]
-];
-const legends=[["LEGENDARY","💐","Legendary Flower Garden","Lily of the Valley • Crying Lily • Tulips • Snapdragon • Roses. A complete legendary botanical drop for seven days in a row."],["LEGENDARY","🎟️","Golden Date Ticket","Choose one date or activity with Mikael a.k.a Mr Perfect. ❤️"],["LEGENDARY","👑","Ultimate Princess Day","One full day of upgraded princess treatment."],["LEGENDARY","💖","Your Choice Voucher","Choose one reasonable cute or fun thing to do together."],["LEGENDARY","🏆","Agent Yelizaveta VIP Pass","Choose the next date activity AND claim a proper hug."]];
+["Common","💌","Secret Compliment","LizzyOS confirms you are dangerously adorable today."],
+["Common","🌸","Digital Flower","One completely unnecessary but deserved digital flower."],
+["Common","🫂","Hug Token","Redeem for one proper hug."],
+["Common","🎵","Song of the Day","Ask Mr Perfect to choose one song for you today."],
+["Common","☕","Mini Treat Token","Redeem for one small snack or drink."],
+["Rare","😂","Roast Mr Perfect","One consequence-free roast."],
+["Rare","👓","Nickname Immunity","Choose one banned nickname Mikael cannot use today."],
+["Rare","😈","Little Miss Attitude Pass","Unlimited attitude today."],
+["Rare","💬","Make Mikael Say It","Choose one ridiculous sentence Mr Perfect must say."],
+["Rare","🎲","Double Mystery","Demand one extra LizzyOS-style surprise."],
+["Epic","⚖️","Argument Winner Pass","Automatically win one harmless argument."],
+["Epic","🍝","Pasta Emergency Pass","Redeem for one pasta-related request or mini pasta date."],
+["Epic","👑","Princess Treatment Pass","One reasonable princess-treatment request."],
+["Epic","🎳","Activity Date Token","Choose a fun activity for a future date."],
+["Epic","💌","Personal Paragraph","Mr Perfect owes you one properly thoughtful paragraph."],
+["Epic","🔐","Agent Advantage","Claim one extra hint in a Crack the Code mission."],
+
+/* New Common Garden + small reward drops */
+["Common","🌷","Random Flower","Adds one random flower directly to Lizzy's Garden."],
+["Common","🌱","Random Plant Seed","Adds one random seed to the Garden seed inventory."],
+["Common","💧","Garden Boost","Gives one existing plant a health and growth boost."],
+["Common","💌","Pocket Compliment","A personalised LizzyOS compliment appears when claimed."],
+["Common","😂","Cheeky Joke","A Lizzy/Mikael or Little Miss Attitude joke."],
+["Common","🕵️","Easter Egg Hint","One clue toward a hidden LizzyOS Easter egg."],
+["Common","☕","Coffee / Hot Chocolate Token","One coffee or hot chocolate on Mikael."],
+["Common","🍫","Snack Token","One snack of Lizzy's choice."],
+["Common","🎵","Song Dedication","Mikael chooses a song that reminds him of Lizzy."],
+["Common","📸","Memory Drop","Unlocks a random memory/photo prompt."],
+["Common","💬","Question Token","One question Mikael has to answer properly."],
+["Common","🪙","Second Chance Token","Save this to reroll a future Daily Reward."],
+
+/* New Rare drops */
+["Rare","🎟️","Activity Date Token","Lizzy chooses an activity for the two of you."],
+["Rare","🍝","Food Date Token","Lizzy chooses where or what you eat."],
+["Rare","🌹","Rare Flower Pack","Adds three special flowers to Lizzy's Garden."],
+["Rare","🎁","Mystery Gift Token","Mikael owes Lizzy one small surprise."],
+["Rare","🍦","Dessert Run","Dessert or ice cream on Mikael."],
+["Rare","🎬","Movie Night Token","Lizzy chooses the movie. Complaints from Mikael are prohibited. 😂"],
+["Rare","👑","Princess Treatment Pass","One reasonable small request with princess treatment."],
+["Rare","💌","Secret Letter","Unlocks a Daily-Rewards-exclusive secret letter."],
+["Rare","🌸","Garden Jackpot","Adds five random flowers to Lizzy's Garden."],
+["Rare","🔐","Classified File","Unlocks one secret Agent Yelizaveta dossier."],
+["Rare","🎳","Rematch Token","Lizzy can demand a rematch at an activity you've previously done."],
+["Rare","💤","Lazy Date Pass","Lizzy chooses a simple chilled activity/date."]
+]
+const legends=[
+["LEGENDARY","🎟️","Golden Date Ticket","Dinner plus an activity of Lizzy's choice. ❤️"],
+["LEGENDARY","👑","Ultimate Princess Day","One full day of upgraded princess treatment."],
+["LEGENDARY","💖","Your Choice Voucher","Choose one reasonable cute or fun thing to do together."],
+["LEGENDARY","🏆","Agent Yelizaveta VIP Pass","Choose the next date activity AND claim a proper hug."],
+["LEGENDARY","💐","Real Flower Drop","Mikael owes Lizzy real flowers."],
+["LEGENDARY","🎁","Legendary Mystery Gift","A bigger or special surprise from Mikael."],
+["LEGENDARY","🌹","Garden Crown","Unlocks an exclusive flower unavailable anywhere else."],
+["LEGENDARY","🃏","Mikael's Wild Card","One reasonable request that can be saved and redeemed later."],
+["LEGENDARY","💌","The Unreleased Letter","Unlocks a special personal letter unavailable through normal LizzyOS."],
+["LEGENDARY","🌸","Garden of Lizzy","Instantly awards one of every standard flower."]
+]
 function key(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
 function dn(k){let a=k.split("-").map(Number);return Math.floor(Date.UTC(a[0],a[1]-1,a[2])/86400000)}
 function ix(s,n){let x=0;for(const ch of s)x=(x*31+ch.charCodeAt(0))>>>0;return x%n}
@@ -2286,236 +2342,777 @@ function st(){return Number(localStorage.getItem("lizzyMysteryStreak")||0)}
 function reward(){try{return JSON.parse(localStorage.getItem("lizzyMysteryReward")||"null")}catch(e){return null}}
 function track(n){let p=n%7;$("streakTrack").innerHTML=Array.from({length:7},(_,i)=>`<span class="${((p===0&&n>0)||i<p)?"done":""}">${i+1}</span>`).join("")}
 function refresh(){let today=key(),opened=localStorage.getItem("lizzyMysteryOpened")===today,n=st(),r=reward();$("mysteryGift").textContent=opened&&r&&r[0]==="LEGENDARY"?"🏆":opened?"✨":"🎁";$("mysteryReward").classList.toggle("hidden",!opened);if(opened&&r)$("mysteryReward").innerHTML=`<div class="rewardRarity">${r[0]}</div><div class="rewardIcon">${r[1]}</div><strong>${r[2]}</strong><p>${r[3]}</p>`;$("openMysteryBox").disabled=opened;$("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";$("mysteryCountdown").textContent=opened?"Today's reward is claimed. Open tomorrow to keep the streak alive.":"";$("mysteryStreak").textContent=`🔥 ${n} Day${n===1?"":"s"} Streak`;let left=n?7-(n%7||7):7;$("mysteryStreakSub").textContent=(n>0&&n%7===0)?"Legendary milestone reached! Tomorrow starts the next 7-day run.":`${left} consecutive day${left===1?"":"s"} until guaranteed Legendary.`;track(n)}
-function claim(){let today=key();if(localStorage.getItem("lizzyMysteryOpened")===today)return;let last=localStorage.getItem("lizzyMysteryLastDate")||"",old=st(),n=1;if(last){let diff=dn(today)-dn(last);n=diff===1?old+1:1}let leg=n%7===0,r;if(leg)r=legends[ix(today+n,legends.length)];else{let roll=ix(today+"rarity",100),rar=roll<55?"Common":roll<85?"Rare":"Epic",pool=normal.filter(x=>x[0]===rar);r=pool[ix(today+"reward",pool.length)]}localStorage.setItem("lizzyMysteryLastDate",today);localStorage.setItem("lizzyMysteryStreak",String(n));localStorage.setItem("lizzyMysteryOpened",today);localStorage.setItem("lizzyMysteryReward",JSON.stringify(r));refresh();if(leg){fetch("https://formspree.io/f/mljrlrwb",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({event:"7-Day Legendary Reward Claimed",streak:`${n} consecutive days`,reward:r[2],reward_details:r[3],date:today})}).catch(()=>{});$("mysteryReward").classList.add("legendaryBurst");setTimeout(()=>$("mysteryReward").classList.remove("legendaryBurst"),1600);if(typeof confetti==="function")confetti({particleCount:180,spread:110,origin:{y:.6}})}}
+function claim(){let today=key();if(localStorage.getItem("lizzyMysteryOpened")===today)return;let last=localStorage.getItem("lizzyMysteryLastDate")||"",old=st(),n=1;if(last){let diff=dn(today)-dn(last);n=diff===1?old+1:1}let leg=n%7===0,r;if(leg)r=legends[ix(today+n,legends.length)];else{let roll=ix(today+"rarity",100),rar=roll<55?"Common":roll<85?"Rare":"Epic",pool=normal.filter(x=>x[0]===rar);r=pool[ix(today+"reward",pool.length)]}localStorage.setItem("lizzyMysteryLastDate",today);localStorage.setItem("lizzyMysteryStreak",String(n));localStorage.setItem("lizzyMysteryOpened",today);localStorage.setItem("lizzyMysteryReward",JSON.stringify(r));
+window.dispatchEvent(new CustomEvent("lizzyDailyRewardClaimed",{detail:{reward:r,date:today,streak:n}}));
+refresh();if(leg){fetch("https://formspree.io/f/mljrlrwb",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({event:"7-Day Legendary Reward Claimed",streak:`${n} consecutive days`,reward:r[2],reward_details:r[3],date:today})}).catch(()=>{});$("mysteryReward").classList.add("legendaryBurst");setTimeout(()=>$("mysteryReward").classList.remove("legendaryBurst"),1600);if(typeof confetti==="function")confetti({particleCount:180,spread:110,origin:{y:.6}})}}
 function open(){$("mysteryBoxWindow").classList.remove("hidden");refresh()}function close(){$("mysteryBoxWindow").classList.add("hidden")}
 $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEventListener("click",close);$("closeMysteryBox")?.addEventListener("click",close);$("openMysteryBox")?.addEventListener("click",claim);
 })();
 
 
-// =====================================================
-// PERSONALITY + LOCK SCREEN + CLEAN DESKTOP UPDATE
-// =====================================================
-(()=>{
- const $=id=>document.getElementById(id);
- const profiles={
-  lizzy:{name:"Lizzy",desktop:{games:"Games",archive:"Lizzy Archives",read:"Read Me",mission:"Mission Log",open:"Open When...",bin:"Recycle Bin",date:"Our Date",mystery:"Daily Mystery"},gameTitle:"🎮 Games",gameIntro:"Choose your game, Lizzy 💗",welcome:"Welcome back, Lizzy ❤️",wrong:["Incorrect access code 💗","Not quite. LizzyOS believes in you 😭","Okay this is becoming a security incident 😂"]},
-  attitude:{name:"Little Miss Attitude",desktop:{games:"Beat Mikael",archive:"Receipts",read:"What Does He Want Now?",mission:"Mikael's Alleged Plans",open:"Unfortunately, Feelings",bin:"Absolutely Not",date:"Fine, I'll See Him",mystery:"Give Me Something"},gameTitle:"🙄 Ways To Beat Mikael",gameIntro:"Pick a game. Humbling Mikael is encouraged.",welcome:"Little Miss Attitude Mode Activated 🙄  Patience with Mikael: 3%.",wrong:["Incorrect. The attitude did not help. 🙄","Still wrong, Little Miss Attitude 😭","Four eyes and we're still struggling? Interesting. 🤨"]},
-  agent:{name:"Agent Yelizaveta",desktop:{games:"Training Simulations",archive:"Intelligence Archives",read:"Mission Briefing",mission:"Mission Log",open:"Classified Files",bin:"Evidence Disposal",date:"Mission Schedule",mystery:"Daily Intelligence Drop"},gameTitle:"🕵️ Training Simulations",gameIntro:"Select a simulation, Agent Yelizaveta. Clearance approved.",welcome:"IDENTITY CONFIRMED. Agent Yelizaveta has entered the system. 🕵️",wrong:["ACCESS DENIED. Recheck credentials, Agent.","SECURITY WARNING: repeated authentication failure.","CLEARANCE SUSPENDED... temporarily. Try the hint, Agent. 🕵️"]}
- };
- let persona=localStorage.getItem("lizzyPersona")||"lizzy",fails=0,hint=0;
- const hints=[
-  "The password is a nickname YOU gave Mikael. Yes, unfortunately you caused this. 😂",
-  "It contains two words. The second is an extremely questionable description of a man. 🙄",
-  "You hate men, yet somehow you gave ONE of them this nickname. Character development? 😭",
-  "Think about the ridiculously flattering nickname you gave him that he has absolutely refused to let go of.",
-  "M _   P _ _ _ _ _ _",
-  "🚨 LIZZYOS HAS GIVEN UP: the first word is Mr. The second is what you once claimed Mikael was. Your past decisions have consequences. 😭"
- ];
- function setText(id,text){const el=$(id);if(el)el.textContent=text}
- function applyPersona(p){persona=p in profiles?p:"lizzy";localStorage.setItem("lizzyPersona",persona);const x=profiles[persona];document.body.dataset.lizzyPersona=persona;document.querySelectorAll("[data-persona]").forEach(b=>b.classList.toggle("selected",b.dataset.persona===persona));setText("lockPersonaName",x.name);setText("gamesFolderLabel",x.desktop.games);setText("gamesWindowTitle",x.gameTitle);setText("gamesFolderIntro",x.gameIntro);const map={folderIcon:"archive",readMeIcon:"read",missionIcon:"mission",openWhenIcon:"open",recycleBinIcon:"bin",calendarIcon:"date",mysteryBoxIcon:"mystery"};Object.entries(map).forEach(([id,key])=>{const e=$(id)?.querySelector("span:last-child");if(e)e.textContent=x.desktop[key]});
-  const gameNames={lizzy:{funQuizIcon:"Lizzy Quiz",heartGameIcon:"Heart Catch",mikhailQuizIcon:"Mikhail Quiz",wouldMikaelRatherIcon:"Would Mikael Rather?",ticTacToeIcon:"Tic-Tac-Toe",crackCodeIcon:"Crack the Code"},attitude:{funQuizIcon:"Obviously I Know Me",heartGameIcon:"Catch Feelings, Apparently",mikhailQuizIcon:"How Well Do I Know This Man?",wouldMikaelRatherIcon:"Questionable Mikael Decisions",ticTacToeIcon:"Humble Mr Perfect",crackCodeIcon:"Make Him Explain Himself"},agent:{funQuizIcon:"Identity Verification",heartGameIcon:"Operation: Catch Heart",mikhailQuizIcon:"Mikhail Intelligence Exam",wouldMikaelRatherIcon:"Subject Preference Analysis",ticTacToeIcon:"Tactical Grid",crackCodeIcon:"Code Division"}}[persona];Object.entries(gameNames).forEach(([id,name])=>{const e=$(id)?.querySelector("span:last-child");if(e)e.textContent=name});
- }
- function unlock(){const code=$("lizzyAccessCode")?.value.trim().toLowerCase().replace(/\s+/g," ");if(code==="mr perfect"||code==="mrperfect"){setText("lockClearance","APPROVED");setText("lockStatus",profiles[persona].welcome+" ACCESS GRANTED ✅ So you do remember. Mikael will unfortunately use this as evidence forever. 😌");setTimeout(()=>{
-      const lock=$("lizzyLockScreen"), desktop=$("desktop");
-      lock?.classList.add("hidden","unlocked");
-      desktop?.classList.remove("hidden");
-      document.body.classList.remove("lizzyLockActive");
-      document.body.classList.add("lizzyosUnlocked");
-      if(terminal){terminal.style.display="";terminal.classList.remove("hidden")}
-      desktopArea?.classList.add("hidden");
-      if(terminalText)terminalText.innerHTML="";
-      startTerminal();
-      window.scrollTo(0,0);
-      setTimeout(()=>window.dispatchEvent(new Event("resize")),50);
-    },650);localStorage.setItem("lizzyUnlockedSession","yes");return}fails++;setText("lockStatus",profiles[persona].wrong[Math.min(fails-1,2)]);$("lizzyAccessCode")?.classList.add("wrongShake");setTimeout(()=>$("lizzyAccessCode")?.classList.remove("wrongShake"),450)}
- document.querySelectorAll("[data-persona]").forEach(b=>b.addEventListener("click",()=>applyPersona(b.dataset.persona)));
- $("unlockLizzyOS")?.addEventListener("click",unlock);$("lizzyAccessCode")?.addEventListener("keydown",e=>{if(e.key==="Enter")unlock()});
- $("forgotLizzyCode")?.addEventListener("click",()=>{setText("lockHint",hints[Math.min(hint,hints.length-1)]);hint++});
- function openGames(){$("gamesFolderWindow")?.classList.remove("hidden")}function closeGames(){$("gamesFolderWindow")?.classList.add("hidden")}
- $("gamesFolderIcon")?.addEventListener("click",openGames);$("gamesFolderRedClose")?.addEventListener("click",closeGames);$("closeGamesFolder")?.addEventListener("click",closeGames);
- // When a game is chosen, close the folder behind its existing game window.
- ["funQuizIcon","heartGameIcon","mikhailQuizIcon","wouldMikaelRatherIcon","ticTacToeIcon","crackCodeIcon"].forEach(id=>$(id)?.addEventListener("click",()=>setTimeout(closeGames,50)));
- applyPersona(persona);
-})();
-
-
 // =========================================================
-// LIVING DESKTOP UPDATE
-// Night Mode • About Lizzy • Lizzy Mail • Warnings • Moods
-// Live clock/date • Last login • Unread indicators
+// LIZZY'S GARDEN + TOKEN JAR + WEATHER
+// PROGRESS-SAFE UPDATE
+// IMPORTANT: This module DOES NOT overwrite the existing
+// lizzyMysteryStreak / LastDate / Opened / Reward keys.
 // =========================================================
 (() => {
-  const $ = id => document.getElementById(id);
-  const store = {
-    get(k, fallback=null){ try { const v=localStorage.getItem(k); return v===null?fallback:JSON.parse(v); } catch { return fallback; } },
-    set(k,v){ try { localStorage.setItem(k,JSON.stringify(v)); } catch {} }
-  };
+    const $ = id => document.getElementById(id);
 
-  const personality = () => localStorage.getItem("lizzyPersona") || "lizzy";
+    const KEYS = {
+        garden: "lizzyGardenV1",
+        tokens: "lizzyTokenJarV1",
+        migration: "lizzyGardenTokenMigrationV1",
+        gameSeeds: "lizzyGameSeedRewardsV1",
+        pendingNotify: "lizzyPendingTokenNotificationsV1",
+        notificationEndpoint: "lizzyTelegramWorkerURL"
+    };
 
-  const personaCopy = {
-    lizzy:{
-      mail:"💌 Lizzy Mail", greeting:"Send Mikael a message 💌",
-      about:"Certified LizzyOS VIP ✨"
-    },
-    attitude:{
-      mail:"💌 Bother Mikael", greeting:"Fine. Say what you need to say 🙄",
-      about:"Attitude: MAXIMUM · Patience with Mikael: questionable."
-    },
-    agent:{
-      mail:"📡 Secure Comms", greeting:"Transmit secure message to Agent M. Petrov",
-      about:"Clearance verified. Agent Yelizaveta is operational."
+    const nowISO = () => new Date().toISOString();
+    const dayKey = (d=new Date()) =>
+        `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+
+    function safeRead(key, fallback){
+        try{
+            const raw = localStorage.getItem(key);
+            return raw === null ? fallback : JSON.parse(raw);
+        }catch(e){ return fallback; }
     }
-  };
-
-  function updatePersonaLivingUI(){
-    const p = personaCopy[personality()] || personaCopy.lizzy;
-    if($("lizzyMailWindowTitle")) $("lizzyMailWindowTitle").textContent=p.mail;
-    if($("mailGreeting")) $("mailGreeting").textContent=p.greeting;
-    if($("aboutLizzyStatus")) $("aboutLizzyStatus").textContent=p.about;
-  }
-
-  // Night Mode
-  function applyNight(){
-    const on=store.get("lizzyNightMode",false);
-    document.body.classList.toggle("lizzyNightMode",!!on);
-    if($("nightModeToggle")) $("nightModeToggle").textContent=on?"☀️":"🌙";
-  }
-  $("nightModeToggle")?.addEventListener("click",()=>{
-    store.set("lizzyNightMode",!store.get("lizzyNightMode",false));
-    applyNight();
-  });
-
-  // Desktop moods
-  function applyMood(){
-    document.body.dataset.desktopMood=store.get("lizzyDesktopMood","pink");
-  }
-  $("desktopMoodButton")?.addEventListener("click",()=>$("moodPicker")?.classList.toggle("hidden"));
-  document.querySelectorAll("#moodPicker [data-mood]").forEach(btn=>btn.addEventListener("click",()=>{
-    store.set("lizzyDesktopMood",btn.dataset.mood);
-    applyMood();
-    $("moodPicker")?.classList.add("hidden");
-  }));
-
-  // Fake warnings
-  const warnings = {
-    lizzy:[
-      ["💗 LIZZYOS NOTICE","Excessive cuteness detected. System stability remains questionable."],
-      ["🌸 SYSTEM UPDATE","Lizzy has entered the building. Productivity has officially been suspended."],
-      ["💌 SECURITY ALERT","Someone appears to be thinking about Mikael. LizzyOS refuses to comment further."],
-      ["🍝 PRIORITY NOTICE","Pasta levels are below recommended LizzyOS operating requirements."],
-      ["✨ SYSTEM CHECK","Smile detected. LizzyOS performance increased by 47%."]
-    ],
-    attitude:[
-      ["🙄 ATTITUDE WARNING","Maximum sass detected. Mikael has been advised to proceed at his own risk."],
-      ["🚫 SYSTEM ERROR","Patience with men has reached critically low levels."],
-      ["👓 VISUAL ALERT","Four eyes detected. Still somehow missing the obvious. Interesting."],
-      ["📉 MIKAEL STATUS","Mikael's argument success rate has dropped to 2%. Please do not assist him."],
-      ["⚠️ LITTLE MISS ATTITUDE","Tone detected. LizzyOS has decided not to challenge it."]
-    ],
-    agent:[
-      ["🕵️ CLASSIFIED ALERT","Agent Yelizaveta activity detected. Clearance confirmed."],
-      ["📡 INTELLIGENCE UPDATE","Subject M. Petrov remains under observation."],
-      ["🔐 SECURITY NOTICE","Secure channel active. Suspiciously romantic activity detected."],
-      ["📁 CLASSIFIED FILE","New intelligence suggests Agent Mikhail is still calling himself Mr Perfect."],
-      ["🎯 MISSION UPDATE","Primary objective unchanged: maintain operational superiority over Mikael."]
-    ]
-  };
-  function showWarning(){
-    const pool=warnings[personality()]||warnings.lizzy;
-    const [title,msg]=pool[Math.floor(Math.random()*pool.length)];
-    $("warningTitle").textContent=title;$("warningMessage").textContent=msg;
-    $("lizzyWarningToast").classList.remove("hidden");
-  }
-  $("warningsButton")?.addEventListener("click",showWarning);
-  $("warningDismiss")?.addEventListener("click",()=>$("lizzyWarningToast")?.classList.add("hidden"));
-
-  // Live clock/date
-  function tick(){
-    const now=new Date();
-    if($("liveClockDisplay")) $("liveClockDisplay").textContent=now.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
-    if($("liveDateDisplay")) $("liveDateDisplay").textContent=now.toLocaleDateString([], {weekday:"short",day:"numeric",month:"short"});
-  }
-  tick(); setInterval(tick,1000);
-
-  // Last login: capture previous login, then store this login.
-  const previousLogin=store.get("lizzyLastLogin",null);
-  if($("lastLoginDisplay")){
-    $("lastLoginDisplay").textContent=previousLogin
-      ? "Last login: "+new Date(previousLogin).toLocaleString([], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})
-      : "Last login: First visit 💗";
-  }
-  let loginRecorded=false;
-  function recordLoginOnce(){
-    if(loginRecorded || !document.body.classList.contains("lizzyosUnlocked")) return;
-    loginRecorded=true; store.set("lizzyLastLogin",new Date().toISOString());
-  }
-  new MutationObserver(recordLoginOnce).observe(document.body,{attributes:true,attributeFilter:["class"]});
-  recordLoginOnce();
-
-  // About This Lizzy: attach to Read Me icon via double-click modifier,
-  // plus create a dedicated launcher if one doesn't already exist.
-  function createLauncher(id,emoji,label,handler){
-    const area=$("desktopArea"); if(!area || $(id)) return;
-    const d=document.createElement("div");
-    d.id=id; d.className="desktopIcon livingLauncher";
-    d.innerHTML=`<div class="desktopEmoji">${emoji}</div><span>${label}</span>`;
-    d.addEventListener("click",handler); area.appendChild(d);
-  }
-  createLauncher("aboutLizzyIcon","💗","About This Lizzy",()=>{
-    updatePersonaLivingUI();$("aboutLizzyWindow")?.classList.remove("hidden");
-  });
-  createLauncher("lizzyMailIcon","💌","Lizzy Mail",()=>{
-    updatePersonaLivingUI();$("lizzyMailWindow")?.classList.remove("hidden");
-    markMailRead();
-  });
-
-  document.querySelectorAll("[data-close-living]").forEach(b=>b.addEventListener("click",()=>{
-    $(b.dataset.closeLiving)?.classList.add("hidden");
-  }));
-
-  // Lizzy Mail local inbox/outbox.
-  const msg=$("lizzyMailMessage");
-  msg?.addEventListener("input",()=>{$("mailCharacterCount").textContent=`${msg.value.length} / 800`;});
-  function messages(){ return store.get("lizzyMailMessages",[]); }
-  function renderMessages(){
-    const host=$("lizzyMailHistory"); if(!host)return;
-    const list=messages().slice().reverse().slice(0,8);
-    host.innerHTML=list.length?list.map(m=>`<div class="mailHistoryItem">${escapeHtml(m.text)}<small>${new Date(m.time).toLocaleString()}</small></div>`).join("")
-      : `<div class="mailHistoryItem">No messages yet. LizzyOS is suspiciously quiet.</div>`;
-  }
-  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
-  $("sendLizzyMail")?.addEventListener("click",()=>{
-    const text=msg?.value.trim(); if(!text)return;
-    const list=messages(); list.push({text,time:new Date().toISOString()}); store.set("lizzyMailMessages",list);
-    store.set("lizzyMailUnread",true);
-    msg.value="";$("mailCharacterCount").textContent="0 / 800";
-    $("mailSentStatus").textContent="Message saved 💗";
-    renderMessages(); updateUnread();
-  });
-
-  // Unread indicator system.
-  function ensureBadge(iconId,badgeId){
-    const icon=$(iconId); if(!icon || $(badgeId))return;
-    const b=document.createElement("span");b.id=badgeId;b.className="unreadBadge hidden";b.textContent="1";icon.appendChild(b);
-  }
-  function markMailRead(){store.set("lizzyMailUnread",false);updateUnread();}
-  function updateUnread(){
-    ensureBadge("lizzyMailIcon","lizzyMailUnreadBadge");
-    const unread=!!store.get("lizzyMailUnread",false);
-    $("lizzyMailUnreadBadge")?.classList.toggle("hidden",!unread);
-    $("mailUnreadPill")?.classList.toggle("hidden",!unread);
-  }
-
-  applyNight(); applyMood(); updatePersonaLivingUI(); renderMessages(); updateUnread();
-
-  // Small welcome warning after successful boot, once per page visit.
-  let welcomed=false;
-  const welcomeObserver=new MutationObserver(()=>{
-    if(!welcomed && document.body.classList.contains("lizzyosUnlocked")){
-      welcomed=true;
-      setTimeout(showWarning,2200);
+    function safeWrite(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
     }
-  });
-  welcomeObserver.observe(document.body,{attributes:true,attributeFilter:["class"]});
+
+    // A broad Garden catalogue: standard, rare and secret plants.
+    const FLOWERS = {
+        tulip:       {name:"Tulip",emoji:"🌷",type:"flower",rarity:"Common"},
+        redRose:     {name:"Red Rose",emoji:"🌹",type:"flower",rarity:"Common"},
+        pinkRose:    {name:"Pink Rose",emoji:"🌹",type:"flower",rarity:"Uncommon"},
+        whiteRose:   {name:"White Rose",emoji:"🤍",type:"flower",rarity:"Uncommon"},
+        lilyValley:  {name:"Lily of the Valley",emoji:"🤍",type:"flower",rarity:"Rare"},
+        cryingLily:  {name:"Crying Lily",emoji:"🥀",type:"flower",rarity:"Rare"},
+        snapdragon:  {name:"Snapdragon",emoji:"🌺",type:"flower",rarity:"Uncommon"},
+        sunflower:   {name:"Sunflower",emoji:"🌻",type:"flower",rarity:"Common"},
+        daisy:       {name:"Daisy",emoji:"🌼",type:"flower",rarity:"Common"},
+        lavender:    {name:"Lavender",emoji:"🪻",type:"flower",rarity:"Uncommon"},
+        orchid:      {name:"Orchid",emoji:"🌸",type:"flower",rarity:"Rare"},
+        peony:       {name:"Peony",emoji:"🌺",type:"flower",rarity:"Rare"},
+        hydrangea:   {name:"Hydrangea",emoji:"🪻",type:"flower",rarity:"Uncommon"},
+        carnation:   {name:"Carnation",emoji:"🌸",type:"flower",rarity:"Common"},
+        daffodil:    {name:"Daffodil",emoji:"🌼",type:"flower",rarity:"Common"},
+        iris:        {name:"Iris",emoji:"🪻",type:"flower",rarity:"Rare"},
+        chrysanthemum:{name:"Chrysanthemum",emoji:"🌼",type:"flower",rarity:"Uncommon"},
+        poppy:       {name:"Poppy",emoji:"🌺",type:"flower",rarity:"Common"},
+        forgetMeNot: {name:"Forget-Me-Not",emoji:"💠",type:"flower",rarity:"Rare"},
+        hibiscus:    {name:"Hibiscus",emoji:"🌺",type:"flower",rarity:"Uncommon"},
+        mysteryBloom:{name:"Mystery Blossom",emoji:"🌸",type:"flower",rarity:"Secret"},
+        moonflower:  {name:"Moonflower",emoji:"🌙",type:"flower",rarity:"Legendary"},
+        starBloom:   {name:"Star Bloom",emoji:"✨",type:"flower",rarity:"Legendary"},
+        gardenCrown: {name:"Garden Crown",emoji:"👑",type:"flower",rarity:"Legendary"},
+        bananaTree:  {name:"Suspicious Banana Tree",emoji:"🍌",type:"tree",rarity:"Secret"}
+    };
+
+    const STANDARD_FLOWERS = [
+        "tulip","redRose","pinkRose","whiteRose","lilyValley","cryingLily","snapdragon",
+        "sunflower","daisy","lavender","orchid","peony","hydrangea","carnation",
+        "daffodil","iris","chrysanthemum","poppy","forgetMeNot","hibiscus"
+    ];
+
+    const SEEDS = {
+        tulipSeed:{name:"Tulip Seed",emoji:"🌷",plant:"tulip"},
+        roseSeed:{name:"Rose Seed",emoji:"🌹",plant:"redRose"},
+        lilySeed:{name:"Lily of the Valley Seed",emoji:"🤍",plant:"lilyValley"},
+        cryingLilySeed:{name:"Crying Lily Seed",emoji:"🥀",plant:"cryingLily"},
+        snapdragonSeed:{name:"Snapdragon Seed",emoji:"🌺",plant:"snapdragon"},
+        sunflowerSeed:{name:"Sunflower Seed",emoji:"🌻",plant:"sunflower"},
+        lavenderSeed:{name:"Lavender Seed",emoji:"🪻",plant:"lavender"},
+        orchidSeed:{name:"Orchid Seed",emoji:"🌸",plant:"orchid"},
+        mysterySeed:{name:"Mystery Seed",emoji:"❓",plant:"mysteryBloom"},
+        moonSeed:{name:"Moonflower Seed",emoji:"🌙",plant:"moonflower"},
+        mikaelSeed:{name:"UNKNOWN_SEED.exe",emoji:"❓",plant:"bananaTree",secret:true}
+    };
+    const COMMON_SEEDS = ["tulipSeed","roseSeed","snapdragonSeed","sunflowerSeed","lavenderSeed"];
+    const GAME_SEEDS   = ["lilySeed","cryingLilySeed","orchidSeed","mysterySeed"];
+
+    const WEATHER = [
+        {id:"perfect",emoji:"🌤️",name:"Perfect Garden Day",desc:"Ideal conditions. Plants grow a little faster today.",decay:0.72,growth:1.25},
+        {id:"sunny",emoji:"☀️",name:"Sunny",desc:"Normal growing weather. Keep an eye on thirsty plants.",decay:1.0,growth:1.0},
+        {id:"rain",emoji:"🌧️",name:"Rain",desc:"Nature has volunteered for watering duty.",decay:0.2,growth:1.05,autoWater:true},
+        {id:"heavyRain",emoji:"⛈️",name:"Heavy Rain",desc:"Everything is soaked. Fragile plants are a little dramatic about it.",decay:0.05,growth:0.9,autoWater:true,severe:true},
+        {id:"heat",emoji:"🔥",name:"Heatwave",desc:"Plants are losing water faster. Check the Garden today.",decay:1.65,growth:0.85,severe:true},
+        {id:"severeHeat",emoji:"🥵",name:"Severe Heat",desc:"Dangerously hot. Some plants may need extra attention.",decay:2.25,growth:0.65,severe:true},
+        {id:"wind",emoji:"🌬️",name:"Strong Winds",desc:"Mature flowers may look stressed, but they'll recover.",decay:1.15,growth:0.8,severe:true},
+        {id:"cold",emoji:"❄️",name:"Cold Snap",desc:"Growth slows today. Tulips are suspiciously pleased.",decay:0.7,growth:0.5,severe:true},
+        {id:"mist",emoji:"🌫️",name:"Misty Morning",desc:"Cool and damp. Moisture lasts longer.",decay:0.55,growth:0.9},
+        {id:"rainbow",emoji:"🌈",name:"Rainbow Weather",desc:"Rare LizzyOS conditions. Growth gets a magical boost.",decay:0.45,growth:1.55,rare:true}
+    ];
+
+    const MIKAEL_COMMENTS = {
+        healthy:[
+            "Look at that. Actual responsible plant ownership. I am shocked. — Mikael",
+            "The plants are thriving. Please don't let this success go to your head.",
+            "Garden status: healthy. Hater status: probably unchanged. 🙄"
+        ],
+        thirsty:[
+            "Interesting gardening technique, Lizzy. Have you considered water?",
+            "Your plant has submitted a formal hydration complaint.",
+            "BREAKING NEWS: local woman remembers she owns a garden. Hopefully."
+        ],
+        wilting:[
+            "This flower has seen more neglect than Mikael's good advice. 😭",
+            "Your plant has requested new management.",
+            "I was going to blame climate change, but unfortunately this one is on you."
+        ],
+        critical:[
+            "OH NOW YOU REMEMBER HER?? 😭",
+            "The plant would like it noted that this apology is being considered.",
+            "LizzyOS Gardening Board has opened an investigation."
+        ],
+        banana:[
+            "Of course the stupid banana tree is fine. 🍌 — Mikael",
+            "Mikael Tree status: thriving purely out of spite.",
+            "Somehow the banana tree has survived. Men really do have unnecessary confidence."
+        ]
+    };
+
+    const UPGRADE_QUESTIONS = [
+        {q:"What phrase does Mikael say way too often?",a:["oh wow","oh my days","oh wow oh my days"]},
+        {q:"What is Mikael's guilty-pleasure artist?",a:["tay tay","taylor swift","taytay"]},
+        {q:"If Mikael could eat one meal for an entire week, what would he choose?",a:["pasta","spaghetti bolognese","spaghetti bolognaise","spag bol"]},
+        {q:"What was the first sport Mikael played competitively?",a:["cricket"]},
+        {q:"What is one thing Mikael always loses or forgets?",a:["his windshields","windshields","glasses","his glasses"]},
+        {q:"What's the quickest way to annoy Mikael?",a:["say something stupid","saying something stupid","something stupid"]},
+        {q:"What is Mikael's dream car?",a:["porsche 911 gt3","911 gt3","porsche gt3"]},
+        {q:"If Mikael had to waste the first R10,000 of R1 million, what would he buy?",a:["a new console","new console","console"]},
+        {q:"What is something Mikael would never do, even for money?",a:["join the letters gang","letters gang","join letters gang"]},
+        {q:"What is Mikael's favourite thing about Lizzy that isn't physical? 😏",a:["her personality","personality","lizzy's personality"]}
+    ];
+
+    const TOKEN_DEFS = {
+        "Hug Token":{emoji:"🫂",desc:"One proper Mikael hug."},
+        "Mini Treat Token":{emoji:"☕",desc:"One small snack or drink."},
+        "Coffee / Hot Chocolate Token":{emoji:"☕",desc:"One coffee or hot chocolate on Mikael."},
+        "Snack Token":{emoji:"🍫",desc:"One snack of Lizzy's choice."},
+        "Question Token":{emoji:"💬",desc:"One question Mikael has to answer properly."},
+        "Second Chance Token":{emoji:"🪙",desc:"One future Daily Reward reroll."},
+        "Activity Date Token":{emoji:"🎟️",desc:"Lizzy chooses an activity for the two of you."},
+        "Food Date Token":{emoji:"🍝",desc:"Lizzy chooses where or what you eat."},
+        "Mystery Gift Token":{emoji:"🎁",desc:"Mikael owes one small surprise."},
+        "Dessert Run":{emoji:"🍦",desc:"Dessert or ice cream on Mikael."},
+        "Movie Night Token":{emoji:"🎬",desc:"Lizzy chooses the movie. Mikael complaints prohibited."},
+        "Princess Treatment Pass":{emoji:"👑",desc:"One reasonable small request with princess treatment."},
+        "Rematch Token":{emoji:"🎳",desc:"Demand a rematch at an activity you've already done."},
+        "Lazy Date Pass":{emoji:"💤",desc:"Choose one chilled activity/date."},
+        "Golden Date Ticket":{emoji:"🎟️",desc:"Dinner plus an activity of Lizzy's choice."},
+        "Mikael's Wild Card":{emoji:"🃏",desc:"One reasonable request saved for later."},
+        "Real Flower Drop":{emoji:"💐",desc:"Mikael owes Lizzy real flowers."},
+        "Legendary Mystery Gift":{emoji:"🎁",desc:"A bigger or special surprise from Mikael."},
+        "Your Choice Voucher":{emoji:"💖",desc:"Choose one reasonable cute or fun thing to do together."},
+        "Agent Yelizaveta VIP Pass":{emoji:"🏆",desc:"Choose the next date activity AND claim a proper hug."},
+        "Ultimate Princess Day":{emoji:"👑",desc:"One full day of upgraded princess treatment."}
+    };
+
+    function defaultGarden(){
+        return {
+            version:1,
+            tier:1,
+            slots:12,
+            plants:[],
+            seeds:{},
+            flowers:{},
+            selectedSeed:null,
+            lastWeatherApplied:"",
+            createdAt:nowISO()
+        };
+    }
+    function defaultTokens(){
+        return {version:1,inventory:{},history:[],rerollCredits:0};
+    }
+
+    let garden = Object.assign(defaultGarden(), safeRead(KEYS.garden, {}));
+    garden.seeds = garden.seeds || {};
+    garden.flowers = garden.flowers || {};
+    garden.plants = Array.isArray(garden.plants) ? garden.plants : [];
+    let tokens = Object.assign(defaultTokens(), safeRead(KEYS.tokens, {}));
+    tokens.inventory = tokens.inventory || {};
+    tokens.history = Array.isArray(tokens.history) ? tokens.history : [];
+    let redeeming = null;
+    let upgradeSession = null;
+
+    function saveGarden(){ safeWrite(KEYS.garden, garden); }
+    function saveTokens(){ safeWrite(KEYS.tokens, tokens); }
+
+    // One-time migration. NEVER changes the old Daily Mystery keys.
+    function migrateOnce(){
+        if(localStorage.getItem(KEYS.migration)) return;
+
+        // The user confirmed these two rewards are already owned.
+        tokens.inventory["Hug Token"] = Math.max(1, Number(tokens.inventory["Hug Token"]||0));
+        tokens.inventory["Activity Date Token"] = Math.max(1, Number(tokens.inventory["Activity Date Token"]||0));
+
+        // Give the Garden a small starter pack, without affecting any previous reward.
+        garden.seeds.tulipSeed = Math.max(1, Number(garden.seeds.tulipSeed||0));
+        garden.seeds.roseSeed = Math.max(1, Number(garden.seeds.roseSeed||0));
+
+        saveGarden(); saveTokens();
+        localStorage.setItem(KEYS.migration, "done");
+    }
+    migrateOnce();
+
+    function hash(text){
+        let h=2166136261;
+        for(const ch of text){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}
+        return h>>>0;
+    }
+    function weatherFor(date){
+        const k=dayKey(date);
+        const roll=hash(k+"-garden-weather")%100;
+        // Rare rainbow is genuinely rare.
+        let pool;
+        if(roll<3) pool=WEATHER.find(w=>w.id==="rainbow");
+        else if(roll<14) pool=WEATHER.find(w=>w.id==="rain");
+        else if(roll<20) pool=WEATHER.find(w=>w.id==="heavyRain");
+        else if(roll<31) pool=WEATHER.find(w=>w.id==="heat");
+        else if(roll<36) pool=WEATHER.find(w=>w.id==="severeHeat");
+        else if(roll<45) pool=WEATHER.find(w=>w.id==="wind");
+        else if(roll<53) pool=WEATHER.find(w=>w.id==="cold");
+        else if(roll<63) pool=WEATHER.find(w=>w.id==="mist");
+        else if(roll<78) pool=WEATHER.find(w=>w.id==="perfect");
+        else pool=WEATHER.find(w=>w.id==="sunny");
+        return pool;
+    }
+    function forecast(days=3){
+        return Array.from({length:days},(_,i)=>{
+            const d=new Date(); d.setDate(d.getDate()+i);
+            return {date:d,weather:weatherFor(d)};
+        });
+    }
+
+    function plantWeatherMultiplier(plant,w){
+        let mult=w.decay;
+        const id=plant.flowerId;
+        if(id==="tulip" && w.id==="cold") mult*=0.55;
+        if(id==="lilyValley" && ["rain","mist","heavyRain"].includes(w.id)) mult*=0.58;
+        if(id==="sunflower" && ["heat","sunny"].includes(w.id)) mult*=0.82;
+        if(id==="bananaTree" && ["heat","severeHeat","rain"].includes(w.id)) mult*=0.45;
+        return mult;
+    }
+
+    function hoursSince(iso){
+        return Math.max(0,(Date.now()-new Date(iso).getTime())/3600000);
+    }
+    function currentHealth(plant){
+        const w=weatherFor(new Date());
+        const h=hoursSince(plant.lastWatered);
+        // 100 health, roughly 1.5 points/hour at ordinary conditions.
+        const loss=h*1.5*plantWeatherMultiplier(plant,w);
+        return Math.max(0,Math.round(100-loss));
+    }
+    function plantState(health){
+        if(health>=70)return "healthy";
+        if(health>=45)return "thirsty";
+        if(health>=20)return "wilting";
+        return "critical";
+    }
+    function growthStage(plant){
+        const watered = Number(plant.waterCount||0);
+        if(watered>=6)return 4;
+        if(watered>=4)return 3;
+        if(watered>=2)return 2;
+        if(watered>=1)return 1;
+        return 0;
+    }
+    function stageVisual(plant){
+        const f=FLOWERS[plant.flowerId]||FLOWERS.tulip;
+        const stage=growthStage(plant);
+        if(plant.flowerId==="bananaTree"){
+            return ["🫘","🌱","🌿","🌴","🍌"][stage];
+        }
+        return ["🫘","🌱","🌿","🪴",f.emoji][stage];
+    }
+
+    function randomFrom(arr, salt=""){
+        return arr[hash(dayKey()+salt+Math.random())%arr.length];
+    }
+    function addSeed(seedId,count=1,reason=""){
+        if(!SEEDS[seedId]) return;
+        garden.seeds[seedId]=(garden.seeds[seedId]||0)+count;
+        saveGarden();
+        gardenComment(`🌱 ${SEEDS[seedId].name} added${reason?` — ${reason}`:""}.`);
+        renderGarden();
+    }
+    function addFlower(flowerId,count=1,reason=""){
+        if(!FLOWERS[flowerId]) return;
+        garden.flowers[flowerId]=(garden.flowers[flowerId]||0)+count;
+        saveGarden();
+        gardenComment(`${FLOWERS[flowerId].emoji} ${FLOWERS[flowerId].name} added to the collection${reason?` — ${reason}`:""}.`);
+        renderGarden();
+    }
+    function randomStandardFlower(){
+        return STANDARD_FLOWERS[hash(Date.now()+"flower"+Math.random())%STANDARD_FLOWERS.length];
+    }
+    function randomSeed(){
+        return COMMON_SEEDS[hash(Date.now()+"seed"+Math.random())%COMMON_SEEDS.length];
+    }
+
+    function gardenComment(text){
+        const el=$("gardenMikaelComment");
+        if(el)el.textContent=text;
+    }
+
+    function applyDailyWeather(){
+        const today=dayKey();
+        if(garden.lastWeatherApplied===today) return;
+        const w=weatherFor(new Date());
+        if(w.autoWater && garden.plants.length){
+            garden.plants.forEach(p=>{
+                p.lastWatered=nowISO();
+                p.waterCount=(p.waterCount||0)+1;
+            });
+        }
+        garden.lastWeatherApplied=today;
+        saveGarden();
+    }
+
+    function renderWeather(){
+        const w=weatherFor(new Date());
+        $("gardenWeatherEmoji").textContent=w.emoji;
+        $("gardenWeatherName").textContent=w.name;
+        $("gardenWeatherDescription").textContent=w.desc;
+        const alert=$("gardenWeatherAlert");
+        if(w.severe){
+            alert.classList.remove("hidden");
+            alert.textContent =
+                w.id==="severeHeat" ? "🚨 SEVERE HEAT: plants are drying out much faster today. Check them again later."
+                : w.id==="heat" ? "🔥 HEATWAVE WARNING: thirsty plants need attention sooner than normal."
+                : w.id==="heavyRain" ? "⛈️ HEAVY RAIN: LizzyOS has watered everything automatically."
+                : w.id==="wind" ? "🌬️ STRONG WINDS: mature plants may look stressed today."
+                : "❄️ COLD SNAP: growth is temporarily slower.";
+        }else{
+            alert.classList.add("hidden");
+        }
+        const names=["TODAY","TOMORROW","DAY 3"];
+        $("gardenForecast").innerHTML=forecast(3).map((x,i)=>`
+            <div class="forecastDay">
+                <small>${names[i]}</small>
+                <span>${x.weather.emoji}</span>
+                <b>${x.weather.name}</b>
+            </div>`).join("");
+    }
+
+    function renderSeeds(){
+        const host=$("gardenSeedInventory");
+        const entries=Object.entries(garden.seeds).filter(([,n])=>n>0);
+        if(!entries.length){
+            host.innerHTML=`<div class="memoryMessage">No seeds yet. Perfect game scores and Daily Rewards can earn them. 🌱</div>`;
+            return;
+        }
+        host.innerHTML=entries.map(([id,n])=>{
+            const s=SEEDS[id];
+            return `<button class="seedChip ${garden.selectedSeed===id?"selected":""}" data-seed="${id}">
+                <b>${s.emoji} ${s.secret?"Unknown Seed":s.name} ×${n}</b>
+                <small>${s.secret?"Origin: Classified":"Tap, then choose an empty plot."}</small>
+            </button>`;
+        }).join("");
+        host.querySelectorAll("[data-seed]").forEach(b=>b.onclick=()=>{
+            garden.selectedSeed=b.dataset.seed;
+            saveGarden();renderSeeds();
+            gardenComment(`Selected ${SEEDS[b.dataset.seed].secret?"UNKNOWN_SEED.exe":SEEDS[b.dataset.seed].name}. Now choose an empty plot.`);
+        });
+    }
+
+    function renderPlots(){
+        const host=$("gardenPlots");
+        const slots=garden.tier===3 ? Math.max(24,garden.plants.length+8) : garden.slots;
+        $("gardenPlotCount").textContent=slots;
+        let healthy=0,needs=0;
+        garden.plants.forEach(p=>{
+            const state=plantState(currentHealth(p));
+            if(state==="healthy")healthy++; else needs++;
+        });
+        $("gardenHealthyCount").textContent=healthy;
+        $("gardenThirstyCount").textContent=needs;
+        $("gardenSeedCount").textContent=Object.values(garden.seeds).reduce((a,b)=>a+b,0);
+        $("gardenTierName").textContent=garden.tier===3?"Infinite Garden ♾️":garden.tier===2?"Expanded Garden 🌸":"Lizzy's Garden 🌷";
+        $("gardenPlotHeading").textContent=garden.tier===3?"Infinite space. Mikael regrets giving you this much power.":"Tap an empty plot after selecting a seed.";
+
+        const bySlot=new Map(garden.plants.map(p=>[p.slot,p]));
+        const cards=[];
+        for(let slot=0;slot<slots;slot++){
+            const p=bySlot.get(slot);
+            if(!p){
+                cards.push(`<div class="gardenPlot empty" data-empty-slot="${slot}">
+                    <div class="emptySoil">🟫</div>
+                    <strong>Empty Plot</strong>
+                    <small>${garden.selectedSeed?"Plant selected seed 🌱":"Select a seed first"}</small>
+                </div>`);
+                continue;
+            }
+            const health=currentHealth(p),state=plantState(health),f=FLOWERS[p.flowerId];
+            cards.push(`<div class="gardenPlot" data-plant="${p.id}">
+                <div class="plantVisual ${state}">${stageVisual(p)}</div>
+                <div class="plantMeta">
+                    <strong>${p.flowerId==="bananaTree"&&growthStage(p)<4?"UNKNOWN PLANT":f.name}</strong>
+                    <small>${["Seed","Sprout","Growing","Budding","Blooming"][growthStage(p)]} · ${state.toUpperCase()}</small>
+                    <div class="plantHealthBar"><div class="plantHealthFill" style="width:${health}%"></div></div>
+                    <small>💧 Last watered: ${new Date(p.lastWatered).toLocaleString()}</small>
+                    <div class="plantActions">
+                        <button data-water="${p.id}">💧 Water</button>
+                        <button data-boost="${p.id}">✨ Check</button>
+                    </div>
+                </div>
+            </div>`);
+        }
+        host.innerHTML=cards.join("");
+
+        host.querySelectorAll("[data-empty-slot]").forEach(el=>el.onclick=()=>plantSelectedSeed(Number(el.dataset.emptySlot)));
+        host.querySelectorAll("[data-water]").forEach(b=>b.onclick=e=>{e.stopPropagation();waterPlant(b.dataset.water)});
+        host.querySelectorAll("[data-boost]").forEach(b=>b.onclick=e=>{e.stopPropagation();inspectPlant(b.dataset.boost)});
+    }
+
+    function renderCollection(){
+        const host=$("gardenFlowerCollection");
+        const entries=Object.entries(garden.flowers).filter(([,n])=>n>0);
+        host.innerHTML=entries.length?entries.map(([id,n])=>`
+            <div class="flowerCollectionChip">
+                <b>${FLOWERS[id].emoji} ${FLOWERS[id].name} ×${n}</b>
+                <small>${FLOWERS[id].rarity}</small>
+            </div>`).join(""):`<div class="memoryMessage">Your collection will grow as flowers bloom and rewards drop. 🌷</div>`;
+    }
+
+    function renderGarden(){
+        applyDailyWeather();
+        renderWeather();renderSeeds();renderPlots();renderCollection();
+    }
+
+    function plantSelectedSeed(slot){
+        const seedId=garden.selectedSeed;
+        if(!seedId || !(garden.seeds[seedId]>0)){
+            gardenComment("Pick a seed first, Garden Boss. 🌱");
+            return;
+        }
+        const seed=SEEDS[seedId];
+        garden.seeds[seedId]--;
+        garden.plants.push({
+            id:`plant_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+            slot,
+            seedId,
+            flowerId:seed.plant,
+            plantedAt:nowISO(),
+            lastWatered:nowISO(),
+            waterCount:0,
+            bonusGrowth:0
+        });
+        garden.selectedSeed=null;
+        saveGarden();
+        gardenComment(seedId==="mikaelSeed"
+            ?"❓ UNKNOWN_SEED.exe planted. LizzyOS accepts no responsibility for whatever this becomes."
+            :`🌱 ${seed.name} planted. Don't forget the water.`);
+        renderGarden();
+    }
+
+    function waterPlant(id){
+        const p=garden.plants.find(x=>x.id===id); if(!p)return;
+        const before=growthStage(p);
+        p.lastWatered=nowISO();
+        p.waterCount=(p.waterCount||0)+1;
+        const after=growthStage(p);
+        if(after===4 && before<4){
+            addFlower(p.flowerId,1,"Fully grown in the Garden");
+        }
+        saveGarden();
+        const card=document.querySelector(`[data-plant="${id}"] .plantVisual`);
+        card?.classList.add("waterSplash");setTimeout(()=>card?.classList.remove("waterSplash"),700);
+        gardenComment(p.flowerId==="bananaTree"
+            ? randomFrom(MIKAEL_COMMENTS.banana)
+            : "💧 Water delivered. The plant has decided not to file a complaint today.");
+        renderGarden();
+    }
+
+    function inspectPlant(id){
+        const p=garden.plants.find(x=>x.id===id);if(!p)return;
+        const state=plantState(currentHealth(p));
+        const pool=p.flowerId==="bananaTree"?MIKAEL_COMMENTS.banana:MIKAEL_COMMENTS[state];
+        gardenComment(randomFrom(pool,id));
+    }
+
+    function waterAll(){
+        if(!garden.plants.length){gardenComment("Water what, exactly? The empty soil? 😭");return}
+        garden.plants.forEach(p=>{p.lastWatered=nowISO();p.waterCount=(p.waterCount||0)+1});
+        saveGarden();gardenComment("💦 Everybody watered. Mikael has temporarily withdrawn the plant-neglect allegations.");renderGarden();
+    }
+
+    // Garden Boost reward.
+    function gardenBoost(){
+        if(!garden.plants.length){addSeed(randomSeed(),1,"Garden Boost converted to a seed because the Garden was empty");return}
+        const p=garden.plants[hash(Date.now()+"boost")%garden.plants.length];
+        p.lastWatered=nowISO();
+        p.waterCount=(p.waterCount||0)+2;
+        saveGarden();gardenComment(`✨ Garden Boost applied to ${FLOWERS[p.flowerId].name}.`);renderGarden();
+    }
+
+    // ---------------------------------------------
+    // Upgrade security
+    // Tier 1 -> 2: 3/3. Tier 2 -> 3: 5/5.
+    // ---------------------------------------------
+    function normalizeAnswer(v){
+        return String(v||"").toLowerCase().trim()
+            .replace(/[’']/g,"").replace(/[^a-z0-9\s]/g,"").replace(/\s+/g," ");
+    }
+    function shuffledQuestions(count){
+        const arr=[...UPGRADE_QUESTIONS];
+        for(let i=arr.length-1;i>0;i--){
+            const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];
+        }
+        return arr.slice(0,count);
+    }
+    function openUpgrade(){
+        if(garden.tier>=3){
+            gardenComment("♾️ Your Garden is already infinite. There is literally nowhere else to go.");
+            return;
+        }
+        const needed=garden.tier===1?3:5;
+        upgradeSession={questions:shuffledQuestions(needed),index:0,correct:0,targetTier:garden.tier+1};
+        $("gardenUpgradeWindow").classList.remove("hidden");
+        $("gardenUpgradeComplete").classList.add("hidden");
+        $("gardenUpgradeQuiz").classList.remove("hidden");
+        $("gardenUpgradeTitle").textContent=garden.tier===1?"🌸 Expanded Garden Security Check":"♾️ Infinite Garden Final Clearance";
+        $("gardenUpgradeIntro").textContent=garden.tier===1
+            ?"Answer all 3 difficult Mikael questions correctly to DOUBLE your Garden."
+            :"Final boss: answer all 5 correctly. One mistake means the Infinite Garden stays locked.";
+        renderUpgradeQuestion();
+    }
+    function renderUpgradeQuestion(){
+        if(!upgradeSession)return;
+        const n=upgradeSession.questions.length,i=upgradeSession.index;
+        $("gardenUpgradeProgress").innerHTML=Array.from({length:n},(_,x)=>`<span class="${x<i?"done":""}">${x+1}</span>`).join("");
+        $("gardenUpgradeQuestion").textContent=upgradeSession.questions[i].q;
+        $("gardenUpgradeAnswer").value="";
+        $("gardenUpgradeFeedback").textContent="";
+        setTimeout(()=>$("gardenUpgradeAnswer").focus(),60);
+    }
+    function submitUpgradeAnswer(){
+        if(!upgradeSession)return;
+        const q=upgradeSession.questions[upgradeSession.index],v=normalizeAnswer($("gardenUpgradeAnswer").value);
+        const ok=q.a.some(a=>normalizeAnswer(a)===v);
+        if(!ok){
+            $("gardenUpgradeFeedback").textContent="❌ GARDEN EXPANSION DENIED. Apparently listening when Mikael speaks was optional. 😂";
+            upgradeSession=null;
+            return;
+        }
+        upgradeSession.correct++;
+        upgradeSession.index++;
+        if(upgradeSession.index<upgradeSession.questions.length){
+            $("gardenUpgradeFeedback").textContent="✅ Suspiciously correct...";
+            setTimeout(renderUpgradeQuestion,550);
+            return;
+        }
+        garden.tier=upgradeSession.targetTier;
+        if(garden.tier===2)garden.slots=24;
+        if(garden.tier===3)garden.slots=999999;
+        saveGarden();
+        $("gardenUpgradeQuiz").classList.add("hidden");
+        $("gardenUpgradeComplete").classList.remove("hidden");
+        $("gardenUpgradeCompleteText").textContent=garden.tier===2
+            ?"Expanded Garden unlocked — 24 planting spaces. You actually know the developer. 🌸"
+            :"INFINITE GARDEN UNLOCKED ♾️🌷 Okay... that's actually concerning. You know way too much about Mikael.";
+        upgradeSession=null;renderGarden();
+    }
+
+    // ---------------------------------------------
+    // Token Jar
+    // ---------------------------------------------
+    function addToken(name,count=1){
+        if(!TOKEN_DEFS[name])return;
+        tokens.inventory[name]=(tokens.inventory[name]||0)+count;
+        saveTokens();renderTokens();
+    }
+    function renderTokens(){
+        const host=$("tokenJarList");
+        const entries=Object.entries(tokens.inventory).filter(([name,n])=>n>0&&TOKEN_DEFS[name]);
+        host.innerHTML=entries.length?entries.map(([name,n])=>{
+            const d=TOKEN_DEFS[name];
+            return `<div class="tokenCard">
+                <div class="tokenCardEmoji">${d.emoji}</div>
+                <div><strong>${name}</strong><p>${d.desc}</p></div>
+                <div class="tokenCount">×${n}</div>
+                <button data-redeem-token="${encodeURIComponent(name)}">Redeem ${d.emoji}</button>
+            </div>`;
+        }).join(""):`<div class="memoryMessage">The Jar is empty. Daily Rewards can fix that. 🫙</div>`;
+        host.querySelectorAll("[data-redeem-token]").forEach(b=>b.onclick=()=>openRedeem(decodeURIComponent(b.dataset.redeemToken)));
+
+        const hist=$("tokenRedeemHistory");
+        hist.innerHTML=tokens.history.length?tokens.history.slice(0,20).map(x=>`
+            <div class="tokenHistoryItem"><b>${x.emoji} ${x.name}</b><small>${new Date(x.redeemedAt).toLocaleString()} · ${x.notifyStatus}</small></div>
+        `).join(""):`<div class="memoryMessage">Nothing redeemed yet.</div>`;
+    }
+    function openRedeem(name){
+        if(!TOKEN_DEFS[name] || !(tokens.inventory[name]>0))return;
+        redeeming=name;
+        const d=TOKEN_DEFS[name];
+        $("tokenRedeemEmoji").textContent=d.emoji;
+        $("tokenRedeemName").textContent=name;
+        $("tokenRedeemDescription").textContent=d.desc;
+        $("tokenRedeemStatus").textContent="";
+        $("tokenRedeemWindow").classList.remove("hidden");
+    }
+    async function notifyRedemption(payload){
+        const endpoint=localStorage.getItem(KEYS.notificationEndpoint)||"";
+        if(!endpoint){
+            const q=safeRead(KEYS.pendingNotify,[]);
+            q.push(payload);safeWrite(KEYS.pendingNotify,q);
+            return "Queued for Telegram";
+        }
+        try{
+            const res=await fetch(endpoint,{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({type:"token_redeemed",...payload})
+            });
+            if(!res.ok)throw new Error("Worker response not OK");
+            return "Mikael notified";
+        }catch(e){
+            const q=safeRead(KEYS.pendingNotify,[]);
+            q.push(payload);safeWrite(KEYS.pendingNotify,q);
+            return "Notification queued";
+        }
+    }
+    async function confirmRedeem(){
+        if(!redeeming || !(tokens.inventory[redeeming]>0))return;
+        const name=redeeming,d=TOKEN_DEFS[name];
+        tokens.inventory[name]--;
+        if(name==="Second Chance Token")tokens.rerollCredits=(tokens.rerollCredits||0)+1;
+        const payload={token:name,emoji:d.emoji,redeemed_at:new Date().toLocaleString(),redeemed_at_iso:nowISO()};
+        const entry={name,emoji:d.emoji,redeemedAt:payload.redeemed_at_iso,notifyStatus:"Sending..."};
+        tokens.history.unshift(entry);saveTokens();renderTokens();
+        $("tokenRedeemStatus").textContent="Redeemed 💗 Preparing Mikael notification...";
+        entry.notifyStatus=await notifyRedemption(payload);
+        saveTokens();renderTokens();
+        $("tokenRedeemStatus").textContent=`✅ ${name} redeemed. ${entry.notifyStatus}.`;
+        redeeming=null;
+    }
+
+    // ---------------------------------------------
+    // Reward integration
+    // ---------------------------------------------
+    const compliments=[
+        "LizzyOS diagnostic: somehow you're still ridiculously pretty. No patch available.",
+        "You have the annoying habit of making ordinary things feel memorable. 💗",
+        "Certified smart, funny and very easy to make a whole operating system about.",
+        "Your personality 😏 remains one of Mikael's favourite things about you.",
+        "System scan: kindness levels unusually high. Hater allegations remain under investigation."
+    ];
+    const jokes=[
+        "Today's challenge: say something nice about Mikael. Difficulty: Legendary.",
+        "LizzyOS detected unnecessary negativity. It was just Lizzy being Lizzy. 🙄",
+        "Mikael said 'hear me out.' The Garden immediately entered emergency mode.",
+        "Mikael's defence: 'I was joking.' LizzyOS court finds him guilty.",
+        "Professional Hater Lizzy vs Professional Menace Mikael — still the main event."
+    ];
+    const hints=[
+        "Some secrets react to things you TYPE rather than click.",
+        "The Recycle Bin has always looked a little suspicious.",
+        "Not every Easter egg appears during normal daytime hours.",
+        "Sometimes clicking something more than once is the entire point.",
+        "A mysterious seed may be hiding behind unusually good game performance."
+    ];
+
+    function processReward(r){
+        if(!Array.isArray(r))return;
+        const [,icon,name] = r;
+
+        // Garden rewards
+        if(name==="Random Flower" || name==="Digital Flower"){addFlower(randomStandardFlower(),1,"Daily Reward");}
+        else if(name==="Random Plant Seed"){addSeed(randomSeed(),1,"Daily Reward");}
+        else if(name==="Garden Boost"){gardenBoost();}
+        else if(name==="Rare Flower Pack"){
+            ["lilyValley","cryingLily","orchid"].forEach(id=>addFlower(id,1,"Rare Flower Pack"));
+        }
+        else if(name==="Garden Jackpot"){
+            for(let i=0;i<5;i++)addFlower(randomStandardFlower(),1,"Garden Jackpot");
+        }
+        else if(name==="Garden Crown"){addFlower("gardenCrown",1,"LEGENDARY Garden Crown");}
+        else if(name==="Garden of Lizzy"){STANDARD_FLOWERS.forEach(id=>addFlower(id,1,"Garden of Lizzy"));}
+
+        // Tokens
+        if(TOKEN_DEFS[name])addToken(name,1);
+
+        // Lightweight immediate rewards
+        if(name==="Pocket Compliment")alert("💌 "+randomFrom(compliments,"compliment"));
+        if(name==="Cheeky Joke")alert("😂 "+randomFrom(jokes,"joke"));
+        if(name==="Easter Egg Hint")alert("🕵️ "+randomFrom(hints,"hint"));
+
+        // Secret Mikael Seed: tiny chance when Random Plant Seed drops.
+        if(name==="Random Plant Seed" && hash(dayKey()+"mikael-secret")%23===0){
+            addSeed("mikaelSeed",1,"CLASSIFIED");
+        }
+    }
+    window.addEventListener("lizzyDailyRewardClaimed",e=>processReward(e.detail?.reward));
+
+    // Migrate today's currently saved reward ONCE so this update doesn't
+    // erase or ignore a reward already claimed before deployment.
+    const CURRENT_REWARD_MIGRATION="lizzyCurrentRewardGardenMigrationV1";
+    if(!localStorage.getItem(CURRENT_REWARD_MIGRATION)){
+        try{
+            const r=JSON.parse(localStorage.getItem("lizzyMysteryReward")||"null");
+            const opened=localStorage.getItem("lizzyMysteryOpened");
+            if(r && opened) processReward(r);
+        }catch(e){}
+        localStorage.setItem(CURRENT_REWARD_MIGRATION,"done");
+    }
+
+    // Perfect game -> one seed per game per calendar day.
+    window.addEventListener("lizzyPerfectGame",e=>{
+        const detail=e.detail||{},earned=safeRead(KEYS.gameSeeds,{});
+        const k=`${dayKey()}_${detail.key||detail.game}`;
+        if(earned[k])return;
+        earned[k]=true;safeWrite(KEYS.gameSeeds,earned);
+        let seed=GAME_SEEDS[hash(k+"seed")%GAME_SEEDS.length];
+
+        // Very secret Mikael seed chance. The UI never advertises this.
+        if(hash(k+"mikael")%31===0)seed="mikaelSeed";
+
+        addSeed(seed,1,`Perfect performance in ${detail.game}`);
+        if(typeof confetti==="function")confetti({particleCount:90,spread:85,origin:{y:.72}});
+        alert(`🌱 PERFECT GAME REWARD!\n\n${SEEDS[seed].secret?"A mysterious seed":SEEDS[seed].name} has been added to Lizzy's Garden.`);
+    });
+
+    // ---------------------------------------------
+    // UI wiring
+    // ---------------------------------------------
+    function openGarden(){
+        $("lizzyGardenWindow").classList.remove("hidden");
+        renderGarden();
+        const stateCounts=garden.plants.reduce((a,p)=>{
+            const s=plantState(currentHealth(p));a[s]=(a[s]||0)+1;return a;
+        },{});
+        const worst=stateCounts.critical?"critical":stateCounts.wilting?"wilting":stateCounts.thirsty?"thirsty":"healthy";
+        gardenComment(garden.plants.some(p=>p.flowerId==="bananaTree")
+            ? randomFrom(MIKAEL_COMMENTS.banana)
+            : randomFrom(MIKAEL_COMMENTS[worst]));
+    }
+    function closeGarden(){$("lizzyGardenWindow").classList.add("hidden")}
+    function openTokens(){$("tokenJarWindow").classList.remove("hidden");renderTokens()}
+    function closeTokens(){$("tokenJarWindow").classList.add("hidden")}
+
+    $("lizzyGardenIcon")?.addEventListener("click",openGarden);
+    $("lizzyGardenClose")?.addEventListener("click",closeGarden);
+    $("closeLizzyGarden")?.addEventListener("click",closeGarden);
+    $("waterAllPlants")?.addEventListener("click",waterAll);
+    $("openGardenUpgrade")?.addEventListener("click",openUpgrade);
+    $("gardenUpgradeClose")?.addEventListener("click",()=>$("gardenUpgradeWindow").classList.add("hidden"));
+    $("closeGardenUpgrade")?.addEventListener("click",()=>$("gardenUpgradeWindow").classList.add("hidden"));
+    $("submitGardenUpgradeAnswer")?.addEventListener("click",submitUpgradeAnswer);
+    $("gardenUpgradeAnswer")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitUpgradeAnswer()});
+
+    $("tokenJarIcon")?.addEventListener("click",openTokens);
+    $("tokenJarClose")?.addEventListener("click",closeTokens);
+    $("closeTokenJar")?.addEventListener("click",closeTokens);
+    $("cancelTokenRedeem")?.addEventListener("click",()=>{$("tokenRedeemWindow").classList.add("hidden");redeeming=null});
+    $("confirmTokenRedeem")?.addEventListener("click",confirmRedeem);
+
+    // Public helper for the upcoming Cloudflare/Telegram setup:
+    // localStorage.setItem("lizzyTelegramWorkerURL","https://YOUR-WORKER.workers.dev")
+    window.LizzyGarden = {render:renderGarden,addSeed,addFlower,addToken};
+
+    renderTokens();
 })();
