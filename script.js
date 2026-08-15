@@ -1,23 +1,3 @@
-
-// =========================================================
-// LIZZYOS TELEGRAM NOTIFICATIONS (via Cloudflare Worker)
-// Bot token + Chat ID stay private in Cloudflare secrets.
-// =========================================================
-const LIZZYOS_NOTIFY_URL = "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
-async function lizzyNotify(type, title, details) {
-  try {
-    const r = await fetch(LIZZYOS_NOTIFY_URL, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({type, title, details})
-    });
-    if (!r.ok) throw new Error(`Notification HTTP ${r.status}`);
-    return true;
-  } catch (err) {
-    console.warn("LizzyOS Telegram notification failed:", err);
-    return false;
-  }
-}
 // =============================================
 // LIZZY-DATE
 // Version 2.0
@@ -1651,7 +1631,7 @@ document.addEventListener("keydown", (event) => {
  $("calendarIcon")?.addEventListener("click",()=>{let d=localStorage.getItem("lizzySelectedDate"),t=localStorage.getItem("lizzySelectedTime");if($("desktopDateChoice"))$("desktopDateChoice").value=d||"";if($("desktopTimeChoice"))$("desktopTimeChoice").value=t||"";if($("desktopSchedulerRandomMessage"))$("desktopSchedulerRandomMessage").textContent=randomMsg();preview();saved();$("calendarWindow")?.classList.remove("hidden")});
  ["calendarRedClose","closeCalendar"].forEach(id=>$(id)?.addEventListener("click",()=>$("calendarWindow")?.classList.add("hidden")));
  ["desktopDateChoice","desktopTimeChoice"].forEach(id=>$(id)?.addEventListener("change",preview));
- $("confirmDesktopDate")?.addEventListener("click",async()=>{let d=$("desktopDateChoice")?.value,t=$("desktopTimeChoice")?.value,s=$("desktopDateStatus"),b=$("confirmDesktopDate");if(!d||!t){if(s)s.textContent="Choose both a date and a time first 😭";return}b.disabled=true;if(s)s.textContent="Sending mission details to Mikhail... 📡";try{let ok=await lizzyNotify("📅 CALENDAR REQUEST","Lizzy selected a date ❤️",`Date: ${fmtD(d)}\nTime: ${fmtT(t)}\nMission: Operation Strike Her Heart ❤️`);if(!ok)throw Error();localStorage.setItem("lizzySelectedDate",d);localStorage.setItem("lizzySelectedTime",t);if(s)s.textContent="Sent! Agent Mikhail has been notified ❤️";saved();if(typeof confetti==="function")confetti({particleCount:90,spread:90,origin:{y:.72}})}catch(e){if(s)s.textContent="Couldn't send the date right now. Please try again ❤️"}finally{b.disabled=false}});
+ $("confirmDesktopDate")?.addEventListener("click",async()=>{let d=$("desktopDateChoice")?.value,t=$("desktopTimeChoice")?.value,s=$("desktopDateStatus"),b=$("confirmDesktopDate");if(!d||!t){if(s)s.textContent="Choose both a date and a time first 😭";return}b.disabled=true;if(s)s.textContent="Sending mission details to Mikhail... 📡";try{let r=await fetch(URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({subject:"❤️ Lizzy selected a date!",message:`📅 LIZZYOS DATE SELECTED\n\nDate: ${fmtD(d)}\nTime: ${fmtT(t)}\n\nMission: Operation Strike Her Heart ❤️`,selected_date:fmtD(d),selected_time:fmtT(t)})});if(!r.ok)throw Error();localStorage.setItem("lizzySelectedDate",d);localStorage.setItem("lizzySelectedTime",t);if(s)s.textContent="Sent! Agent Mikhail has been notified ❤️";saved();if(typeof confetti==="function")confetti({particleCount:90,spread:90,origin:{y:.72}})}catch(e){if(s)s.textContent="Couldn't send the date right now. Please try again ❤️"}finally{b.disabled=false}});
  const rm=$("readMeWindow");$("readMeRedClose")?.addEventListener("click",()=>rm?.classList.add("hidden"));$("readMeYellowMin")?.addEventListener("click",()=>rm?.classList.toggle("readMeMinimised"));$("readMeGreenMax")?.addEventListener("click",()=>{rm?.classList.remove("readMeMinimised");rm?.classList.toggle("readMeExpanded")});
  saved();
 })();
@@ -1822,7 +1802,11 @@ document.addEventListener("keydown", (event) => {
         const right=answerLog.filter(x=>x.correct);
         const wrong=answerLog.filter(x=>!x.correct);
         const details=answerLog.map((x,i)=>`${i+1}. ${x.question}\nSelected: ${x.selected}\nCorrect answer: ${x.accepted}\nResult: ${x.correct?"CORRECT":"WRONG"}`).join("\n\n");
-        lizzyNotify("🧠 MIKHAIL QUIZ", `${labels[level]} — ${score}/${total} (${p}%)`, `Result: ${title}\nCorrect: ${right.length}\nWrong: ${wrong.length}\n\n${details}`);
+        lizzyTelegramNotify(
+            "🧠 MIKHAIL QUIZ COMPLETED",
+            `${labels[level]} — ${score}/${total} (${p}%)`,
+            details
+        );
         fetch("https://formspree.io/f/xdenzgee",{
             method:"POST",
             headers:{"Content-Type":"application/json","Accept":"application/json"},
@@ -2003,7 +1987,7 @@ function intro(){$("wouldRatherIntro").classList.remove("hidden");$("wouldRather
 function start(){round=[...bank].sort(()=>Math.random()-.5).slice(0,5);i=score=0;answerLog=[];$("wouldRatherIntro").classList.add("hidden");$("wouldRatherResult").classList.add("hidden");$("wouldRatherPlay").classList.remove("hidden");render()}
 function render(){let q=round[i];$("wouldRatherProgress").textContent=`${i+1}/5 • Q${q.n}`;$("wouldRatherScore").textContent=`Score: ${score}`;$("wouldRatherA").textContent=q.a;$("wouldRatherB").textContent=q.b;$("wouldRatherA").disabled=$("wouldRatherB").disabled=false;$("wouldRatherReaction").textContent=""}
 function pick(x){let q=round[i],ok=q.correct==="BOTH"||q.correct===x;if(ok)score++;answerLog.push({questionNumber:q.n,question:`${q.a} OR ${q.b}`,lizzyAnswer:x==="A"?q.a:q.b,mikaelAnswer:q.correct==="BOTH"?"Either / Both":q.correct==="A"?q.a:q.b,correct:ok?"Yes":"No"});$("wouldRatherA").disabled=$("wouldRatherB").disabled=true;$("wouldRatherReaction").textContent=ok?"Correct 👀❤️":"Wrong 😭 Mr Perfect disagrees.";setTimeout(()=>{i++;i<5?render():finish()},650)}
-function finish(){$("wouldRatherPlay").classList.add("hidden");$("wouldRatherResult").classList.remove("hidden");let t=score===5?"DANGEROUSLY HIGH CLEARANCE 🕵️❤️":score>=4?"Very Suspicious 👀":score>=3?"Respectable 😌":score>=2?"Further Investigation Required 😂":"SECURITY CLEARANCE DENIED 🚨";$("wouldRatherResultTitle").textContent=`${score}/5 — ${t}`;$("wouldRatherResultText").textContent=score===5?"Agent Yelizaveta knows Mr Perfect suspiciously well.":"Play another random five and prove yourself.";lizzyNotify("🤔 WOULD MIKAEL RATHER?", `${score}/5 — ${t}`, answerLog.map((a,n)=>`${n+1}. ${a.question}\nLizzy: ${a.lizzyAnswer}\nMikael: ${a.mikaelAnswer}\nCorrect: ${a.correct}`).join("\n\n"));fetch("https://formspree.io/f/mrpzlzkw",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({game:"Would Mikael Rather?",score:`${score}/5`,result:t,questions_and_answers:answerLog.map((a,n)=>`${n+1}. ${a.question}\nLizzy: ${a.lizzyAnswer}\nMikael: ${a.mikaelAnswer}\nCorrect: ${a.correct}`).join("\n\n")})}).catch(()=>{})}
+function finish(){$("wouldRatherPlay").classList.add("hidden");$("wouldRatherResult").classList.remove("hidden");let t=score===5?"DANGEROUSLY HIGH CLEARANCE 🕵️❤️":score>=4?"Very Suspicious 👀":score>=3?"Respectable 😌":score>=2?"Further Investigation Required 😂":"SECURITY CLEARANCE DENIED 🚨";$("wouldRatherResultTitle").textContent=`${score}/5 — ${t}`;$("wouldRatherResultText").textContent=score===5?"Agent Yelizaveta knows Mr Perfect suspiciously well.":"Play another random five and prove yourself.";fetch("https://formspree.io/f/mrpzlzkw",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({game:"Would Mikael Rather?",score:`${score}/5`,result:t,questions_and_answers:answerLog.map((a,n)=>`${n+1}. ${a.question}\nLizzy: ${a.lizzyAnswer}\nMikael: ${a.mikaelAnswer}\nCorrect: ${a.correct}`).join("\n\n")})}).catch(()=>{});lizzyTelegramNotify("🤔 WOULD MIKAEL RATHER COMPLETED",`${score}/5 — ${t}`,answerLog.map((a,n)=>`${n+1}. ${a.question}\nLizzy: ${a.lizzyAnswer}\nMikael: ${a.mikaelAnswer}\nCorrect: ${a.correct}`).join("\n\n"))}
 $("wouldMikaelRatherIcon")?.addEventListener("click",()=>{$("wouldMikaelRatherWindow").classList.remove("hidden");intro()});$("wouldMikaelRatherClose")?.addEventListener("click",()=>$("wouldMikaelRatherWindow").classList.add("hidden"));$("closeWouldMikaelRather")?.addEventListener("click",()=>$("wouldMikaelRatherWindow").classList.add("hidden"));$("startWouldRather")?.addEventListener("click",start);$("playWouldRatherAgain")?.addEventListener("click",start);$("wouldRatherA")?.addEventListener("click",()=>pick("A"));$("wouldRatherB")?.addEventListener("click",()=>pick("B"));})();
 // TIC-TAC-TOE VS MR PERFECT
 // Easy = mostly random
@@ -2285,7 +2269,7 @@ function menu(){$("crackMenu").classList.remove("hidden");$("crackPlay").classLi
 function start(id){mid=Number(id);stage=0;attempts=0;crackLog=[];$("crackMenu").classList.add("hidden");$("crackComplete").classList.add("hidden");$("crackPlay").classList.remove("hidden");render()}
 function render(){let m=missions[mid],s=m.stages[stage];$("crackMissionTitle").textContent=m.title;$("crackStage").textContent=`Stage ${stage+1}/${m.stages.length}`;$("crackPuzzle").innerHTML=s.q;$("crackAnswer").value="";$("crackFeedback").textContent="";$("crackAnswer").focus()}
 function submit(){let s=missions[mid].stages[stage],raw=$("crackAnswer").value,v=norm(raw),ok=s.a.some(a=>norm(a)===v);crackLog.push({stage:stage+1,question:$("crackPuzzle").innerText.replace(/\s+/g," ").trim(),answer:raw||"(blank)",expected:s.a.join(" / "),correct:ok?"Yes":"No"});if(ok){attempts=0;$("crackFeedback").textContent="✅ DECRYPTED. Accessing next layer...";setTimeout(()=>{stage++;stage<missions[mid].stages.length?render():complete()},650)}else{attempts++;$("crackFeedback").textContent=attempts>=3?"🚨 INTRUDER DETECTED. Agent clearance temporarily questioned. Try the hint. 😭":"❌ ACCESS DENIED. Incorrect code."}}
-function complete(){let m=missions[mid];$("crackPlay").classList.add("hidden");$("crackComplete").classList.remove("hidden");$("crackCompleteTitle").textContent=`🔓 ${m.reward}`;$("crackCompleteText").textContent=mid===5?"You actually went through all of that just to see what was in here? 😂 Agent Yelizaveta has earned a LEGENDARY Mystery Reward. ❤️":"Mission complete. Mr Perfect would like it recorded that your security clearance is becoming concerning. 😂❤️";localStorage.setItem(`crackMission${mid}`,"complete");lizzyNotify("🔐 CRACK THE CODE", m.title, `Result: ${m.reward}\n\n${crackLog.map(a=>`Stage ${a.stage}: ${a.question}\nLizzy answer: ${a.answer}\nExpected: ${a.expected}\nCorrect: ${a.correct}`).join("\n\n")}`);fetch("https://formspree.io/f/xjybobov",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({game:"Crack the Code",mission:m.title,result:m.reward,questions_and_answers:crackLog.map(a=>`Stage ${a.stage}: ${a.question}\nLizzy answer: ${a.answer}\nExpected: ${a.expected}\nCorrect: ${a.correct}`).join("\n\n")})}).catch(()=>{})}
+function complete(){let m=missions[mid];$("crackPlay").classList.add("hidden");$("crackComplete").classList.remove("hidden");$("crackCompleteTitle").textContent=`🔓 ${m.reward}`;$("crackCompleteText").textContent=mid===5?"You actually went through all of that just to see what was in here? 😂 Agent Yelizaveta has earned a LEGENDARY Mystery Reward. ❤️":"Mission complete. Mr Perfect would like it recorded that your security clearance is becoming concerning. 😂❤️";localStorage.setItem(`crackMission${mid}`,"complete");fetch("https://formspree.io/f/xjybobov",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({game:"Crack the Code",mission:m.title,result:m.reward,questions_and_answers:crackLog.map(a=>`Stage ${a.stage}: ${a.question}\nLizzy answer: ${a.answer}\nExpected: ${a.expected}\nCorrect: ${a.correct}`).join("\n\n")})}).catch(()=>{});lizzyTelegramNotify("🔐 CRACK THE CODE COMPLETED",`${m.title} — ${m.reward}`,crackLog.map(a=>`Stage ${a.stage}: ${a.question}\nLizzy answer: ${a.answer}\nExpected: ${a.expected}\nCorrect: ${a.correct}`).join("\n\n"))}
 $("crackCodeIcon")?.addEventListener("click",()=>{$("crackCodeWindow").classList.remove("hidden");menu()});
 $("crackCodeClose")?.addEventListener("click",()=>$("crackCodeWindow").classList.add("hidden"));$("closeCrackCode")?.addEventListener("click",()=>$("crackCodeWindow").classList.add("hidden"));
 document.querySelectorAll("[data-mission]").forEach(b=>b.addEventListener("click",()=>start(b.dataset.mission)));
@@ -2364,8 +2348,7 @@ function reward(){try{return JSON.parse(localStorage.getItem("lizzyMysteryReward
 function track(n){let p=n%7;$("streakTrack").innerHTML=Array.from({length:7},(_,i)=>`<span class="${((p===0&&n>0)||i<p)?"done":""}">${i+1}</span>`).join("")}
 function refresh(){let today=key(),opened=localStorage.getItem("lizzyMysteryOpened")===today,n=st(),r=reward();$("mysteryGift").textContent=opened&&r&&r[0]==="LEGENDARY"?"🏆":opened?"✨":"🎁";$("mysteryReward").classList.toggle("hidden",!opened);if(opened&&r)$("mysteryReward").innerHTML=`<div class="rewardRarity">${r[0]}</div><div class="rewardIcon">${r[1]}</div><strong>${r[2]}</strong><p>${r[3]}</p>`;$("openMysteryBox").disabled=opened;$("openMysteryBox").textContent=opened?"Come back tomorrow 💗":"Open Today's Box ✨";$("mysteryCountdown").textContent=opened?"Today's reward is claimed. Open tomorrow to keep the streak alive.":"";$("mysteryStreak").textContent=`🔥 ${n} Day${n===1?"":"s"} Streak`;let left=n?7-(n%7||7):7;$("mysteryStreakSub").textContent=(n>0&&n%7===0)?"Legendary milestone reached! Tomorrow starts the next 7-day run.":`${left} consecutive day${left===1?"":"s"} until guaranteed Legendary.`;track(n)}
 function claim(){let today=key();if(localStorage.getItem("lizzyMysteryOpened")===today)return;let last=localStorage.getItem("lizzyMysteryLastDate")||"",old=st(),n=1;if(last){let diff=dn(today)-dn(last);n=diff===1?old+1:1}let leg=n%7===0,r;if(leg)r=legends[ix(today+n,legends.length)];else{let roll=ix(today+"rarity",100),rar=roll<55?"Common":roll<85?"Rare":"Epic",pool=normal.filter(x=>x[0]===rar);r=pool[ix(today+"reward",pool.length)]}localStorage.setItem("lizzyMysteryLastDate",today);localStorage.setItem("lizzyMysteryStreak",String(n));localStorage.setItem("lizzyMysteryOpened",today);localStorage.setItem("lizzyMysteryReward",JSON.stringify(r));
-window.dispatchEvent(new CustomEvent("lizzyDailyRewardClaimed",{detail:{reward:r,date:today,streak:n}}));
-lizzyNotify(leg?"🚨 LEGENDARY REWARD CLAIMED":"🎁 DAILY REWARD CLAIMED",`${r[1]} ${r[2]}`,`Rarity: ${r[0]}\nStreak: ${n} day${n===1?"":"s"}\nDetails: ${r[3]}\nStatus: CLAIMED`);
+window.dispatchEvent(new CustomEvent("lizzyDailyRewardClaimed",{detail:{reward:r,date:today,streak:n}}));lizzyTelegramNotify(leg?"🚨 LEGENDARY REWARD CLAIMED":"🎁 DAILY REWARD CLAIMED",`${r[1]} ${r[2]}`,`Rarity: ${r[0]}\nReward: ${r[2]}\nDetails: ${r[3]}\nStreak: ${n} day${n===1?"":"s"}\nDate: ${today}\nStatus: CLAIMED`);
 refresh();if(leg){fetch("https://formspree.io/f/mljrlrwb",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({event:"7-Day Legendary Reward Claimed",streak:`${n} consecutive days`,reward:r[2],reward_details:r[3],date:today})}).catch(()=>{});$("mysteryReward").classList.add("legendaryBurst");setTimeout(()=>$("mysteryReward").classList.remove("legendaryBurst"),1600);if(typeof confetti==="function")confetti({particleCount:180,spread:110,origin:{y:.6}})}}
 function open(){$("mysteryBoxWindow").classList.remove("hidden");refresh()}function close(){$("mysteryBoxWindow").classList.add("hidden")}
 $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEventListener("click",close);$("closeMysteryBox")?.addEventListener("click",close);$("openMysteryBox")?.addEventListener("click",claim);
@@ -2519,14 +2502,13 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
 
     const TOKEN_DEFS = {
         "Hug Token":{emoji:"🫂",desc:"One proper Mikael hug."},
+        "Argument Winner Pass":{emoji:"⚖️",desc:"Automatically win one harmless argument. Mikael's right to appeal: denied 😂."},
         "Mini Treat Token":{emoji:"☕",desc:"One small snack or drink."},
         "Coffee / Hot Chocolate Token":{emoji:"☕",desc:"One coffee or hot chocolate on Mikael."},
         "Snack Token":{emoji:"🍫",desc:"One snack of Lizzy's choice."},
         "Question Token":{emoji:"💬",desc:"One question Mikael has to answer properly."},
         "Second Chance Token":{emoji:"🪙",desc:"One future Daily Reward reroll."},
         "Activity Date Token":{emoji:"🎟️",desc:"Lizzy chooses an activity for the two of you."},
-        "Argument Winner Pass":{emoji:"⚖️",desc:"Automatically win one harmless argument. Mikael must admit Lizzy was right 😂"},
-        "Argument Voucher":{emoji:"🎟️",desc:"One argument where Mikhail admits Lizzy was right. Terms and conditions definitely apply 😂"},
         "Food Date Token":{emoji:"🍝",desc:"Lizzy chooses where or what you eat."},
         "Mystery Gift Token":{emoji:"🎁",desc:"Mikael owes one small surprise."},
         "Dessert Run":{emoji:"🍦",desc:"Dessert or ice cream on Mikael."},
@@ -2564,7 +2546,6 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
     garden.seeds = garden.seeds || {};
     garden.flowers = garden.flowers || {};
     garden.plants = Array.isArray(garden.plants) ? garden.plants : [];
-    if(!localStorage.getItem(KEYS.notificationEndpoint)) localStorage.setItem(KEYS.notificationEndpoint,LIZZYOS_NOTIFY_URL);
     let tokens = Object.assign(defaultTokens(), safeRead(KEYS.tokens, {}));
     tokens.inventory = tokens.inventory || {};
     tokens.history = Array.isArray(tokens.history) ? tokens.history : [];
@@ -3006,19 +2987,20 @@ $("mysteryBoxIcon")?.addEventListener("click",open);$("mysteryBoxClose")?.addEve
         $("tokenRedeemWindow").classList.remove("hidden");
     }
     async function notifyRedemption(payload){
-        try{
-            const ok=await lizzyNotify(
-                payload.token==="Argument Winner Pass"||payload.token==="Argument Voucher" ? "⚖️ ARGUMENT TOKEN REDEEMED" : "🎟️ TOKEN / REWARD REDEEMED",
-                `${payload.emoji||"🎟️"} ${payload.token||"Unknown Token"}`,
-                `What it means: ${payload.description||"No description available."}\nRedeemed: ${payload.redeemed_at||new Date().toLocaleString()}`
-            );
-            if(!ok) throw new Error("Telegram notification failed");
-            return "Telegram sent ✓";
-        }catch(e){
+        const isArgument = payload.token === "Argument Winner Pass";
+        const type = isArgument ? "⚖️ ARGUMENT TOKEN REDEEMED" : "🎟️ TOKEN REDEEMED";
+        const title = `${payload.emoji||"🎟️"} ${payload.token||"Unknown Token"}`;
+        const details =
+`Reward: ${payload.token||"Unknown Token"}
+What it means: ${payload.description||"No description available."}
+Redeemed: ${payload.redeemed_at||new Date().toLocaleString()}
+Status: REDEEMED${isArgument?"\n\nMikael's right to appeal: DENIED 😂":""}`;
+        const ok = await lizzyTelegramNotify(type,title,details);
+        if(!ok){
             const q=safeRead(KEYS.pendingNotify,[]);
             q.push(payload);safeWrite(KEYS.pendingNotify,q);
-            return "Queued";
         }
+        return ok ? "Telegram sent" : "Recorded";
     }
     async function confirmRedeem(){
         if(!redeeming || !(tokens.inventory[redeeming]>0))return;
@@ -3350,3 +3332,14 @@ document.addEventListener("click",e=>{
    else {const t=document.getElementById(card.dataset.openGame); if(t){t.style.display="";t.click();t.style.display="none";}}
  }
 },true);
+
+// Telegram-only observer for the existing Our Date submission.
+document.getElementById("sendDateButton")?.addEventListener("click", () => {
+  const date =
+    document.getElementById("datePicker")?.value ||
+    document.getElementById("dateInput")?.value ||
+    localStorage.getItem("selectedDate") ||
+    localStorage.getItem("lizzySelectedDate") ||
+    "Date not available";
+  lizzyTelegramNotify("📅 DATE REQUEST", "LizzyOS Mission Date Update", `Selected date: ${date}`);
+});
