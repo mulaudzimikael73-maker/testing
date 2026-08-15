@@ -536,14 +536,6 @@
                 <span>Recycle Bin</span>
             </div>
 
-            <div class="desktopIcon" id="gamesFolderStaticIcon"
-         role="button" tabindex="0"
-         onclick="document.getElementById('gamesFolderStaticWindow').classList.remove('hidden');"
-         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('gamesFolderStaticWindow').classList.remove('hidden');}">
-                <div class="desktopEmoji">🎮</div>
-                <span>Games</span>
-            </div>
-
             <div class="desktopIcon" id="funQuizIcon">
                 <div class="desktopEmoji">🧠</div>
                 <span>Lizzy Quiz</span>
@@ -566,17 +558,6 @@
             <div class="desktopIcon" id="wouldMikaelRatherIcon"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
             <div class="desktopIcon" id="ticTacToeIcon"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
             <div class="desktopIcon" id="crackCodeIcon"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
-
-            <div class="desktopIcon" id="lizzyGardenIcon">
-                <div class="desktopEmoji">🌷</div>
-                <span>Lizzy's Garden</span>
-            </div>
-
-            <div class="desktopIcon" id="tokenJarIcon">
-                <div class="desktopEmoji">🫙</div>
-                <span>Token Jar</span>
-            </div>
-
             <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
                 <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
                 <span>Our Date</span>
@@ -584,32 +565,6 @@
 
         </div>
 
-
-        
-        <div id="gamesFolderStaticWindow" class="desktopWindow hidden gamesFolderWindow">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="gamesFolderStaticClose"
-          onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');"></span>
-                    <span class="windowMinDot"></span><span class="windowMaxDot"></span>
-                </div>
-                <h2>🎮 Games & Quizzes</h2>
-            </div>
-            <div class="windowScroll">
-                <div class="gamesFolderIntro"><span>🎮</span><div><small>LIZZYOS ARCADE</small><h3>Games, quizzes & unnecessary competition</h3><p>Win big, get perfect scores, and you may earn Garden seeds. 🌱</p></div></div>
-                <div class="gamesFolderGrid">
-                    <button class="gameFolderCard" data-open-game="funQuizIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('funQuizWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('funQuizIcon');if(i)i.click();}"><span>🧠</span><b>Lizzy Quiz</b><small>How well do you know yourself?</small></button>
-                    <button class="gameFolderCard" data-open-game="mikhailQuizIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('mikhailQuizWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('mikhailQuizIcon');if(i)i.click();}"><span>🧠</span><b>Mikhail Quiz</b><small>Prove you actually listen.</small></button>
-                    <button class="gameFolderCard" data-open-game="wouldMikaelRatherIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('wouldMikaelRatherWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('wouldMikaelRatherIcon');if(i)i.click();}"><span>🤔</span><b>Would Mikael Rather?</b><small>Choose wisely.</small></button>
-                    <button class="gameFolderCard" data-open-game="heartGameIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('heartGameWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('heartGameIcon');if(i)i.click();}"><span>💗</span><b>Heart Catch</b><small>Catch them before they escape.</small></button>
-                    <button class="gameFolderCard" data-open-game="mysteryBoxIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('mysteryBoxWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('mysteryBoxIcon');if(i)i.click();}"><span>🎁</span><b>Daily Mystery</b><small>Your daily classified reward.</small></button>
-                    <button class="gameFolderCard" data-open-game="ticTacToeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('ticTacToeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('ticTacToeIcon');if(i)i.click();}"><span>❌⭕</span><b>Tic-Tac-Toe</b><small>Lizzy vs Mikael.</small></button>
-                    <button class="gameFolderCard" data-open-game="crackCodeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('crackCodeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('crackCodeIcon');if(i)i.click();}"><span>🔐</span><b>Crack the Code</b><small>Agent-level puzzles.</small></button>
-                </div>
-            </div>
-            <button id="closeGamesFolderStatic" class="windowCloseButton"
-          onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');">Close</button>
-        </div>
 
         <!-- Finder Window -->
 
@@ -1002,6 +957,7 @@
                         <strong id="rewardTicketTitle"></strong>
                         <p id="rewardTicketText"></p>
                         <span>AUTHORIZED BY AGENT MIKHAIL ❤️</span>
+                        <button id="redeemQuizReward" type="button">Redeem This Reward 🎟️</button>
                     </div>
                     <button id="restartMikhailQuiz">Choose Another Level</button>
                 </div>
@@ -1028,169 +984,6 @@
                 <p id="mysteryCountdown" class="memoryMessage"></p>
             </div>
             <button id="closeMysteryBox" class="windowCloseButton">Close</button>
-        </div>
-
-
-        <!-- Lizzy's Garden -->
-        <div id="lizzyGardenWindow" class="desktopWindow hidden gardenWindow">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="lizzyGardenClose" title="Close"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>🌷 Lizzy's Garden</h2>
-            </div>
-
-            <div class="windowScroll gardenApp">
-                <div class="gardenTopGrid">
-                    <section class="gardenWeatherCard">
-                        <div class="weatherHeadline">
-                            <span id="gardenWeatherEmoji">🌤️</span>
-                            <div>
-                                <small>LIZZYOS GARDEN WEATHER</small>
-                                <h3 id="gardenWeatherName">Loading forecast...</h3>
-                            </div>
-                        </div>
-                        <p id="gardenWeatherDescription"></p>
-                        <div id="gardenWeatherAlert" class="gardenWeatherAlert hidden"></div>
-                        <div id="gardenForecast" class="gardenForecast"></div>
-                    </section>
-
-                    <section class="gardenSummaryCard">
-                        <small>GARDEN STATUS</small>
-                        <h3 id="gardenTierName">Lizzy's Garden 🌷</h3>
-                        <div class="gardenStats">
-                            <span><b id="gardenPlotCount">0</b> Plots</span>
-                            <span><b id="gardenHealthyCount">0</b> Healthy</span>
-                            <span><b id="gardenThirstyCount">0</b> Need Water</span>
-                            <span><b id="gardenSeedCount">0</b> Seeds</span>
-                        </div>
-                        <button id="openGardenUpgrade">🏡 Upgrade Garden</button>
-                    </section>
-                </div>
-
-                <section class="gardenInventoryPanel">
-                    <div class="gardenPanelHeading">
-                        <div>
-                            <small>SEED INVENTORY</small>
-                            <h3>What should we plant? 🌱</h3>
-                        </div>
-                        <button id="waterAllPlants">💧 Water All</button>
-                    </div>
-                    <div id="gardenSeedInventory" class="gardenSeedInventory"></div>
-                </section>
-
-                <section class="gardenPlotPanel">
-                    <div class="gardenPanelHeading">
-                        <div>
-                            <small>YOUR GARDEN</small>
-                            <h3 id="gardenPlotHeading">Plant something and make it yours.</h3>
-                        </div>
-                    </div>
-                    <div id="gardenAmbient" class="gardenAmbient" aria-hidden="true">
-                        <span class="gardenBug blueGardenButterfly" style="top:8%;--flyTime:12s;--delay:-2s">🦋</span>
-                        <span class="gardenBug blueGardenButterfly" style="top:38%;--flyTime:16s;--delay:-7s">🦋</span>
-                        <span class="gardenBug blueGardenButterfly" style="top:62%;--flyTime:14s;--delay:-4s">🦋</span>
-                        <span class="gardenBug" style="top:7%;--flyTime:14s;--delay:-3s">🦋</span>
-                        <span class="gardenBug" style="top:24%;--flyTime:11s;--delay:-7s">🐝</span>
-                        <span class="gardenBug" style="top:43%;--flyTime:16s;--delay:-1s">🦋</span>
-                        <span class="gardenBug" style="top:61%;--flyTime:13s;--delay:-9s">🐞</span>
-                        <span class="gardenBug" style="top:15%;--flyTime:18s;--delay:-5s">🐝</span>
-                    </div>
-                    <div id="gardenBugMessage" class="gardenBugMessage"></div>
-                    <div id="gardenPlots" class="gardenPlots"></div>
-                </section>
-
-                <section class="gardenCollectionPanel">
-                    <div class="gardenPanelHeading">
-                        <div>
-                            <small>FLOWER COLLECTION</small>
-                            <h3>Flowers you've discovered 🌸</h3>
-                        </div>
-                    </div>
-                    <div id="gardenFlowerCollection" class="gardenFlowerCollection"></div>
-                </section>
-
-                <div id="gardenMikaelComment" class="gardenMikaelComment"></div>
-            </div>
-            <button id="closeLizzyGarden" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- Garden Upgrade Security -->
-        <div id="gardenUpgradeWindow" class="desktopWindow hidden gardenUpgradeWindow">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="gardenUpgradeClose" title="Close"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>🔐 Garden Expansion Security</h2>
-            </div>
-            <div class="windowScroll gardenUpgradeBody">
-                <div class="upgradeLockEmoji">🏡</div>
-                <h3 id="gardenUpgradeTitle">Garden Expansion</h3>
-                <p id="gardenUpgradeIntro"></p>
-                <div id="gardenUpgradeProgress" class="gardenUpgradeProgress"></div>
-                <div id="gardenUpgradeQuiz">
-                    <p id="gardenUpgradeQuestion" class="gardenUpgradeQuestion"></p>
-                    <input id="gardenUpgradeAnswer" type="text" autocomplete="off" placeholder="Enter your answer...">
-                    <p id="gardenUpgradeFeedback" class="gameFeedback"></p>
-                    <button id="submitGardenUpgradeAnswer">Submit Answer 🔐</button>
-                </div>
-                <div id="gardenUpgradeComplete" class="hidden">
-                    <h3>ACCESS GRANTED 🌷</h3>
-                    <p id="gardenUpgradeCompleteText"></p>
-                </div>
-            </div>
-            <button id="closeGardenUpgrade" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- Token Jar -->
-        <div id="tokenJarWindow" class="desktopWindow hidden tokenJarWindow">
-            <div class="windowTop">
-                <div class="windowDots">
-                    <span class="windowCloseDot" id="tokenJarClose" title="Close"></span>
-                    <span class="windowMinDot"></span>
-                    <span class="windowMaxDot"></span>
-                </div>
-                <h2>🫙 Lizzy's Token Jar</h2>
-            </div>
-            <div class="windowScroll tokenJarApp">
-                <div class="tokenJarHero">
-                    <div class="tokenJarEmoji">🫙</div>
-                    <div>
-                        <small>LIZZYOS REDEEMABLES</small>
-                        <h3>Your Unreasonably Powerful Collection</h3>
-                        <p>Tap a token whenever you’re ready to use it. Once confirmed, LizzyOS marks it as redeemed.</p>
-                    </div>
-                </div>
-                
-                <div id="tokenJarList" class="tokenJarList"></div>
-                <div class="tokenHistorySection">
-                    <h3>Redeemed Tokens</h3>
-                    <div id="tokenRedeemHistory" class="tokenRedeemHistory"></div>
-                </div>
-            </div>
-            <button id="closeTokenJar" class="windowCloseButton">Close</button>
-        </div>
-
-        <!-- Token Redeem Confirmation -->
-        <div id="tokenRedeemWindow" class="desktopWindow hidden tokenRedeemWindow">
-            <div class="windowTop">
-                <h2>🎟️ Redeem Token?</h2>
-            </div>
-            <div class="windowScroll tokenRedeemBody">
-                <div id="tokenRedeemEmoji" class="tokenRedeemEmoji">🎟️</div>
-                <h3 id="tokenRedeemName"></h3>
-                <p id="tokenRedeemDescription"></p>
-                <p class="memoryMessage">This will use one token and add it to your redeemed history.</p>
-                <div class="tokenRedeemActions">
-                    <button id="cancelTokenRedeem">Never Mind</button>
-                    <button id="confirmTokenRedeem">Redeem 💗</button>
-                </div>
-                <p id="tokenRedeemStatus"></p>
-            </div>
         </div>
 
 <div id="calendarWindow" class="desktopWindow hidden">
@@ -1342,53 +1135,6 @@ if (window.netlifyIdentity) {
     });
 }
 </script>
-
-
-<!-- ===== The Unreleased Letter ===== -->
-<div id="unreleasedDecryptScreen" class="unreleasedDecryptScreen hidden">
-  <div class="decryptNoise"></div>
-  <div class="decryptBox">
-    <div class="decryptLock">🔐</div>
-    <small>LEGENDARY REWARD DETECTED</small>
-    <h1 id="decryptHeadline">CLASSIFIED FILE DECRYPTING...</h1>
-    <div class="decryptBar"><div id="decryptBarFill"></div></div>
-    <p id="decryptStatus">Verifying Agent Yelizaveta clearance...</p>
-  </div>
-</div>
-
-<div id="unreleasedLetterWindow" class="desktopWindow hidden unreleasedLetterWindow">
-  <div class="windowTop">
-    <div class="windowDots">
-      <span class="windowCloseDot" id="unreleasedLetterClose" title="Close"></span>
-      <span class="windowMinDot"></span>
-      <span class="windowMaxDot"></span>
-    </div>
-    <h2>💌 The Unreleased Letter</h2>
-  </div>
-  <div class="windowScroll unreleasedLetterBody">
-    <div class="unreleasedClassification">CLASSIFICATION: NEVER MEANT TO BE RELEASED</div>
-    <div class="unreleasedSeal">💌</div>
-    <h1>THE UNRELEASED LETTER</h1>
-    <p>Hey Lizzy,</p>
-    <p>If you're reading this, somehow you actually managed to unlock the one letter I wasn't planning on making easy to find.</p>
-    <p>There are a lot of jokes on this website. Me being Mr Perfect, you being the world's biggest hater, your ridiculous amount of attitude, and obviously the ongoing allegations that you hate men. 😂</p>
-    <p>But underneath all of that, there's something I probably don't say seriously enough.</p>
-    <p class="unreleasedEmphasis">I really appreciate having you in my life.</p>
-    <p>I like your personality 😏, the way you think, the random conversations we have, the way you make me laugh, and even the moments where you're being unnecessarily difficult just because you can.</p>
-    <p>Somehow, getting to know you became something I genuinely look forward to.</p>
-    <p>And that's probably why this ridiculous website exists in the first place.</p>
-    <p>Not because I needed to build an entire operating system, secret agent database, reward system, garden and apparently now a weather simulator just for one person...</p>
-    <p class="unreleasedEmphasis">but because you're worth making something ridiculous for.</p>
-    <p>There are probably a hundred easier ways I could've said that.</p>
-    <p>Unfortunately, you got Mikael.</p>
-    <p>So you got LizzyOS instead. 😂</p>
-    <p>Keep this information to yourself though.</p>
-    <p>I have a reputation to maintain.</p>
-    <p class="unreleasedSignature"><strong>— Mikael</strong><br><em>a.k.a. Mr Perfect 💜</em></p>
-    <div class="unreleasedPS"><strong>P.S.</strong> If you use anything written in this letter against me, I will deny everything.</div>
-  </div>
-  <button id="closeUnreleasedLetter" class="windowCloseButton">Close Classified File</button>
-</div>
 
 <script src="script.js"></script>
 
