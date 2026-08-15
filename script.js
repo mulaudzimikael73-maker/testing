@@ -1,3 +1,33 @@
+
+// =====================================================
+// LIZZYOS TELEGRAM NOTIFICATION BRIDGE
+// =====================================================
+const LIZZY_TELEGRAM_WORKER_URL =
+  "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
+
+async function lizzyTelegramNotify(type, title, details) {
+  try {
+    const response = await fetch(LIZZY_TELEGRAM_WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: type || "LizzyOS Activity",
+        title: title || "New Activity",
+        details: details || "No additional details."
+      })
+    });
+
+    if (!response.ok) {
+      console.error("LizzyOS Telegram Worker returned", response.status);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("LizzyOS Telegram notification failed:", error);
+    return false;
+  }
+}
+
 // =============================================
 // LIZZY-DATE
 // Version 2.0
