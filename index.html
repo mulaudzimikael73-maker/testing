@@ -8,7 +8,7 @@
 
     <title>Lizzy ❤️</title>
 
-    <link rel="stylesheet" href="style.css?v=20260818-locked-final">
+    <link rel="stylesheet" href="style.css?v=20260823-v417-answer-space">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -18,6 +18,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+
+<style>
+#lizzyAssistantIcon,#dayCheckIcon,#codyCourtGameCard,#rpsGameCard{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  position:relative;
+  z-index:50;
+}
+#gamesFolderStaticWindow #codyCourtGameCard,
+#gamesFolderStaticWindow #rpsGameCard{z-index:5}
+</style>
 </head>
 
 <body>
@@ -544,28 +555,32 @@
                 <span>Games</span>
             </div>
 
-            <div class="desktopIcon" id="funQuizIcon">
+            <div class="desktopIcon" id="funQuizIcon" style="display:none!important">
                 <div class="desktopEmoji">🧠</div>
                 <span>Lizzy Quiz</span>
             </div>
 
-            <div class="desktopIcon" id="heartGameIcon">
+            <div class="desktopIcon" id="heartGameIcon" style="display:none!important">
                 <div class="desktopEmoji">💗</div>
                 <span>Heart Catch</span>
             </div>
-            <div class="desktopIcon" id="mikhailQuizIcon">
+            <div class="desktopIcon" id="mikhailQuizIcon" style="display:none!important">
                 <div class="desktopEmoji">🧠</div>
                 <span>Mikhail Quiz</span>
             </div>
 
-            <div class="desktopIcon" id="mysteryBoxIcon">
+            <div class="desktopIcon" id="mysteryBoxIcon" style="display:none!important">
                 <div class="desktopEmoji">🎁</div>
                 <span>Daily Mystery</span>
             </div>
 
-            <div class="desktopIcon" id="wouldMikaelRatherIcon"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
-            <div class="desktopIcon" id="ticTacToeIcon"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
-            <div class="desktopIcon" id="crackCodeIcon"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
+            <div class="desktopIcon" id="wouldMikaelRatherIcon" style="display:none!important"><div class="desktopEmoji">🤔</div><span>Would Mikael Rather?</span></div>
+            <div class="desktopIcon" id="ticTacToeIcon" style="display:none!important"><div class="desktopEmoji">❌⭕</div><span>Tic-Tac-Toe</span></div>
+            <div class="desktopIcon" id="crackCodeIcon" style="display:none!important"><div class="desktopEmoji">🔐</div><span>Crack the Code</span></div>
+            <div class="desktopIcon livingDesktopIcon" id="classifiedFolderIcon"><div class="desktopEmoji">🗃️</div><span>CLASSIFIED</span></div>
+            <div class="desktopIcon livingDesktopIcon" id="livingDesktopIcon"><div class="desktopEmoji">🖥️</div><span>Living Desktop</span></div>
+            <div class="desktopIcon livingDesktopIcon" id="internetIcon"><div class="desktopEmoji">🌐</div><span>Internet</span></div>
+            <div class="desktopIcon livingDesktopIcon" id="lizzyMailIcon"><div class="desktopEmoji">💌</div><span>Lizzy Mail</span><span id="lizzyMailTodayDot" class="mailDesktopDot">TODAY</span></div>
 
             <div class="desktopIcon" id="lizzyGardenIcon">
                 <div class="desktopEmoji">🌷</div>
@@ -581,7 +596,8 @@
                 <div class="desktopEmoji">🛒</div>
                 <span>Seed Store</span>
             </div>
-
+            <div class="desktopIcon livingDesktopIcon" id="lizzyAssistantIcon" role="button" tabindex="0"><div class="desktopEmoji">✨</div><span>Lizzy Assistant</span></div>
+            <div class="desktopIcon livingDesktopIcon" id="dayCheckIcon" role="button" tabindex="0"><div class="desktopEmoji">💗</div><span>How's Today?</span></div>
             <div class="desktopIcon calendarFolderIcon" id="calendarIcon">
                 <div class="desktopEmoji calendarFolderEmoji"><span class="folderCalendarBadge">📅</span></div>
                 <span>Our Date</span>
@@ -609,7 +625,9 @@
                     <button class="gameFolderCard" data-open-game="heartGameIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('heartGameWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('heartGameIcon');if(i)i.click();}"><span>💗</span><b>Heart Catch</b><small>Catch them before they escape.</small></button>
                     <button class="gameFolderCard" data-open-game="mysteryBoxIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('mysteryBoxWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('mysteryBoxIcon');if(i)i.click();}"><span>🎁</span><b>Daily Mystery</b><small>Your daily classified reward.</small></button>
                     <button class="gameFolderCard" data-open-game="ticTacToeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('ticTacToeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('ticTacToeIcon');if(i)i.click();}"><span>❌⭕</span><b>Tic-Tac-Toe</b><small>Lizzy vs Mikael.</small></button>
-                    <button class="gameFolderCard" data-open-game="crackCodeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('crackCodeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('crackCodeIcon');if(i)i.click();}"><span>🔐</span><b>Crack the Code</b><small>Agent-level puzzles.</small></button>
+                                        <button class="gameFolderCard" id="codyCourtGameCard" type="button"><span>⚖️</span><b>Cody Court</b><small>Review evidence and deliver your ruling.</small></button>
+                    <button class="gameFolderCard" id="rpsGameCard" type="button"><span>✊</span><b>Rock Paper Scissors</b><small>Lizzy vs Mikael. Best record wins.</small></button>
+<button class="gameFolderCard" data-open-game="crackCodeIcon" onclick="document.getElementById('gamesFolderStaticWindow').classList.add('hidden');var w=document.getElementById('crackCodeWindow');if(w){w.classList.remove('hidden');}else{var i=document.getElementById('crackCodeIcon');if(i)i.click();}"><span>🔐</span><b>Crack the Code</b><small>Agent-level puzzles.</small></button>
                 </div>
             </div>
             <button id="closeGamesFolderStatic" class="windowCloseButton"
@@ -953,18 +971,137 @@
 
             <button id="closeTicTacToe" class="windowCloseButton">Close</button>
         </div>
+
+<!-- LIVING DESKTOP PHASE 1 — COMPACT -->
+<div id="classifiedFolderWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="classifiedFolderClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🗃️ CLASSIFIED</h2></div>
+ <div class="windowScroll"><p class="memoryMessage">🔒 Purchased dossiers and classified files are stored here.</p><div id="classifiedArchivePanel"></div></div>
+ <button class="windowCloseButton" id="classifiedFolderCloseBtn">Close</button>
+</div>
+
+<div id="lizzyMailWindow" class="desktopWindow hidden">
+ <div class="windowTop">
+  <div class="windowDots">
+   <span class="windowCloseDot" id="lizzyMailClose"></span>
+   <span class="windowMinDot"></span>
+   <span class="windowMaxDot"></span>
+  </div>
+  <h2>💌 Lizzy Mail</h2>
+ </div>
+ <div class="dailyMailApp">
+   <div class="dailyMailHeader">
+     <div>
+       <small>LIZZYOS DAILY MAIL</small>
+       <h2>Mikael 💜</h2>
+       <span id="dailyMailDate"></span>
+     </div>
+     <span class="dailyMailBadge">1 MESSAGE TODAY</span>
+   </div>
+
+   <div class="dailyMailMessageCard">
+     <small>FROM: MIKAEL</small>
+     <div id="dailyMailMessage"></div>
+   </div>
+
+   <div class="dailyMailReplyBox">
+     <label for="dailyMailReply">Reply to Mikael</label>
+     <textarea id="dailyMailReply" maxlength="800" placeholder="Type your reply..."></textarea>
+     <div class="dailyMailReplyBottom">
+       <span id="dailyMailReplyCount">0 / 800</span>
+       <button id="sendDailyMailReply" type="button">Send 💗</button>
+     </div>
+     <div id="dailyMailStatus"></div>
+   </div>
+
+   <div class="dailyMailFooter">
+     Tomorrow, Mikael will leave you a different message. Refreshing today will not change this one.
+   </div>
+ </div>
+ <button class="windowCloseButton" id="lizzyMailCloseBtn">Close</button>
+</div>
+
+<div id="internetWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="internetClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🌐 Internet</h2></div>
+ <div class="browserChrome">
+  <div class="browserNav"><button id="browserBack">←</button><button id="browserHome">⌂</button><div id="browserAddress">lizzy://home</div></div>
+  <div id="browserPage" class="browserPage"></div>
+ </div>
+ <button class="windowCloseButton" id="internetCloseBtn">Close</button>
+</div>
+
+<div id="mikaelDatabaseWindow" class="desktopWindow hidden mikaelDatabaseWindow">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="mikaelDatabaseClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🕴🏾 Mikael.exe</h2></div>
+ <div class="windowScroll mikaelDatabaseApp">
+  <section class="mikaelHero"><div class="mikaelAvatar">M</div><div><small>SUBJECT FILE // MIKAEL</small><h2>Mr Perfect Database</h2><p>Somehow both informative and deeply unnecessary.</p></div><span class="mikaelOnline">● ONLINE</span></section>
+  <nav class="mikaelTabs">
+   <button class="active" data-mikael-tab="profile">👤 Profile</button><button data-mikael-tab="stats">📊 Stats</button><button data-mikael-tab="facts">🎲 Facts</button><button data-mikael-tab="quotes">💬 Quotes</button><button data-mikael-tab="intel">🕵️ Lizzy Intel</button><button data-mikael-tab="challenge">🧠 Challenge</button><button data-mikael-tab="classified">🔐 Classified</button>
+  </nav>
+  <div id="mikaelTabContent"></div>
+ </div>
+ <button class="windowCloseButton" id="mikaelDatabaseCloseBtn">Close</button>
+</div>
+
+<div id="livingDesktopWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="livingDesktopClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🖥️ Living Desktop</h2></div>
+ <div class="windowScroll">
+   <div class="livingControlGrid">
+    <section class="livingControlCard"><h3>📝 Sticky Note</h3><p id="stickyPreview">A note from Mikael.</p><div class="livingActions"><button id="stickyToggle">Show Note</button><button id="stickyNext">New Note</button></div></section>
+    <section class="livingControlCard"><h3>🌤️ Mood of the Day</h3><p id="moodDisplay">Not selected</p><div id="moodChoices" class="moodChoices"></div></section>
+    <section class="livingControlCard"><h3>⏳ Countdown</h3><p id="countdownDisplay">No countdown yet</p><input id="countdownName" placeholder="Event name"><input id="countdownDate" type="datetime-local"><div class="livingActions"><button id="countdownSave">Save</button><button id="countdownClear">Clear</button></div></section>
+    <section class="livingControlCard"><h3>🖥️ System Activity</h3><p id="livingSystemActivity">LizzyOS is checking its systems…</p><small id="livingSystemActivityTime"></small></section>
+<section class="livingControlCard"><h3>🕒 Time of Day</h3><p id="livingTimeStatus">Checking local time…</p><small>Changes automatically through the day.</small></section>
+<section class="livingControlCard"><h3>😈 Mikael Takeover</h3><p id="mikaelProfileStatus">Loading…</p><div class="livingActions"><button id="openMikaelDatabase" type="button">Open Mikael.exe</button><button id="toggleMikaelProfile" type="button">Activate Mikael Takeover</button></div></section>
+   </div>
+   <p class="livingRareHint">🕵🏾 Rare Mikael sightings happen on their own. Catch him before he disappears.</p>
+ </div>
+ <button class="windowCloseButton" id="livingDesktopCloseBtn">Close</button>
+</div>
+
+<div id="livingStickyNote" class="livingStickyNote hidden"><div class="stickyHandle"><span>📝 NOTE FROM MIKAEL</span><button id="stickyHide">×</button></div><div id="stickyMessage"></div></div>
+<div 
+<div id="takeoverSecretFile" class="desktopIcon takeoverOnlyIcon hidden" title="Takeover-only file">
+  <div class="desktopEmoji">📁</div><span>MIKAEL ONLY</span>
+</div>
+<div id="takeoverBatSignal" class="takeoverBatSignal hidden" title="Something is watching…">🦇</div>
+<div id="takeoverSecretWindow" class="desktopWindow takeoverSecretWindow hidden">
+  <div class="windowBar"><span>🔐 TAKEOVER // MIKAEL ONLY</span><button type="button" id="takeoverSecretClose">×</button></div>
+  <div class="windowScroll takeoverSecretBody">
+    <small>EDITORIAL CONTROL FILE // ACTIVE SESSION ONLY</small>
+    <h2>🕴🏾 You found something that shouldn't be here.</h2>
+    <p>This folder only exists while Mikael has control of LizzyOS.</p>
+    <div id="takeoverSecretContent"></div>
+    <button type="button" id="takeoverSecretAnother">Generate Another Classified Message</button>
+  </div>
+</div>
+<div id="takeoverRareEvent" class="takeoverRareEvent hidden">
+  <div>
+    <small>RARE TAKEOVER EVENT</small>
+    <h2>🕴🏾 MR PERFECT IS WATCHING</h2>
+    <p id="takeoverRareText"></p>
+    <button type="button" id="takeoverRareClaim">Investigate</button>
+  </div>
+</div>
+<div id="rareMikael" class="rareMikael hidden"><span>🕴🏾</span><small>MIKAEL</small></div>
+
 <div id="crackCodeWindow" class="desktopWindow hidden">
 <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="crackCodeClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🔐 Crack the Code</h2></div>
 <div class="windowScroll crackApp">
 <div id="crackMenu">
 <div class="crackHero">🔐🕵️</div><h3>Agent Yelizaveta: Code Division</h3>
-<p>Five classified missions. Each mission contains multiple puzzles. Solve the stages, collect the keys and break LizzyOS security.</p>
+<p>Twelve classified missions. Some puzzles stay inside this window; others temporarily hide evidence across the real LizzyOS desktop.</p>
 <div class="crackMissionGrid">
 <button data-mission="1">🔐 <strong>Security Breach</strong><small>Mikael • ciphers • website clues</small></button>
 <button data-mission="2">🗂️ <strong>Missing Mr Perfect File</strong><small>Search LizzyOS and recover the file</small></button>
 <button data-mission="3">📺 <strong>TV Multiverse Meltdown</strong><small>The Office • B99 • Gilmore Girls • HSM</small></button>
 <button data-mission="4">🌍 <strong>Agent Knowledge Exam</strong><small>General knowledge • maths • logic</small></button>
-<button data-mission="5">❤️ <strong>LizzyOS Treasure Hunt</strong><small>MAXIMUM difficulty • everything combined</small></button>
+<button data-mission="5">❤️ <strong>LizzyOS Treasure Hunt</strong><small>Original maximum-security mission</small></button>
+<button data-mission="6">🕴️ <strong>Operation Miknak</strong><small>Mikael archive • personal intelligence</small></button>
+<button data-mission="7">🖥️ <strong>The Corrupted Desktop</strong><small>LIVE scavenger hunt across LizzyOS</small></button>
+<button data-mission="8">🛰️ <strong>Agent Yelizaveta: Intercepted</strong><small>A1Z26 • identity transmission</small></button>
+<button data-mission="9">🏀 <strong>The Number Four</strong><small>#4 investigation • Mikael history</small></button>
+<button data-mission="10">🕵️ <strong>The Impostor File</strong><small>Find missing Profile D • restore Mikael</small></button>
+<button data-mission="11">🧠 <strong>Mikael Knowledge Protocol</strong><small>Hard authentication sequence</small></button>
+<button data-mission="12">🗄️ <strong>Vault Breach</strong><small>★★★★★ • earn +1 Vault clearance</small></button>
 </div></div>
 <div id="crackPlay" class="hidden">
 <div class="crackMeta"><span id="crackMissionTitle"></span><span id="crackStage"></span></div>
@@ -1029,7 +1166,7 @@
                 <div id="mysteryGift" class="mysteryGift">🎁</div>
                 <h3>One surprise every day.</h3>
                 <p>LizzyOS has prepared today's classified delivery...</p>
-                <div class="streakPanel"><strong id="mysteryStreak">🔥 0 Day Streak</strong><small id="mysteryStreakSub">Open today to begin your streak.</small><div class="streakTrack" id="streakTrack"></div></div><p class="legendaryNotice">🏆 Open the box <strong>7 calendar days in a row</strong> for a guaranteed LEGENDARY reward. Miss a day and the streak resets.</p><button id="openMysteryBox">Open Today's Box ✨</button>
+                <div class="streakPanel"><strong id="mysteryStreak">🔥 0 Day Streak</strong><small id="mysteryStreakSub">Open today to begin your streak.</small><div class="streakTrack" id="streakTrack"></div></div><p class="legendaryNotice">🔥 Ordinary odds: <strong>55% Basic • 13% Reverse • 17% Normal • 9% Rare • 5% Epic • 1% Legendary</strong>.<br>🏆 Every 7th consecutive day gets a special roll: <strong>40% Legendary • 30% Epic • 20% Rare • 10% Normal</strong>. No Basic or Reverse Tokens on Day 7.</p><button id="openMysteryBox">Open Today's Box ✨</button>
                 <div id="mysteryReward" class="mysteryReward hidden"></div>
                 <p id="mysteryCountdown" class="memoryMessage"></p>
             </div>
@@ -1153,7 +1290,27 @@
         </div>
 
         <!-- Token Jar -->
-        <div id="tokenJarWindow" class="desktopWindow hidden tokenJarWindow">
+        <div id="mikaelRedeemWindow" class="desktopWindow hidden">
+ <div class="windowTop"><div class="windowDots"><span class="windowCloseDot" id="mikaelRedeemClose"></span><span class="windowMinDot"></span><span class="windowMaxDot"></span></div><h2>🔐 Mikael Token Control</h2></div>
+ <div class="mikaelRedeemPanel">
+  <div id="mikaelRedeemLogin">
+   <div class="mikaelControlSeal">🔄</div>
+   <h2>Mikael Only</h2>
+   <p>Private Reverse Token redemption panel.</p>
+   <input id="mikaelRedeemPassword" type="password" autocomplete="off" placeholder="Enter Mikael access code">
+   <button id="mikaelRedeemLoginBtn" type="button">Unlock</button>
+   <div id="mikaelRedeemLoginStatus"></div>
+  </div>
+  <div id="mikaelRedeemDashboard" class="hidden">
+   <div class="mikaelControlHeader"><div><small>MIKAEL PRIVATE CONTROL</small><h2>Reverse Tokens</h2></div><button id="mikaelRedeemLogout" type="button">Lock 🔒</button></div>
+   <p>Lizzy can see these tokens in her Token Jar, but redemption happens only here.</p>
+   <div id="mikaelPrivateTokenList"></div>
+  </div>
+ </div>
+ <button class="windowCloseButton" id="mikaelRedeemCloseBtn">Close</button>
+</div>
+
+<div id="tokenJarWindow" class="desktopWindow hidden tokenJarWindow">
             <div class="windowTop">
                 <div class="windowDots">
                     <span class="windowCloseDot" id="tokenJarClose" title="Close"></span>
@@ -1396,7 +1553,10 @@ if (window.netlifyIdentity) {
   <button id="closeUnreleasedLetter" class="windowCloseButton">Close Classified File</button>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=20260822-v27-redo"></script>
+<script src="living-desktop.js?v=20260823-v415-launch-hotfix"></script>
+
+<script src="internet.js?v=20260821-bank-selfcontained-final"></script>
 
 
         <div id="seedStoreWindow" data-build="20260818-locked-final" class="desktopWindow hidden seedStoreWindow">
@@ -1463,6 +1623,30 @@ if (window.netlifyIdentity) {
             </div>
         </div>
 
-<script src="seed-store.js?v=20260818-locked-final"></script>
+<script src="seed-store.js?v=20260822-v43"></script>
+<script src="letter-notifications.js?v=20260821-open-when-telegram-fixed"></script>
+<script src="mikael-exe.js?v=20260822-v29-layout"></script>
+
+<div id="livingAmbientStrip" class="livingAmbientStrip"><span id="ambientTimeGreeting">LizzyOS Online</span><i>•</i><span id="ambientMood">Mood: Normal</span><i>•</i><span id="ambientCountdown">No countdown</span></div><div id="mikaelTakeoverBoot" class="mikaelTakeoverBoot hidden" aria-hidden="true">
+  <div class="takeoverNoise"></div>
+  <div class="takeoverBootInner">
+    <div class="takeoverBootIcon">🕴🏾</div>
+    <small>LIZZYOS SECURITY OVERRIDE</small>
+    <h1>MIKAEL HAS ENTERED THE SYSTEM</h1>
+    <p id="takeoverBootLine">Mr Perfect is requesting editorial control…</p>
+    <div class="takeoverBootBar"><i></i></div>
+  </div>
+</div>
+<div id="mikaelTakeoverBanner" class="mikaelTakeoverBanner hidden">
+  <span>😈 MIKAEL TAKEOVER ACTIVE</span>
+  <small>Mr Perfect has editorial control.</small>
+</div>
+<div id="mikaelTakeoverPopup" class="mikaelTakeoverPopup hidden">
+  <button type="button" id="mikaelTakeoverPopupClose">×</button>
+  <small>MIKAEL SYSTEM MESSAGE</small>
+  <p id="mikaelTakeoverPopupText"></p>
+</div>
+
+<script src="fun-apps.js?v=20260823-v416-selfcontained"></script>
 </body>
 </html>

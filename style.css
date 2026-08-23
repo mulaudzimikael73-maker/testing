@@ -3273,3 +3273,1044 @@ color:#ff5ca8;
         grid-template-columns:repeat(2,minmax(0,1fr))!important;
     }
 }
+
+
+/* =========================================================
+   SEED STORE + MICKY BUCS — ADDITIVE MODULE
+   ========================================================= */
+.seedStoreWindow{width:min(900px,92vw);max-height:88vh;overflow:auto}
+.seedStoreBody{padding:18px}
+.mickyWalletCard{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px;border-radius:18px;background:rgba(255,255,255,.12);margin-bottom:8px}
+.mickyWalletCard h2{margin:4px 0 0}
+.mickyWalletCard button,.mickyJobCard button,.seedShopCard button{border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700}
+.mickyJobsGrid,.seedShopGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:12px 0 22px}
+.mickyJobCard,.seedShopCard{padding:14px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}
+.mickyJobCard h4,.seedShopCard h4{margin:4px 0 7px}
+.mickyJobCard p,.seedShopCard p{margin:5px 0 10px;font-size:.9rem}
+.mickyJobReward,.seedPrice{font-weight:800;margin-bottom:9px}
+.mickyJobCard.completed{opacity:.72}
+.seedStoreIntro{opacity:.8}
+.seedStoreStatus{min-height:22px;margin:8px 0 12px;font-weight:700}
+@media(max-width:600px){.mickyWalletCard{align-items:flex-start;flex-direction:column}.seedStoreWindow{width:95vw}}
+
+
+/* STORE EXPANSION V2 — additive, existing progress keys are untouched */
+.storeExpansionTabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.storeExpansionTabs button,.bankButtons button,#claimSavingsBonus{border:0;border-radius:12px;padding:10px 13px;cursor:pointer;font-weight:800}
+.storeExpansionPanel{margin:12px 0 20px;padding:14px;border-radius:16px;background:rgba(255,255,255,.07)}
+.classifiedItemCard{padding:15px;border:1px dashed rgba(255,255,255,.4);border-radius:16px;margin:10px 0 15px}
+.bankCard{padding:15px;border-radius:16px;background:rgba(255,255,255,.09)}
+.bankButtons{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+.achievementGrid,.secretShelfGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.achievementCard,.secretItem{padding:13px;border-radius:14px;background:rgba(255,255,255,.09)}
+.achievementCard.unlocked{outline:1px solid rgba(255,255,255,.45)}
+.secretItem small{display:block;margin-top:7px;opacity:.7}
+.verifyBadge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:900;margin:4px 0}
+.jobPending{opacity:.82}
+
+.secretItem input{width:100%;margin-top:10px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:inherit}.purchasedLettersBox,.mikaelTokensBox{margin:18px;padding:15px;border-radius:16px;background:rgba(255,255,255,.08)}.purchasedLetter{margin:8px 0;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)}.purchasedLetter pre{white-space:pre-wrap;font-family:inherit;line-height:1.6;margin-top:10px}
+
+/* Locked final Store fixes */
+.purchasedExtrasBox{margin-top:16px;padding:14px;border-radius:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
+.ownedExtraRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.ownedExtraRow:last-child{border-bottom:0}.ownedDestination{display:block;margin-top:8px;opacity:.85}
+.purchasedLetter{margin:10px 0;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)}.purchasedLetter pre{white-space:pre-wrap;font:inherit;line-height:1.55}
+.lizzyRealExtrasFx{position:absolute;inset:60px 0 0;pointer-events:none;overflow:hidden;z-index:12}
+.realFairyLights{position:absolute;top:5px;left:6%;right:6%;border-top:2px solid rgba(40,30,20,.65);display:flex;justify-content:space-around}
+.realFairyLights i{width:10px;height:10px;margin-top:7px;border-radius:50%;background:#fff5b1;box-shadow:0 0 8px #fff,0 0 15px #ffe878;animation:realGlow 1.4s infinite alternate}
+.realButterfly,.realPetal{position:absolute;font-size:22px}.rb1{left:15%;top:30%;animation:realFly 6s infinite ease-in-out}.rb2{left:70%;top:55%;animation:realFly 7s 1s infinite ease-in-out}
+.realPetal{top:-25px;animation:realFall 7s linear infinite}.rp1{left:20%}.rp2{left:50%;animation-delay:2s}.rp3{left:80%;animation-delay:4s}
+.plantVisual{position:relative}.realCustomPot{position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);width:44px;height:30px;display:flex;align-items:center;justify-content:center;z-index:3}
+.realCustomPot.heart{background:#e85c9b;color:#fff;clip-path:polygon(50% 100%,5% 48%,5% 22%,22% 5%,50% 23%,78% 5%,95% 22%,95% 48%)}.realCustomPot.gotham{background:#17171b;color:#ffd65a;border-radius:4px 4px 12px 12px}.realCustomPot.moon{background:#343b78;color:#fff3a5;border-radius:4px 4px 12px 12px}
+@keyframes realGlow{to{transform:scale(1.2);opacity:.55}}@keyframes realFly{50%{transform:translate(45px,-25px)}}@keyframes realFall{to{transform:translateY(650px) rotate(300deg);opacity:.2}}
+
+
+/* Crack the Code — live scavenger mission evidence */
+.missionInjectedClue{
+  width:100%;margin:14px 0;padding:16px;border:2px dashed rgba(255,255,255,.75);
+  border-radius:16px;background:rgba(71,36,116,.88);color:#fff;text-align:left;
+  box-shadow:0 0 0 3px rgba(255,255,255,.08),0 0 24px rgba(255,255,255,.16);
+  animation:missionEvidencePulse 1.6s ease-in-out infinite alternate;cursor:pointer;
+}
+.missionInjectedClue b,.missionInjectedClue span,.missionInjectedClue strong,.missionInjectedClue small,.missionInjectedClue em{display:block}
+.missionInjectedClue span{margin-top:5px;opacity:.85}.missionInjectedClue strong{font-size:26px;margin:8px 0}
+.missionInjectedClue small{line-height:1.45;margin-bottom:7px}.missionInjectedClue em{font-size:12px;opacity:.75}
+.missionProgressMini{display:grid;gap:5px;margin-top:12px;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)}
+.missionProgressMini span{display:block}
+.impostorProfiles{display:grid;gap:9px}.impostorProfiles p{padding:10px;border-radius:12px;background:rgba(255,255,255,.08)}
+@keyframes missionEvidencePulse{from{transform:scale(.995);filter:brightness(.95)}to{transform:scale(1);filter:brightness(1.12)}}
+
+/* Mission 7 — guaranteed temporary CLASSIFIED folder */
+#missionClassifiedIcon{position:relative!important;display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;cursor:pointer!important;z-index:40!important}
+#missionClassifiedIcon .missionFolderBadge{position:absolute;top:-7px;right:-10px;padding:3px 6px;border-radius:999px;background:#fff;color:#3e245d;font-size:9px;font-weight:900;letter-spacing:.4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#missionClassifiedWindow{z-index:10050!important}
+#missionClassifiedEvidenceHost .missionInjectedClue{display:block!important;visibility:visible!important;opacity:1!important}
+
+
+/* LIVING DESKTOP — COMPACT */
+.livingControlGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.livingControlCard{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px}.livingControlCard h3{margin:0 0 7px}.livingControlCard p{margin:6px 0 10px}.livingControlCard input{width:100%;box-sizing:border-box;margin:5px 0;padding:9px;border-radius:9px;border:1px solid rgba(255,255,255,.22)}.livingControlCard button,.livingActions button{padding:8px 11px;border:0;border-radius:10px;cursor:pointer}.livingActions{display:flex;gap:7px;flex-wrap:wrap}.moodChoices{display:grid;grid-template-columns:1fr 1fr;gap:6px}.moodChoices button:disabled{opacity:.45}.livingRareHint{text-align:center;opacity:.75;margin:18px 0 4px}
+#livingStickyNote{position:fixed;right:22px;top:115px;width:205px;min-height:105px;padding:14px;background:#fff1a8;color:#463d25;z-index:9000;transform:rotate(1.5deg);box-shadow:0 8px 24px rgba(0,0,0,.22);font-family:"Comic Sans MS","Segoe Print",cursive}.livingStickyNote.hidden{display:none!important}.stickyHandle{font:800 10px system-ui;cursor:move;border-bottom:1px dashed #9f9460;padding-bottom:7px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}.stickyHandle button{width:auto!important;min-width:0!important;height:auto!important;padding:2px 7px!important;margin:0!important;border:0!important;border-radius:7px!important;background:rgba(0,0,0,.08)!important;color:#463d25!important;font-size:16px!important}
+.classifiedFileCard{padding:13px;margin:8px 0;border-radius:14px;background:rgba(255,255,255,.08)}.classifiedEmpty{text-align:center;padding:28px 10px}
+body[data-lizzy-mood="happy"] #desktopArea{filter:saturate(1.08) brightness(1.03)}body[data-lizzy-mood="tired"] #desktopArea{filter:saturate(.78) brightness(.92)}body[data-lizzy-mood="dramatic"] #desktopArea{filter:contrast(1.08) saturate(1.18)}body[data-lizzy-mood="soft"] #desktopArea{filter:saturate(.9) brightness(1.06)}body[data-lizzy-mood="annoyed"] #desktopArea{filter:saturate(.72)}body[data-lizzy-mood="missing"] #desktopArea{filter:saturate(.82)}
+body.mikaelProfileActive #livingDesktopIcon:after{content:"MIKAEL";position:absolute;top:-4px;right:-10px;font-size:8px;background:#fff;color:#3d2455;border-radius:999px;padding:3px 5px;font-weight:900}
+#rareMikael{position:fixed;left:-90px;z-index:9990;cursor:pointer;text-align:center}#rareMikael span{display:block;font-size:42px}#rareMikael small{background:rgba(0,0,0,.72);color:#fff;padding:2px 5px;border-radius:5px;font-size:8px}#rareMikael.rareRun{animation:rareMikaelWalk 10s linear forwards}@keyframes rareMikaelWalk{from{left:-90px}to{left:calc(100vw + 90px)}}.countdownCelebrate:after{content:"🎉 ✨ 💗 🎉 ✨ 💗";position:fixed;inset:0;z-index:20000;display:grid;place-items:center;font-size:7vw;pointer-events:none;animation:livingCelebrate 3.2s ease-out forwards}@keyframes livingCelebrate{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@media(max-width:700px){.livingControlGrid{grid-template-columns:1fr}#livingStickyNote{width:165px;right:8px;top:95px}}
+
+/* GUARANTEED VISIBLE INTERNET APP */
+#internetWindow{z-index:10020}
+.browserChrome{min-height:500px;display:flex;flex-direction:column;background:rgba(255,255,255,.035);border-radius:14px;overflow:hidden}
+.browserNav{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.09)}
+.browserNav button{border:0;border-radius:9px;padding:8px 12px;cursor:pointer}
+#browserAddress{flex:1;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px}
+.browserPage{padding:22px;overflow:auto;min-height:390px}
+.browserHome{text-align:center;max-width:760px;margin:auto}.searchLogo{font-size:38px;font-weight:900;margin:30px 0 14px}.searchLogo span{font-weight:500}
+.fakeSearch{max-width:520px;margin:0 auto 32px;padding:13px 18px;border-radius:999px;background:rgba(255,255,255,.13);text-align:left;opacity:.8}
+.browserBookmarks{display:grid;grid-template-columns:1fr 1fr;gap:14px}.browserBookmarks button{display:grid;grid-template-columns:48px 1fr;text-align:left;align-items:center;padding:18px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.09);color:inherit;cursor:pointer}.browserBookmarks button span{font-size:34px;grid-row:1/3}.browserBookmarks button b{font-size:16px}.browserBookmarks button small{opacity:.7}
+.lifeLessonsPage,.bankLanding{max-width:760px;margin:auto;text-align:center}.wisdomBrand{font-size:25px;font-weight:900}.wisdomSub{opacity:.7}.wisdomCard{padding:28px;margin:22px 0;border-radius:22px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.15)}.wisdomCard blockquote{font-size:clamp(20px,3vw,31px);line-height:1.4;margin:18px 0}.wisdomButtons{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.wisdomButtons button,.bankLanding button{border:0;border-radius:12px;padding:11px 15px;cursor:pointer}.wisdomRating{font-size:13px;opacity:.8;margin-top:18px}.bankLogo{font-size:60px}.bankNotice{margin:24px auto;padding:20px;max-width:520px;border-radius:16px;background:rgba(255,255,255,.1);line-height:1.7}
+@media(max-width:700px){.browserBookmarks{grid-template-columns:1fr}}
+
+/* LIFE LESSONS — COMPACT VIEW FIX */
+#internetWindow .browserChrome{min-height:0;height:calc(100% - 92px)}
+#internetWindow .browserPage{min-height:0;height:100%;box-sizing:border-box;overflow-y:auto;padding:14px 20px 20px}
+#internetWindow .lifeLessonsPage{max-width:680px;margin:0 auto;padding-bottom:12px}
+#internetWindow .wisdomBrand{font-size:20px;margin-top:4px}
+#internetWindow .wisdomSub{font-size:13px;margin:7px 0 10px}
+#internetWindow .wisdomCard{padding:16px 22px;margin:10px 0 12px;border-radius:18px}
+#internetWindow .wisdomCard small{font-size:11px}
+#internetWindow .wisdomCard blockquote{font-size:clamp(17px,2.1vw,24px);line-height:1.3;margin:11px 0}
+#internetWindow .wisdomCard cite{font-size:13px}
+#internetWindow .wisdomButtons{position:sticky;bottom:0;padding:9px 5px 5px;background:linear-gradient(to top,rgba(151,77,154,.98) 65%,rgba(151,77,154,0));z-index:4}
+#internetWindow .wisdomButtons button{padding:9px 12px;font-size:12px}
+#internetWindow .wisdomRating{margin:8px 0 0;font-size:11px}
+@media(max-height:800px){
+ #internetWindow .browserNav{padding:6px 9px}
+ #internetWindow .browserPage{padding-top:9px}
+ #internetWindow .wisdomBrand{font-size:18px}
+ #internetWindow .wisdomSub{margin:4px 0 7px}
+ #internetWindow .wisdomCard{padding:12px 18px;margin:7px 0 8px}
+ #internetWindow .wisdomCard blockquote{font-size:clamp(16px,1.8vw,21px);margin:8px 0}
+}
+
+/* LIFE LESSONS — FORCE CONTROLS + RATING INTO VIEW */
+#internetWindow .browserChrome{
+  height:430px !important;
+  min-height:430px !important;
+}
+#internetWindow .browserPage{
+  height:365px !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  padding:10px 18px 12px !important;
+}
+#internetWindow .lifeLessonsPage{
+  max-width:650px !important;
+  padding:0 0 8px !important;
+}
+#internetWindow .wisdomBrand{
+  font-size:18px !important;
+  margin:2px 0 3px !important;
+}
+#internetWindow .wisdomSub{
+  font-size:11px !important;
+  margin:2px 0 6px !important;
+}
+#internetWindow .wisdomCard{
+  padding:10px 16px !important;
+  margin:6px 0 7px !important;
+  min-height:0 !important;
+}
+#internetWindow .wisdomCard small{font-size:10px !important}
+#internetWindow .wisdomCard blockquote{
+  font-size:18px !important;
+  line-height:1.22 !important;
+  margin:7px 0 !important;
+}
+#internetWindow .wisdomCard cite{font-size:11px !important}
+#internetWindow .wisdomButtons{
+  position:static !important;
+  padding:3px 0 !important;
+  margin:0 !important;
+  background:none !important;
+}
+#internetWindow .wisdomButtons button{
+  padding:7px 10px !important;
+  font-size:11px !important;
+}
+#internetWindow .wisdomRating{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  margin:6px 0 2px !important;
+  padding:7px 10px !important;
+  border-radius:10px !important;
+  background:rgba(255,255,255,.12) !important;
+  font-size:11px !important;
+  line-height:1.2 !important;
+}
+
+/* BANK OF MICKY — INTERNET BANKING */
+.bankLoginPage,.bankSite{max-width:680px;margin:0 auto}.bankLoginPage{text-align:center;padding:8px 0}.bankLoginBrand{font-size:52px}.bankLoginPage h1{margin:3px 0}.bankTagline{opacity:.7;margin:3px 0 18px}.bankLoginCard{max-width:390px;margin:auto;text-align:left;padding:20px;border-radius:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14)}.bankLoginCard label{display:block;font-size:11px;font-weight:800;letter-spacing:.5px;margin:9px 0 5px}.bankClient,.bankLoginCard input{box-sizing:border-box;width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:inherit}.bankLoginCard input{outline:none}.bankLoginCard button{width:100%;margin-top:13px;padding:11px;border:0;border-radius:11px;cursor:pointer;font-weight:800}.bankLoginStatus{min-height:18px;text-align:center;font-size:12px}.bankFinePrint{display:block;margin-top:14px;opacity:.55}.bankSiteHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.bankSiteHeader small{font-weight:900;letter-spacing:1.2px;opacity:.65}.bankSiteHeader h2{margin:2px 0}.bankSiteHeader button{border:0;border-radius:9px;padding:7px 10px;cursor:pointer}.bankAccountCard{padding:20px;border-radius:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16)}.bankAccountCard small,.bankMiniCard small{font-size:10px;font-weight:900;letter-spacing:1px;opacity:.7}.bankBigBalance{font-size:38px;font-weight:900;margin:7px 0}.bankBigBalance span{font-size:16px}.bankAccountNo{font-size:11px;opacity:.65}.bankGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.bankMiniCard{padding:14px;border-radius:15px;background:rgba(255,255,255,.08);text-align:left}.bankMiniCard strong{display:block;font-size:21px;margin:5px 0}.bankMiniCard span{display:block;font-size:11px;opacity:.7;line-height:1.35}.bankActions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.bankActions button{padding:10px 8px;border:0;border-radius:11px;cursor:pointer;font-size:11px;font-weight:800}.bankWebStatus{margin:10px 0;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.12);font-size:12px}.bankRules{margin-top:10px;padding:12px 14px;border-radius:13px;background:rgba(255,255,255,.06);font-size:11px;line-height:1.4}.bankRules p{margin:4px 0 0}@media(max-width:650px){.bankGrid,.bankActions{grid-template-columns:1fr}.bankBigBalance{font-size:30px}}
+
+/* DAILY LIZZY MAIL */
+#lizzyMailWindow{z-index:10030}
+.mailDesktopDot{position:absolute;top:-6px;right:-10px;font-size:8px;font-weight:900;padding:3px 6px;border-radius:999px;background:#fff;color:#8c2d82;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.dailyMailApp{max-width:650px;margin:0 auto;padding:4px 4px 12px}
+.dailyMailHeader{display:flex;align-items:center;justify-content:space-between;padding:10px 4px 12px}
+.dailyMailHeader small{font-size:9px;font-weight:900;letter-spacing:1px;opacity:.6}
+.dailyMailHeader h2{margin:2px 0}
+.dailyMailHeader span{font-size:10px;opacity:.7}
+.dailyMailBadge{padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.12);font-size:9px!important;font-weight:900}
+.dailyMailMessageCard{padding:20px;border-radius:18px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.15);margin-bottom:12px}
+.dailyMailMessageCard small{font-size:9px;font-weight:900;letter-spacing:.7px;opacity:.6}
+#dailyMailMessage{font-size:clamp(18px,2.4vw,25px);line-height:1.4;margin-top:10px}
+.dailyMailReplyBox{padding:14px;border-radius:16px;background:rgba(255,255,255,.07)}
+.dailyMailReplyBox label{display:block;font-size:11px;font-weight:900;margin-bottom:7px}
+.dailyMailReplyBox textarea{width:100%;height:80px;box-sizing:border-box;resize:none;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.09);color:inherit;padding:11px;outline:none}
+.dailyMailReplyBottom{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+.dailyMailReplyBottom span{font-size:9px;opacity:.6}
+.dailyMailReplyBottom button{border:0;border-radius:10px;padding:9px 15px;cursor:pointer;font-weight:800}
+.dailyMailReplyBottom button:disabled{opacity:.45;cursor:not-allowed}
+#dailyMailStatus{min-height:16px;margin-top:6px;font-size:10px;opacity:.8}
+.dailyMailFooter{text-align:center;font-size:9px;opacity:.5;margin:10px 0 0}
+@media(max-width:650px){.dailyMailHeader{align-items:flex-start;gap:8px}.dailyMailBadge{white-space:nowrap}#dailyMailMessage{font-size:18px}}
+
+/* DAILY LIZZY MAIL — COMPACT SIZE FIX */
+#lizzyMailWindow{
+  width:min(860px,88vw)!important;
+  max-height:78vh!important;
+}
+#lizzyMailWindow .windowTop{
+  padding:10px 14px!important;
+}
+#lizzyMailWindow .dailyMailApp{
+  max-width:560px!important;
+  padding:0 4px 8px!important;
+}
+#lizzyMailWindow .dailyMailHeader{
+  padding:6px 2px 8px!important;
+}
+#lizzyMailWindow .dailyMailHeader h2{
+  font-size:28px!important;
+  margin:1px 0!important;
+}
+#lizzyMailWindow .dailyMailHeader small{
+  font-size:8px!important;
+}
+#lizzyMailWindow .dailyMailHeader span{
+  font-size:9px!important;
+}
+#lizzyMailWindow .dailyMailBadge{
+  padding:5px 8px!important;
+  font-size:8px!important;
+}
+#lizzyMailWindow .dailyMailMessageCard{
+  padding:14px 16px!important;
+  margin-bottom:9px!important;
+  border-radius:15px!important;
+}
+#lizzyMailWindow #dailyMailMessage{
+  font-size:clamp(16px,1.7vw,21px)!important;
+  line-height:1.28!important;
+  margin-top:7px!important;
+}
+#lizzyMailWindow .dailyMailReplyBox{
+  padding:10px 12px!important;
+  border-radius:14px!important;
+}
+#lizzyMailWindow .dailyMailReplyBox label{
+  font-size:10px!important;
+  margin-bottom:5px!important;
+}
+#lizzyMailWindow .dailyMailReplyBox textarea{
+  height:58px!important;
+  padding:9px 10px!important;
+}
+#lizzyMailWindow .dailyMailReplyBottom{
+  margin-top:5px!important;
+}
+#lizzyMailWindow .dailyMailReplyBottom button{
+  padding:8px 13px!important;
+  font-size:11px!important;
+}
+#lizzyMailWindow #dailyMailStatus{
+  margin-top:4px!important;
+  min-height:12px!important;
+  font-size:9px!important;
+}
+#lizzyMailWindow .dailyMailFooter{
+  margin-top:7px!important;
+  font-size:8px!important;
+}
+#lizzyMailWindow .windowCloseButton{
+  margin-top:8px!important;
+  padding:8px 14px!important;
+}
+@media(max-height:800px){
+  #lizzyMailWindow{
+    max-height:72vh!important;
+  }
+  #lizzyMailWindow .dailyMailApp{
+    max-width:520px!important;
+  }
+  #lizzyMailWindow .dailyMailHeader h2{
+    font-size:24px!important;
+  }
+  #lizzyMailWindow .dailyMailMessageCard{
+    padding:11px 14px!important;
+  }
+  #lizzyMailWindow #dailyMailMessage{
+    font-size:17px!important;
+  }
+  #lizzyMailWindow .dailyMailReplyBox textarea{
+    height:50px!important;
+  }
+}
+
+/* MIKAEL REVERSE TOKENS */
+#mikaelTokensBox{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15)}
+#mikaelTokensBox h3{margin-bottom:4px}.mikaelTokenIntro{font-size:11px;opacity:.7;margin:0 0 10px}
+.mikaelReverseCard{grid-template-columns:auto 1fr auto!important;gap:10px;align-items:center}
+.mikaelReverseCard button{grid-column:2/4;justify-self:end;padding:7px 11px;border:0;border-radius:9px;cursor:pointer;font-weight:800}
+
+/* PRIVATE MIKAEL TOKEN CONTROL */
+#mikaelRedeemWindow{width:min(720px,88vw)!important;z-index:10080}
+.mikaelRedeemPanel{max-width:560px;margin:0 auto;padding:12px 6px 18px}
+#mikaelRedeemLogin{text-align:center;padding:22px}.mikaelControlSeal{font-size:52px}
+#mikaelRedeemLogin input{display:block;width:min(330px,90%);margin:16px auto 9px;padding:11px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:inherit}
+#mikaelRedeemLogin button,.mikaelControlHeader button,.mikaelPrivateToken button{border:0;border-radius:10px;padding:9px 13px;cursor:pointer;font-weight:800}
+#mikaelRedeemLoginStatus{min-height:18px;margin-top:8px;font-size:11px}
+.mikaelControlHeader{display:flex;justify-content:space-between;align-items:center}.mikaelControlHeader small{font-size:9px;letter-spacing:1px;opacity:.6}
+.mikaelPrivateToken{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;margin:9px 0;border-radius:14px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12)}
+.mikaelPrivateEmoji{font-size:28px}.mikaelPrivateToken p{margin:3px 0;font-size:11px;opacity:.75}.mikaelPrivateToken small{font-size:9px;opacity:.6}
+#mikaelTokensBox .mikaelReverseCard button{display:none!important}
+
+/* CROSS-DEVICE REVERSE TOKEN REDEMPTION NOTICE */
+.reverseRedemptionOverlay{position:fixed;inset:0;z-index:200000;background:rgba(10,5,20,.72);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.reverseRedemptionOverlay.hidden{display:none!important}
+.reverseRedemptionCard{width:min(480px,90vw);text-align:center;padding:28px 24px;border-radius:22px;background:linear-gradient(145deg,rgba(80,34,91,.98),rgba(31,20,52,.98));border:1px solid rgba(255,255,255,.2);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.reverseAlarm{font-size:48px}.reverseRedemptionCard small{font-size:9px;font-weight:900;letter-spacing:1.3px;opacity:.65}.reverseRedemptionCard h2{margin:8px 0 10px}.reverseRedemptionCard p{line-height:1.5}.reverseRemaining{margin:14px 0;padding:9px;border-radius:10px;background:rgba(255,255,255,.09);font-size:11px}.reverseRedemptionCard button{border:0;border-radius:12px;padding:10px 18px;font-weight:900;cursor:pointer}.reverseRedemptionCard button:disabled{opacity:.5}#reverseAckStatus{min-height:15px;margin-top:7px;font-size:9px;opacity:.7}
+
+.mikaelCloudStatus{margin:5px 0 12px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.1);font-size:10px;font-weight:900}
+.mikaelTestAlert{display:block;width:100%;margin:14px 0 0;padding:10px;border:1px dashed rgba(255,255,255,.3);border-radius:11px;background:rgba(255,255,255,.08);color:inherit;cursor:pointer;font-weight:800}
+
+/* DAILY REWARDS V4 — MASSIVE POOL + REVEALS */
+.dailyRewardRevealOverlay{position:fixed;inset:0;z-index:210000;display:grid;place-items:center;padding:20px;background:rgba(12,6,20,.76);backdrop-filter:blur(10px)}
+.dailyRewardRevealOverlay.hidden{display:none!important}
+.dailyRewardRevealCard{width:min(500px,90vw);padding:28px 24px;border-radius:24px;text-align:center;background:linear-gradient(145deg,rgba(93,45,111,.98),rgba(31,20,50,.99));border:1px solid rgba(255,255,255,.2);box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.dailyRewardRevealCard small{font-size:10px;font-weight:1000;letter-spacing:1.4px;opacity:.7}.dailyRewardRevealCard h2{margin:7px 0 4px}.dailyRevealEmoji{font-size:64px;margin:14px 0 6px}.dailyRewardRevealCard h3{font-size:22px;margin:5px 0}.dailyRewardRevealCard p{line-height:1.45;opacity:.86}.dailyRevealStreak{margin:14px 0;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.09);font-size:11px}.dailyRewardRevealCard button{border:0;border-radius:11px;padding:10px 18px;font-weight:900;cursor:pointer}
+.reveal-reverse-token .dailyRewardRevealCard{animation:reversePulse .65s ease-in-out 2}.reveal-legendary .dailyRewardRevealCard{box-shadow:0 0 55px rgba(255,225,120,.35),0 24px 80px rgba(0,0,0,.5);animation:legendaryPop .6s ease-out}
+.reveal-dull-basic .dailyRewardRevealCard{filter:saturate(.65)}.reveal-rare .dailyRewardRevealCard,.reveal-epic .dailyRewardRevealCard{box-shadow:0 0 38px rgba(255,255,255,.12),0 24px 80px rgba(0,0,0,.45)}
+@keyframes reversePulse{50%{transform:scale(1.035) rotate(-1deg)}}@keyframes legendaryPop{0%{transform:scale(.75);opacity:.3}70%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.dailyRewardHistorySection{margin-top:14px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06)}.dailyRewardHistorySection summary{cursor:pointer;font-weight:900}.dailyHistoryRow{display:flex;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.08)}.dailyHistoryRow:last-child{border-bottom:0}.dailyHistoryRow>span{font-size:23px}.dailyHistoryRow b,.dailyHistoryRow small{display:block}.dailyHistoryRow small{font-size:9px;opacity:.62;margin-top:2px}.legendaryNotice{line-height:1.5}
+
+/* MIKAEL.EXE PROFILE DATABASE V2 */
+.mikaelDatabaseWindow{width:min(860px,91vw)!important;height:min(680px,83vh)!important}
+.mikaelDatabaseApp{padding:15px}.mikaelHero{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:17px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11)}
+.mikaelAvatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:1000;background:rgba(255,255,255,.14)}.mikaelHero small,.mikaelProfileGrid small,.mikaelFiles small,.lizzyIntelHero small,.mikaelChallenge small{font-size:9px;letter-spacing:1.1px;opacity:.58;font-weight:900}.mikaelHero h2{margin:2px 0}.mikaelHero p{margin:0;opacity:.7}.mikaelOnline{font-size:9px;font-weight:900;opacity:.75}
+.mikaelTabs{display:flex;gap:6px;overflow-x:auto;padding:12px 1px}.mikaelTabs button{white-space:nowrap;border:0;border-radius:10px;padding:8px 10px;background:rgba(255,255,255,.07);color:inherit;cursor:pointer;font-weight:800}.mikaelTabs button.active{background:rgba(255,255,255,.18)}
+.mikaelProfileGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mikaelProfileGrid article,.mikaelFiles article{padding:14px;border-radius:15px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.09)}.mikaelProfileGrid h3,.mikaelFiles h3{margin:4px 0}.mikaelProfileGrid p,.mikaelFiles p{font-size:11px;line-height:1.55;opacity:.78}
+.mikaelStats{display:grid;gap:8px}.mikaelStats>div{position:relative;overflow:hidden;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.065);display:flex;justify-content:space-between}.mikaelStats i{position:absolute;bottom:0;left:0;width:var(--w);height:2px;background:currentColor;opacity:.35}.mikaelOpinionBtn,.mikaelRandomCard button,.mikaelChallenge button{border:0;border-radius:11px;padding:9px 13px;font-weight:900;cursor:pointer;margin-top:12px}.mikaelOpinion{margin-top:9px;padding:13px;border-radius:13px;background:rgba(255,255,255,.07);font-style:italic}
+.mikaelRandomCard{text-align:center;padding:28px 18px;border-radius:18px;background:rgba(255,255,255,.07)}.mikaelRandomCard>div{font-size:48px;margin:12px}.mikaelRandomCard p{font-size:16px;line-height:1.5}
+.mikaelQuoteGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mikaelQuoteGrid blockquote{margin:0;padding:14px;border-radius:14px;background:rgba(255,255,255,.065)}.mikaelQuoteGrid blockquote span{display:block;font-size:13px;line-height:1.45}.mikaelQuoteGrid blockquote small{display:block;margin-top:7px;font-size:8px;opacity:.5}.lizzyIntelQuote{border:1px solid rgba(255,255,255,.1)}.lizzyIntelHero{display:flex;gap:12px;align-items:center;padding:14px;margin-bottom:10px}.lizzyIntelHero>span{font-size:36px}.lizzyIntelHero h3{margin:2px 0}
+.mikaelChallengeTop{display:flex;justify-content:space-between;align-items:center}.mikaelQuestion,.mikaelChallengeResult{margin-top:14px;padding:18px;border-radius:16px;background:rgba(255,255,255,.07);text-align:center}.mikaelQuestion>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mikaelQuestion button{margin:0}.mikaelChallengeResult>span{font-size:45px}.mikaelChallengeResult h3{font-size:30px;margin:5px}
+.mikaelFiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mikaelFiles article.restricted{filter:saturate(.35);border-style:dashed}
+@media(max-width:650px){.mikaelProfileGrid,.mikaelQuoteGrid,.mikaelFiles{grid-template-columns:1fr}.mikaelHero{grid-template-columns:auto 1fr}.mikaelOnline{grid-column:1/-1}.mikaelDatabaseWindow{width:94vw!important;height:82vh!important}}
+
+/* DESKTOP CLEANUP V2.1 */
+.desktopIcons,.desktop-icons,#desktopIcons{
+ max-width:1040px!important;
+ padding:24px 28px 82px!important;
+ grid-template-columns:repeat(6,minmax(92px,1fr))!important;
+ gap:22px 14px!important;
+}
+.desktopIcons>.desktopIcon,.desktop-icons>.desktopIcon,#desktopIcons>.desktopIcon{
+ width:112px!important;min-height:102px!important;gap:5px!important;margin:0!important;
+}
+.desktopIcons>.desktopIcon .desktopEmoji,.desktop-icons>.desktopIcon .desktopEmoji,#desktopIcons>.desktopIcon .desktopEmoji{
+ width:72px!important;min-height:70px!important;font-size:58px!important;
+}
+.desktopIcons>.desktopIcon>span,.desktop-icons>.desktopIcon>span,#desktopIcons>.desktopIcon>span{
+ margin-top:4px!important;font-size:11px!important;line-height:1.2!important;
+}
+#rareMikael.rareCatchable{position:fixed!important;right:auto!important;bottom:auto!important;transform:none!important;animation:none!important;z-index:250000!important;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important;user-select:none!important}
+#rareMikael.rareCatchable *{pointer-events:none!important}
+#rareMikael.rareCaught{animation:mikaelCaughtPop .4s ease-out!important;pointer-events:none!important}
+@keyframes mikaelCaughtPop{50%{transform:scale(1.28) rotate(5deg)}100%{transform:scale(.8);opacity:0}}
+@media(max-width:900px){.desktopIcons,.desktop-icons,#desktopIcons{grid-template-columns:repeat(5,minmax(86px,1fr))!important}}
+@media(max-width:650px){.desktopIcons,.desktop-icons,#desktopIcons{grid-template-columns:repeat(4,minmax(70px,1fr))!important;padding:20px 12px 78px!important;gap:18px 8px!important}.desktopIcons>.desktopIcon,.desktop-icons>.desktopIcon,#desktopIcons>.desktopIcon{width:82px!important;min-height:90px!important}.desktopIcons>.desktopIcon .desktopEmoji,.desktop-icons>.desktopIcon .desktopEmoji,#desktopIcons>.desktopIcon .desktopEmoji{width:60px!important;min-height:60px!important;font-size:50px!important}}
+
+/* DESKTOP LAYOUT HOTFIX V2.2 — desktopArea is the real icon grid */
+#desktopArea{
+  position:relative!important;
+  inset:auto!important;
+  width:min(1180px,calc(100% - 48px))!important;
+  min-height:calc(100vh - 110px)!important;
+  margin:0 auto!important;
+  padding:34px 24px 100px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(130px,1fr))!important;
+  grid-auto-rows:145px!important;
+  gap:22px 26px!important;
+  align-content:start!important;
+  align-items:start!important;
+  justify-items:center!important;
+}
+#desktopArea.hidden{display:none!important}
+#desktopArea>.desktopIcon{
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+  transform:none!important;
+  float:none!important;
+  margin:0!important;
+  width:140px!important;
+  height:132px!important;
+  min-height:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  text-align:center!important;
+  cursor:pointer!important;
+  z-index:2!important;
+}
+#desktopArea>.desktopIcon:hover{transform:translateY(-3px) scale(1.03)!important}
+#desktopArea>.desktopIcon>.desktopEmoji{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  width:88px!important;
+  height:88px!important;
+  min-height:88px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:70px!important;
+  line-height:1!important;
+}
+#desktopArea>.desktopIcon>span{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  font-size:14px!important;
+  line-height:1.15!important;
+  font-weight:700!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+#desktopArea>.desktopIcon>span[id$="Dot"]{position:absolute!important;width:auto!important}
+#desktopArea>.desktopWindow,
+#desktopArea>.finderWindow,
+#desktopArea>[id$="Window"]{
+  grid-column:auto!important;
+}
+@media(max-width:900px){
+ #desktopArea{grid-template-columns:repeat(4,minmax(115px,1fr))!important;width:calc(100% - 24px)!important;gap:18px 16px!important}
+}
+@media(max-width:650px){
+ #desktopArea{grid-template-columns:repeat(3,minmax(90px,1fr))!important;width:100%!important;padding:24px 10px 90px!important;grid-auto-rows:125px!important;gap:12px 6px!important}
+ #desktopArea>.desktopIcon{width:100px!important;height:115px!important}
+ #desktopArea>.desktopIcon>.desktopEmoji{width:72px!important;height:72px!important;min-height:72px!important;font-size:58px!important}
+ #desktopArea>.desktopIcon>span{font-size:12px!important}
+}
+
+/* DESKTOP NEATNESS V2.3 — folder contents stay inside Games */
+#desktopArea > #funQuizIcon,
+#desktopArea > #heartGameIcon,
+#desktopArea > #mikhailQuizIcon,
+#desktopArea > #mysteryBoxIcon,
+#desktopArea > #wouldMikaelRatherIcon,
+#desktopArea > #ticTacToeIcon,
+#desktopArea > #crackCodeIcon,
+#desktopArea > #gamesFolderIcon{display:none!important}
+#desktopArea > #gamesFolderStaticIcon{display:flex!important}
+
+/* clean core launcher grid */
+#desktopArea{
+ grid-template-columns:repeat(5,minmax(135px,1fr))!important;
+ grid-auto-rows:150px!important;
+ column-gap:34px!important;row-gap:24px!important
+}
+#desktopArea > .desktopIcon{width:145px!important;max-width:145px!important}
+#desktopArea > .desktopWindow,
+#desktopArea > .finderWindow,
+#desktopArea > [id$="Window"]{position:fixed!important;margin:0!important}
+@media(max-width:900px){#desktopArea{grid-template-columns:repeat(4,minmax(120px,1fr))!important;column-gap:20px!important}}
+@media(max-width:650px){#desktopArea{grid-template-columns:repeat(3,minmax(92px,1fr))!important;column-gap:8px!important;row-gap:14px!important}}
+
+/* DESKTOP V2.4 FINAL — clean top-level launcher layout */
+#desktopArea{
+ grid-template-columns:repeat(5,minmax(135px,1fr))!important;
+ grid-auto-rows:150px!important;
+ column-gap:34px!important;
+ row-gap:24px!important;
+}
+#desktopArea > #gamesFolderStaticIcon{display:flex!important}
+@media(max-width:900px){#desktopArea{grid-template-columns:repeat(4,minmax(120px,1fr))!important}}
+@media(max-width:650px){#desktopArea{grid-template-columns:repeat(3,minmax(92px,1fr))!important}}
+
+/* MIKAEL PROFILE BUTTON/WINDOW FIX V2.5 */
+#openMikaelDatabase,#toggleMikaelProfile{position:relative!important;z-index:10!important;pointer-events:auto!important;cursor:pointer!important}
+#mikaelDatabaseWindow{position:fixed!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;z-index:12000!important;pointer-events:auto!important}
+#mikaelDatabaseWindow.hidden{display:none!important}
+body.mikaelProfileActive #mikaelProfileStatus{font-weight:800!important;text-shadow:0 0 12px rgba(255,255,255,.35)}
+
+/* MIKAEL.EXE V2.7 — CLEAN REDO */
+#mikaelDatabaseWindow{
+  position:fixed!important;
+  top:50%!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  z-index:50000!important;
+  pointer-events:auto!important;
+}
+#mikaelDatabaseWindow.hidden{display:none!important}
+#mikaelDatabaseWindow .windowScroll{
+  overflow:auto!important;
+  max-height:calc(82vh - 110px)!important;
+}
+#mikaelDatabaseWindow button,
+#mikaelDatabaseWindow [data-mikael-tab]{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+#mikaelDatabaseWindow .mikaelTabs{
+  position:relative!important;
+  z-index:5!important;
+}
+#mikaelTabContent{
+  position:relative!important;
+  z-index:4!important;
+  min-height:240px!important;
+}
+
+/* MIKAEL.EXE CLASSIFIED DOSSIERS V2.8 */
+.mikaelOpenFile{width:100%;margin-top:8px!important}
+.mikaelDossier,.mikaelDecrypt{position:relative;padding:22px;border-radius:16px;background:rgba(10,10,14,.38);border:1px solid rgba(255,255,255,.12)}
+.mikaelDossier>button:first-child,.mikaelDecrypt>button:first-child{margin:0 0 18px!important}
+.dossierStamp{position:absolute;right:18px;top:18px;border:2px solid currentColor;padding:5px 9px;font-weight:1000;letter-spacing:2px;transform:rotate(5deg);opacity:.42}
+.mikaelDossier h2,.mikaelDecrypt h2{margin:5px 0 12px}.dossierMeta{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:11px}
+.dossierBody{margin-top:15px}.dossierBody p{font-size:12px;line-height:1.65;margin:0 0 13px}
+.mikaelDecrypt{text-align:center;max-width:560px;margin:0 auto}.decryptIcon{font-size:54px;margin:8px}.mikaelDecrypt input{display:block;width:min(420px,90%);margin:18px auto 8px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.25);color:inherit;text-align:center}
+.mikaelDecrypt #decryptMrPerfect{margin:4px auto!important}.decryptHint{font-size:10px;opacity:.65}.mikaelDecrypt #decryptFeedback{min-height:30px;margin-top:14px;font-size:12px;font-weight:800}
+
+/* =========================================================
+   MIKAEL.EXE V2.9 — APPROVED WINDOW / CLASSIFIED LAYOUT
+   ========================================================= */
+#mikaelDatabaseWindow{
+  width:min(1180px,92vw)!important;
+  height:min(760px,88vh)!important;
+  max-width:none!important;
+  max-height:none!important;
+  top:50%!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  border-radius:24px!important;
+  overflow:hidden!important;
+}
+
+#mikaelDatabaseWindow .windowBar{
+  height:68px!important;
+  min-height:68px!important;
+  padding:0 24px!important;
+  box-sizing:border-box!important;
+}
+
+#mikaelDatabaseWindow .windowScroll{
+  height:calc(100% - 68px)!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:18px 22px 26px!important;
+  box-sizing:border-box!important;
+}
+
+#mikaelDatabaseWindow .mikaelHero{
+  min-height:130px!important;
+  padding:22px 30px!important;
+  margin-bottom:16px!important;
+  border-radius:20px!important;
+  box-sizing:border-box!important;
+}
+
+#mikaelDatabaseWindow .mikaelHero h2{
+  font-size:34px!important;
+  line-height:1.05!important;
+  margin:4px 0 8px!important;
+}
+
+#mikaelDatabaseWindow .mikaelHero p{
+  font-size:17px!important;
+  margin:0!important;
+}
+
+#mikaelDatabaseWindow .mikaelTabs{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+  overflow:visible!important;
+  margin:0 0 14px!important;
+}
+
+#mikaelDatabaseWindow .mikaelTabs button{
+  min-width:0!important;
+  width:100%!important;
+  padding:12px 8px!important;
+  font-size:14px!important;
+  white-space:nowrap!important;
+  border-radius:12px!important;
+}
+
+#mikaelTabContent{
+  min-height:330px!important;
+  overflow:visible!important;
+}
+
+#mikaelDatabaseWindow .mikaelFiles{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:12px!important;
+  align-items:stretch!important;
+}
+
+#mikaelDatabaseWindow .mikaelFiles article{
+  min-width:0!important;
+  min-height:225px!important;
+  padding:18px 14px!important;
+  border-radius:16px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  text-align:center!important;
+  box-sizing:border-box!important;
+}
+
+#mikaelDatabaseWindow .mikaelFiles article small{
+  font-size:10px!important;
+  letter-spacing:.7px!important;
+}
+
+#mikaelDatabaseWindow .mikaelFiles article h3{
+  font-size:18px!important;
+  line-height:1.15!important;
+  margin:14px 0 8px!important;
+  min-height:42px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+#mikaelDatabaseWindow .mikaelFiles article p{
+  font-size:11px!important;
+  line-height:1.35!important;
+  min-height:32px!important;
+  margin:0 0 12px!important;
+}
+
+#mikaelDatabaseWindow .mikaelOpenFile{
+  margin-top:auto!important;
+  min-height:42px!important;
+  font-size:12px!important;
+  padding:9px 8px!important;
+  border-radius:12px!important;
+}
+
+#mikaelDatabaseWindow .mikaelDossier,
+#mikaelDatabaseWindow .mikaelDecrypt{
+  max-width:900px!important;
+  margin:0 auto!important;
+}
+
+#mikaelDatabaseWindow .dossierBody{
+  max-height:360px!important;
+  overflow-y:auto!important;
+  padding-right:8px!important;
+}
+
+#mikaelDatabaseWindow .decryptHint{
+  margin:14px auto 4px!important;
+  max-width:440px!important;
+  font-size:11px!important;
+  line-height:1.45!important;
+  opacity:.82!important;
+}
+
+@media(max-width:1050px){
+  #mikaelDatabaseWindow{
+    width:94vw!important;
+    height:86vh!important;
+  }
+  #mikaelDatabaseWindow .mikaelTabs{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+  #mikaelDatabaseWindow .mikaelFiles{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:720px){
+  #mikaelDatabaseWindow{
+    width:96vw!important;
+    height:88vh!important;
+    border-radius:18px!important;
+  }
+  #mikaelDatabaseWindow .windowScroll{
+    padding:14px!important;
+  }
+  #mikaelDatabaseWindow .mikaelHero h2{
+    font-size:27px!important;
+  }
+  #mikaelDatabaseWindow .mikaelTabs{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #mikaelDatabaseWindow .mikaelFiles{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:470px){
+  #mikaelDatabaseWindow .mikaelFiles{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* =========================================================
+   MIKAEL TAKEOVER V1
+   ========================================================= */
+.mikaelTakeoverBoot{
+ position:fixed;inset:0;z-index:90000;
+ display:grid;place-items:center;
+ background:rgba(21,7,34,.86);
+ backdrop-filter:blur(12px);
+ color:white;text-align:center;
+}
+.mikaelTakeoverBoot.hidden{display:none!important}
+.takeoverNoise{position:absolute;inset:0;pointer-events:none;opacity:.13;
+ background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.25) 4px);
+ animation:takeoverNoise .16s steps(2) infinite}
+.takeoverBootInner{position:relative;width:min(650px,86vw);padding:42px 28px;border:1px solid rgba(255,255,255,.2);border-radius:24px;background:rgba(255,110,180,.12);box-shadow:0 30px 100px rgba(0,0,0,.45)}
+.takeoverBootIcon{font-size:64px;animation:takeoverIcon .5s steps(2) infinite}
+.takeoverBootInner small{font-weight:900;letter-spacing:3px;opacity:.72}
+.takeoverBootInner h1{font-size:clamp(28px,5vw,56px);line-height:1;margin:14px 0}
+.takeoverBootInner p{font-size:15px;opacity:.82}
+.takeoverBootBar{height:8px;margin:26px auto 0;max-width:440px;background:rgba(255,255,255,.13);border-radius:99px;overflow:hidden}
+.takeoverBootBar i{display:block;height:100%;width:0;background:#ff6fb5;animation:takeoverLoad 2.65s ease forwards}
+@keyframes takeoverLoad{to{width:100%}}
+@keyframes takeoverNoise{50%{transform:translateY(2px)}}
+@keyframes takeoverIcon{50%{transform:translateX(4px)}}
+
+.mikaelTakeoverBanner{
+ position:fixed;top:14px;left:50%;transform:translateX(-50%);
+ z-index:15000;padding:8px 18px;border-radius:999px;
+ background:rgba(42,16,58,.82);border:1px solid rgba(255,255,255,.22);
+ color:white;box-shadow:0 8px 28px rgba(0,0,0,.22);
+ display:flex;align-items:center;gap:10px;cursor:pointer;
+ backdrop-filter:blur(12px);font-size:10px;
+}
+.mikaelTakeoverBanner.hidden{display:none!important}
+.mikaelTakeoverBanner span{font-weight:1000;letter-spacing:.6px}
+.mikaelTakeoverBanner small{opacity:.72}
+
+.mikaelTakeoverPopup{
+ position:fixed;right:22px;bottom:24px;z-index:16000;
+ width:min(330px,calc(100vw - 44px));padding:17px 42px 17px 17px;
+ border-radius:18px;background:rgba(47,21,65,.9);color:white;
+ border:1px solid rgba(255,255,255,.2);box-shadow:0 18px 55px rgba(0,0,0,.3);
+ backdrop-filter:blur(16px);animation:takeoverPopupIn .28s ease;
+}
+.mikaelTakeoverPopup.hidden{display:none!important}
+.mikaelTakeoverPopup button{position:absolute;right:10px;top:8px;width:26px!important;height:26px!important;padding:0!important;min-width:0!important;border-radius:50%!important}
+.mikaelTakeoverPopup small{font-size:8px;font-weight:1000;letter-spacing:1.4px;opacity:.6}
+.mikaelTakeoverPopup p{margin:6px 0 0;font-size:12px;line-height:1.45}
+@keyframes takeoverPopupIn{from{opacity:0;transform:translateY(12px) scale(.96)}}
+
+body.mikaelTakeoverActive #desktopArea{filter:saturate(1.12) contrast(1.03)}
+body.mikaelTakeoverActive #desktopArea:before{
+ content:"MR PERFECT // EDITORIAL CONTROL";
+ position:absolute;right:24px;bottom:20px;
+ font-size:9px;font-weight:1000;letter-spacing:2px;
+ color:rgba(255,255,255,.5);pointer-events:none
+}
+body.mikaelTakeoverActive #livingDesktopIcon:after{
+ content:"TAKEOVER"!important;background:#3d2455!important;color:#fff!important;
+ animation:takeoverBadge 1.4s ease-in-out infinite
+}
+body.mikaelTakeoverActive .desktopIcon:hover{transform:scale(1.1) rotate(-1deg)}
+body.mikaelTakeoverActive #livingStickyNote{background:#f4d9ff;color:#3d2455;box-shadow:0 10px 32px rgba(48,15,72,.3)}
+body.mikaelTakeoverActive #livingStickyNote .stickyHandle button{color:#3d2455!important}
+body.mikaelMicroGlitch #desktopArea{animation:mikaelMicroGlitch .26s steps(2)}
+@keyframes mikaelMicroGlitch{25%{transform:translateX(2px);filter:hue-rotate(8deg)}50%{transform:translateX(-3px)}75%{transform:translateX(1px);filter:hue-rotate(-8deg)}}
+@keyframes takeoverBadge{50%{transform:scale(1.08);box-shadow:0 0 12px rgba(255,255,255,.5)}}
+
+@media(max-width:700px){
+ .mikaelTakeoverBanner small{display:none}
+ .mikaelTakeoverBanner{top:8px}
+ .mikaelTakeoverPopup{right:10px;bottom:12px;width:calc(100vw - 20px);box-sizing:border-box}
+}
+
+/* TAKEOVER EXCLUSIVES V2 */
+#takeoverSecretFile{position:fixed!important;right:38px!important;top:120px!important;z-index:8000!important;width:115px!important;height:115px!important;display:flex!important}
+#takeoverSecretFile.hidden{display:none!important}
+#takeoverSecretFile .desktopEmoji{font-size:58px!important}
+#takeoverSecretFile span{font-size:11px!important;font-weight:900!important}
+.takeoverBatSignal{position:fixed;left:24px;top:44%;z-index:8500;font-size:34px;cursor:pointer;filter:drop-shadow(0 5px 10px rgba(0,0,0,.3));animation:batFloat 3s ease-in-out infinite}
+.takeoverBatSignal.hidden{display:none!important}.takeoverBatSignal.batCaught{animation:batCaught .8s ease!important}
+@keyframes batFloat{50%{transform:translateY(-12px) rotate(-7deg)}}@keyframes batCaught{50%{transform:scale(1.7) rotate(18deg)}}
+.takeoverSecretWindow{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;width:min(680px,90vw)!important;height:min(520px,76vh)!important;z-index:40000!important}
+.takeoverSecretBody{padding:26px!important;text-align:left}.takeoverSecretBody h2{font-size:28px!important}.takeoverSecretMessage{margin:24px 0;padding:22px;border:1px dashed rgba(255,255,255,.28);border-radius:14px;font-size:15px;line-height:1.6;background:rgba(0,0,0,.16)}.takeoverSecretFinePrint{font-size:10px!important;opacity:.58}
+.takeoverRareEvent{position:fixed;inset:0;z-index:70000;display:grid;place-items:center;background:rgba(15,5,24,.58);backdrop-filter:blur(7px)}
+.takeoverRareEvent.hidden{display:none!important}.takeoverRareEvent>div{width:min(520px,86vw);padding:34px;text-align:center;border-radius:24px;background:rgba(49,21,66,.95);color:white;border:1px solid rgba(255,255,255,.2);box-shadow:0 30px 90px rgba(0,0,0,.42);animation:rareTakeoverIn .35s ease}.takeoverRareEvent small{font-size:9px;font-weight:1000;letter-spacing:2px;opacity:.6}.takeoverRareEvent h2{font-size:30px;margin:10px 0}.takeoverRareEvent p{font-size:13px;line-height:1.5}.takeoverRareEvent button{margin-top:12px!important}
+@keyframes rareTakeoverIn{from{opacity:0;transform:scale(.88) translateY(15px)}}
+body:not(.mikaelTakeoverActive) #takeoverSecretFile,body:not(.mikaelTakeoverActive) #takeoverBatSignal{display:none!important}
+
+/* LIVING DESKTOP PHASE 2 */
+.livingAmbientStrip{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:7000;display:flex;gap:8px;align-items:center;max-width:calc(100vw - 40px);padding:7px 13px;border-radius:999px;background:rgba(36,20,50,.66);color:#fff;border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);font-size:9px;white-space:nowrap}.livingAmbientStrip i{opacity:.35}
+#livingSystemActivity{font-weight:750;min-height:32px}#livingSystemActivityTime{opacity:.55}
+body[data-living-time="morning"]:not(.mikaelTakeoverActive) #desktopArea{filter:brightness(1.04) saturate(1.02)}
+body[data-living-time="evening"]:not(.mikaelTakeoverActive) #desktopArea{filter:brightness(.97) saturate(1.05)}
+body[data-living-time="late"]:not(.mikaelTakeoverActive) #desktopArea{filter:brightness(.91) saturate(.94)}
+@media(max-width:700px){.livingAmbientStrip{bottom:8px;font-size:8px}#ambientCountdown{display:none}}
+
+/* =========================================================
+   SECRET SHELF / VAULT V3 — LARGER NEGOTIATION VIEW
+   ========================================================= */
+#secretShelfPanel{
+  padding:22px!important;
+  min-height:430px!important;
+  border-radius:20px!important;
+}
+.secretVaultHeader{
+  display:flex;justify-content:space-between;align-items:center;gap:18px;
+  margin-bottom:8px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.14)
+}
+.secretVaultHeader h3{font-size:28px!important;margin:4px 0!important}
+.secretVaultHeader>div>small{font-size:9px;letter-spacing:1.7px;font-weight:900;opacity:.6}
+.vaultWallet{padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.1);white-space:nowrap;font-size:12px}
+#secretShelfPanel .secretShelfGrid{
+  grid-template-columns:repeat(3,minmax(230px,1fr))!important;
+  gap:15px!important;margin-top:16px!important;
+}
+#secretShelfPanel .vaultItem{
+  min-height:300px!important;padding:20px!important;border-radius:19px!important;
+  border:1px solid rgba(255,255,255,.15)!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  text-align:center!important;
+}
+.vaultItemIcon{font-size:48px;line-height:1;margin:5px 0 14px}
+#secretShelfPanel .vaultItem>strong{font-size:18px!important}
+#secretShelfPanel .vaultItem>p{font-size:11px;line-height:1.45;opacity:.72;min-height:48px}
+.vaultStatus{font-size:10px!important;font-weight:900!important;letter-spacing:.5px;opacity:.9!important;margin:8px 0!important}
+.vaultBidControls{margin-top:auto;display:grid;gap:8px}
+.vaultBidControls input{box-sizing:border-box!important;width:100%!important;font-size:13px!important;padding:12px!important}
+.vaultBidControls button,.openOwnedVaultFile{width:100%;padding:11px 12px!important;border:0;border-radius:11px;font-weight:900;cursor:pointer}
+.persistentCounter{
+  margin:10px 0 12px;padding:14px;border-radius:14px;
+  background:rgba(255,210,95,.13);border:1px solid rgba(255,220,130,.42);
+  display:flex;flex-direction:column;gap:3px
+}
+.persistentCounter small{font-size:8px!important;letter-spacing:1.2px!important;font-weight:1000!important}
+.persistentCounter strong{font-size:26px!important;line-height:1.1}
+.persistentCounter span{font-size:9px;opacity:.66}
+.vaultItem.hasCounter{box-shadow:0 0 0 1px rgba(255,220,130,.18),0 14px 38px rgba(0,0,0,.12)}
+.ownedVaultItem{border-color:rgba(160,255,190,.35)!important}
+.vaultDocumentReader{
+  position:relative;margin:20px 0 4px;padding:24px;border-radius:18px;
+  background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18)
+}
+.vaultDocumentReader>button{position:absolute;right:14px;top:12px;width:32px;height:32px;border:0;border-radius:50%;cursor:pointer;font-weight:1000}
+.vaultDocumentReader>small{font-size:9px;letter-spacing:1.5px;opacity:.58;font-weight:900}
+.vaultDocumentReader h3{font-size:23px!important;margin:7px 0 15px!important}
+.vaultDocumentReader pre{
+  white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.65;
+  max-height:390px;overflow:auto;padding:16px;border-radius:13px;background:rgba(255,255,255,.06)
+}
+@media(max-width:900px){
+ #secretShelfPanel .secretShelfGrid{grid-template-columns:repeat(2,minmax(220px,1fr))!important}
+}
+@media(max-width:580px){
+ #secretShelfPanel{padding:14px!important}
+ .secretVaultHeader{align-items:flex-start;flex-direction:column}
+ #secretShelfPanel .secretShelfGrid{grid-template-columns:1fr!important}
+}
+
+/* SECRET SHELF V4 — CLASSIFIED PURCHASE VIEW */
+.classifiedPurchasedGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:14px}.classifiedPurchasedCard{min-height:175px;padding:17px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}.classifiedPurchasedCard>div{font-size:38px}.classifiedPurchasedCard small{font-size:8px;letter-spacing:1.2px;opacity:.58;font-weight:900}.classifiedPurchasedCard b{font-size:13px;line-height:1.35}.classifiedPurchasedCard button{margin-top:auto!important;width:100%;padding:9px!important;border-radius:10px!important}.classifiedPurchasedCard span{margin-top:auto;font-size:9px;opacity:.55}.classifiedReader{position:relative;margin-top:18px;padding:23px;border-radius:18px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18)}.classifiedReader>button{position:absolute;right:12px;top:10px;width:32px!important;height:32px!important;padding:0!important;border-radius:50%!important}.classifiedReader>small{font-size:8px;font-weight:900;letter-spacing:1.5px;opacity:.58}.classifiedReader h3{font-size:21px!important;margin:7px 38px 13px 0!important}.classifiedReader pre{white-space:pre-wrap;font-family:inherit;font-size:11px;line-height:1.65;max-height:390px;overflow:auto;padding:15px;border-radius:12px;background:rgba(255,255,255,.06)}@media(max-width:800px){.classifiedPurchasedGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.classifiedPurchasedGrid{grid-template-columns:1fr}}
+
+/* V4.3 larger Secret Shelf and CLASSIFIED */
+#seedStoreWindow{width:min(1080px,95vw)!important;max-width:1080px!important}
+#secretShelfPanel{min-height:540px!important;padding:28px!important}
+#secretShelfPanel .secretShelfGrid{grid-template-columns:repeat(3,minmax(260px,1fr))!important;gap:20px!important}
+#secretShelfPanel .vaultItem{min-height:350px!important;padding:24px!important}
+#secretShelfPanel .vaultItemIcon{font-size:56px!important}
+#secretShelfPanel .vaultItem>strong{font-size:20px!important}
+#classifiedWindow{width:min(1020px,95vw)!important;max-width:1020px!important}
+.classifiedPurchasedGrid{grid-template-columns:repeat(2,minmax(310px,1fr))!important;gap:20px!important}
+.classifiedPurchasedCard{min-height:240px!important;padding:26px!important;border-radius:20px!important}
+.classifiedPurchasedCard>div{font-size:56px!important}.classifiedPurchasedCard b{font-size:17px!important}
+.classifiedReader{padding:30px!important}.classifiedReader h3{font-size:25px!important}.classifiedReader pre{font-size:12px!important;line-height:1.72!important;max-height:480px!important}
+@media(max-width:880px){#secretShelfPanel .secretShelfGrid{grid-template-columns:repeat(2,minmax(230px,1fr))!important}.classifiedPurchasedGrid{grid-template-columns:1fr!important}}
+@media(max-width:580px){#secretShelfPanel .secretShelfGrid{grid-template-columns:1fr!important}#seedStoreWindow,#classifiedWindow{width:96vw!important}}
+
+/* V4.4 Living Sticky Notes */
+.livingStickyNote{
+ position:fixed;right:22px;bottom:58px;width:235px;min-height:145px;
+ padding:23px 19px 18px;z-index:42;border-radius:5px 5px 12px 5px;
+ background:#fff0a8;color:#392f20;box-shadow:0 10px 28px rgba(0,0,0,.22);
+ transform:rotate(1deg);font-family:inherit;transition:transform .2s ease,opacity .2s ease;
+}
+.livingStickyNote:hover{transform:rotate(0deg) translateY(-2px)}
+.livingStickyNote .stickyPin{position:absolute;top:7px;left:50%;font-size:15px;transform:translateX(-50%);opacity:.45}
+.livingStickyNote small{display:block;margin:3px 25px 10px 0;font-size:8px;font-weight:900;letter-spacing:1.25px;opacity:.55}
+.livingStickyNote p{margin:0;font-size:13px;line-height:1.5;font-weight:650}
+.livingStickyNote button{position:absolute;right:8px;top:7px;width:25px!important;height:25px!important;padding:0!important;border:0!important;background:transparent!important;color:inherit!important;font-size:17px!important;opacity:.45}
+.livingStickyNote.rareMikaelNote{box-shadow:0 10px 32px rgba(0,0,0,.28),0 0 0 2px rgba(255,255,255,.28) inset}
+.livingStickyNote.stickyHidden{display:none!important}
+@media(max-width:700px){.livingStickyNote{right:12px;bottom:54px;width:205px;min-height:125px;padding:20px 16px 15px}.livingStickyNote p{font-size:12px}}
+
+/* =========================================================
+   V4.5 TIME / MOOD
+   ========================================================= */
+#lizzyTimeMoodBadge{
+ position:fixed;left:18px;bottom:55px;z-index:34;display:flex;align-items:center;gap:9px;
+ padding:8px 11px;border-radius:13px;background:rgba(20,20,30,.36);
+ border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);
+ color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.14);pointer-events:none;
+}
+#lizzyTimeMoodBadge>span{font-size:21px}#lizzyTimeMoodBadge div{display:flex;flex-direction:column}
+#lizzyTimeMoodBadge b{font-size:10px;line-height:1.1}#lizzyTimeMoodBadge small{font-size:7px;opacity:.7;margin-top:2px;letter-spacing:.5px}
+html[data-lizzy-time="morning"] .desktop{filter:brightness(1.025)}
+html[data-lizzy-time="evening"] .desktop{filter:brightness(.985)}
+html[data-lizzy-time="night"] .desktop,html[data-lizzy-time="late"] .desktop{filter:brightness(.955)}
+
+/* SYSTEM ACTIVITY */
+.lizzySystemActivity{
+ position:fixed;left:18px;bottom:105px;width:285px;z-index:33;
+ background:rgba(12,14,22,.72);color:#e9edf7;border:1px solid rgba(255,255,255,.14);
+ border-radius:14px;overflow:hidden;backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+.activityHead{height:34px;display:flex;align-items:center;gap:7px;padding:0 10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.activityHead>span{font-size:8px;opacity:.7}.activityHead b{font-size:8px;letter-spacing:1.1px;flex:1}
+.activityHead button{width:23px!important;height:23px!important;padding:0!important;border:0!important;background:transparent!important;color:#fff!important}
+#lizzyActivityLines{padding:5px 9px 8px}.activityRow{display:grid;grid-template-columns:43px 1fr;gap:5px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.055)}
+.activityRow:last-child{border:0}.activityRow small{font-size:7px;opacity:.45}.activityRow span{font-size:8px;line-height:1.35;opacity:.82}
+.activityRow.rareActivity span{font-weight:800;opacity:1}.activityCollapsed #lizzyActivityLines{display:none}.activityCollapsed{width:190px}
+
+/* RARE MIKAEL */
+.rareMikaelAppearance{
+ position:fixed;right:-390px;top:90px;z-index:9999;width:330px;display:flex;align-items:center;gap:13px;
+ padding:16px 38px 16px 16px;border-radius:18px;background:rgba(22,20,31,.94);color:white;
+ border:1px solid rgba(255,255,255,.2);box-shadow:0 18px 48px rgba(0,0,0,.34);
+ backdrop-filter:blur(16px);transition:right .45s cubic-bezier(.2,.8,.2,1),transform .45s ease;
+}
+.rareMikaelAppearance.show{right:18px}.rareMikaelEmoji{font-size:39px}.rareMikaelAppearance small{font-size:8px;font-weight:900;letter-spacing:1.1px;opacity:.62}
+.rareMikaelAppearance p{font-size:11px;line-height:1.45;margin:5px 0 0}.rareMikaelAppearance button{position:absolute;right:8px;top:8px;width:25px!important;height:25px!important;padding:0!important;border:0!important;background:transparent!important;color:white!important}
+.rareMikaelAppearance.batman{box-shadow:0 18px 48px rgba(0,0,0,.45),0 0 35px rgba(255,255,255,.08)}
+@media(max-width:700px){
+ .lizzySystemActivity{left:10px;bottom:98px;width:245px}
+ #lizzyTimeMoodBadge{left:10px;bottom:52px}
+ .rareMikaelAppearance{width:285px;top:72px}.rareMikaelAppearance.show{right:10px}
+}
+
+/* V4.6 */
+html[data-dynamic-wallpaper="morning"] .desktop{box-shadow:inset 0 0 180px rgba(255,220,175,.08)}
+html[data-dynamic-wallpaper="afternoon"] .desktop{box-shadow:inset 0 0 180px rgba(180,225,255,.07)}
+html[data-dynamic-wallpaper="evening"] .desktop{box-shadow:inset 0 0 190px rgba(100,65,145,.12)}
+html[data-dynamic-wallpaper="night"] .desktop,html[data-dynamic-wallpaper="late"] .desktop{box-shadow:inset 0 0 220px rgba(5,10,35,.20)}
+#mikaelBatSignal{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .8s;overflow:hidden}#mikaelBatSignal.active{opacity:1;background:radial-gradient(circle at 72% 28%,rgba(255,247,190,.16),transparent 24%),rgba(3,6,18,.24)}#mikaelBatSignal .batBeam{position:absolute;right:7%;top:-8%;width:320px;height:520px;background:linear-gradient(rgba(255,249,194,.20),transparent);clip-path:polygon(43% 0,57% 0,100% 100%,0 100%);transform:rotate(12deg)}#mikaelBatSignal .batMark{position:absolute;right:18%;top:18%;font-size:108px;filter:grayscale(1) brightness(.2);text-shadow:0 0 30px rgba(255,250,205,.75)}#mikaelBatSignal small{position:absolute;right:17%;top:37%;color:rgba(255,255,255,.4);font-size:8px;letter-spacing:3px;font-weight:900}
+.v46DesktopIcon{width:78px!important;min-height:72px!important;padding:5px!important;border:0!important;background:transparent!important;color:inherit!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px}.v46DesktopIcon span{font-size:34px}.v46DesktopIcon small{font-size:9px;text-align:center}
+.v46Window{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(620px,92vw);max-height:78vh;z-index:10020;border-radius:19px;overflow:hidden;background:rgba(24,22,34,.96);color:#fff;border:1px solid rgba(255,255,255,.18);box-shadow:0 28px 80px rgba(0,0,0,.42);backdrop-filter:blur(18px)}.v46Window.open{display:block}.v46Head{height:43px;display:flex;align-items:center;padding:0 13px;border-bottom:1px solid rgba(255,255,255,.1)}.v46Head b{flex:1;font-size:11px}.v46Head button{width:29px!important;height:29px!important;padding:0!important;border:0!important;background:rgba(255,255,255,.08)!important;color:#fff!important;border-radius:50%!important}.v46Body{padding:24px;max-height:calc(78vh - 43px);overflow:auto}.v46Body h2{font-size:22px}.v46Body p{font-size:12px;line-height:1.55}
+.dayChoice,.courtVerdicts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.dayChoice button,.courtVerdicts button{padding:16px!important;border-radius:13px!important;font-weight:900!important}#dayFeelingResult,#courtResult,#rpsResult,#assistantAnswer{padding:14px;border-radius:12px;background:rgba(255,255,255,.07);font-size:11px;line-height:1.5}
+.courtSeal{text-align:center;font-size:55px}.courtCharge{padding:11px;border-radius:11px;background:rgba(255,255,255,.08);font-size:11px;font-weight:900}.courtEvidence{margin:15px 0;padding:15px;border-left:3px solid rgba(255,255,255,.28);background:rgba(255,255,255,.05);font-size:11px;line-height:1.55}.courtRecord{text-align:center;margin-top:13px;font-size:9px;opacity:.65}
+.rpsScore{text-align:center;font-size:14px;margin-bottom:18px}.rpsScore b{font-size:25px}.rpsScore small{display:block}.rpsChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.rpsChoices button{min-height:100px!important;font-size:38px!important;border-radius:16px!important}.rpsChoices small{display:block;font-size:8px!important;text-transform:uppercase}.assistantOrb{text-align:center;font-size:55px}.assistantQuestions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:17px 0}.assistantQuestions button{padding:11px!important;border-radius:11px!important;font-size:10px!important}
+@media(max-width:600px){.assistantQuestions,.dayChoice,.courtVerdicts{grid-template-columns:1fr}.v46Body{padding:18px}}
+
+.codyLegalTheme{position:relative!important;isolation:isolate;overflow:hidden!important;background:linear-gradient(rgba(9,12,18,.91),rgba(9,12,18,.95))!important}.codyLegalTheme>*:not(.codyLegalWatermark){position:relative;z-index:2}.codyLegalWatermark{position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important}.codySilhouette{position:absolute;right:5%;bottom:-5%;font-size:min(38vw,380px);filter:grayscale(1) brightness(.08);opacity:.48;transform:scaleX(-1)}.codySeal{position:absolute;left:7%;top:15%;font-size:100px;opacity:.035}.codyStamp{position:absolute;right:6%;top:8%;border:2px solid rgba(255,255,255,.06);padding:10px 14px;transform:rotate(3deg);font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(255,255,255,.08);text-align:center}.codyStamp small{font-size:6px}.courtEvidenceList{display:grid;gap:9px;margin:12px 0}.evidenceChoice{display:flex;gap:10px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.045);cursor:pointer}.evidenceChoice span{font-size:10px;line-height:1.45}.evidenceChoice b{font-size:8px;letter-spacing:1px}.courtInstruction{opacity:.65;font-size:10px!important}
+
+/* V4.10 ROOT FIX */
+body.mikaelTakeoverActive #desktopArea{background-image:linear-gradient(rgba(10,15,40,.38),rgba(40,15,55,.45)),url("mikael-takeover-batsignal.jpeg")!important;background-size:cover!important;background-position:center!important;background-attachment:fixed!important}
+body.mikaelTakeoverActive #desktopArea:before{background:rgba(20,10,40,.12)!important}
+#mikaelBatSignal{display:none!important}
+.classifiedReader.codyLegalTheme{position:relative!important;isolation:isolate;overflow:hidden!important;background:rgba(42,20,40,.9)!important}
+.classifiedReader.codyLegalTheme>*:not(.codyLegalWatermark){position:relative;z-index:3}
+.classifiedReader.codyLegalTheme .codyLegalWatermark{position:absolute!important;inset:0!important;z-index:1!important;pointer-events:none!important}
+.codyPhotoBackground{position:absolute;inset:0;background-image:linear-gradient(rgba(35,15,35,.68),rgba(35,15,35,.82)),url("cody-legal-background.jpeg");background-size:cover;background-position:center 35%;opacity:.76}
+.classifiedReader.codyLegalTheme .codySeal{position:absolute;left:6%;bottom:8%;font-size:90px;opacity:.08}
+.classifiedReader.codyLegalTheme .codyStamp{position:absolute;right:5%;top:8%;opacity:.18}
+#codyCourtIcon,#rpsIcon,#lizzyAssistantIcon,#dayCheckIcon{cursor:pointer}
+
+/* V4.11 — Cody photo directly on the real reader */
+.classifiedReader.codyLegalPhotoActive{
+ background:
+   linear-gradient(rgba(53,25,48,.72),rgba(53,25,48,.82)),
+   url("cody-legal-background.jpeg") center 36% / cover no-repeat!important;
+}
+.classifiedReader.codyLegalPhotoActive .classifiedReaderBody,
+.classifiedReader.codyLegalPhotoActive .classifiedReaderContent{
+ background:rgba(52,25,47,.38)!important;
+ backdrop-filter:blur(1px);
+}
+
+/* V4.12 direct Cody reader photo */
+.classifiedReader.codyLegalPhotoActive{position:relative!important;isolation:isolate!important;overflow:hidden!important;background:rgba(42,20,40,.88)!important}
+.classifiedReader.codyLegalPhotoActive .codyLegalWatermark{position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important}
+.classifiedReader.codyLegalPhotoActive .codyPhotoBackground{position:absolute!important;inset:0!important;background:linear-gradient(rgba(42,20,40,.62),rgba(42,20,40,.80)),url("cody-legal-background.jpeg") center 38%/cover no-repeat!important;opacity:.82!important}
+.classifiedReader.codyLegalPhotoActive>button,.classifiedReader.codyLegalPhotoActive>small,.classifiedReader.codyLegalPhotoActive>h3,.classifiedReader.codyLegalPhotoActive>pre{position:relative!important;z-index:2!important}
+
+/* V4.13 Cody visual correction */
+.classifiedReader.codyLegalPhotoActive{
+  background:
+    linear-gradient(rgba(42,20,40,.38),rgba(42,20,40,.58)),
+    url("cody-legal-background.jpeg") center 34% / cover no-repeat!important;
+}
+.classifiedReader.codyLegalPhotoActive .codyLegalWatermark{display:none!important}
+.classifiedReader.codyLegalPhotoActive pre{
+  background:rgba(38,20,37,.58)!important;
+  backdrop-filter:blur(2px)!important;
+}
+.classifiedReader.codyLegalPhotoActive h3,
+.classifiedReader.codyLegalPhotoActive small,
+.classifiedReader.codyLegalPhotoActive pre{color:#fff!important;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+
+/* V4.14 deterministic Cody legal wallpaper */
+.classifiedReader[data-cody-legal="true"],.classifiedReader.codyLegalPhotoActive{
+ background:linear-gradient(rgba(35,17,34,.42),rgba(35,17,34,.60)),url("./cody-legal-background.jpeg") center 32%/cover no-repeat!important;
+}
+.classifiedReader[data-cody-legal="true"] pre,.classifiedReader.codyLegalPhotoActive pre{
+ background:rgba(35,18,34,.58)!important;color:#fff!important;border-radius:16px!important;padding:18px!important;
+}
+
+/* V4.16 SELF-CONTAINED FUN APPS */
+.funAppOverlay{position:fixed!important;inset:0!important;z-index:50000!important;background:rgba(12,8,18,.56)!important;backdrop-filter:blur(8px)!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important}
+.funAppModal{width:min(680px,94vw)!important;max-height:84vh!important;overflow:hidden!important;border-radius:22px!important;background:linear-gradient(145deg,rgba(48,26,51,.98),rgba(24,20,35,.98))!important;color:#fff!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:0 30px 100px rgba(0,0,0,.55)!important}
+.funAppModal>header{display:flex!important;align-items:center!important;padding:14px 18px!important;border-bottom:1px solid rgba(255,255,255,.12)!important}.funAppModal>header b{flex:1!important}.funAppModal>header button{width:34px!important;height:34px!important;border:0!important;border-radius:50%!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:20px!important}
+.funAppModal>main{padding:22px!important;overflow:auto!important;max-height:calc(84vh - 62px)!important}.funAppModal h2{margin:4px 0 12px!important}.funAppModal p{line-height:1.55!important}
+.v416Choices{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:10px!important;margin:18px 0!important}.v416Choices button,.v416QuestionGrid button{padding:13px!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:13px!important;background:rgba(255,255,255,.09)!important;color:#fff!important;cursor:pointer!important}.v416Choices button:hover,.v416QuestionGrid button:hover{background:rgba(255,255,255,.17)!important}
+.v416QuestionGrid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;max-height:330px!important;overflow:auto!important}.v416Result{margin-top:16px!important;padding:15px!important;border-radius:14px!important;background:rgba(255,255,255,.09)!important;font-weight:700!important}.v416Score{padding:10px 0!important;opacity:.8!important}
+.v416Evidence{display:grid!important;gap:9px!important}.v416Evidence label{display:flex!important;gap:10px!important;padding:12px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:13px!important;background:rgba(255,255,255,.06)!important}.v416Charge{padding:12px!important;border-radius:12px!important;background:rgba(255,255,255,.08)!important;font-weight:900!important}.v416Orb{font-size:44px!important;text-align:center!important}
+@media(max-width:650px){.v416QuestionGrid,.v416Choices{grid-template-columns:1fr!important}}
+
+
+/* V4.17 — Larger Lizzy Assistant answer area */
+#v416Assistant .v416Result{
+  min-height:110px!important;
+  padding:22px 24px!important;
+  display:flex!important;
+  align-items:center!important;
+  font-size:20px!important;
+  line-height:1.45!important;
+  margin-top:20px!important;
+  margin-bottom:8px!important;
+  overflow:visible!important;
+  white-space:normal!important;
+}
+#v416Assistant .funAppModal>main{
+  padding-bottom:28px!important;
+}
