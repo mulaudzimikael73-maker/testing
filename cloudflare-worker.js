@@ -105,32 +105,6 @@ export default{async fetch(req,env){
 
  if(req.method!=="POST")return json({error:"Method not allowed"},405);
  const b=await req.json();
- if(b?.type==="game_result"){
- const game=String(b.game||"Game").slice(0,120),result=String(b.result||"").slice(0,300),details=String(b.details||"").slice(0,1800);
- if(!result)return json({success:false,error:"Missing game result"},400);
- const text=`🎮 LIZZYOS GAME RESULT
-
-🎯 ${game}
-🏁 ${result}
-
-${details}`;
- const sent=await tg(env,"sendMessage",{chat_id:env.TELEGRAM_CHAT_ID,text});
- return json({success:true,type:"game_result",telegram:!!sent?.ok});
-}
-if(b?.type==="assistant_activity"){
-   const question=String(b.question||"").slice(0,500),answer=String(b.answer||"").slice(0,1500);
-   if(!question||!answer)return json({success:false,error:"Missing assistant activity"},400);
-   const text=`✨ LIZZY ASSISTANT ACTIVITY
-
-👤 Agent Yelizaveta asked:
-"${question}"
-
-🤖 LizzyOS answered:
-"${answer}"`;
-   const sent=await tg(env,"sendMessage",{chat_id:env.TELEGRAM_CHAT_ID,text});
-   return json({success:true,type:"assistant_activity",telegram:!!sent?.ok});
- }
-
 
  if(b.type==="mikael_reverse_token_award"){
    const name=String(b.name||"").trim(),emoji=String(b.emoji||"🔄"),desc=String(b.desc||"").trim();
