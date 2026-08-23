@@ -948,6 +948,32 @@ openWhenLetters.hug = {
     `
 };
 
+openWhenLetters.sick = {
+    title: "🤒 Open When You’re Sick",
+    body: `
+        <p>Dear Lizzy,</p>
+        <p>So apparently Little Miss Attitude has been defeated by… <strong>germs</strong>.</p>
+        <p>Embarrassing.</p>
+        <p>I’m not saying you’re weak, but I <strong>am</strong> saying I think you’re weak. 😂 And hopefully you won’t go telling your mommy that Mikael is bullying a sick person, because that would be a dramatic misrepresentation of events.</p>
+        <p>But jokes aside, you actually need to get better soon.</p>
+        <p>Because Mikael—<br>I mean <strong>Lizzy</strong>—can’t survive without a healthy Lizzy.</p>
+        <p>That may sound wrong.</p>
+        <p><strong>But I said what I said.</strong></p>
+        <p>Unfortunately, this also means you can’t even properly use your <strong>Hug Token</strong> right now because you’ll probably get Mikael sick too.</p>
+        <p>And Mikael thinks that wouldn’t be very good.</p>
+        <p>Although… knowing him, he would probably risk it anyway. 😭</p>
+        <p>So for now, your official instructions are:</p>
+        <p>Rest properly.<br>Drink lots of water.<br>Eat something.<br>Take care of yourself.<br>And stop pretending you’re perfectly fine when you clearly aren’t.</p>
+        <p>And yes, you are allowed one of your famous <strong>“cleansing/detox” crying sessions</strong> if medically necessary. 😂</p>
+        <p>Your only job right now is to get better. LizzyOS, Cody Legal Counsel, Agent Yelizaveta and even Mr Perfect need you back at full operating capacity.</p>
+        <p><strong>Get better soon, Four Eyes. 💗</strong></p>
+        <p>And don’t worry — I’ll try to be nice to you while you’re sick.</p>
+        <p><strong>Try.</strong></p>
+        <p>No promises.</p>
+        <p class="letterSignature">— Mikael a.k.a Mr Perfect 💗</p>
+    `
+};
+
 openWhenLetters.laugh = {
     title: "😂 Open When You Need to Laugh",
     body: `
@@ -2312,6 +2338,21 @@ $("crackBack")?.addEventListener("click",menu);$("crackAnother")?.addEventListen
 })();
 
 
+
+// One-time live progress preservation: restore the existing 4-day streak after deployment.
+// Never lowers or overwrites a streak that is already 4 or higher.
+(() => {
+  const migrationKey = "lizzyPreserveStreak4MigrationV1";
+  if (!localStorage.getItem(migrationKey)) {
+    const current = Number(localStorage.getItem("lizzyMysteryStreak") || 0);
+    if (current < 4) {
+      localStorage.setItem("lizzyMysteryStreak", "4");
+      // Do not mark today's reward as opened; this only restores the displayed/progress streak.
+    }
+    localStorage.setItem(migrationKey, "done");
+  }
+})();
+
 // DAILY REWARDS + STRICT CONSECUTIVE STREAK
 (()=>{
 const $=id=>document.getElementById(id);
@@ -3403,3 +3444,5 @@ window.addEventListener("load", () => {
     }, 1200);
   }
 });
+
+if (typeof lizzyTelegramNotify === "function") window.lizzyTelegramNotify = lizzyTelegramNotify;
