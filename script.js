@@ -5,12 +5,15 @@
 // =====================================================
 const LIZZY_TELEGRAM_WORKER_URL = "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
 
-async function lizzyTelegramNotify(type, title, details) {
+async function lizzyTelegramNotify(type, title, details, extra) {
   try {
+    const walletBalance = Number(localStorage.getItem("lizzyMickyBucsV1") || 0);
     const payload = JSON.stringify({
       type: type || "LizzyOS Activity",
       title: title || "New Activity",
-      details: details || "No additional details."
+      details: details || "No additional details.",
+      balance: walletBalance,
+      ...(extra && typeof extra === "object" ? extra : {})
     });
 
     const response = await fetch(LIZZY_TELEGRAM_WORKER_URL, {
@@ -852,6 +855,11 @@ missionIcon?.addEventListener("click", () => {
 
     unlockAchievement("Opened Mission Log 🗂️");
 
+    if(!localStorage.getItem("lizzyFirstDateBadgeV1")){
+        localStorage.setItem("lizzyFirstDateBadgeV1", "1");
+        setTimeout(()=>unlockAchievement("First Date Badge 🏅"), 3800);
+    }
+
 });
 
 closeMission?.addEventListener("click", () => {
@@ -1467,107 +1475,92 @@ document.addEventListener("keydown", (event) => {
 
     // ---------- Lizzy Quiz ----------
     const lizzyQuizQuestions = [
-        {
-            q: "What colour has administrator privileges in LizzyOS? 💗",
-            a: ["Blue", "Pink — obviously", "Corporate grey"],
-            correct: 1,
-            right: "Correct. Pink has full system access. 🌸",
-            wrong: "Security alert: this answer was suspiciously un-Lizzy."
-        },
-        {
-            q: "Who has the unfair advantage on the first bowling mission? 🎳",
-            a: ["Agent Mikhail", "Agent Yelizaveta", "The bowling ball"],
-            correct: 1,
-            right: "Correct 😭 Intelligence reports say Agent Yelizaveta is dangerously experienced.",
-            wrong: "Nice try. Agent Mikhail has approximately one mission of experience 😂"
-        },
-        {
-            q: "Where should banned nicknames be sent?",
-            a: ["The Recycle Bin 🗑️", "The Mission Log", "Pinned to the desktop"],
-            correct: 0,
-            right: "Correct. Delete immediately. Empty Bin optional 😂",
-            wrong: "Absolutely not. LizzyOS recommends immediate deletion."
-        },
-        {
-            q: "What food has suspiciously high priority in this system? 🍝",
-            a: ["Pasta", "Plain toast", "A single lettuce leaf"],
-            correct: 0,
-            right: "Correct. Pasta database verified. 🍝",
-            wrong: "LizzyOS refuses to accept this answer."
-        },
-        {
-            q: "What is Agent Mikhail's most important mission objective?",
-            a: ["Win every argument", "Make Agent Yelizaveta smile ❤️", "Become a professional bowler overnight"],
-            correct: 1,
-            right: "Mission intelligence confirms this answer. ❤️",
-            wrong: "Incorrect. Please review Mission Log #001."
-        }
+      {q:"What colour has administrator privileges in LizzyOS? 💗",a:["Blue","Pink — obviously","Corporate grey"],correct:1,right:"Correct. Pink has full system access. 🌸",wrong:"Security alert: this answer was suspiciously un-Lizzy."},
+      {q:"Who has the unfair advantage on the first bowling mission? 🎳",a:["Agent Mikhail","Agent Yelizaveta","The bowling ball"],correct:1,right:"Correct 😭 Intelligence reports say Agent Yelizaveta is dangerously experienced.",wrong:"Nice try. Agent Mikhail has approximately one mission of experience 😂"},
+      {q:"Where should banned nicknames be sent?",a:["The Recycle Bin 🗑️","The Mission Log","Pinned to the desktop"],correct:0,right:"Correct. Delete immediately. Empty Bin optional 😂",wrong:"Absolutely not. LizzyOS recommends immediate deletion."},
+      {q:"What food has suspiciously high priority in this system? 🍝",a:["Pasta","Plain toast","A single lettuce leaf"],correct:0,right:"Correct. Pasta database verified. 🍝",wrong:"LizzyOS refuses to accept this answer."},
+      {q:"What is Agent Mikhail's most important mission objective?",a:["Win every argument","Make Agent Yelizaveta smile ❤️","Become a professional bowler overnight"],correct:1,right:"Mission intelligence confirms this answer. ❤️",wrong:"Incorrect. Please review Mission Log #001."},
+      {q:"Where did Lizzy learn to be such a menace? 😈",a:["Mikael taught her","It's in her DNA","Agent training"],correct:1,right:"DNA analysis confirms the menace appears factory-installed. 🧬",wrong:"Nope. This behaviour appears to go much deeper 😂"},
+      {q:"How would Mikael classify Lizzy's attitude levels?",a:["Low","Moderate","A national security concern"],correct:2,right:"Threat level confirmed: attitude remains a national security concern. 🚨",wrong:"That reading is suspiciously low."},
+      {q:"What happens when Lizzy's attitude combines with Four Eyes Mode? 👓",a:["The attitude disappears","She looks more professional while maintaining the attitude","LizzyOS crashes"],correct:1,right:"Exactly. The glasses change the presentation, not the attitude 😂",wrong:"Four Eyes Mode does not neutralise the attitude."},
+      {q:"What does Lizzy apparently enjoy doing to Mikael?",a:["Agreeing with everything he says","Ragebaiting him","Protecting his peace"],correct:1,right:"Correct. Ragebait activity remains unusually high. 🎣",wrong:"Historical evidence strongly disagrees 😂"},
+      {q:"What does Lizzy claim crying is? 😭",a:["A competitive sport","Cleansing or detoxing","Classified information"],correct:1,right:"Correct — that is the official Lizzy PR explanation.",wrong:"Please consult the emotional-cleansing propaganda department."},
+      {q:"What does Mikael call Lizzy's explanation for all the crying?",a:["Medical science","Propaganda","A completely reasonable explanation"],correct:1,right:"Correct. Mikael has formally labelled it propaganda 😂",wrong:"Mikael's official position is considerably less supportive."},
+      {q:"According to Lizzy herself, what has Mikael supposedly damaged? 😂",a:["Her glasses","Her reputation","Her LizzyOS account"],correct:1,right:"Correct. The reputation damage allegation is officially on record.",wrong:"That is not the allegation Lizzy submitted."},
+      {q:"Why does Lizzy say her reputation has been tainted?",a:["Because she became Cody's lawyer","Because Mikael has her calling him perfect and randomly smiling about him","Because she lost at bowling"],correct:1,right:"Evidence archived. Future denial attempts may be unsuccessful 😂",wrong:"The written evidence points somewhere much more embarrassing."},
+      {q:"What did Lizzy admit she sometimes finds herself doing? 👀",a:["Planning Mikael's arrest","Randomly smiling about Mikael","Deleting LizzyOS"],correct:1,right:"Admission confirmed and safely archived. 📁",wrong:"Nope. The evidence specifically mentions smiling."},
+      {q:"Which unofficial parenting award does Mikael regularly give Lizzy for looking after her sisters? 🏆",a:["Guardian of the Year","Mother of the Year","Chief Babysitter"],correct:1,right:"Correct. Mother of the Year remains her unofficial title 😂",wrong:"The Mikael Awards Committee uses a much more dramatic title."},
+      {q:"What incident nearly cost Lizzy her prestigious 'Mother of the Year' title? 🍳",a:["She forgot to buy snacks","She didn't cook, leading Mikael to launch the 'starving the kids' allegations","She made her sister clean"],correct:1,right:"Correct. The Great Cooking Scandal remains on file.",wrong:"Nope. Think of the infamous cooking incident."},
+      {q:"What serious allegation did Mikael make during the Great Cooking Scandal? 🚨",a:["Lizzy had retired from motherhood","Lizzy was starving the kids","Lizzy had ordered takeaways"],correct:1,right:"Correct. A dramatic allegation, but an allegation nonetheless 😂",wrong:"Mikael's accusation was significantly more dramatic."},
+      {q:"What is Lizzy apparently creating with one of her sisters? 👯‍♀️",a:["Her replacement","A mini version of herself","A new LizzyOS administrator"],correct:1,right:"Correct. Mini Lizzy development is reportedly underway.",wrong:"Intelligence suggests something far more dangerous: another Lizzy 😂"},
+      {q:"What is the greatest concern about Lizzy creating a mini version of herself? 🚨",a:["They'll dress the same","There could soon be TWO menaces","Cody will need another lawyer"],correct:1,right:"Exactly. LizzyOS is not prepared for double-menace capacity.",wrong:"You're underestimating the menace multiplication risk."},
+      {q:"If Lizzy's sister becomes exactly like her, what has most likely been inherited? 🧬",a:["The menace gene","Mikael's propaganda","Micky Bucs"],correct:0,right:"Correct. The menace gene appears highly transferable 😂",wrong:"Genetic analysis points to the menace department."},
+      {q:"What happens when Mikael catches Lizzy being sweet? 💗",a:["She proudly accepts the allegation","She risks damaging her menace reputation","Cody objects"],correct:1,right:"Correct. Sweetness is dangerous to the established menace brand.",wrong:"Think about the reputation she is trying so hard to maintain 😂"},
+      {q:"According to Lizzy's own testimony, what has suffered because of Mikael's influence? 📄",a:["Her patience","Her reputation","Her LizzyOS clearance"],correct:1,right:"Correct. Her reputation is apparently the primary casualty.",wrong:"Her own testimony names a different victim."},
+      {q:"How does Lizzy plan to respond if anyone asks whether those admissions are true? 🕵️‍♀️",a:["Tell the truth immediately","Deny everything","Ask Mikael to confirm"],correct:1,right:"Correct. Denial protocol activated 😂",wrong:"That would be far too cooperative for the official defence strategy."},
+      {q:"What makes Lizzy's campaign against Mikael slightly difficult to believe? 🤨",a:["She secretly likes Batman","She complains about him while admitting she randomly finds herself smiling about him","She keeps spending Micky Bucs"],correct:1,right:"Exactly. Exhibit: Random Smiling has been submitted.",wrong:"The contradiction is hidden in her own Mikael admissions."},
+      {q:"What disturbing discovery has LizzyOS made about Mikael and Lizzy? 🧬",a:["They're both secretly lawyers","They may actually be more similar than either would like to admit","They have the same eyesight"],correct:1,right:"⚠️ SIMILARITY DETECTED. Neither suspect is expected to accept this finding.",wrong:"LizzyOS intelligence has found a more uncomfortable similarity."},
+      {q:"What trait might Mikael and Lizzy BOTH be guilty of? 🎣",a:["Avoiding arguments","Deliberately annoying each other for entertainment","Admitting when they're wrong immediately"],correct:1,right:"⚠️ SIMILARITY DETECTED: mutual annoyance appears recreational.",wrong:"The evidence suggests both suspects are considerably less peaceful."},
+      {q:"What happens when Mikael and Lizzy both believe they're right? ⚠️",a:["They calmly compromise","An unnecessarily long debate begins","Mikael immediately apologises"],correct:1,right:"Correct. Estimated debate duration: unnecessarily long 😂",wrong:"That outcome sounds far too peaceful."},
+      {q:"Which title could realistically apply to BOTH Mikael and Lizzy? 😂",a:["The Quiet One","Professional Menace","Conflict Avoider"],correct:1,right:"⚠️ SIMILARITY DETECTED: Professional Menace status may be shared.",wrong:"Neither suspect has demonstrated enough peace for that title."},
+      {q:"Why might Mikael have difficulty complaining about Lizzy's ragebaiting? 🎣",a:["Ragebaiting isn't real","He isn't exactly innocent of doing the same thing to her","Lizzy never does it"],correct:1,right:"Correct. Mikael's hands may not be completely clean here 😂",wrong:"The case file contains evidence against both parties."},
+      {q:"What might explain why Mikael and Lizzy can argue over complete nonsense for so long?",a:["Poor Wi-Fi","Neither particularly enjoys backing down","LizzyOS requires it"],correct:1,right:"⚠️ SIMILARITY DETECTED: stubbornness readings elevated on both sides.",wrong:"The network has been cleared of responsibility."},
+      {q:"What similarity would both Mikael AND Lizzy probably deny if questioned? 👀",a:["They can both be stubborn","They're both Batman","They both wear glasses"],correct:0,right:"Correct. Both suspects are expected to appeal this finding.",wrong:"The similarity report points to something in their personalities."},
+      {q:"If Lizzy is Little Miss Attitude, what does that potentially make Mikael? 🤔",a:["Mr No Attitude","Someone who probably has enough attitude of his own","An innocent victim"],correct:1,right:"⚠️ SIMILARITY DETECTED. Mikael's innocence remains unverified 😂",wrong:"LizzyOS refuses to certify Mikael as completely innocent."},
+      {q:"What is the strongest evidence that Mikael and Lizzy might actually enjoy annoying each other? 😂",a:["They keep doing it and still continue talking to each other","They've filed official paperwork","Cody told us"],correct:0,right:"Correct. Continued voluntary participation is highly suspicious 😂",wrong:"The strongest evidence is much simpler and happens repeatedly."},
+      {q:"What is perhaps the most dangerous thing Mikael and Lizzy have in common? 🚨",a:["Their favourite colour","Both seem capable of turning absolutely nothing into an argument","Their bowling ability"],correct:1,right:"⚠️ SIMILARITY DETECTED: argument generation capability confirmed.",wrong:"The danger is less athletic and much more argumentative."},
+      {q:"Who is actually the bigger menace? 😈",a:["Lizzy, case closed","Mikael, case closed","Investigation ongoing — both suspects blame each other"],correct:2,right:"Correct. Investigation remains open indefinitely 😂",wrong:"There is nowhere near enough cooperation for a final ruling."},
+      {q:"What is Mikael's favourite colour? 💜",a:["Pink","Purple","Black"],correct:1,right:"Correct. Purple is Mr Perfect's colour. 💜",wrong:"Mr Perfect's favourite colour is elsewhere in the palette."},
+      {q:"What is Mikael's favourite superhero? 🦇",a:["Superman","Batman","Spider-Man"],correct:1,right:"Correct. Broad-daylight Batman activity remains under investigation.",wrong:"Gotham intelligence would like you to reconsider."},
+      {q:"What number did Mikael wear when playing basketball in high school? 🏀",a:["23","4","30"],correct:1,right:"Correct. Number 4. 🏀",wrong:"Check the Mikael basketball file."},
+      {q:"What is Cody's middle name? 🐶",a:["Perfect","Aladeen","Batman"],correct:1,right:"Correct. Cody Aladeen, legally represented and dangerous 😂",wrong:"Cody's legal file lists a different middle name."},
+      {q:"Who is Cody's official legal counsel? ⚖️",a:["Mikael","Lizzy","Agent Mikhail"],correct:1,right:"Correct. Mikael should probably watch what he says around Cody.",wrong:"Cody's lawyer is much closer to the case."},
+      {q:"What does Mikael call himself with absolutely no evidence of bias? 😂",a:["Mr Average","Mr Perfect","Mr Humble"],correct:1,right:"Correct. Self-certified Mr Perfect.",wrong:"Mikael's self-appointed title is considerably less humble."},
+      {q:"What currency does LizzyOS use? 💵",a:["Lizzy Dollars","Micky Bucs","Perfect Points"],correct:1,right:"Correct. Micky Bucs accepted across suspicious parts of LizzyOS.",wrong:"Check the LizzyOS economy."},
+      {q:"What is Mikael's dream holiday/training destination? 🏔️",a:["Paris","Dagestan","New York"],correct:1,right:"Correct. Dagestan — apparently relaxation was never the plan.",wrong:"Mikael's dream destination is much more grappling-oriented."},
+      {q:"What does Mikael apparently plan to do in Dagestan? 😂",a:["Relax by the pool","Train and wrestle bears","Learn ballet"],correct:1,right:"Correct. Bear-wrestling risk assessment: questionable.",wrong:"The Dagestan file contains significantly more grappling."},
+      {q:"What is the password required to decrypt AYPP-006? 🔐",a:["Four Eyes","Micky The Greatest","Mr Perfect"],correct:1,right:"Correct. Birthday-card intelligence confirmed.",wrong:"Remember the birthday-card clue."}
     ];
 
-    let fqIndex = 0;
-    let fqScore = 0;
-
+    const LIZZY_QUIZ_ROUND_SIZE=10;
+    let activeLizzyQuizQuestions=[];
+    let fqIndex=0,fqScore=0;
+    function shuffledQuizPool(){
+      const pool=[...lizzyQuizQuestions];
+      for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+      return pool.slice(0,Math.min(LIZZY_QUIZ_ROUND_SIZE,pool.length));
+    }
     function startFunQuiz(){
-        fqIndex = 0;
-        fqScore = 0;
-        $("funQuizScore").textContent = "0";
-        $("funQuizTotal").textContent = lizzyQuizQuestions.length;
-        $("restartFunQuiz").classList.add("hidden");
-        renderFunQuiz();
+      activeLizzyQuizQuestions=shuffledQuizPool();fqIndex=0;fqScore=0;
+      $("funQuizScore").textContent="0";$("funQuizTotal").textContent=activeLizzyQuizQuestions.length;
+      $("restartFunQuiz").classList.add("hidden");renderFunQuiz();
     }
-
     function renderFunQuiz(){
-        const q = lizzyQuizQuestions[fqIndex];
-        if (!q) {
-            $("funQuizQuestion").innerHTML =
-                fqScore === lizzyQuizQuestions.length
-                ? `🏆 Perfect score! ${fqScore}/${lizzyQuizQuestions.length}`
-                : `Mission complete: ${fqScore}/${lizzyQuizQuestions.length}`;
-            $("funQuizAnswers").innerHTML = "";
-            $("funQuizFeedback").innerHTML =
-                fqScore === lizzyQuizQuestions.length
-                ? "Okay... either you know LizzyOS extremely well or you have classified information. 😏❤️"
-                : fqScore >= 3
-                ? "Approved. Your Lizzy knowledge clearance remains active. 💗"
-                : "Agent Mikhail is requesting a formal investigation into this score 😂";
-            $("restartFunQuiz").classList.remove("hidden");
-            if (fqScore === lizzyQuizQuestions.length && typeof unlockAchievement === "function") {
-                unlockAchievement("Certified Lizzy Expert 💗");
-            }
-            if (fqScore === lizzyQuizQuestions.length) {
-                window.dispatchEvent(new CustomEvent("lizzyPerfectGame", {
-                    detail:{game:"Lizzy Quiz", key:"funQuiz", score:`${fqScore}/${lizzyQuizQuestions.length}`}
-                }));
-            }
-            return;
-        }
-
-        $("funQuizQuestion").textContent = q.q;
-        $("funQuizFeedback").textContent = "";
-        $("funQuizAnswers").innerHTML = q.a.map((answer, i) =>
-            `<button class="funQuizAnswer" data-fq-answer="${i}">${answer}</button>`
-        ).join("");
-
-        document.querySelectorAll("[data-fq-answer]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const chosen = Number(btn.dataset.fqAnswer);
-                const correct = chosen === q.correct;
-                if (correct) {
-                    fqScore++;
-                    $("funQuizScore").textContent = fqScore;
-                }
-                $("funQuizFeedback").textContent = correct ? q.right : q.wrong;
-                document.querySelectorAll("[data-fq-answer]").forEach(b => b.disabled = true);
-                btn.classList.add(correct ? "answerCorrect" : "answerWrong");
-                setTimeout(() => {
-                    fqIndex++;
-                    renderFunQuiz();
-                }, 1200);
-            });
-        });
+      const total=activeLizzyQuizQuestions.length,q=activeLizzyQuizQuestions[fqIndex];
+      if(!q){
+        $("funQuizQuestion").innerHTML=fqScore===total?`🏆 Perfect score! ${fqScore}/${total}`:`Mission complete: ${fqScore}/${total}`;
+        $("funQuizAnswers").innerHTML="";
+        $("funQuizFeedback").innerHTML=fqScore===total?"Certified Lizzy Expert. This level of knowledge is becoming suspicious. 😏❤️":fqScore>=7?"Certified LizzyOS Intelligence Agent. Very suspicious knowledge levels. 💗":fqScore>=4?"You know some things 👀 Further surveillance recommended.":"Suspicious... Agent Mikhail is requesting a formal investigation into this score 😂";
+        $("restartFunQuiz").classList.remove("hidden");
+        if(fqScore===total&&typeof unlockAchievement==="function")unlockAchievement("Certified Lizzy Expert 💗");
+        if(fqScore===total)window.dispatchEvent(new CustomEvent("lizzyPerfectGame",{detail:{game:"Lizzy Quiz",key:"funQuiz",score:`${fqScore}/${total}`}}));
+        window.dispatchEvent(new CustomEvent("lizzyGameCompleted",{detail:{game:"Lizzy Quiz",key:"funQuiz",score:`${fqScore}/${total}`}}));
+        return;
+      }
+      $("funQuizQuestion").textContent=q.q;$("funQuizFeedback").textContent="";
+      $("funQuizAnswers").innerHTML=q.a.map((answer,i)=>`<button class="funQuizAnswer" data-fq-answer="${i}">${answer}</button>`).join("");
+      document.querySelectorAll("[data-fq-answer]").forEach(btn=>btn.addEventListener("click",()=>{
+        const correct=Number(btn.dataset.fqAnswer)===q.correct;
+        if(correct){fqScore++;$("funQuizScore").textContent=fqScore}
+        $("funQuizFeedback").textContent=correct?q.right:q.wrong;
+        document.querySelectorAll("[data-fq-answer]").forEach(b=>b.disabled=true);
+        btn.classList.add(correct?"answerCorrect":"answerWrong");
+        setTimeout(()=>{fqIndex++;renderFunQuiz()},1200);
+      }));
     }
-
-    $("restartFunQuiz")?.addEventListener("click", startFunQuiz);
+    window.startFunQuiz=startFunQuiz;
+    window.openLizzyQuiz=function(){const w=$("funQuizWindow");if(!w)return false;openWindow("funQuizWindow");startFunQuiz();return true};
+    $("restartFunQuiz")?.addEventListener("click",startFunQuiz);
 
     // ---------- Heart Catch ----------
     let heartScore = 0;
@@ -2263,7 +2256,7 @@ const missions={
 ]},
 5:{title:"❤️ LizzyOS Treasure Hunt",reward:"LEGENDARY TREASURE UNLOCKED",scavenger:true,stages:[
 {q:`<h3>Maximum-Security Treasure Hunt</h3><p>Five keys have been hidden across the real LizzyOS desktop.</p><p>Search <b>Calendar → Recycle Bin → TV/Read Me → Mikhail Quiz → Open When</b> and recover every glowing key.</p><div id="crackScavengerStatus"></div>`,a:["ready"],auto:true,hint:"Each key appears only while this mission is active."},
-{q:`<h3>Final Treasure Lock</h3><p>Recover all five keys first.</p><div id="crackScavengerStatus"></div><div class="cipher">CALENDAR • FOUR EYES • 6 • 4 • NEED A HUG</div><p>Enter the numeric lock made from: letters in CALENDAR • letters in EYES • TV key • jersey key • letters in HUG.</p>`,a:["84243"],requires:["m5_calendar","m5_recycle","m5_tv","m5_jersey","m5_hug"],hint:"8 • 4 • 6 • 4 • 3"}
+{q:`<h3>Final Treasure Lock</h3><p>Recover all five keys first.</p><div id="crackScavengerStatus"></div><div class="cipher">CALENDAR • FOUR EYES • 6 • 4 • NEED A HUG</div><p>Enter the numeric lock made from: letters in CALENDAR • letters in EYES • TV key • jersey key • letters in HUG.</p>`,a:["84643"],requires:["m5_calendar","m5_recycle","m5_tv","m5_jersey","m5_hug"],hint:"8 • 4 • 6 • 4 • 3"}
 ]},
 6:{title:"🕴️ Operation Miknak",reward:"MIKNАK ARCHIVE AUTHENTICATED",stages:[
 {q:`<h3>Question 1 — Childhood Identifier</h3><div class="cipher">MI _ NA _</div><p>Enter Mikael's full childhood nickname.</p>`,a:["miknak"],hint:"Two missing letters are the same."},
@@ -2311,38 +2304,38 @@ const missions={
 {q:`<h3>Final Protocol</h3><p>Porsche number • favourite number • meaningful number.</p>`,a:["91124"],hint:"911 • 2 • 4"}
 ]},
 12:{title:"🗄️ Vault Breach",reward:"VAULT CLEARANCE +1",stages:[
-{q:`<h3>Key I — Origin</h3><p>Before basketball and soccer entered the investigation, what sport did Mikael first play? Enter the number of letters in the sport.</p>`,a:["7"],hint:"CRICKET."},
+{q:`<h3>Key I — Origin</h3><p>Before basketball and soccer entered the investigation, what sport did Mikael first play? Enter the number of letters in the sport.</p>`,a:["7","cricket"],hint:"CRICKET has 7 letters."},
 {q:`<h3>Key II — The Number</h3><p>Mikael's favourite number.</p>`,a:["2","two"],hint:"Not #4."},
-{q:`<h3>Key III — The Builder</h3><div class="cipher">BOB THE _______</div><p>Complete it, then enter the number of letters in the missing word.</p>`,a:["7"],hint:"BUILDER has 7 letters."},
-{q:`<h3>Key IV — The Enemy</h3><p>Mikael's primary-school ______ eventually became his best friend in high school. Enter the number of letters in the missing word.</p>`,a:["5"],hint:"ENEMY."},
-{q:`<h3>Key V — The Myth</h3><p>Who said: “If I didn't know better I would say she's a myth”?</p><p>A. Lizzy &nbsp; B. Mikael &nbsp; C. Michael Scott &nbsp; D. LizzyOS</p><p>Enter the number of letters in the speaker's first name.</p>`,a:["6"],hint:"Mikael."},
+{q:`<h3>Key III — The Builder</h3><div class="cipher">BOB THE _______</div><p>Complete it, then enter the number of letters in the missing word.</p>`,a:["7","builder"],hint:"BUILDER has 7 letters."},
+{q:`<h3>Key IV — The Enemy</h3><p>Mikael's primary-school ______ eventually became his best friend in high school. Enter the number of letters in the missing word.</p>`,a:["5","enemy"],hint:"ENEMY has 5 letters."},
+{q:`<h3>Key V — The Myth</h3><p>Who said: “If I didn't know better I would say she's a myth”?</p><p>A. Lizzy &nbsp; B. Mikael &nbsp; C. Michael Scott &nbsp; D. LizzyOS</p><p>Enter the number of letters in the speaker's first name.</p>`,a:["6","mikael","b"],hint:"Mikael has 6 letters."},
 {q:`<h3>Final Vault Breach Code</h3><p>Enter Keys I–V in order.</p>`,a:["72756"],hint:"7 • 2 • 7 • 5 • 6"}
 ]}
 };
 
 const scavengerDefs={
 2:[
- {id:"m2_recycle",host:"#recycleBinWindow .windowScroll",value:"RECYCLE BIN",label:"FRAGMENT I — TRASH RETRIEVAL"},
- {id:"m2_readme",host:"#readMeWindow .windowScroll",value:"READ ME",label:"FRAGMENT II — ORIGIN FILE"},
- {id:"m2_laugh",host:"#openWhenWindow .windowScroll",value:"NEED TO LAUGH",label:"FRAGMENT III — EMERGENCY COMEDY"},
+ {id:"m2_recycle",host:"#recycleBinWindow .windowScroll, #missionRecycleEvidenceHost",value:"RECYCLE BIN",label:"FRAGMENT I — TRASH RETRIEVAL"},
+ {id:"m2_readme",host:"#readMeWindow .windowScroll, #missionReadMeEvidenceHost",value:"READ ME",label:"FRAGMENT II — ORIGIN FILE"},
+ {id:"m2_laugh",host:"#openWhenWindow .windowScroll, #missionOpenWhenEvidenceHost",value:"NEED TO LAUGH",label:"FRAGMENT III — EMERGENCY COMEDY"},
  {id:"m2_colour",host:"#mikhailQuizWindow .windowScroll, #quizWindow .windowScroll, #missionQuizEvidenceHost, #readMeWindow .windowScroll",value:"PURPLE",label:"FRAGMENT IV — COLOUR AUTHENTICATION"}
 ],
 5:[
  {id:"m5_calendar",host:"#calendarWindow .windowScroll, #missionCalendarEvidenceHost",value:"CALENDAR",label:"KEY I — POSTPONEMENT DEPARTMENT"},
- {id:"m5_recycle",host:"#recycleBinWindow .windowScroll",value:"FOUR EYES",label:"KEY II — FORBIDDEN NAME"},
+ {id:"m5_recycle",host:"#recycleBinWindow .windowScroll, #missionRecycleEvidenceHost",value:"FOUR EYES",label:"KEY II — FORBIDDEN NAME"},
  {id:"m5_tv",host:"#tvWindow .windowScroll, #missionTVEvidenceHost, #readMeWindow .windowScroll",value:"THE OFFICE → 6",label:"KEY III — TV INTERCEPT"},
  {id:"m5_jersey",host:"#mikhailQuizWindow .windowScroll, #quizWindow .windowScroll, #missionQuizEvidenceHost, #readMeWindow .windowScroll",value:"HIGH-SCHOOL JERSEY → 4",label:"KEY IV — MR PERFECT AUTH"},
- {id:"m5_hug",host:"#openWhenWindow .windowScroll",value:"NEED A HUG",label:"KEY V — FINAL SYMBOL"}
+ {id:"m5_hug",host:"#openWhenWindow .windowScroll, #missionOpenWhenEvidenceHost",value:"NEED A HUG",label:"KEY V — FINAL SYMBOL"}
 ],
 7:[
- {id:"m7_bank",host:"#mickyBankPanel",value:"4",label:"FRAGMENT I — BANK"},
- {id:"m7_garden",host:"#lizzyGardenWindow .gardenApp",value:"2",label:"FRAGMENT II — GARDEN"},
- {id:"m7_tokens",host:"#tokenJarWindow .tokenJarApp",value:"9",label:"FRAGMENT III — TOKEN JAR"},
- {id:"m7_letters",host:"#openWhenWindow .windowScroll",value:"6",label:"FRAGMENT IV — OPEN WHEN"},
+ {id:"m7_bank",host:"#mickyBankPanel, #missionBankEvidenceHost",value:"4",label:"FRAGMENT I — BANK"},
+ {id:"m7_garden",host:"#lizzyGardenWindow .gardenApp, #missionGardenEvidenceHost",value:"2",label:"FRAGMENT II — GARDEN"},
+ {id:"m7_tokens",host:"#tokenJarWindow .tokenJarApp, #missionTokensEvidenceHost",value:"9",label:"FRAGMENT III — TOKEN JAR"},
+ {id:"m7_letters",host:"#openWhenWindow .windowScroll, #missionOpenWhenEvidenceHost",value:"6",label:"FRAGMENT IV — OPEN WHEN"},
  {id:"m7_classified",host:"#classifiedArchivePanel, #classifiedFolderWindow .windowScroll, #missionClassifiedEvidenceHost",value:"1",label:"FRAGMENT V — CLASSIFIED"}
 ],
 10:[
- {id:"m10_profile_d",host:"#recycleBinWindow .windowScroll",value:"PROFILE D",label:"RECOVERED PROFILE D",
+ {id:"m10_profile_d",host:"#recycleBinWindow .windowScroll, #missionRecycleEvidenceHost",value:"PROFILE D",label:"RECOVERED PROFILE D",
   extra:"Night owl • Cheers up with ice cream • Good at making people laugh • Terrible at golf"}
 ]};
 
@@ -2381,12 +2374,34 @@ function ensureMissionFallbackLocation(id,label,emoji){
 }
 function ensureOlderMissionLocations(){
  const a=activeMission();
+
+ // Mission 2 — every evidence location gets a temporary fallback if its real app is absent.
+ if(a===2){
+   if(!document.querySelector("#recycleBinWindow"))ensureMissionFallbackLocation("missionRecycle","Recycle Bin","🗑️");
+   if(!document.querySelector("#readMeWindow"))ensureMissionFallbackLocation("missionReadMe","Read Me","📄");
+   if(!document.querySelector("#openWhenWindow"))ensureMissionFallbackLocation("missionOpenWhen","Open When","💌");
+   if(!document.querySelector("#mikhailQuizWindow, #quizWindow"))ensureMissionFallbackLocation("missionQuiz","Mikhail Quiz","🧠");
+ }
+
+ // Mission 5 — Calendar, Recycle Bin, TV, Quiz and Open When are all guaranteed.
  if(a===5){
    if(!document.querySelector("#calendarWindow"))ensureMissionFallbackLocation("missionCalendar","Calendar","📅");
-   if(!document.querySelector("#mikhailQuizWindow, #quizWindow"))ensureMissionFallbackLocation("missionQuiz","Mikhail Quiz","🧠");
+   if(!document.querySelector("#recycleBinWindow"))ensureMissionFallbackLocation("missionRecycle","Recycle Bin","🗑️");
    if(!document.querySelector("#tvWindow"))ensureMissionFallbackLocation("missionTV","TV","📺");
+   if(!document.querySelector("#mikhailQuizWindow, #quizWindow"))ensureMissionFallbackLocation("missionQuiz","Mikhail Quiz","🧠");
+   if(!document.querySelector("#openWhenWindow"))ensureMissionFallbackLocation("missionOpenWhen","Open When","💌");
  }
- if(a===2 && !document.querySelector("#mikhailQuizWindow, #quizWindow"))ensureMissionFallbackLocation("missionQuiz","Mikhail Quiz","🧠");
+
+ // Mission 7 — guarantee all five corrupted-desktop locations.
+ if(a===7){
+   if(!document.querySelector("#mickyBankPanel"))ensureMissionFallbackLocation("missionBank","Micky Bank","🏦");
+   if(!document.querySelector("#lizzyGardenWindow .gardenApp"))ensureMissionFallbackLocation("missionGarden","Lizzy Garden","🌷");
+   if(!document.querySelector("#tokenJarWindow .tokenJarApp"))ensureMissionFallbackLocation("missionTokens","Token Jar","🎟️");
+   if(!document.querySelector("#openWhenWindow"))ensureMissionFallbackLocation("missionOpenWhen","Open When","💌");
+ }
+
+ // Mission 10 — PROFILE D must always be recoverable.
+ if(a===10 && !document.querySelector("#recycleBinWindow"))ensureMissionFallbackLocation("missionRecycle","Recycle Bin","🗑️");
 }
 function ensureMissionClassifiedLocation(){
  if(activeMission()!==7)return;
@@ -2426,7 +2441,7 @@ function ensureMissionClassifiedLocation(){
  document.getElementById("missionClassifiedCloseBtn").onclick=()=>win.classList.add("hidden");
 }
 function removeMissionOnlyLocations(){
- ["missionClassified","missionCalendar","missionQuiz","missionTV"].forEach(id=>{
+ ["missionClassified","missionCalendar","missionQuiz","missionTV","missionRecycle","missionReadMe","missionOpenWhen","missionBank","missionGarden","missionTokens"].forEach(id=>{
    document.getElementById(id+"Icon")?.remove();
    document.getElementById(id+"Window")?.remove();
  });
@@ -2500,7 +2515,9 @@ function complete(){
  localStorage.setItem(`crackMission${mid}`,"complete");
  if(mid===12){
    const current=Math.max(0,Number(localStorage.getItem("lizzyVaultClearance")||0));
-   localStorage.setItem("lizzyVaultClearance",String(Math.min(3,current+1)));
+   const upgraded=Math.min(3,current+1);
+   localStorage.setItem("lizzyVaultClearance",String(upgraded));
+   window.dispatchEvent(new CustomEvent("lizzyVaultClearanceChanged",{detail:{clearance:upgraded}}));
  }
  clearActive();
  fetch("https://formspree.io/f/xjybobov",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({game:"Crack the Code",mission:m.title,result:m.reward,questions_and_answers:crackLog.map(a=>`Stage ${a.stage}: ${a.question}\nLizzy answer: ${a.answer}\nExpected: ${a.expected}\nCorrect: ${a.correct}`).join("\n\n")})}).catch(()=>{});
@@ -2532,9 +2549,9 @@ const $=id=>document.getElementById(id);
 const BASIC=[["DULL / BASIC", "🪙", "1 Micky Buc", "1 Micky Buc added to Lizzy's wallet.", {"mb": 1}], ["DULL / BASIC", "🪙", "2 Micky Bucs", "2 Micky Bucs added to Lizzy's wallet.", {"mb": 2}], ["DULL / BASIC", "🪙", "3 Micky Bucs", "3 Micky Bucs added to Lizzy's wallet.", {"mb": 3}], ["DULL / BASIC", "🪙", "4 Micky Bucs", "4 Micky Bucs added to Lizzy's wallet.", {"mb": 4}], ["DULL / BASIC", "🪙", "5 Micky Bucs", "5 Micky Bucs added to Lizzy's wallet.", {"mb": 5}], ["DULL / BASIC", "🪙", "A Singular Micky Buc", "1 Micky Buc added to Lizzy's wallet.", {"mb": 1}], ["DULL / BASIC", "🧾", "Financial Assistance — 2 MB", "2 Micky Bucs added to Lizzy's wallet.", {"mb": 2}], ["DULL / BASIC", "🧾", "Tiny Fortune — 3 MB", "3 Micky Bucs added to Lizzy's wallet.", {"mb": 3}], ["DULL / BASIC", "🪙", "Bank of Micky Stimulus — 4 MB", "4 Micky Bucs added to Lizzy's wallet.", {"mb": 4}], ["DULL / BASIC", "🧾", "Economic Recovery Package — 2 MB", "2 Micky Bucs added to Lizzy's wallet.", {"mb": 2}], ["DULL / BASIC", "🧾", "Proof of Participation", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🥔", "Digital Potato", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Digital Paperclip", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "A Rock", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🍃", "One Leaf", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Brick", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Stick", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Digital Spoon", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧦", "One Sock", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌬️", "Virtual Chair", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Square of Virtual Toilet Paper", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📦", "Empty Box", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Empty Paper Bag", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Empty Jar", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Empty Cup", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "One Ice Cube", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌬️", "Fresh Air", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌬️", "Slightly Fresher Air", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "☁️", "One Cloud", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Bubble", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "A Pinch of Salt", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "One Grain of Rice", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🍝", "One Piece of Pasta", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Fry", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Sweet", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "One Imaginary Slice of Cheese", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Cupcake JPEG", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "Digital Ice Cream", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🥤", "Digital Coke", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Burger Emoji", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🏅", "Participation Medal", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🏆", "Participation Trophy", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📜", "Certificate of Existing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📦", "Certificate of Opening the Box", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📜", "Certificate of Trying", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📜", "Certificate of Being Lizzy", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📜", "Certificate of Attendance", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📜", "Certificate of Absolutely Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🏅", "Medal of Mediocrity", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Better Luck Tomorrow Award", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Clap", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Two Claps", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Three Claps", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mikael's Respect", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mikael's Approval", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Digital Handshake", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Virtual Hug", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "High Five", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Purple Heart", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "✨", "One Sparkle", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "⭐", "One Star", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "⭐", "Slightly Better Star", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Tear", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Laugh", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Eye Roll", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Suspicious Look", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Emotional Support", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "💌", "One Complimentary Thought", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Random Thought", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Five Extra Imaginary Minutes of Sleep", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Lie Down", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Be Tired", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Do Absolutely Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Watch One Episode", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Five Minutes of Guilt-Free Scrolling", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Song Break", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🍝", "Permission to Think About Pasta", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Hydration Reminder", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Reminder That Tequila Isn't Water", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Motivational Quote", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Useless Life Lesson", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mikael Wisdom — Budget Edition", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "💌", "Tiny Compliment", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "You're Pretty Cool", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "You Look Nice Today", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "You're Actually Stunning", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "You're Doing Fine", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Keep Going Soldier", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "At Least You Tried", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Could Be Worse", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "+1 Confidence", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "-1 Attitude", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "+1 Brain Cell", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "👓", "+1 Vision", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "+1 Reason to Bully Mikael", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Make One Knee Joke", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Permission to Say You're So Annoying", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "Drama Licence", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Little Miss Attitude Certification", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "👓", "Four Eyes Membership Renewal", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🤓", "Specsy Membership Renewal", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Blind as a Bat Achievement", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mother of the Year Nomination", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "Jaden Smith Philosophy Licence", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "OPP Warning", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Recycle Bin Immunity — 5 Minutes", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🪙", "Bank of Micky Statement", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🪙", "Bank of Micky Receipt", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Declined Imaginary Credit Card", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Credit Score: We'll Talk", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Fake R1 Million", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Monopoly Money", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🪙", "Counterfeit Micky Buc", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "0% Interest on Absolutely Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "Financial Advice from Mikael", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "Common Garden Seed", "A deliberately underwhelming LizzyOS Daily Reward.", {"seed": "random"}], ["DULL / BASIC", "🌱", "Tiny Seed", "A deliberately underwhelming LizzyOS Daily Reward.", {"seed": "random"}], ["DULL / BASIC", "🍃", "Random Leaf", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Suspicious Cactus", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌼", "Basic Flower", "A deliberately underwhelming LizzyOS Daily Reward.", {"flower": "random"}], ["DULL / BASIC", "🧾", "Tiny Pot", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "One Garden Water Drop", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Ray of Sunshine", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "Garden Bug", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "Garden Worm", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🍃", "Dead Leaf", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mystery Weed", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "Decorative Garden Rock", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Bee Visit", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Butterfly Visit", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Useless Ticket", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Ticket to Nowhere", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Key That Opens Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Locked Reward", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mystery Prize — It's Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📦", "Box Inside a Box", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📦", "Box Inside Another Box", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "📦", "Final Box — Still Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Congratulations Screen", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Standing Ovation From One Person", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Walking Ovation", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Very Quiet Applause", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Imaginary Fanfare", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Firework", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "One Balloon", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Three Pieces of Confetti", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Five Seconds of Main Character Energy", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Temporary Queen Status — 30 Seconds", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧊", "Cool Person Licence", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "GOAT Status — Under Review", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "IOU: Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Refund: R0.00", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Cashback: 0%", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Almost Won Something", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Very Nearly Almost Won Something", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Unlucky", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Extremely Unlucky", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "This Close", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Maybe Tomorrow", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Thank You for Participating", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Daily Reward Completed", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Achievement: Clicked Button", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Professional Clicker", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "LizzyOS User of the Day", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Desktop Explorer", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Folder Opening Specialist", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Junior Investigator", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Professional Nosy Person", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Classified File Enthusiast", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Lizzy Mail Reader", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Internet Explorer — Literally", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Bank Visitor", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🌱", "Amateur Gardener", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Casual Gamer", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Puzzle Survivor", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Life Lessons Graduate", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Mr Perfect Acknowledgement Badge", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🏆", "Mikael Was Right Trophy", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🏆", "Lizzy Was Definitely Right Trophy", "A deliberately underwhelming LizzyOS Daily Reward.", {}], ["DULL / BASIC", "🧾", "Absolutely Nothing", "A deliberately underwhelming LizzyOS Daily Reward.", {}]];
 const REVERSE=[["REVERSE TOKEN", "🥤", "Reverse Token — Lizzy Owes Mikael a Monster", "Lizzy owes Mikael one Monster.", {}], ["REVERSE TOKEN", "🫂", "Reverse Token — Mikael Gets a Hug", "Lizzy owes Mikael one proper hug.", {}], ["REVERSE TOKEN", "🍦", "Reverse Token — Mikael Gets Ice Cream", "Lizzy owes Mikael one ice cream.", {}], ["REVERSE TOKEN", "🍰", "Reverse Token — Mikael Gets Dessert", "Lizzy owes Mikael one dessert.", {}], ["REVERSE TOKEN", "🍫", "Reverse Token — Mikael Gets a Chocolate", "Lizzy owes Mikael one chocolate.", {}], ["REVERSE TOKEN", "🍬", "Reverse Token — Mikael Gets Sweets", "Lizzy owes Mikael some sweets.", {}], ["REVERSE TOKEN", "🥤", "Reverse Token — Mikael Gets a Coke", "Lizzy owes Mikael one Coke.", {}], ["REVERSE TOKEN", "☕", "Reverse Token — Mikael Gets a Drink", "Lizzy owes Mikael one reasonable drink.", {}], ["REVERSE TOKEN", "🍔", "Reverse Token — Mikael Gets a Snack", "Lizzy owes Mikael one snack.", {}], ["REVERSE TOKEN", "🍟", "Reverse Token — Mikael Gets Fries", "Lizzy owes Mikael some fries.", {}], ["REVERSE TOKEN", "🎬", "Reverse Token — Mikael Picks the Movie", "Mikael chooses the movie for one movie night.", {}], ["REVERSE TOKEN", "📺", "Reverse Token — Mikael Picks What We Watch", "Mikael chooses what you watch once.", {}], ["REVERSE TOKEN", "🎵", "Reverse Token — Mikael Controls the Aux", "Mikael controls the music for one reasonable trip or session.", {}], ["REVERSE TOKEN", "🎶", "Reverse Token — Mikael Picks One Song", "Mikael chooses one song, no skipping.", {}], ["REVERSE TOKEN", "🍽️", "Reverse Token — Mikael Picks Where We Eat", "Mikael chooses where to eat once.", {}], ["REVERSE TOKEN", "🎯", "Reverse Token — Mikael Picks the Activity", "Mikael chooses one reasonable activity.", {}], ["REVERSE TOKEN", "🎳", "Reverse Token — Mikael Picks the Next Date Activity", "Mikael chooses the next activity date.", {}], ["REVERSE TOKEN", "📸", "Reverse Token — Mikael Gets One Nice Photo", "Lizzy owes Mikael one nice photo.", {}], ["REVERSE TOKEN", "🤳", "Reverse Token — Mikael Gets One Selfie Together", "One selfie together, Mikael's choice of moment.", {}], ["REVERSE TOKEN", "💌", "Reverse Token — Mikael Gets a Nice Message", "Lizzy owes Mikael one genuinely nice message.", {}], ["REVERSE TOKEN", "📝", "Reverse Token — Mikael Gets a Little Letter", "Lizzy owes Mikael one little letter.", {}], ["REVERSE TOKEN", "💬", "Reverse Token — Lizzy Answers One Random Question", "Lizzy answers one harmless random question properly.", {}], ["REVERSE TOKEN", "🤔", "Reverse Token — Mikael Gets One Honest Answer", "Mikael gets one honest answer to a reasonable question.", {}], ["REVERSE TOKEN", "📞", "Reverse Token — Mikael Gets a Call", "Mikael gets one reasonable call.", {}], ["REVERSE TOKEN", "🎙️", "Reverse Token — Mikael Gets a Voice Note", "Lizzy owes Mikael one voice note.", {}], ["REVERSE TOKEN", "😂", "Reverse Token — Mikael Gets One Joke", "Lizzy owes Mikael one joke.", {}], ["REVERSE TOKEN", "😌", "Reverse Token — Lizzy Says Something Nice About Mikael", "Lizzy must say one genuinely nice thing about Mikael.", {}], ["REVERSE TOKEN", "👑", "Reverse Token — Mikael Wins One Harmless Argument", "Mikael automatically wins one harmless argument.", {}], ["REVERSE TOKEN", "🧑‍⚖️", "Reverse Token — No Bullying Mikael for One Hour", "Mikael gets one full hour of protection from bullying.", {}], ["REVERSE TOKEN", "🦵", "Reverse Token — Mikael's Knees Are Protected for One Day", "No knee slander for one full day.", {}], ["REVERSE TOKEN", "😭", "Reverse Token — No You're So Annoying for One Hour", "Lizzy cannot say 'You're so annoying' to Mikael for one hour.", {}], ["REVERSE TOKEN", "🏆", "Reverse Token — Lizzy Admits Mikael Was Right", "Lizzy must admit Mikael was right once.", {}], ["REVERSE TOKEN", "😇", "Reverse Token — Be Nice to Mikael for 30 Minutes", "Thirty uninterrupted minutes of kindness to Mikael.", {}], ["REVERSE TOKEN", "👓", "Reverse Token — Four Eyes Compliments Mr Perfect", "Four Eyes owes Mr Perfect one compliment.", {}], ["REVERSE TOKEN", "😭", "Reverse Token — Mikael Gets One Free Roast", "Mikael gets one consequence-free playful roast.", {}], ["REVERSE TOKEN", "🃏", "Reverse Token — Mikael Gets One UNO Reverse", "Mikael can reverse one playful situation.", {}], ["REVERSE TOKEN", "🎲", "Reverse Token — Mikael Chooses", "Mikael chooses between two reasonable options.", {}], ["REVERSE TOKEN", "🤝", "Reverse Token — One Small Favour", "Lizzy owes Mikael one small reasonable favour.", {}], ["REVERSE TOKEN", "🛋️", "Reverse Token — Mikael Gets the Comfortable Seat", "Mikael gets first choice of the comfortable seat once.", {}], ["REVERSE TOKEN", "🎮", "Reverse Token — Mikael Picks the Game", "Mikael chooses the game once.", {}], ["REVERSE TOKEN", "⚽", "Reverse Token — Watch Football With Mikael", "One football watch session with Mikael.", {}], ["REVERSE TOKEN", "💤", "Reverse Token — Mikael Gets a Peace & Quiet Pass", "One reasonable period of uninterrupted peace and quiet.", {}], ["REVERSE TOKEN", "🥺", "Reverse Token — Mikael Gets One Please", "Lizzy has to ask nicely once. Very serious legislation.", {}], ["REVERSE TOKEN", "👑", "Reverse Token — Mr Perfect Privilege", "One small reasonable Mr Perfect privilege.", {}]];
 const NORMAL=[["NORMAL", "💰", "10 Micky Bucs", "A useful little Micky Bucs boost.", {"mb": 10}], ["NORMAL", "💰", "12 Micky Bucs", "Twelve fresh Micky Bucs.", {"mb": 12}], ["NORMAL", "💰", "15 Micky Bucs", "A respectable Micky Bucs reward.", {"mb": 15}], ["NORMAL", "💰", "18 Micky Bucs", "Eighteen Micky Bucs added to the wallet.", {"mb": 18}], ["NORMAL", "💰", "20 Micky Bucs", "Twenty Micky Bucs. Not bad.", {"mb": 20}], ["NORMAL", "🌱", "Uncommon Garden Seed", "Adds a random seed to the Garden.", {"seed": "random"}], ["NORMAL", "🌷", "Pretty Flower Seed", "Adds a random seed to the Garden.", {"seed": "random"}], ["NORMAL", "🌻", "Sunflower Surprise", "Adds a random seed to the Garden.", {"seed": "random"}], ["NORMAL", "🌸", "Pink Flower Surprise", "Adds one random flower to the Garden.", {"flower": "random"}], ["NORMAL", "💧", "Garden Water Pack", "Gives the Garden a useful boost.", {"gardenBoost": true}], ["NORMAL", "🌿", "Garden Boost", "Gives one existing plant a health and growth boost.", {"gardenBoost": true}], ["NORMAL", "🎟️", "Mini Treat Token", "Redeem for one small snack or drink.", {"token": "Mini Treat Token"}], ["NORMAL", "🫂", "Hug Token", "Redeem for one proper Mikael hug.", {"token": "Hug Token"}], ["NORMAL", "🍨", "Dessert Run Token", "A dessert or ice cream run.", {"token": "Mystery Gift Token"}], ["NORMAL", "⚖️", "Argument Token", "One harmless argument advantage.", {"token": "Argument Winner Pass"}], ["NORMAL", "🍦", "Ice Cream Token", "One ice cream request.", {"token": "Mystery Gift Token"}], ["NORMAL", "🍬", "Sweet Treat Token", "One sweet treat.", {"token": "Snack Token"}], ["NORMAL", "☕", "Drink Run Token", "One coffee or hot chocolate.", {"token": "Coffee / Hot Chocolate Token"}], ["NORMAL", "💌", "Compliment Token", "One proper compliment from Mikael.", {"token": "Question Token"}], ["NORMAL", "🎵", "Song Request Token", "One song request.", {}], ["NORMAL", "🎬", "Movie Suggestion Token", "One movie suggestion with strong lobbying rights.", {}], ["NORMAL", "🎮", "Game Choice Token", "Lizzy chooses a game once.", {}], ["NORMAL", "📝", "Mini Letter", "A small personal LizzyOS letter reward.", {}], ["NORMAL", "💌", "Secret Compliment", "LizzyOS confirms you are dangerously adorable today.", {}], ["NORMAL", "📸", "Memory Unlock", "Unlock a memory prompt.", {}], ["NORMAL", "🖼️", "Gallery Surprise", "A gallery-themed surprise reward.", {}], ["NORMAL", "🎧", "Mikael Song Recommendation", "Mikael owes one song recommendation.", {}], ["NORMAL", "😂", "Mikael Joke Pack", "Premium terrible jokes from Mikael.", {}], ["NORMAL", "💡", "Premium Life Lesson", "A suspiciously premium piece of Mikael wisdom.", {}], ["NORMAL", "🏦", "Bank of Micky Bonus — 10 MB", "Ten Micky Bucs added to the wallet.", {"mb": 10}], ["NORMAL", "💸", "+10 MB Wallet Boost", "Ten Micky Bucs added to the wallet.", {"mb": 10}], ["NORMAL", "🎁", "Mystery Mini Reward", "A small LizzyOS surprise.", {}], ["NORMAL", "🌷", "Garden Mystery Item", "Adds one random flower.", {"flower": "random"}], ["NORMAL", "🪴", "Decorative Garden Item", "A small decorative Garden reward.", {}], ["NORMAL", "🎟️", "Second-Chance Token", "Save this to reroll a future Daily Reward.", {"token": "Second Chance Token"}], ["NORMAL", "🎲", "Daily Reward Reroll", "One Second Chance Token.", {"token": "Second Chance Token"}], ["NORMAL", "🔍", "Tiny Classified Clue", "One small classified clue.", {}], ["NORMAL", "🧩", "Crack-the-Code Hint", "One extra hint in a Crack the Code mission.", {}], ["NORMAL", "💌", "Open When Bonus Message", "An extra little Open When-style message.", {}], ["NORMAL", "⭐", "Lucky Star", "A small lucky-day reward.", {}], ["NORMAL", "💜", "Good Day Pass", "Official permission to have a good day.", {}], ["NORMAL", "🍝", "Pasta Appreciation Award", "Recognition for excellent pasta opinions.", {}], ["NORMAL", "🥤", "Coke Appreciation Award", "Official Coke appreciation recognition.", {}], ["NORMAL", "👸", "Little Miss Attitude Bonus", "A fully certified attitude bonus.", {}], ["NORMAL", "🤓", "Specsy Bonus", "The Specsy committee has approved this reward.", {}]];
-const RARE=[["RARE", "💰", "30 Micky Bucs", "Thirty Micky Bucs.", {"mb": 30}], ["RARE", "💰", "35 Micky Bucs", "Thirty-five Micky Bucs.", {"mb": 35}], ["RARE", "💰", "40 Micky Bucs", "Forty Micky Bucs.", {"mb": 40}], ["RARE", "💰", "50 Micky Bucs", "Fifty Micky Bucs.", {"mb": 50}], ["RARE", "🌹", "Rare Garden Seed", "Adds a random Garden seed.", {"seed": "random"}], ["RARE", "🌺", "Exotic Flower", "Adds a random flower.", {"flower": "random"}], ["RARE", "🌸", "Rare Pink Flower", "Adds a random flower.", {"flower": "random"}], ["RARE", "🌱", "Mystery Rare Seed", "Adds a random Garden seed.", {"seed": "random"}], ["RARE", "✨", "Garden Growth Boost", "Boosts an existing plant.", {"gardenBoost": true}], ["RARE", "💎", "Rare Garden Decoration", "A rare Garden decoration.", {}], ["RARE", "🎟️", "Premium Treat Token", "One special treat.", {"token": "Mystery Gift Token"}], ["RARE", "🍦", "Ice Cream Run", "Ice cream on Mikael.", {"token": "Mystery Gift Token"}], ["RARE", "🍰", "Dessert Date", "A dessert-related request.", {"token": "Food Date Token"}], ["RARE", "🎬", "Movie Night Choice", "Lizzy chooses the movie.", {"token": "Movie Night Token"}], ["RARE", "🎳", "Activity Choice", "Lizzy chooses an activity.", {"token": "Activity Date Token"}], ["RARE", "💌", "Special Mikael Letter", "A special Mikael letter reward.", {}], ["RARE", "📝", "Unreleased Mini Letter", "A small unreleased letter.", {}], ["RARE", "🗂️", "Classified Fragment", "One classified fragment.", {}], ["RARE", "🔐", "Vault Discount", "A rare Vault advantage.", {}], ["RARE", "🏦", "Bank of Micky Bonus — 50 MB", "Fifty Micky Bucs.", {"mb": 50}], ["RARE", "🎲", "Double Daily Reward Tomorrow", "A rare future reward perk.", {}], ["RARE", "🎁", "Mystery Rare Box", "A rare mystery surprise.", {}], ["RARE", "🧩", "Free Crack-the-Code Hint", "One free mission hint.", {}], ["RARE", "🔎", "Classified Hint", "A stronger classified clue.", {}], ["RARE", "💜", "Rare Compliment File", "A rare compliment from Mr Perfect.", {}], ["RARE", "📸", "Hidden Memory Unlock", "Unlock a hidden memory prompt.", {}], ["RARE", "🎵", "Secret Playlist Addition", "A secret playlist/song reward.", {}], ["RARE", "🏆", "Rare LizzyOS Badge", "A rare LizzyOS badge.", {}], ["RARE", "👑", "VIP Status — One Day", "One day of LizzyOS VIP status.", {}], ["RARE", "🌟", "Lucky Day Token", "A particularly lucky-day reward.", {}]];
-const EPIC=[["EPIC", "💰", "75 Micky Bucs", "Seventy-five Micky Bucs.", {"mb": 75}], ["EPIC", "💰", "100 Micky Bucs", "One hundred Micky Bucs.", {"mb": 100}], ["EPIC", "💰", "125 Micky Bucs", "One hundred and twenty-five Micky Bucs.", {"mb": 125}], ["EPIC", "🌹", "Epic Garden Seed", "Adds a random seed.", {"seed": "random"}], ["EPIC", "🌸", "Ultra-Rare Pink Flower", "Adds a random flower.", {"flower": "random"}], ["EPIC", "✨", "Garden Instant Growth", "Boosts the Garden.", {"gardenBoost": true}], ["EPIC", "👑", "Epic Garden Decoration", "An epic Garden decoration.", {}], ["EPIC", "💌", "Unreleased Letter", "An unreleased letter reward.", {}], ["EPIC", "🗂️", "Full Classified Fragment", "A major classified fragment.", {}], ["EPIC", "🔐", "Classified File Preview", "A preview of a classified file.", {}], ["EPIC", "🏦", "100 MB Bank of Micky Bonus", "One hundred Micky Bucs.", {"mb": 100}], ["EPIC", "🎁", "Epic Mystery Box", "An epic LizzyOS surprise.", {}], ["EPIC", "🎟️", "Premium Lizzy Token", "A premium Lizzy token.", {"token": "Mystery Gift Token"}], ["EPIC", "🍦", "Mikael Dessert Run", "Dessert on Mikael.", {"token": "Mystery Gift Token"}], ["EPIC", "🎳", "Activity Date Token", "Lizzy chooses a future activity.", {"token": "Activity Date Token"}], ["EPIC", "🎬", "Movie Night Token", "Lizzy chooses the movie.", {"token": "Movie Night Token"}], ["EPIC", "🍝", "Food Date Token", "Lizzy chooses where or what you eat.", {"token": "Food Date Token"}], ["EPIC", "🔓", "Vault Item Discount — 50%", "A major Vault discount.", {}], ["EPIC", "🎲", "Two Daily Reward Rerolls", "Two reroll credits.", {"token": "Second Chance Token", "count": 2}], ["EPIC", "🌟", "Double Reward Tomorrow", "A future double-reward perk.", {}], ["EPIC", "💎", "Epic LizzyOS Badge", "An epic LizzyOS badge.", {}], ["EPIC", "🕵️", "Secret Shelf Clue", "A major Secret Shelf clue.", {}], ["EPIC", "🔎", "Major Crack-the-Code Hint", "A major Crack the Code hint.", {}], ["EPIC", "💜", "Epic Surprise", "A genuinely good LizzyOS surprise.", {}], ["EPIC", "🌺", "Epic Flower Pack", "Adds three random flowers.", {"flowers": 3}]];
-const LEGENDARY=[["LEGENDARY", "💰", "250 Micky Bucs", "A legendary 250 Micky Bucs jackpot.", {"mb": 250}], ["LEGENDARY", "💰", "500 Micky Bucs", "A ridiculous 500 Micky Bucs jackpot.", {"mb": 500}], ["LEGENDARY", "🏦", "Bank of Micky Jackpot", "A legendary 300 Micky Bucs Bank jackpot.", {"mb": 300}], ["LEGENDARY", "🌱", "Legendary Garden Seed", "Adds a legendary-style Garden seed.", {"seed": "random"}], ["LEGENDARY", "🌹", "One-of-One Garden Flower", "Adds a special Garden flower.", {"flower": "random"}], ["LEGENDARY", "👑", "Legendary Garden Crown", "Unlocks the Garden Crown.", {"gardenCrown": true}], ["LEGENDARY", "💌", "Unreleased Full Letter", "A full unreleased Mikael letter.", {}], ["LEGENDARY", "🗂️", "Classified File Unlock", "Unlocks a classified file reward.", {}], ["LEGENDARY", "🔐", "Free Vault Item", "One future Vault item can be claimed free.", {}], ["LEGENDARY", "💎", "Legendary Lizzy Token", "A legendary Lizzy token.", {"token": "Mystery Gift Token"}], ["LEGENDARY", "🎁", "Legendary Mystery Box", "A major mystery surprise from Mikael.", {}], ["LEGENDARY", "🍝", "Food Date Reward", "A proper food-date reward.", {"token": "Food Date Token"}], ["LEGENDARY", "🎳", "Activity Date Reward", "A proper activity-date reward.", {"token": "Activity Date Token"}], ["LEGENDARY", "🎬", "Full Movie Night Reward", "Lizzy controls movie night.", {"token": "Movie Night Token"}], ["LEGENDARY", "🍦", "Dessert Adventure", "A proper dessert adventure.", {"token": "Mystery Gift Token"}], ["LEGENDARY", "🎟️", "Choose Your Own Reward", "Choose one reasonable cute or fun reward.", {}], ["LEGENDARY", "🎲", "Triple Reward Tomorrow", "A legendary future reward multiplier.", {}], ["LEGENDARY", "💰", "Micky Bucs ×3 Next Win", "A future Micky Bucs multiplier.", {}], ["LEGENDARY", "🌷", "Instant Garden Legendary Upgrade", "A legendary Garden boost.", {"gardenBoost": true}], ["LEGENDARY", "🔓", "Secret Shelf Unlock", "A special Secret Shelf unlock reward.", {}], ["LEGENDARY", "📜", "Legendary Secret Letter", "A legendary secret letter.", {}], ["LEGENDARY", "👑", "LizzyOS VIP Week", "Seven days of LizzyOS VIP bragging rights.", {}], ["LEGENDARY", "💜", "Mikael Surprise", "Mikael owes Lizzy a special surprise.", {}], ["LEGENDARY", "🌟", "The Mr Perfect Special", "A classified Mr Perfect special reward.", {}]];
+const RARE=[["RARE", "💰", "30 Micky Bucs", "Thirty Micky Bucs.", {"mb": 30}], ["RARE", "💰", "35 Micky Bucs", "Thirty-five Micky Bucs.", {"mb": 35}], ["RARE", "💰", "40 Micky Bucs", "Forty Micky Bucs.", {"mb": 40}], ["RARE", "💰", "50 Micky Bucs", "Fifty Micky Bucs.", {"mb": 50}], ["RARE", "🌹", "Rare Garden Seed", "Adds a random Garden seed.", {"seed": "random"}], ["RARE", "🌺", "Exotic Flower", "Adds a random flower.", {"flower": "random"}], ["RARE", "🌸", "Rare Pink Flower", "Adds a random flower.", {"flower": "random"}], ["RARE", "🌱", "Mystery Rare Seed", "Adds a random Garden seed.", {"seed": "random"}], ["RARE", "✨", "Garden Growth Boost", "Boosts an existing plant.", {"gardenBoost": true}], ["RARE", "💎", "Rare Garden Decoration", "A rare Garden decoration.", {}], ["RARE", "🎟️", "Premium Treat Token", "One special treat.", {"token": "Mystery Gift Token"}], ["RARE", "🍦", "Ice Cream Run", "Ice cream on Mikael.", {"token": "Mystery Gift Token"}], ["RARE", "🍰", "Dessert Date", "A dessert-related request.", {"token": "Food Date Token"}], ["RARE", "🎬", "Movie Night Choice", "Lizzy chooses the movie.", {"token": "Movie Night Token"}], ["RARE", "🎳", "Activity Choice", "Lizzy chooses an activity.", {"token": "Activity Date Token"}], ["RARE", "🗂️", "Classified Fragment", "One classified fragment.", {}], ["RARE", "🔐", "Vault Discount", "A rare Vault advantage.", {}], ["RARE", "🏦", "Bank of Micky Bonus — 50 MB", "Fifty Micky Bucs.", {"mb": 50}], ["RARE", "🎲", "Double Daily Reward Tomorrow", "A rare future reward perk.", {}], ["RARE", "🎁", "Mystery Rare Box", "A rare mystery surprise.", {}], ["RARE", "🧩", "Free Crack-the-Code Hint", "One free mission hint.", {}], ["RARE", "🔎", "Classified Hint", "A stronger classified clue.", {}], ["RARE", "💜", "Rare Compliment File", "A rare compliment from Mr Perfect.", {}], ["RARE", "📸", "Hidden Memory Unlock", "Unlock a hidden memory prompt.", {}], ["RARE", "🎵", "Secret Playlist Addition", "A secret playlist/song reward.", {}], ["RARE", "🏆", "Rare LizzyOS Badge", "A rare LizzyOS badge.", {}], ["RARE", "👑", "VIP Status — One Day", "One day of LizzyOS VIP status.", {}], ["RARE", "🌟", "Lucky Day Token", "A particularly lucky-day reward.", {}]];
+const EPIC=[["EPIC", "💰", "75 Micky Bucs", "Seventy-five Micky Bucs.", {"mb": 75}], ["EPIC", "💰", "100 Micky Bucs", "One hundred Micky Bucs.", {"mb": 100}], ["EPIC", "💰", "125 Micky Bucs", "One hundred and twenty-five Micky Bucs.", {"mb": 125}], ["EPIC", "🌹", "Epic Garden Seed", "Adds a random seed.", {"seed": "random"}], ["EPIC", "🌸", "Ultra-Rare Pink Flower", "Adds a random flower.", {"flower": "random"}], ["EPIC", "✨", "Garden Instant Growth", "Boosts the Garden.", {"gardenBoost": true}], ["EPIC", "👑", "Epic Garden Decoration", "An epic Garden decoration.", {}], ["EPIC", "🗂️", "Full Classified Fragment", "A major classified fragment.", {}], ["EPIC", "🔐", "Classified File Preview", "A preview of a classified file.", {}], ["EPIC", "🏦", "100 MB Bank of Micky Bonus", "One hundred Micky Bucs.", {"mb": 100}], ["EPIC", "🎁", "Epic Mystery Box", "An epic LizzyOS surprise.", {}], ["EPIC", "🎟️", "Premium Lizzy Token", "A premium Lizzy token.", {"token": "Mystery Gift Token"}], ["EPIC", "🍦", "Mikael Dessert Run", "Dessert on Mikael.", {"token": "Mystery Gift Token"}], ["EPIC", "🎳", "Activity Date Token", "Lizzy chooses a future activity.", {"token": "Activity Date Token"}], ["EPIC", "🎬", "Movie Night Token", "Lizzy chooses the movie.", {"token": "Movie Night Token"}], ["EPIC", "🍝", "Food Date Token", "Lizzy chooses where or what you eat.", {"token": "Food Date Token"}], ["EPIC", "🔓", "Vault Item Discount — 50%", "A major Vault discount.", {}], ["EPIC", "🎲", "Two Daily Reward Rerolls", "Two reroll credits.", {"token": "Second Chance Token", "count": 2}], ["EPIC", "🌟", "Double Reward Tomorrow", "A future double-reward perk.", {}], ["EPIC", "💎", "Epic LizzyOS Badge", "An epic LizzyOS badge.", {}], ["EPIC", "🕵️", "Secret Shelf Clue", "A major Secret Shelf clue.", {}], ["EPIC", "🔎", "Major Crack-the-Code Hint", "A major Crack the Code hint.", {}], ["EPIC", "💜", "Epic Surprise", "A genuinely good LizzyOS surprise.", {}], ["EPIC", "🌺", "Epic Flower Pack", "Adds three random flowers.", {"flowers": 3}]];
+const LEGENDARY=[["LEGENDARY", "💰", "250 Micky Bucs", "A legendary 250 Micky Bucs jackpot.", {"mb": 250}], ["LEGENDARY", "💰", "500 Micky Bucs", "A ridiculous 500 Micky Bucs jackpot.", {"mb": 500}], ["LEGENDARY", "🏦", "Bank of Micky Jackpot", "A legendary 300 Micky Bucs Bank jackpot.", {"mb": 300}], ["LEGENDARY", "🌱", "Legendary Garden Seed", "Adds a legendary-style Garden seed.", {"seed": "random"}], ["LEGENDARY", "🌹", "One-of-One Garden Flower", "Adds a special Garden flower.", {"flower": "random"}], ["LEGENDARY", "👑", "Legendary Garden Crown", "Unlocks the Garden Crown.", {"gardenCrown": true}], ["LEGENDARY", "🗂️", "Classified File Unlock", "Unlocks a classified file reward.", {}], ["LEGENDARY", "🔐", "Free Vault Item", "One future Vault item can be claimed free.", {}], ["LEGENDARY", "💎", "Legendary Lizzy Token", "A legendary Lizzy token.", {"token": "Mystery Gift Token"}], ["LEGENDARY", "🎁", "Legendary Mystery Box", "A major mystery surprise from Mikael.", {}], ["LEGENDARY", "🍝", "Food Date Reward", "A proper food-date reward.", {"token": "Food Date Token"}], ["LEGENDARY", "🎳", "Activity Date Reward", "A proper activity-date reward.", {"token": "Activity Date Token"}], ["LEGENDARY", "🎬", "Full Movie Night Reward", "Lizzy controls movie night.", {"token": "Movie Night Token"}], ["LEGENDARY", "🍦", "Dessert Adventure", "A proper dessert adventure.", {"token": "Mystery Gift Token"}], ["LEGENDARY", "🎟️", "Choose Your Own Reward", "Choose one reasonable cute or fun reward.", {}], ["LEGENDARY", "🎲", "Triple Reward Tomorrow", "A legendary future reward multiplier.", {}], ["LEGENDARY", "💰", "Micky Bucs ×3 Next Win", "A future Micky Bucs multiplier.", {}], ["LEGENDARY", "🌷", "Instant Garden Legendary Upgrade", "A legendary Garden boost.", {"gardenBoost": true}], ["LEGENDARY", "👑", "LizzyOS VIP Week", "Seven days of LizzyOS VIP bragging rights.", {}], ["LEGENDARY", "💜", "Mikael Surprise", "Mikael owes Lizzy a special surprise.", {}], ["LEGENDARY", "🌟", "The Mr Perfect Special", "A classified Mr Perfect special reward.", {}]];
 const HISTORY_KEY="lizzyMysteryRewardHistoryV4";
 const RECENT_LIMIT=20;
 
@@ -2554,14 +2571,13 @@ function pick(pool,seed){
  if(!filtered.length)filtered=pool;
  return filtered[ix(seed,filtered.length)];
 }
+function vipRewardBoostActive(){try{const v=JSON.parse(localStorage.getItem("lizzyVipStateV1")||"null");return !!(v&&Date.now()<Number(v.expiresAt||0)&&v.mysteryBoost)}catch(e){return false}}
 function ordinaryBucket(today,n){
  const roll=ix(today+"ordinary-bucket-v4",10000)/100;
- if(roll<55)return ["BASIC",BASIC];
- if(roll<68)return ["REVERSE",REVERSE];
- if(roll<85)return ["NORMAL",NORMAL];
- if(roll<94)return ["RARE",RARE];
- if(roll<99)return ["EPIC",EPIC];
- return ["LEGENDARY",LEGENDARY];
+ if(vipRewardBoostActive()){
+  if(roll<35)return ["BASIC",BASIC];if(roll<43)return ["REVERSE",REVERSE];if(roll<70)return ["NORMAL",NORMAL];if(roll<89)return ["RARE",RARE];if(roll<99)return ["EPIC",EPIC];return ["LEGENDARY",LEGENDARY];
+ }
+ if(roll<55)return ["BASIC",BASIC];if(roll<68)return ["REVERSE",REVERSE];if(roll<85)return ["NORMAL",NORMAL];if(roll<94)return ["RARE",RARE];if(roll<99)return ["EPIC",EPIC];return ["LEGENDARY",LEGENDARY];
 }
 function daySevenBucket(today,n){
  const roll=ix(today+"day7-bucket-v4",10000)/100;
@@ -2594,6 +2610,14 @@ function refresh(){
  $("mysteryStreak").textContent=`🔥 ${n} Day${n===1?"":"s"} Streak`;
  let left=n?7-(n%7||7):7;
  $("mysteryStreakSub").textContent=(n>0&&n%7===0)?"Day 7 reached — today's milestone roll had a 40% Legendary chance.":`${left} consecutive day${left===1?"":"s"} until the 40% Legendary milestone roll.`;
+ let vr=$("vipDailyRerollButton");
+ if(opened&&localStorage.getItem("lizzyVipRewardReroll")==="1"){if(!vr){vr=document.createElement("button");vr.id="vipDailyRerollButton";vr.textContent="👑 VIP REROLL TODAY'S REWARD";$("mysteryReward")?.insertAdjacentElement("afterend",vr);vr.onclick=vipRerollCurrent}vr.classList.remove("hidden")}else if(vr)vr.classList.add("hidden");
+ let sc=$("secondChanceRerollButton"),scCredits=0;
+ try{scCredits=Number(JSON.parse(localStorage.getItem("lizzyTokenJarV1")||"{}").rerollCredits||0)}catch(e){}
+ if(opened&&scCredits>0){
+   if(!sc){sc=document.createElement("button");sc.id="secondChanceRerollButton";$("mysteryReward")?.insertAdjacentElement("afterend",sc);sc.onclick=useSecondChanceReroll}
+   sc.textContent=`🪙 USE SECOND CHANCE REROLL (${scCredits})`;sc.classList.remove("hidden");
+ }else if(sc)sc.classList.add("hidden");
  track(n);renderHistory();
 }
 function rewardOverlay(r,n,isDay7){
@@ -2612,6 +2636,26 @@ function rewardOverlay(r,n,isDay7){
  o.classList.remove("hidden");
  $("closeDailyRewardReveal").onclick=()=>o.classList.add("hidden");
  if(type==="LEGENDARY"&&typeof confetti==="function")confetti({particleCount:220,spread:130,origin:{y:.62}});
+}
+function vipRerollCurrent(){
+ if(localStorage.getItem("lizzyVipRewardReroll")!=="1")return;
+ const today=key(),current=reward();if(!current)return;const n=st(),day7=n%7===0,[bucket,pool]=day7?daySevenBucket(today,n):ordinaryBucket(today,n),candidates=pool.filter(r=>r[2]!==current[2]);if(!candidates.length)return;
+ const replacement=candidates[ix(`${today}-${Date.now()}-vip-reroll`,candidates.length)];localStorage.setItem("lizzyMysteryReward",JSON.stringify(replacement));localStorage.removeItem("lizzyVipRewardReroll");
+ const h=history();h.push({date:today,streak:n,reward:replacement,rerolled:true,replaced:current[2]});saveHistory(h);window.dispatchEvent(new CustomEvent("lizzyDailyRewardClaimed",{detail:{reward:replacement,date:today,streak:n,day7,rerolled:true}}));refresh();rewardOverlay(replacement,n,day7);
+}
+function useSecondChanceReroll(){
+ let credits=0;
+ try{const t=JSON.parse(localStorage.getItem("lizzyTokenJarV1")||"{}");credits=Number(t.rerollCredits||0)}catch(e){}
+ const today=key(),current=reward();
+ if(credits<=0||localStorage.getItem("lizzyMysteryOpened")!==today||!current)return false;
+ const n=st(),day7=n%7===0,[bucket,pool]=day7?daySevenBucket(today,n):ordinaryBucket(today,n);
+ const candidates=pool.filter(r=>r[2]!==current[2]);if(!candidates.length)return false;
+ const replacement=candidates[ix(`${today}-${Date.now()}-second-chance`,candidates.length)];
+ try{const t=JSON.parse(localStorage.getItem("lizzyTokenJarV1")||"{}");t.rerollCredits=Math.max(0,Number(t.rerollCredits||0)-1);localStorage.setItem("lizzyTokenJarV1",JSON.stringify(t))}catch(e){}
+ localStorage.setItem("lizzyMysteryReward",JSON.stringify(replacement));
+ const h=history();h.push({date:today,streak:n,reward:replacement,rerolled:true,replaced:current[2],source:"Second Chance Token"});saveHistory(h);
+ window.dispatchEvent(new CustomEvent("lizzyDailyRewardClaimed",{detail:{reward:replacement,date:today,streak:n,day7,rerolled:true}}));
+ refresh();rewardOverlay(replacement,n,day7);return true;
 }
 function claim(){
  let today=key();if(localStorage.getItem("lizzyMysteryOpened")===today)return;
@@ -2670,40 +2714,50 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         }catch(e){ return fallback; }
     }
     function safeWrite(key, value){
-        localStorage.setItem(key, JSON.stringify(value));
+        try{
+            localStorage.setItem(key, JSON.stringify(value));
+        }catch(e){
+            // Never let a full/blocked phone storage kill the Garden.
+            console.warn("LizzyOS: could not save", key, e);
+        }
     }
 
     // A broad Garden catalogue: standard, rare and secret plants.
     const FLOWERS = {
-        tulip:       {name:"Tulip",emoji:"🌷",type:"flower",rarity:"Common"},
-        redRose:     {name:"Red Rose",emoji:"🌹",type:"flower",rarity:"Common"},
-        pinkRose:    {name:"Pink Rose",emoji:"🌹",type:"flower",rarity:"Uncommon"},
-        whiteRose:   {name:"White Rose",emoji:"🤍",type:"flower",rarity:"Uncommon"},
-        lilyValley:  {name:"Lily of the Valley",emoji:"🤍",type:"flower",rarity:"Rare"},
-        cryingLily:  {name:"Crying Lily",emoji:"🥀",type:"flower",rarity:"Rare"},
-        snapdragon:  {name:"Snapdragon",emoji:"🌺",type:"flower",rarity:"Uncommon"},
-        sunflower:   {name:"Sunflower",emoji:"🌻",type:"flower",rarity:"Common"},
-        daisy:       {name:"Daisy",emoji:"🌼",type:"flower",rarity:"Common"},
-        lavender:    {name:"Lavender",emoji:"🪻",type:"flower",rarity:"Uncommon"},
-        orchid:      {name:"Orchid",emoji:"🌸",type:"flower",rarity:"Rare"},
-        peony:       {name:"Peony",emoji:"🌺",type:"flower",rarity:"Rare"},
-        hydrangea:   {name:"Hydrangea",emoji:"🪻",type:"flower",rarity:"Uncommon"},
-        carnation:   {name:"Carnation",emoji:"🌸",type:"flower",rarity:"Common"},
-        daffodil:    {name:"Daffodil",emoji:"🌼",type:"flower",rarity:"Common"},
-        iris:        {name:"Iris",emoji:"🪻",type:"flower",rarity:"Rare"},
-        chrysanthemum:{name:"Chrysanthemum",emoji:"🌼",type:"flower",rarity:"Uncommon"},
-        poppy:       {name:"Poppy",emoji:"🌺",type:"flower",rarity:"Common"},
-        forgetMeNot: {name:"Forget-Me-Not",emoji:"💠",type:"flower",rarity:"Rare"},
-        hibiscus:    {name:"Hibiscus",emoji:"🌺",type:"flower",rarity:"Uncommon"},
-        mysteryBloom:{name:"Mystery Blossom",emoji:"🌸",type:"flower",rarity:"Secret"},
-        moonflower:  {name:"Moonflower",emoji:"🌙",type:"flower",rarity:"Legendary"},
-        starBloom:   {name:"Star Bloom",emoji:"✨",type:"flower",rarity:"Legendary"},
-        gardenCrown: {name:"Garden Crown",emoji:"👑",type:"flower",rarity:"Legendary"},
-        bananaTree:  {name:"Suspicious Banana Tree",emoji:"🍌",type:"tree",rarity:"Secret"},
-        jacaranda:    {name:"Jacaranda Tree",emoji:"🌳",type:"tree",rarity:"Uncommon"},
-        willow:       {name:"Willow Tree",emoji:"🌳",type:"tree",rarity:"Rare"},
-        cherryTree:   {name:"Cherry Blossom Tree",emoji:"🌸",type:"tree",rarity:"Rare"},
-        lemonTree:    {name:"Lemon Tree",emoji:"🍋",type:"tree",rarity:"Uncommon"}
+        tulip:       {name:"Tulip",emoji:"🌷",img:"assets/flowers/tulip.png",type:"flower",rarity:"Common"},
+        redRose:     {name:"Red Rose",emoji:"🌹",img:"assets/flowers/redRose.png",type:"flower",rarity:"Common"},
+        pinkRose:    {name:"Pink Rose",emoji:"🌹",img:"assets/flowers/pinkRose.png",type:"flower",rarity:"Uncommon"},
+        whiteRose:   {name:"White Rose",emoji:"🤍",img:"assets/flowers/whiteRose.png",type:"flower",rarity:"Uncommon"},
+        lilyValley:  {name:"Lily of the Valley",emoji:"🤍",img:"assets/flowers/lilyValley.png",type:"flower",rarity:"Rare"},
+        cryingLily:  {name:"Crying Lily",emoji:"🥀",img:"assets/flowers/cryingLily.png",type:"flower",rarity:"Rare"},
+        snapdragon:  {name:"Snapdragon",emoji:"🌺",img:"assets/flowers/snapdragon.png",type:"flower",rarity:"Uncommon"},
+        sunflower:   {name:"Sunflower",emoji:"🌻",img:"assets/flowers/sunflower.png",type:"flower",rarity:"Common"},
+        daisy:       {name:"Daisy",emoji:"🌼",img:"assets/flowers/daisy.png",type:"flower",rarity:"Common"},
+        lavender:    {name:"Lavender",emoji:"🪻",img:"assets/flowers/lavender.png",type:"flower",rarity:"Uncommon"},
+        orchid:      {name:"Orchid",emoji:"🌸",img:"assets/flowers/orchid.png",type:"flower",rarity:"Rare"},
+        peony:       {name:"Peony",emoji:"🌺",img:"assets/flowers/peony.png",type:"flower",rarity:"Rare"},
+        hydrangea:   {name:"Hydrangea",emoji:"🪻",img:"assets/flowers/hydrangea.png",type:"flower",rarity:"Uncommon"},
+        carnation:   {name:"Carnation",emoji:"🌸",img:"assets/flowers/carnation.png",type:"flower",rarity:"Common"},
+        daffodil:    {name:"Daffodil",emoji:"🌼",img:"assets/flowers/daffodil.png",type:"flower",rarity:"Common"},
+        iris:        {name:"Iris",emoji:"🪻",img:"assets/flowers/iris.png",type:"flower",rarity:"Rare"},
+        chrysanthemum:{name:"Chrysanthemum",emoji:"🌼",img:"assets/flowers/chrysanthemum.png",type:"flower",rarity:"Uncommon"},
+        poppy:       {name:"Poppy",emoji:"🌺",img:"assets/flowers/poppy.png",type:"flower",rarity:"Common"},
+        forgetMeNot: {name:"Forget-Me-Not",emoji:"💠",img:"assets/flowers/forgetMeNot.png",type:"flower",rarity:"Rare"},
+        hibiscus:    {name:"Hibiscus",emoji:"🌺",img:"assets/flowers/hibiscus.png",type:"flower",rarity:"Uncommon"},
+        mysteryBloom:{name:"Mystery Blossom",emoji:"🌸",img:"assets/flowers/mysteryBloom.png",type:"flower",rarity:"Secret"},
+        moonflower:  {name:"Moonflower",emoji:"🌙",img:"assets/flowers/moonflower.png",type:"flower",rarity:"Legendary"},
+        starBloom:   {name:"Star Bloom",emoji:"✨",img:"assets/flowers/starBloom.png",type:"flower",rarity:"Legendary"},
+        gardenCrown: {name:"Garden Crown",emoji:"👑",img:"assets/flowers/gardenCrown.png",type:"flower",rarity:"Legendary"},
+        bananaTree:  {name:"Suspicious Banana Tree",emoji:"🍌",img:"assets/flowers/bananaTree.png",type:"tree",rarity:"Secret"},
+        jacaranda:    {name:"Jacaranda Tree",emoji:"🌳",img:"assets/flowers/jacaranda.png",type:"tree",rarity:"Uncommon"},
+        willow:       {name:"Willow Tree",emoji:"🌳",img:"assets/flowers/willow.png",type:"tree",rarity:"Rare"},
+        cherryTree:   {name:"Cherry Blossom Tree",emoji:"🌸",img:"assets/flowers/cherryTree.png",type:"tree",rarity:"Rare"},
+        lemonTree:    {name:"Lemon Tree",emoji:"🍋",img:"assets/flowers/lemonTree.png",type:"tree",rarity:"Uncommon"},
+        pinkDogwood:  {name:"Pink Dogwood Tree",emoji:"🌸",img:"assets/flowers/pinkDogwood.png",type:"tree",rarity:"Uncommon"},
+        bottlebrush:  {name:"Bottlebrush Tree",emoji:"🌳",img:"assets/flowers/bottlebrush.png",type:"tree",rarity:"Rare"},
+        silkTree:     {name:"Persian Silk Tree",emoji:"🌸",img:"assets/flowers/silkTree.png",type:"tree",rarity:"Rare"},
+        japaneseMaple:{name:"Japanese Maple",emoji:"🍁",img:"assets/flowers/japaneseMaple.png",type:"tree",rarity:"Epic"},
+        saucerMagnolia:{name:"Saucer Magnolia",emoji:"🌷",img:"assets/flowers/saucerMagnolia.png",type:"tree",rarity:"Legendary"}
     };
 
     const STANDARD_FLOWERS = [
@@ -2724,10 +2778,15 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         mysterySeed:{name:"Mystery Seed",emoji:"❓",plant:"mysteryBloom"},
         moonSeed:{name:"Moonflower Seed",emoji:"🌙",plant:"moonflower"},
         mikaelSeed:{name:"UNKNOWN_SEED.exe",emoji:"❓",plant:"bananaTree",secret:true},
-        jacarandaSeed:{name:"Jacaranda Sapling",emoji:"🌳",plant:"jacaranda"},
-        willowSeed:{name:"Willow Sapling",emoji:"🌳",plant:"willow"},
-        cherryTreeSeed:{name:"Cherry Blossom Sapling",emoji:"🌸",plant:"cherryTree"},
-        lemonTreeSeed:{name:"Lemon Tree Sapling",emoji:"🍋",plant:"lemonTree"}
+        jacarandaSeed:{name:"Jacaranda Sapling",emoji:"🌳",img:"assets/flowers/jacaranda.png",plant:"jacaranda"},
+        willowSeed:{name:"Willow Sapling",emoji:"🌳",img:"assets/flowers/willow.png",plant:"willow"},
+        cherryTreeSeed:{name:"Cherry Blossom Sapling",emoji:"🌸",img:"assets/flowers/cherryTree.png",plant:"cherryTree"},
+        lemonTreeSeed:{name:"Lemon Tree Sapling",emoji:"🍋",img:"assets/flowers/lemonTree.png",plant:"lemonTree"},
+        pinkDogwoodSeed:{name:"Pink Dogwood Sapling",emoji:"🌸",img:"assets/flowers/pinkDogwood.png",plant:"pinkDogwood"},
+        bottlebrushSeed:{name:"Bottlebrush Sapling",emoji:"🌳",img:"assets/flowers/bottlebrush.png",plant:"bottlebrush"},
+        silkTreeSeed:{name:"Persian Silk Sapling",emoji:"🌸",img:"assets/flowers/silkTree.png",plant:"silkTree"},
+        japaneseMapleSeed:{name:"Japanese Maple Sapling",emoji:"🍁",img:"assets/flowers/japaneseMaple.png",plant:"japaneseMaple"},
+        saucerMagnoliaSeed:{name:"Saucer Magnolia Sapling",emoji:"🌷",img:"assets/flowers/saucerMagnolia.png",plant:"saucerMagnolia"}
     };
     const COMMON_SEEDS = ["tulipSeed","roseSeed","snapdragonSeed","sunflowerSeed","lavenderSeed"];
     const GAME_SEEDS   = ["lilySeed","cryingLilySeed","orchidSeed","mysterySeed"];
@@ -2809,7 +2868,15 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         "Legendary Mystery Gift":{emoji:"🎁",desc:"A bigger or special surprise from Mikael."},
         "Your Choice Voucher":{emoji:"💖",desc:"Choose one reasonable cute or fun thing to do together."},
         "Agent Yelizaveta VIP Pass":{emoji:"🏆",desc:"Choose the next date activity AND claim a proper hug."},
-        "Ultimate Princess Day":{emoji:"👑",desc:"One full day of upgraded princess treatment."}
+        "Ultimate Princess Day":{emoji:"👑",desc:"One full day of upgraded princess treatment."},
+        "Song Exchange":{emoji:"🎧",desc:"Mikael and Lizzy each send one song that reminds them of the other, with a short explanation why."},
+        "Question Call":{emoji:"📞",desc:"A 10-minute call where Lizzy can ask Mikael questions and he answers honestly, with reasonable privacy vetoes."},
+        "Voice Note Request":{emoji:"🎤",desc:"Lizzy may request one voice note from Mikael on a topic of her choice."},
+        "Truth Card":{emoji:"🃏",desc:"Lizzy may ask Mikael one question and he has to answer truthfully, with reasonable privacy boundaries."},
+        "Free Vault Token":{emoji:"🔓",desc:"One free opening of Mikael's Secret Shelf vault. Redeem to load a free Vault credit."},
+        "Roast Mr Perfect Token":{emoji:"🔥",desc:"One free roast of Mr Perfect. Retaliation officially prohibited."},
+        "Reverse Card Shield":{emoji:"🛡️",desc:"Cancel one Reverse Token you owe Mikael."},
+        "Firework Token":{emoji:"🎆",desc:"Mikael owes Lizzy one celebration moment."}
     };
 
     function defaultGarden(){
@@ -2858,10 +2925,34 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         saveGarden(); saveTokens();
         localStorage.setItem(KEYS.migration, "done");
     }
-    migrateOnce();
+    try{ migrateOnce(); }catch(e){ console.warn("LizzyOS: migration skipped", e); }
+
 
     // One-time Argument Winner Pass migration for existing Token Jars.
     // Separate key means users whose original migration already ran still receive it.
+    // One-time grant of rewards Lizzy already won before this update.
+    if(!localStorage.getItem("lizzyConfirmedWonRewardsV1")){
+        ensureShelves();
+        ["Free Vault Token","Rematch Token","Roast Mr Perfect Token"].forEach(n=>{
+            tokens.inventory[n]=Math.max(1,Number(tokens.inventory[n]||0));
+        });
+        const keepsakes=[
+            ["Better Luck Tomorrow Award","🏅","A commemorative award for a spectacularly average Daily Reward.","DULL / BASIC"],
+            ["Declined Imaginary Credit Card","💳","Bank of Micky regrets to inform you that this card was declined.","DULL / BASIC"],
+            ["One Firework","🎆","One single firework, launched purely in Lizzy's honour.","DULL / BASIC"]
+        ];
+        keepsakes.forEach(([n,e,d,r])=>{
+            const k=tokens.keepsakes[n]||{emoji:e,desc:d,rarity:r,count:0,firstAt:nowISO(),source:"Daily Reward"};
+            k.count=Math.max(1,Number(k.count||0));k.emoji=e;k.desc=d;k.rarity=r;
+            tokens.keepsakes[n]=k;
+        });
+        tokens.collection=Array.isArray(tokens.collection)?tokens.collection:[];
+        saveTokens();
+        // Mystery Rare Box is an Interactive Reward, so it lives in that app.
+        ensureInteractiveReward("Mystery Rare Box");
+        localStorage.setItem("lizzyConfirmedWonRewardsV1","done");
+    }
+
     if(!localStorage.getItem("lizzyArgumentTokenMigrationV1")){
         tokens.inventory["Argument Winner Pass"] =
             Math.max(1, Number(tokens.inventory["Argument Winner Pass"] || 0));
@@ -2937,13 +3028,17 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         if(watered>=1)return 1;
         return 0;
     }
+    function flowerIcon(f,size=48){
+        if(f&&f.img) return `<img class="flowerImg" src="${f.img}" alt="${f.name}" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:middle">`;
+        return f?f.emoji:"🌸";
+    }
     function stageVisual(plant){
         const f=FLOWERS[plant.flowerId]||FLOWERS.tulip;
         const stage=growthStage(plant);
-        if(plant.flowerId==="bananaTree") return ["🫘","🌱","🌿","🌴","🍌"][stage];
+        if(plant.flowerId==="bananaTree") return ["🫘","🌱","🌿","🌴",flowerIcon(f,64)][stage];
         if(["jacaranda","willow","cherryTree","lemonTree"].includes(plant.flowerId))
-            return ["🫘","🌱","🌿","🌳",f.emoji][stage];
-        return ["🫘","🌱","🌿","🪴",f.emoji][stage];
+            return ["🫘","🌱","🌿","🌳",flowerIcon(f,64)][stage];
+        return ["🫘","🌱","🌿","🪴",flowerIcon(f,64)][stage];
     }
 
     function randomFrom(arr, salt=""){
@@ -2960,7 +3055,7 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         if(!FLOWERS[flowerId]) return;
         garden.flowers[flowerId]=(garden.flowers[flowerId]||0)+count;
         saveGarden();
-        gardenComment(`${FLOWERS[flowerId].emoji} ${FLOWERS[flowerId].name} added to the collection${reason?` — ${reason}`:""}.`);
+        gardenComment(`${FLOWERS[flowerId].img?"🌸":FLOWERS[flowerId].emoji} ${FLOWERS[flowerId].name} added to the collection${reason?` — ${reason}`:""}.`);
         renderGarden();
     }
     function randomStandardFlower(){
@@ -3026,7 +3121,7 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         host.innerHTML=entries.map(([id,n])=>{
             const s=SEEDS[id];
             return `<button class="seedChip ${garden.selectedSeed===id?"selected":""}" data-seed="${id}">
-                <b>${s.emoji} ${s.secret?"Unknown Seed":s.name} ×${n}</b>
+                <b>${s.secret?s.emoji:(s.img?`<img class="flowerImg" src="${s.img}" alt="${s.name}" style="width:26px;height:26px;object-fit:contain;vertical-align:middle">`:s.emoji)} ${s.secret?"Unknown Seed":s.name} ×${n}</b>
                 <small>${s.secret?"Origin: Classified":"Tap, then choose an empty plot."}</small>
             </button>`;
         }).join("");
@@ -3091,7 +3186,7 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         const entries=Object.entries(garden.flowers).filter(([,n])=>n>0);
         host.innerHTML=entries.length?entries.map(([id,n])=>`
             <div class="flowerCollectionChip">
-                <b>${FLOWERS[id].emoji} ${FLOWERS[id].name} ×${n}</b>
+                <b>${flowerIcon(FLOWERS[id],28)} ${FLOWERS[id].name} ×${n}</b>
                 <small>${FLOWERS[id].rarity}</small>
             </div>`).join(""):`<div class="memoryMessage">Your collection will grow as flowers bloom and rewards drop. 🌷</div>`;
     }
@@ -3256,8 +3351,118 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         tokens.inventory[name]=(tokens.inventory[name]||0)+count;
         saveTokens();renderTokens();
     }
+
+    // -------------------------------------------------
+    // REWARD VAULT — every Daily Reward gets a home
+    // Redeemables -> inventory, Reverse Tokens -> owed shelf,
+    // everything else -> keepsake shelf. Seeds -> Garden.
+    // -------------------------------------------------
+    function ensureShelves(){
+        if(!tokens.keepsakes||typeof tokens.keepsakes!=="object")tokens.keepsakes={};
+        if(!tokens.reverse||typeof tokens.reverse!=="object")tokens.reverse={};
+        if(!Array.isArray(tokens.collection))tokens.collection=[];
+    }
+    ensureShelves();
+
+    function logCollected(name,emoji,rarity,destination){
+        ensureShelves();
+        tokens.collection.unshift({name,emoji:emoji||"🎁",rarity:rarity||"REWARD",destination,at:nowISO()});
+        tokens.collection=tokens.collection.slice(0,300);
+    }
+    function addKeepsake(name,emoji,desc,rarity,source){
+        ensureShelves();
+        const k=tokens.keepsakes[name]||{emoji:emoji||"🎁",desc:desc||"",rarity:rarity||"KEEPSAKE",count:0,firstAt:nowISO()};
+        k.count=Number(k.count||0)+1;
+        if(emoji)k.emoji=emoji;
+        if(desc)k.desc=desc;
+        if(rarity)k.rarity=rarity;
+        k.source=source||k.source||"Daily Reward";
+        k.lastAt=nowISO();
+        tokens.keepsakes[name]=k;
+        saveTokens();renderTokens();
+    }
+    function addReverseToken(name,emoji,desc){
+        ensureShelves();
+        const r=tokens.reverse[name]||{emoji:emoji||"🔄",desc:desc||"",count:0,firstAt:nowISO()};
+        r.count=Number(r.count||0)+1;r.lastAt=nowISO();
+        tokens.reverse[name]=r;
+        saveTokens();renderTokens();
+    }
+    function settleReverse(name){
+        ensureShelves();
+        const r=tokens.reverse[name];if(!r)return;
+        r.count=Math.max(0,Number(r.count||0)-1);
+        if(r.count<=0)delete tokens.reverse[name];
+        tokens.history.unshift({name:`${name} (settled)`,emoji:r.emoji||"🔄",redeemedAt:nowISO(),notifyStatus:"Marked as settled"});
+        saveTokens();renderTokens();
+        try{lizzyTelegramNotify("🔄 REVERSE TOKEN SETTLED",`${r.emoji||"🔄"} ${name}`,`Lizzy marked this Reverse Token as settled.\nDate: ${new Date().toLocaleString()}`)}catch(e){}
+    }
+    function removeKeepsake(name){
+        ensureShelves();
+        if(!tokens.keepsakes[name])return;
+        delete tokens.keepsakes[name];
+        saveTokens();renderTokens();
+    }
+
+    const SEED_POOLS={
+        "DULL / BASIC":["tulipSeed","roseSeed","sunflowerSeed"],
+        "NORMAL":["tulipSeed","roseSeed","snapdragonSeed","sunflowerSeed","lavenderSeed"],
+        "RARE":["lilySeed","cryingLilySeed","orchidSeed","jacarandaSeed"],
+        "EPIC":["orchidSeed","mysterySeed","cherryTreeSeed","lemonTreeSeed"],
+        "LEGENDARY":["moonSeed","mysterySeed","willowSeed","cherryTreeSeed"]
+    };
+    function seedForRarity(rarity){
+        const pool=SEED_POOLS[rarity]||COMMON_SEEDS;
+        return pool[hash(Date.now()+"rarity-seed"+rarity+Math.random())%pool.length];
+    }
+    function grantSeedFromReward(rarity,reason){
+        const id=seedForRarity(rarity);
+        addSeed(id,1,reason||"Daily Reward");
+        return id;
+    }
+
+    // Reward names that should become real redeemable tokens.
+    const REWARD_TOKEN_MAP={
+        "Song Request Token":"Song Exchange",
+        "Movie Suggestion Token":"Movie Night Token",
+        "Game Choice Token":"Activity Date Token",
+        "Good Day Pass":"Mikael's Wild Card",
+        "Lucky Day Token":"Mikael's Wild Card",
+        "Free Vault Item":"Free Vault Token",
+        "Free Vault Token":"Free Vault Token",
+        "Roast Mr Perfect Token":"Roast Mr Perfect Token",
+        "Rematch Token":"Rematch Token",
+        "One Firework":"Firework Token",
+        "Mystery Mini Reward":"Mystery Gift Token",
+        "Mikael Surprise":"Legendary Mystery Gift",
+        "The Mr Perfect Special":"Agent Yelizaveta VIP Pass",
+        "Epic Surprise":"Mystery Gift Token",
+        "Epic Mystery Box":"Mystery Gift Token",
+        "Legendary Mystery Box":"Legendary Mystery Gift",
+        "Choose Your Own Reward":"Your Choice Voucher",
+        "Rare Compliment File":"Question Token",
+        "Mini Letter":"Mystery Gift Token",
+        "LizzyOS VIP Week":"Ultimate Princess Day",
+        "Premium Lizzy Token":"Mystery Gift Token",
+        "Legendary Lizzy Token":"Legendary Mystery Gift"
+    };
+    function perkSummary(){
+        const perks=safeRead("lizzyRewardPerksV1",{});
+        const rows=[
+            ["🔓","Free Vault Credits",Number(perks.vaultFree||0),"Open Mikael's Secret Shelf vault for free."],
+            ["🪙","Second Chance Rerolls",Number(tokens.rerollCredits||0),"Reroll a claimed Daily Reward."],
+            ["🔐","Classified Peeks",Number(perks.classifiedPeeks||0),"Peek at a locked Secret Shelf file."],
+            ["🕵️","Crack-the-Code Hints",Number(perks.crackHints||0),"Free hints inside Crack the Code."],
+            ["🎁","Double Reward Tomorrow",Number(perks.doubleNext||0),"Your next Daily Reward counts double."],
+            ["✨","Triple Reward Tomorrow",Number(perks.tripleNext||0),"Your next Daily Reward counts triple."],
+            ["💰","Micky Bucs ×3 Next Win",Number(perks.mbTripleNext||0),"Triples the next Micky Bucs reward."],
+            ["🛍️","Vault Discount",Number(perks.vaultDiscount||0),"Percent off your next Vault purchase."]
+        ];
+        return rows.filter(r=>r[2]>0);
+    }
     function renderTokens(){
         const host=$("tokenJarList");
+        if(!host)return;
         const entries=Object.entries(tokens.inventory).filter(([name,n])=>n>0&&TOKEN_DEFS[name]);
         host.innerHTML=entries.length?entries.map(([name,n])=>{
             const d=TOKEN_DEFS[name];
@@ -3270,10 +3475,44 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         }).join(""):`<div class="memoryMessage">The Jar is empty. Daily Rewards can fix that. 🫙</div>`;
         host.querySelectorAll("[data-redeem-token]").forEach(b=>b.onclick=()=>openRedeem(decodeURIComponent(b.dataset.redeemToken)));
 
+        renderShelves();
+
         const hist=$("tokenRedeemHistory");
         hist.innerHTML=tokens.history.length?tokens.history.slice(0,20).map(x=>`
             <div class="tokenHistoryItem"><b>${x.emoji} ${x.name}</b><small>${new Date(x.redeemedAt).toLocaleString()} · ${x.notifyStatus}</small></div>
         `).join(""):`<div class="memoryMessage">Nothing redeemed yet.</div>`;
+    }
+    function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+    function renderShelves(){
+        const list=$("tokenJarList");if(!list)return;
+        ensureShelves();
+        let host=$("tokenJarShelves");
+        if(!host){
+            host=document.createElement("div");
+            host.id="tokenJarShelves";
+            host.className="tokenJarShelves";
+            list.insertAdjacentElement("afterend",host);
+        }
+
+        const keeps=Object.entries(tokens.keepsakes).filter(([,v])=>Number(v.count||0)>0)
+            .sort((a,b)=>String(a[0]).localeCompare(String(b[0])));
+        const keepHTML=`<section class="tokenShelf tokenShelfKeepsakes">
+            <h3>🧸 Keepsake Shelf <span class="tokenShelfCount">${keeps.reduce((t,[,v])=>t+Number(v.count||0),0)} kept</span></h3>
+            <p class="tokenShelfNote">Not redeemable — just permanently yours. Virtual hugs included. 💜</p>
+            ${keeps.length?`<div class="keepsakeGrid">${keeps.map(([name,v])=>`
+                <div class="keepsakeCard" title="${esc(v.desc||"")}">
+                    <span class="keepsakeEmoji">${v.emoji||"🎁"}</span>
+                    <strong>${esc(name)}</strong>
+                    <small>${esc(v.rarity||"KEEPSAKE")}${Number(v.count||0)>1?` · ×${Number(v.count)}`:""}</small>
+                </div>
+            `).join("")}</div>`:`<div class="memoryMessage">No keepsakes yet. Daily Rewards will fix that.</div>`}
+        </section>`;
+
+        host.innerHTML=keepHTML;
+        host.querySelectorAll("[data-settle-token]").forEach(b=>b.onclick=()=>{
+            const n=decodeURIComponent(b.dataset.settleToken);
+            if(confirm(`Mark "${n}" as settled?\n\nThis removes it from what Lizzy owes Mikael.`))settleReverse(n);
+        });
     }
     function openRedeem(name){
         if(!TOKEN_DEFS[name] || !(tokens.inventory[name]>0))return;
@@ -3283,6 +3522,13 @@ window.LizzyDailyRewardsV4={counts:{basic:BASIC.length,reverse:REVERSE.length,no
         $("tokenRedeemName").textContent=name;
         $("tokenRedeemDescription").textContent=d.desc;
         $("tokenRedeemStatus").textContent="";
+        const confirmBtn=$("confirmTokenRedeem");
+        const cancelBtn=$("cancelTokenRedeem");
+        if(confirmBtn){
+            confirmBtn.disabled=false;
+            confirmBtn.textContent=confirmBtn.dataset.originalText||confirmBtn.textContent||"Redeem";
+        }
+        if(cancelBtn)cancelBtn.disabled=false;
         $("tokenRedeemWindow").classList.remove("hidden");
     }
     async function notifyRedemption(payload){
@@ -3304,16 +3550,72 @@ Status: REDEEMED${isArgument?"\n\nMikael's right to appeal: DENIED 😂":""}`;
     async function confirmRedeem(){
         if(!redeeming || !(tokens.inventory[redeeming]>0))return;
         const name=redeeming,d=TOKEN_DEFS[name];
-        tokens.inventory[name]--;
+        const confirmBtn=$("confirmTokenRedeem"), cancelBtn=$("cancelTokenRedeem");
+
+        if(confirmBtn){
+            confirmBtn.disabled=true;
+            confirmBtn.dataset.originalText=confirmBtn.dataset.originalText||confirmBtn.textContent;
+            confirmBtn.textContent="Redeeming…";
+        }
+        if(cancelBtn)cancelBtn.disabled=true;
+
+        // Consume exactly one token.
+        tokens.inventory[name]=Math.max(0,Number(tokens.inventory[name]||0)-1);
         if(name==="Second Chance Token")tokens.rerollCredits=(tokens.rerollCredits||0)+1;
-        const payload={token:name,emoji:d.emoji,description:d.desc,redeemed_at:new Date().toLocaleString(),redeemed_at_iso:nowISO()};
-        const entry={name,emoji:d.emoji,redeemedAt:payload.redeemed_at_iso,notifyStatus:"Sending..."};
-        tokens.history.unshift(entry);saveTokens();renderTokens();
-        $("tokenRedeemStatus").textContent="Redeemed 💗";
-        entry.notifyStatus=await notifyRedemption(payload);
-        saveTokens();renderTokens();
-        $("tokenRedeemStatus").textContent=`✅ ${name} redeemed successfully. 💗`;
+        if(name==="Free Vault Token"){
+            const perks=safeRead("lizzyRewardPerksV1",{});
+            perks.vaultFree=Number(perks.vaultFree||0)+1;
+            safeWrite("lizzyRewardPerksV1",perks);
+        }
+        if(name==="Reverse Card Shield"){
+            ensureShelves();
+            const owed=Object.keys(tokens.reverse).filter(k=>Number(tokens.reverse[k]?.count||0)>0);
+            if(owed.length)settleReverse(owed[0]);
+        }
+
+        const payload={
+            token:name,
+            emoji:d.emoji,
+            description:d.desc,
+            redeemed_at:new Date().toLocaleString(),
+            redeemed_at_iso:nowISO()
+        };
+        const entry={
+            name,
+            emoji:d.emoji,
+            redeemedAt:payload.redeemed_at_iso,
+            notifyStatus:"Sending..."
+        };
+
+        tokens.history.unshift(entry);
+        saveTokens();
+        renderTokens();
+
+        // Close the standard confirmation UI before any special feature opens.
+        $("tokenRedeemStatus").textContent=`✅ ${name} redeemed. Opening reward…`;
+        await new Promise(r=>setTimeout(r,160));
+        $("tokenRedeemWindow")?.classList.add("hidden");
         redeeming=null;
+
+        if(confirmBtn){
+            confirmBtn.disabled=false;
+            confirmBtn.textContent=confirmBtn.dataset.originalText||"Redeem";
+        }
+        if(cancelBtn)cancelBtn.disabled=false;
+
+        // Telegram is background-only and can NEVER block the reward feature.
+        Promise.resolve()
+            .then(()=>notifyRedemption(payload))
+            .then(status=>{
+                entry.notifyStatus=status||"Telegram sent";
+                saveTokens();
+                renderTokens();
+            })
+            .catch(()=>{
+                entry.notifyStatus="Notification failed";
+                saveTokens();
+                renderTokens();
+            });
     }
 
     // ---------------------------------------------
@@ -3341,53 +3643,174 @@ Status: REDEEMED${isArgument?"\n\nMikael's right to appeal: DENIED 😂":""}`;
         "A mysterious seed may be hiding behind unusually good game performance."
     ];
 
-    function processReward(r){
+    function processReward(r,opts){
         if(!Array.isArray(r))return;
-        const [,icon,name,,meta={}] = r;
+        const [rarity,icon,name,desc,meta={}] = r;
+        const source=(opts&&opts.source)||"Daily Reward";
+        const routed=[];
 
-        // V4 metadata rewards: use existing Garden/Token systems and same Micky Bucs wallet.
-        if(meta.mb){
-            const current=Number(safeRead("lizzyMickyBucsV1",0))||0;
-            safeWrite("lizzyMickyBucsV1",current+Number(meta.mb||0));
-            window.dispatchEvent(new Event("lizzyStoreRefresh"));
+        // Interactive rewards are their own app, not Jar items.
+        if(name==="VIP Status — One Day" || name==="VIP Status - One Day" || name==="Mystery Rare Box"){
+            if(window.InteractiveRewardsApp?.grant)window.InteractiveRewardsApp.grant(name);
+            else if(window.grantInteractiveReward)window.grantInteractiveReward(name);
+            else grantInteractiveFallback(name);
+            logCollected(name,icon,rarity,"Interactive Rewards");
+            saveTokens();renderTokens();
+            return;
         }
-        if(meta.seed==="random")addSeed(randomSeed(),1,"Daily Reward");
-        if(meta.flower==="random")addFlower(randomStandardFlower(),1,"Daily Reward");
-        if(Number(meta.flowers||0)>0)for(let i=0;i<Number(meta.flowers);i++)addFlower(randomStandardFlower(),1,"Daily Reward");
-        if(meta.gardenBoost)gardenBoost();
-        if(meta.gardenCrown)addFlower("gardenCrown",1,"LEGENDARY Garden Crown");
+
+        // Reverse Tokens: owed to Mikael, kept on their own shelf.
+        if(rarity==="REVERSE TOKEN" || /^Reverse Token/i.test(name)){
+            addReverseToken(name,icon,desc);
+            logCollected(name,icon,rarity,"Reverse shelf");
+            saveTokens();renderTokens();
+            return;
+        }
+
+        // Micky Bucs
+        if(meta.mb){
+            const perksNow=safeRead("lizzyRewardPerksV1",{});
+            let amount=Number(meta.mb||0);
+            if(Number(perksNow.mbTripleNext||0)>0){
+                amount*=3;
+                perksNow.mbTripleNext=Number(perksNow.mbTripleNext)-1;
+                safeWrite("lizzyRewardPerksV1",perksNow);
+            }
+            const current=Number(safeRead("lizzyMickyBucsV1",0))||0;
+            safeWrite("lizzyMickyBucsV1",current+amount);
+            window.dispatchEvent(new Event("lizzyStoreRefresh"));
+            routed.push(`${amount} Micky Bucs`);
+        }
+
+        // Garden: seeds, flowers and boosts always reach the Garden inventory.
+        let seeded=false;
+        if(meta.seed==="random"||meta.seed===true){grantSeedFromReward(rarity,`${source} — ${name}`);seeded=true;routed.push("Garden seed")}
+        else if(typeof meta.seed==="string"&&SEEDS[meta.seed]){addSeed(meta.seed,1,`${source} — ${name}`);seeded=true;routed.push("Garden seed")}
+        if(Number(meta.seeds||0)>0){for(let i=0;i<Number(meta.seeds);i++)grantSeedFromReward(rarity,`${source} — ${name}`);seeded=true;routed.push("Garden seeds")}
+        if(meta.flower==="random"){addFlower(randomStandardFlower(),1,source);routed.push("Garden flower")}
+        if(Number(meta.flowers||0)>0){for(let i=0;i<Number(meta.flowers);i++)addFlower(randomStandardFlower(),1,source);routed.push("Garden flowers")}
+        if(meta.gardenBoost){gardenBoost();routed.push("Garden boost")}
+        if(meta.gardenCrown){addFlower("gardenCrown",1,"LEGENDARY Garden Crown");routed.push("Garden Crown")}
+
+        // Named garden rewards
+        if(name==="Random Flower"||name==="Digital Flower"){addFlower(randomStandardFlower(),1,source);routed.push("Garden flower")}
+        else if(name==="Random Plant Seed"){grantSeedFromReward(rarity,source);seeded=true;routed.push("Garden seed")}
+        else if(name==="Garden Boost"){gardenBoost();routed.push("Garden boost")}
+        else if(name==="Rare Flower Pack"){["lilyValley","cryingLily","orchid"].forEach(id=>addFlower(id,1,"Rare Flower Pack"));routed.push("Rare Flower Pack")}
+        else if(name==="Garden Jackpot"){for(let i=0;i<5;i++)addFlower(randomStandardFlower(),1,"Garden Jackpot");routed.push("Garden Jackpot")}
+        else if(name==="Garden Crown"){addFlower("gardenCrown",1,"LEGENDARY Garden Crown");routed.push("Garden Crown")}
+        else if(name==="Garden of Lizzy"){STANDARD_FLOWERS.forEach(id=>addFlower(id,1,"Garden of Lizzy"));routed.push("Garden of Lizzy")}
+
+        // Any reward that reads like a seed still plants itself in the Garden.
+        if(!seeded && /\b(seed|sapling)\b/i.test(name)){
+            grantSeedFromReward(rarity,`${source} — ${name}`);
+            seeded=true;routed.push("Garden seed");
+        }
+
+        // Tokens from metadata
         if(meta.token){
             const qty=Math.max(1,Number(meta.count||1));
             for(let i=0;i<qty;i++)addToken(meta.token,1);
+            routed.push(`${meta.token} ×${qty}`);
         }
 
-        // Garden rewards
-        if(name==="Random Flower" || name==="Digital Flower"){addFlower(randomStandardFlower(),1,"Daily Reward");}
-        else if(name==="Random Plant Seed"){addSeed(randomSeed(),1,"Daily Reward");}
-        else if(name==="Garden Boost"){gardenBoost();}
-        else if(name==="Rare Flower Pack"){
-            ["lilyValley","cryingLily","orchid"].forEach(id=>addFlower(id,1,"Rare Flower Pack"));
+        // Perks and credits
+        const perkKey="lizzyRewardPerksV1";
+        const perks=safeRead(perkKey,{rerolls:0,doubleNext:0,tripleNext:0,mbTripleNext:0,vaultDiscount:0,vaultFree:0,classifiedPeeks:0,crackHints:0,badges:[],memories:0,playlistAdds:0,choiceRewards:0,surprises:[]});
+        let perkChanged=false;
+        const addPerk=(k,n=1)=>{perks[k]=Number(perks[k]||0)+n;perkChanged=true;routed.push(k)};
+        if(["Tiny Classified Clue","Classified Fragment","Classified Hint","Full Classified Fragment","Classified File Preview","Secret Shelf Clue","Classified File Unlock"].includes(name)){
+            const n=name==="Classified File Unlock"?3:name==="Full Classified Fragment"?2:1;
+            addPerk("classifiedPeeks",n);
+            localStorage.setItem("lizzyRareSecretPeekCredits",String(Number(localStorage.getItem("lizzyRareSecretPeekCredits")||0)+n));
         }
-        else if(name==="Garden Jackpot"){
-            for(let i=0;i<5;i++)addFlower(randomStandardFlower(),1,"Garden Jackpot");
-        }
-        else if(name==="Garden Crown"){addFlower("gardenCrown",1,"LEGENDARY Garden Crown");}
-        else if(name==="Garden of Lizzy"){STANDARD_FLOWERS.forEach(id=>addFlower(id,1,"Garden of Lizzy"));}
+        if(["Crack-the-Code Hint","Free Crack-the-Code Hint","Major Crack-the-Code Hint"].includes(name))addPerk("crackHints",name==="Major Crack-the-Code Hint"?2:1);
+        if(name==="Vault Discount"){perks.vaultDiscount=Math.max(Number(perks.vaultDiscount||0),15);perkChanged=true;localStorage.setItem("lizzyRareShelfDiscount","15");routed.push("Vault discount")}
+        if(name==="Vault Item Discount — 50%"){perks.vaultDiscount=Math.max(Number(perks.vaultDiscount||0),50);perkChanged=true;localStorage.setItem("lizzyRareShelfDiscount","50");routed.push("Vault discount")}
+        if(["Double Daily Reward Tomorrow","Double Reward Tomorrow"].includes(name))addPerk("doubleNext",1);
+        if(name==="Triple Reward Tomorrow")addPerk("tripleNext",1);
+        if(name==="Micky Bucs ×3 Next Win")addPerk("mbTripleNext",1);
+        if(name==="Hidden Memory Unlock")addPerk("memories",1);
+        if(name==="Secret Playlist Addition")addPerk("playlistAdds",1);
+        if(["Rare LizzyOS Badge","Epic LizzyOS Badge"].includes(name)){perks.badges=Array.isArray(perks.badges)?perks.badges:[];perks.badges.push(name);perkChanged=true}
+        if(perkChanged)safeWrite(perkKey,perks);
 
-        // Tokens
-        if(TOKEN_DEFS[name])addToken(name,1);
+        // Named rewards that are genuinely redeemable become real tokens.
+        const mapped=REWARD_TOKEN_MAP[name];
+        const tokenName=(mapped&&TOKEN_DEFS[mapped])?mapped:(TOKEN_DEFS[name]?name:null);
+        if(tokenName && !(meta.token===tokenName)){addToken(tokenName,1);routed.push(tokenName)}
 
-        // Lightweight immediate rewards
-        if(name==="Pocket Compliment")alert("💌 "+randomFrom(compliments,"compliment"));
-        if(name==="Cheeky Joke")alert("😂 "+randomFrom(jokes,"joke"));
-        if(name==="Easter Egg Hint")alert("🕵️ "+randomFrom(hints,"hint"));
+        // Lightweight instant rewards
+        if(name==="Pocket Compliment"){alert("💌 "+randomFrom(compliments,"compliment"));routed.push("Compliment")}
+        if(name==="Cheeky Joke"){alert("😂 "+randomFrom(jokes,"joke"));routed.push("Joke")}
+        if(name==="Easter Egg Hint"){alert("🕵️ "+randomFrom(hints,"hint"));routed.push("Hint")}
 
-        // Secret Mikael Seed: tiny chance when Random Plant Seed drops.
+        // Secret Mikael Seed
         if(name==="Random Plant Seed" && hash(dayKey()+"mikael-secret")%23===0){
             addSeed("mikaelSeed",1,"CLASSIFIED");
         }
+
+        // Everything with no other destination is kept forever as a keepsake.
+        if(!routed.length){
+            addKeepsake(name,icon,desc,rarity,source);
+            routed.push("Keepsake shelf");
+        }
+
+        logCollected(name,icon,rarity,routed.join(", "));
+        saveTokens();renderTokens();
+    }
+    function ensureInteractiveReward(name){
+        try{
+            const K="lizzyInteractiveRewardsProductionV3";
+            const st=safeRead(K,{})||{};
+            st.vip=Object.assign({owned:0,status:"ready"},st.vip||{});
+            st.rareBox=Object.assign({owned:0,status:"unopened"},st.rareBox||{});
+            if(/VIP Status/i.test(name)){st.vip.owned=Math.max(1,Number(st.vip.owned||0));st.vip.status=st.vip.status==="active"?"active":"ready"}
+            if(/Mystery Rare Box/i.test(name)){st.rareBox.owned=Math.max(1,Number(st.rareBox.owned||0));st.rareBox.status="unopened"}
+            safeWrite(K,st);
+        }catch(e){}
+    }
+    const PERK_NAMES=new Set(["Tiny Classified Clue","Classified Fragment","Classified Hint","Full Classified Fragment","Classified File Preview","Secret Shelf Clue","Classified File Unlock","Crack-the-Code Hint","Free Crack-the-Code Hint","Major Crack-the-Code Hint","Vault Discount","Vault Item Discount — 50%","Double Daily Reward Tomorrow","Double Reward Tomorrow","Triple Reward Tomorrow","Micky Bucs ×3 Next Win","Hidden Memory Unlock","Secret Playlist Addition","Rare LizzyOS Badge","Epic LizzyOS Badge","Pocket Compliment","Cheeky Joke","Easter Egg Hint","VIP Status — One Day","VIP Status - One Day","Mystery Rare Box"]);
+
+    // One-time backfill: past Daily Rewards that previously had nowhere to go
+    // are recovered onto the Keepsake / Reverse shelves. Nothing that already
+    // paid out (Micky Bucs, seeds, tokens, perks) is granted twice.
+    if(!localStorage.getItem("lizzyRewardBackfillV1")){
+        try{
+            const past=JSON.parse(localStorage.getItem("lizzyMysteryRewardHistoryV4")||"[]");
+            (Array.isArray(past)?past:[]).forEach(entry=>{
+                const r=entry&&entry.reward;
+                if(!Array.isArray(r))return;
+                const [rarity,icon,name,desc,meta={}]=r;
+                if(PERK_NAMES.has(name))return;
+                if(rarity==="REVERSE TOKEN"||/^Reverse Token/i.test(name)){addReverseToken(name,icon,desc);return}
+                if(Object.keys(meta||{}).length)return;
+                if(TOKEN_DEFS[name]||REWARD_TOKEN_MAP[name])return;
+                if(/\b(seed|sapling)\b/i.test(name))return;
+                addKeepsake(name,icon,desc,rarity,"Daily Reward (recovered)");
+            });
+            saveTokens();
+        }catch(e){}
+        localStorage.setItem("lizzyRewardBackfillV1","done");
+    }
+
+    function grantInteractiveFallback(name){
+        try{
+            const K="lizzyInteractiveRewardsProductionV3";
+            const st=safeRead(K,{})||{};
+            st.vip=Object.assign({owned:0,status:"ready"},st.vip||{});
+            st.rareBox=Object.assign({owned:0,status:"unopened"},st.rareBox||{});
+            if(/VIP Status/i.test(name)){st.vip.owned=Number(st.vip.owned||0)+1;st.vip.status="ready"}
+            if(/Mystery Rare Box/i.test(name)){st.rareBox.owned=Number(st.rareBox.owned||0)+1;st.rareBox.status="unopened"}
+            safeWrite(K,st);
+        }catch(e){}
     }
     window.addEventListener("lizzyDailyRewardClaimed",e=>processReward(e.detail?.reward));
+    window.addEventListener("lizzyRareBoxInteractionWon",e=>{
+        const name=e.detail?.name;
+        if(name && TOKEN_DEFS[name]) addToken(name,1);
+    });
+
 
     // Migrate today's currently saved reward ONCE so this update doesn't
     // erase or ignore a reward already claimed before deployment.
@@ -3454,6 +3877,45 @@ Status: REDEEMED${isArgument?"\n\nMikael's right to appeal: DENIED 😂":""}`;
     // Public helper for the upcoming Cloudflare/Telegram setup:
     // localStorage.setItem("lizzyTelegramWorkerURL","https://YOUR-WORKER.workers.dev")
     window.LizzyGarden = {render:renderGarden,addSeed,addFlower,addToken};
+
+    /* ---------------------------------------------------------------
+       EXTERNAL REWARD SYNC (Vault / Secret Shelf / Daily Rewards)
+       Other modules write straight to localStorage. Without this the
+       in-memory garden/tokens objects would overwrite those grants on
+       the next save, so purchased/won rewards must be re-read here.
+       --------------------------------------------------------------- */
+    function reloadRewardState(){
+        const g=safeRead(KEYS.garden,null);
+        if(g&&typeof g==="object"){
+            garden=Object.assign(defaultGarden(),g);
+            garden.seeds=garden.seeds||{};
+            garden.flowers=garden.flowers||{};
+            garden.plants=Array.isArray(garden.plants)?garden.plants:[];
+        }
+        const t=safeRead(KEYS.tokens,null);
+        if(t&&typeof t==="object"){
+            tokens=Object.assign(defaultTokens(),t);
+            tokens.inventory=tokens.inventory||{};
+            tokens.history=Array.isArray(tokens.history)?tokens.history:[];
+        }
+        try{renderTokens()}catch(e){}
+        try{if(!$("lizzyGardenWindow")?.classList.contains("hidden"))renderGarden()}catch(e){}
+    }
+    ["lizzyTokenJarUpdated","lizzyGardenUpdated","lizzyExternalRewardGranted","lizzyStoreRefresh"]
+        .forEach(ev=>window.addEventListener(ev,reloadRewardState));
+    window.addEventListener("storage",e=>{
+        if(e.key===KEYS.tokens||e.key===KEYS.garden)reloadRewardState();
+    });
+    window.addEventListener("focus",reloadRewardState);
+
+    // Single safe entry point for every other module that grants rewards.
+    window.LizzyRewards={
+        addToken(name,count=1){reloadRewardState();if(!TOKEN_DEFS[name])return false;addToken(name,count);return true},
+        addSeed(id,count=1){reloadRewardState();if(!SEEDS[id])return false;addSeed(id,count);return true},
+        addRerollCredit(count=1){reloadRewardState();tokens.rerollCredits=Number(tokens.rerollCredits||0)+count;saveTokens();renderTokens();return true},
+        tokenNames(){return Object.keys(TOKEN_DEFS)},
+        seedIds(){return Object.keys(SEEDS)}
+    };
 
     renderTokens();
 })();
@@ -3676,3 +4138,184 @@ window.addEventListener("load", () => {
 });
 
 if (typeof lizzyTelegramNotify === "function") window.lizzyTelegramNotify = lizzyTelegramNotify;
+
+/* ===== MICKY BANK REMOTE SYNC ===== */
+(function(){
+ function endpoint(){try{if(typeof WORKER!=="undefined"&&WORKER)return WORKER}catch(e){}return window.LIZZY_WORKER_URL||window.WORKER_URL||""}
+ function apply(n){n=Math.max(0,Math.floor(Number(n)||0));localStorage.setItem("lizzyMickyBucsRemoteBalance",String(n));
+ ["mickyBucs","lizzyMickyBucs","mickyBucsBalance","lizzyBankBalance"].forEach(k=>{if(localStorage.getItem(k)!==null)localStorage.setItem(k,String(n))});
+ document.querySelectorAll("[data-micky-bucs-balance],#mickyBucsBalance,#bankBalance,#lizzyBankBalance").forEach(el=>el.textContent=String(n));
+ window.dispatchEvent(new CustomEvent("mickyBucsBalanceChanged",{detail:{balance:n,source:"cloudflare"}}))}
+ async function sync(){const e=endpoint();if(!e)return;try{const r=await fetch(e+(e.includes("?")?"&":"?")+"action=micky_bucs_balance",{cache:"no-store"}),d=await r.json();if(r.ok&&d.success)apply(d.balance)}catch(e){console.warn("Bank sync failed",e)}}
+ window.syncMickyBucsFromServer=sync;window.addEventListener("load",()=>setTimeout(sync,800));window.addEventListener("focus",sync);
+ document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")sync()});setInterval(sync,60000);
+})();
+
+/* ===== OUR DATE COUNTDOWN — FRIDAY 28 AUGUST 2026 ===== */
+(function(){
+ const TARGET=new Date(2026,7,28,0,0,0); // local time: Friday 28 August 2026
+ const END=new Date(2026,7,29,0,0,0);
+ const $d=id=>document.getElementById(id);
+ let celebrated=false, celebrationTimer=null;
+ function pad(n){return String(Math.max(0,n)).padStart(2,"0")}
+ function burst(){
+   if(typeof confetti!=="function")return;
+   const end=Date.now()+5000;
+   (function frame(){
+     confetti({particleCount:7,angle:60,spread:75,origin:{x:0,y:.72}});
+     confetti({particleCount:7,angle:120,spread:75,origin:{x:1,y:.72}});
+     if(Date.now()<end)requestAnimationFrame(frame);
+   })();
+ }
+ function dateDayMode(hero){
+   hero.classList.add("dateDay");
+   $d("ourDateCountdownTitle").textContent="IT'S DATE DAY!!! ❤️🎉";
+   $d("ourDateCountdownMessage").textContent="Agent Yelizaveta, the countdown is OVER. Operation Our Date is officially active 😭❤️";
+   if(!celebrated){celebrated=true;burst();celebrationTimer=setInterval(()=>{if(new Date()<END)burst();else clearInterval(celebrationTimer)},30000)}
+ }
+ function updateOurDateCountdown(){
+   const hero=$d("ourDateCountdownHero");if(!hero)return;
+   const now=new Date();
+   if(now>=TARGET&&now<END){dateDayMode(hero);return}
+   if(now>=END){hero.classList.remove("dateDay");$d("ourDateCountdownTitle").textContent="Mission completed ❤️";$d("ourDateCountdownMessage").textContent="Operation Our Date has entered the LizzyOS history books. 💗";["dateCdDays","dateCdHours","dateCdMinutes","dateCdSeconds"].forEach(id=>$d(id).textContent="00");return}
+   const diff=TARGET-now,days=Math.floor(diff/86400000),hours=Math.floor(diff/3600000)%24,mins=Math.floor(diff/60000)%60,secs=Math.floor(diff/1000)%60;
+   $d("dateCdDays").textContent=pad(days);$d("dateCdHours").textContent=pad(hours);$d("dateCdMinutes").textContent=pad(mins);$d("dateCdSeconds").textContent=pad(secs);
+   $d("ourDateCountdownTitle").textContent=days>0?"Friday is getting closer… 👀❤️":"OUR DATE IS TOMORROW!!! 😭❤️";
+   $d("ourDateCountdownMessage").textContent=days>0?"Preparing Agent Yelizaveta for a very important mission… ❤️":"Final preparations underway. Menace levels expected to be extremely high. 🚨💗";
+ }
+ updateOurDateCountdown();setInterval(updateOurDateCountdown,1000);
+ document.getElementById("calendarIcon")?.addEventListener("click",()=>setTimeout(updateOurDateCountdown,50));
+})();
+
+// =====================================================
+// LIZZYOS V5 — FULL PERSONALITY ENGINE
+// =====================================================
+(() => {
+    const $ = id => document.getElementById(id);
+    const qsa = s => [...document.querySelectorAll(s)];
+    const store = localStorage;
+
+    const personalities = {
+        "Lizzy": {
+            sample: "Hi Lizzy 💗 Everything is working perfectly. Also, system diagnostics say you're pretty today. Again.",
+            gameOpen: "Okay Lizzy, be nice to the high score. 💗",
+            quizRight: "Correct 💗 Obviously.",
+            quizWrong: "Almost! LizzyOS is pretending not to notice.",
+            bin: "These nicknames have been respectfully deleted for your peace and happiness. 💗"
+        },
+        "Little Miss Attitude": {
+            sample: "🙄 LizzyOS is online. Try not to break anything, Little Miss Attitude.",
+            gameOpen: "Try not to become unbearable if you beat the high score. 😏",
+            quizRight: "Fine. You got it right. Don't get smug.",
+            quizWrong: "Wrong 😂 Apparently attitude does not count as intelligence points.",
+            bin: "Little Miss Attitude personally requested these names be permanently deleted. Complaints will be ignored."
+        },
+        "Agent Yelizaveta": {
+            sample: "CLEARANCE CONFIRMED. 🕵️ Agent Yelizaveta, all systems operational. Agent Mikael remains under surveillance.",
+            gameOpen: "MISSION ACTIVE. High-score intelligence has been classified.",
+            quizRight: "INTELLIGENCE VERIFIED. Correct answer.",
+            quizWrong: "MISSION ERROR. Intelligence requires recalibration.",
+            bin: "CLASSIFIED DISPOSAL UNIT: prohibited aliases have been contained."
+        }
+    };
+
+    const persona = () => store.getItem("lizzyPersona") || "Agent Yelizaveta";
+    const text = () => personalities[persona()] || personalities["Agent Yelizaveta"];
+
+    function applyPersonality(){
+        const p=persona();
+        document.body.dataset.personality=p;
+        if($("personalitySample")) $("personalitySample").textContent=text().sample;
+
+        // Existing game intros.
+        const heartIntro=document.querySelector("#heartCatchWindow .memoryMessage");
+        if(heartIntro) heartIntro.textContent =
+            p==="Lizzy" ? "Catch as many hearts as you can before the timer runs out 💗" :
+            p==="Little Miss Attitude" ? "Catch the hearts. Try not to act too impressed with yourself 😏" :
+            "MISSION OBJECTIVE: acquire maximum heart units before countdown expiry.";
+
+        const quizIntro=document.querySelector("#funQuizWindow .memoryMessage");
+        if(quizIntro) quizIntro.textContent =
+            p==="Lizzy" ? "A very cute and extremely scientific test of your LizzyOS knowledge. 💗" :
+            p==="Little Miss Attitude" ? "Five questions. Let's see if the attitude comes with answers. 😏" :
+            "INTELLIGENCE ASSESSMENT: five questions. Clearance score pending.";
+    }
+
+    function selectPersona(name){
+        store.setItem("lizzyPersona",name);
+        applyPersonality();
+
+        const message = name==="Lizzy" ? "Lizzy Mode activated 💗 Everything just got softer." :
+            name==="Little Miss Attitude" ? "Little Miss Attitude Mode activated 😏 Mikael has been warned." :
+            "AGENT YELIZAVETA MODE ACTIVE 🕵️ Secure systems engaged.";
+
+        if(typeof window.showToast==="function") window.showToast(message);
+        else {
+            const sample=$("personalitySample");
+            if(sample) sample.textContent=message;
+            setTimeout(applyPersonality,1800);
+        }
+    }
+
+    $("personalityIcon")?.addEventListener("click",()=>{
+        applyPersonality();
+        $("personalityWindow")?.classList.remove("hidden");
+    });
+    ["closePersonality","personalityRedClose"].forEach(id =>
+        $(id)?.addEventListener("click",()=>$("personalityWindow")?.classList.add("hidden"))
+    );
+    qsa("[data-v5-persona]").forEach(btn =>
+        btn.addEventListener("click",()=>selectPersona(btn.dataset.v5Persona))
+    );
+
+    // Personality reactions when opening games.
+    $("funQuizIcon")?.addEventListener("click",()=>{
+        setTimeout(()=>{
+            const f=$("funQuizFeedback");
+            if(f && !f.textContent) f.textContent=text().gameOpen;
+        },100);
+    });
+    $("heartGameIcon")?.addEventListener("click",()=>{
+        const arena=$("heartCatchArena");
+        if(arena && !arena.querySelector(".catchableHeart") && !arena.textContent.includes("Mission Complete")){
+            const start=arena.querySelector(".gameStartMessage");
+            if(start) start.innerHTML=`${text().gameOpen}<br><small>Press Start Mission 💗</small>`;
+        }
+    });
+
+    // Recycle Bin personality subtitle.
+    const binIcon=$("recycleBinIcon");
+    if(binIcon){
+        binIcon.addEventListener("click",()=>{
+            setTimeout(()=>{
+                const bin=$("recycleBinWindow");
+                if(!bin) return;
+                let note=bin.querySelector(".personalityBinNote");
+                if(!note){
+                    note=document.createElement("p");
+                    note.className="personalityBinNote memoryMessage";
+                    const scroll=bin.querySelector(".windowScroll");
+                    if(scroll) scroll.prepend(note);
+                }
+                if(note) note.textContent=text().bin;
+            },50);
+        });
+    }
+
+    // Add persona line to quiz feedback without replacing existing correct/wrong content.
+    const quizAnswers=$("funQuizAnswers");
+    if(quizAnswers){
+        quizAnswers.addEventListener("click",e=>{
+            if(!e.target.closest("[data-fq-answer]")) return;
+            setTimeout(()=>{
+                const f=$("funQuizFeedback");
+                if(!f) return;
+                const chosen=e.target.closest("[data-fq-answer]");
+                const isCorrect=chosen.classList.contains("answerCorrect");
+                if(f.textContent && !f.textContent.includes(" • ")) f.textContent += " • " + (isCorrect?text().quizRight:text().quizWrong);
+            },80);
+        });
+    }
+
+    applyPersonality();
+})();

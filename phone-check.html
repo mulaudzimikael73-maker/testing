@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LizzyOS Phone Check</title>
+<style>
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Poppins,sans-serif;background:#1b1020;color:#ffe9f6;padding:20px}
+  h1{font-size:20px}
+  .card{background:rgba(255,255,255,.07);border:1px solid rgba(255,182,220,.3);border-radius:14px;padding:14px;margin:12px 0}
+  b{color:#ffb6dc}
+  button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:12px;background:#ff5fa2;color:#fff;font-size:16px;font-weight:600}
+  small{opacity:.8;display:block;margin-top:6px}
+  pre{white-space:pre-wrap;word-break:break-all;font-size:12px}
+</style>
+</head>
+<body>
+<h1>🌷 LizzyOS Phone Check</h1>
+<div class="card" id="status">Checking…</div>
+<div class="card">
+  <b>Garden data on this phone</b>
+  <pre id="garden">—</pre>
+</div>
+<div class="card">
+  <b>Free up space (safe)</b>
+  <small>Deletes only old backup/cache entries. Garden, seeds, flowers, wallet, tokens and streaks are kept.</small>
+  <button id="clean">Free up space</button>
+  <button id="reload" style="background:#7a4bd6">Reload LizzyOS</button>
+</div>
+<script>
+function bytes(){let n=0;for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);n+=k.length+(localStorage.getItem(k)||"").length}return n}
+function render(){
+  let writable=true,err="";
+  try{localStorage.setItem("__t__","1");localStorage.removeItem("__t__")}catch(e){writable=false;err=e.name+": "+e.message}
+  const kb=Math.round(bytes()/512);
+  document.getElementById("status").innerHTML =
+    "<b>Saving works:</b> "+(writable?"✅ yes":"❌ no")+"<br><b>Storage used:</b> ~"+kb+" KB<br><b>Items:</b> "+localStorage.length+
+    (err?"<br><b>Error:</b> "+err:"")+
+    "<small>If saving says no, tap Free up space below.</small>";
+  let g=null;try{g=JSON.parse(localStorage.getItem("lizzyGardenV1")||"null")}catch(e){}
+  document.getElementById("garden").textContent = g
+    ? "plots: "+(g.slots||0)+"\nplants: "+((g.plants||[]).length)+"\nseed types: "+Object.keys(g.seeds||{}).length+"\nflower types: "+Object.keys(g.flowers||{}).length
+    : "No garden saved on this phone yet.";
+}
+document.getElementById("clean").onclick=function(){
+  const drop=[];
+  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);
+    if(k && /Snapshot|Backup|Cache|^lizzyTemp|Log$/i.test(k)) drop.push(k);}
+  drop.forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+  alert(drop.length?("Freed "+drop.length+" old backup item(s)."):"Nothing safe to remove — storage is already clean.");
+  render();
+};
+document.getElementById("reload").onclick=function(){location.href="index.html"};
+render();
+</script>
+</body>
+</html>
