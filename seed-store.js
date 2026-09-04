@@ -8,35 +8,25 @@ const KEYS={
  allowance:"lizzyMickyDailyAllowanceV1",
  activity:"lizzyMickyActivityV1"
 };
-const JOBS=[{"id": "visit_garden", "title": "Visit Lizzy's Garden", "reward": 14, "desc": "Open the Garden today."}, {"id": "water_one", "title": "Water one plant", "reward": 15, "desc": "Give one Garden plant some water."}, {"id": "water_two", "title": "Water two plants", "reward": 17, "desc": "Water two plants today."}, {"id": "water_three", "title": "Water three plants", "reward": 17, "desc": "Water three plants today."}, {"id": "plant_seed", "title": "Plant a seed", "reward": 17, "desc": "Plant any seed in an empty Garden plot."}, {"id": "plant_two", "title": "Plant two seeds", "reward": 19, "desc": "Plant two seeds today."}, {"id": "check_plant", "title": "Check on a plant", "reward": 15, "desc": "Use the Garden check button."}, {"id": "collect_flower", "title": "Grow or collect a flower", "reward": 17, "desc": "Add a flower to the Garden collection."}, {"id": "visit_store", "title": "Window shopping", "reward": 14, "desc": "Open the Seed Store."}, {"id": "buy_seed", "title": "Buy any seed", "reward": 15, "desc": "Make one Seed Store purchase."}, {"id": "play_mikhail", "title": "Complete Mikhail Quiz", "reward": 17, "desc": "Finish any Mikhail Quiz level."}, {"id": "perfect_mikhail", "title": "Perfect Mikhail Quiz", "reward": 20, "desc": "Get a perfect score."}, {"id": "play_would", "title": "Complete Would Mikael Rather?", "reward": 17, "desc": "Finish today's five questions."}, {"id": "perfect_would", "title": "Perfect Would Mikael Rather?", "reward": 20, "desc": "Score 5/5."}, {"id": "play_crack", "title": "Complete a Crack the Code mission", "reward": 19, "desc": "Finish any Crack the Code mission."}, {"id": "play_ttt", "title": "Play Tic-Tac-Toe", "reward": 15, "desc": "Finish a Tic-Tac-Toe game."}, {"id": "win_ttt", "title": "Beat Mikael at Tic-Tac-Toe", "reward": 19, "desc": "Win a Tic-Tac-Toe game."}, {"id": "play_heart", "title": "Play Heart Catch", "reward": 15, "desc": "Complete a Heart Catch round."}, {"id": "play_lizzy_quiz", "title": "Complete Lizzy Quiz", "reward": 17, "desc": "Finish the Lizzy Quiz."}, {"id": "play_two_games", "title": "Play two different games", "reward": 19, "desc": "Complete two different games today."}, {"id": "play_three_games", "title": "Game Night", "reward": 22, "desc": "Complete three different games today."}, {"id": "daily_reward", "title": "Claim Daily Reward", "reward": 15, "desc": "Open today's Daily Mystery reward."}, {"id": "streak_check", "title": "Protect the streak", "reward": 15, "desc": "Visit the Daily Reward screen today."}, {"id": "open_token_jar", "title": "Check the Token Jar", "reward": 14, "desc": "Open Lizzy's Token Jar."}, {"id": "redeem_token", "title": "Redeem a token", "reward": 17, "desc": "Use any token from the Jar."}, {"id": "open_readme", "title": "Read Me check-in", "reward": 14, "desc": "Open Read Me."}, {"id": "open_date", "title": "Visit Our Date", "reward": 14, "desc": "Open the Our Date folder."}, {"id": "open_letter", "title": "Open an Open When letter", "reward": 15, "desc": "Read any Open When letter."}, {"id": "open_mission", "title": "Check Mission Log", "reward": 14, "desc": "Open the Mission Log."}, {"id": "open_recycle", "title": "Inspect the Recycle Bin", "reward": 14, "desc": "Check what LizzyOS has rejected today."}, {"id": "nice_mikael", "title": "Say one nice thing about Mikael", "reward": 17, "desc": "Self-confirmed. Difficulty may vary 😂."}, {"id": "no_hating", "title": "Five-minute Hater Break", "reward": 17, "desc": "Go five minutes without hating on Mikael. Self-confirmed."}, {"id": "compliment", "title": "Give Mikael a compliment", "reward": 17, "desc": "A genuine one. Yes, LizzyOS is serious."}, {"id": "mikael_joke", "title": "Laugh at one of Mikael's jokes", "reward": 17, "desc": "Self-confirmed. Pity laughs technically count."}, {"id": "hydrate", "title": "Drink some water", "reward": 15, "desc": "Hydration mission. Self-confirmed."}, {"id": "stretch", "title": "Quick stretch", "reward": 15, "desc": "Do a short stretch. Self-confirmed."}, {"id": "smile", "title": "Smile mission", "reward": 15, "desc": "Find one reason to smile today."}, {"id": "song", "title": "Play a favourite song", "reward": 15, "desc": "Listen to one song you love."}, {"id": "pasta_thought", "title": "Think about pasta", "reward": 14, "desc": "Probably the easiest job on the board."}, {"id": "pink_spot", "title": "Spot something pink", "reward": 15, "desc": "Find something pink in real life."}, {"id": "kind_act", "title": "Do one kind thing", "reward": 17, "desc": "Any small kind act counts."}, {"id": "message_mikael", "title": "Send Mikael a nice message", "reward": 17, "desc": "Self-confirmed."}, {"id": "roast_mikael", "title": "Roast Mikael creatively", "reward": 17, "desc": "One creative roast. Keep it harmless 😂."}, {"id": "beat_score", "title": "Try to beat a game score", "reward": 17, "desc": "Make one serious attempt."}, {"id": "garden_photo", "title": "Admire the Garden", "reward": 14, "desc": "Spend a moment checking your plants."}, {"id": "choose_flower", "title": "Pick today's favourite flower", "reward": 15, "desc": "Choose your favourite flower in the Garden."}, {"id": "organize_tokens", "title": "Token inventory check", "reward": 14, "desc": "Look through the Token Jar."}, {"id": "date_idea", "title": "Think of a future date idea", "reward": 17, "desc": "Self-confirmed."}, {"id": "little_attitude", "title": "Little Miss Attitude challenge", "reward": 17, "desc": "Deliver one iconic but harmless attitude moment."}, {"id": "lizzyos_tour", "title": "LizzyOS Tour", "reward": 19, "desc": "Visit the Garden, Games folder and Token Jar today."}];
+const JOBS=[{"id": "visit_garden", "title": "Visit Lizzy's Garden", "reward": 2, "desc": "Open the Garden today."}, {"id": "water_one", "title": "Water one plant", "reward": 3, "desc": "Give one Garden plant some water."}, {"id": "water_two", "title": "Water two plants", "reward": 5, "desc": "Water two plants today."}, {"id": "water_three", "title": "Water three plants", "reward": 5, "desc": "Water three plants today."}, {"id": "plant_seed", "title": "Plant a seed", "reward": 5, "desc": "Plant any seed in an empty Garden plot."}, {"id": "plant_two", "title": "Plant two seeds", "reward": 7, "desc": "Plant two seeds today."}, {"id": "check_plant", "title": "Check on a plant", "reward": 3, "desc": "Use the Garden check button."}, {"id": "collect_flower", "title": "Grow or collect a flower", "reward": 5, "desc": "Add a flower to the Garden collection."}, {"id": "visit_store", "title": "Window shopping", "reward": 2, "desc": "Open the Seed Store."}, {"id": "buy_seed", "title": "Buy any seed", "reward": 3, "desc": "Make one Seed Store purchase."}, {"id": "play_mikhail", "title": "Complete Mikhail Quiz", "reward": 5, "desc": "Finish any Mikhail Quiz level."}, {"id": "perfect_mikhail", "title": "Perfect Mikhail Quiz", "reward": 8, "desc": "Get a perfect score."}, {"id": "play_would", "title": "Complete Would Mikael Rather?", "reward": 5, "desc": "Finish today's five questions."}, {"id": "perfect_would", "title": "Perfect Would Mikael Rather?", "reward": 8, "desc": "Score 5/5."}, {"id": "play_crack", "title": "Complete a Crack the Code mission", "reward": 7, "desc": "Finish any Crack the Code mission."}, {"id": "play_ttt", "title": "Play Tic-Tac-Toe", "reward": 3, "desc": "Finish a Tic-Tac-Toe game."}, {"id": "win_ttt", "title": "Beat Mikael at Tic-Tac-Toe", "reward": 7, "desc": "Win a Tic-Tac-Toe game."}, {"id": "play_heart", "title": "Play Heart Catch", "reward": 3, "desc": "Complete a Heart Catch round."}, {"id": "play_lizzy_quiz", "title": "Complete Lizzy Quiz", "reward": 5, "desc": "Finish the Lizzy Quiz."}, {"id": "play_two_games", "title": "Play two different games", "reward": 7, "desc": "Complete two different games today."}, {"id": "play_three_games", "title": "Game Night", "reward": 10, "desc": "Complete three different games today."}, {"id": "daily_reward", "title": "Claim Daily Reward", "reward": 3, "desc": "Open today's Daily Mystery reward."}, {"id": "streak_check", "title": "Protect the streak", "reward": 3, "desc": "Visit the Daily Reward screen today."}, {"id": "open_token_jar", "title": "Check the Token Jar", "reward": 2, "desc": "Open Lizzy's Token Jar."}, {"id": "redeem_token", "title": "Redeem a token", "reward": 5, "desc": "Use any token from the Jar."}, {"id": "open_readme", "title": "Read Me check-in", "reward": 2, "desc": "Open Read Me."}, {"id": "open_date", "title": "Visit Our Date", "reward": 2, "desc": "Open the Our Date folder."}, {"id": "open_letter", "title": "Open an Open When letter", "reward": 3, "desc": "Read any Open When letter."}, {"id": "open_mission", "title": "Check Mission Log", "reward": 2, "desc": "Open the Mission Log."}, {"id": "open_recycle", "title": "Inspect the Recycle Bin", "reward": 2, "desc": "Check what LizzyOS has rejected today."}, {"id": "nice_mikael", "title": "Say one nice thing about Mikael", "reward": 5, "desc": "Self-confirmed. Difficulty may vary 😂."}, {"id": "no_hating", "title": "Five-minute Hater Break", "reward": 5, "desc": "Go five minutes without hating on Mikael. Self-confirmed."}, {"id": "compliment", "title": "Give Mikael a compliment", "reward": 5, "desc": "A genuine one. Yes, LizzyOS is serious."}, {"id": "mikael_joke", "title": "Laugh at one of Mikael's jokes", "reward": 5, "desc": "Self-confirmed. Pity laughs technically count."}, {"id": "hydrate", "title": "Drink some water", "reward": 3, "desc": "Hydration mission. Self-confirmed."}, {"id": "stretch", "title": "Quick stretch", "reward": 3, "desc": "Do a short stretch. Self-confirmed."}, {"id": "smile", "title": "Smile mission", "reward": 3, "desc": "Find one reason to smile today."}, {"id": "song", "title": "Play a favourite song", "reward": 3, "desc": "Listen to one song you love."}, {"id": "pasta_thought", "title": "Think about pasta", "reward": 2, "desc": "Probably the easiest job on the board."}, {"id": "pink_spot", "title": "Spot something pink", "reward": 3, "desc": "Find something pink in real life."}, {"id": "kind_act", "title": "Do one kind thing", "reward": 5, "desc": "Any small kind act counts."}, {"id": "message_mikael", "title": "Send Mikael a nice message", "reward": 5, "desc": "Self-confirmed."}, {"id": "roast_mikael", "title": "Roast Mikael creatively", "reward": 5, "desc": "One creative roast. Keep it harmless 😂."}, {"id": "beat_score", "title": "Try to beat a game score", "reward": 5, "desc": "Make one serious attempt."}, {"id": "garden_photo", "title": "Admire the Garden", "reward": 2, "desc": "Spend a moment checking your plants."}, {"id": "choose_flower", "title": "Pick today's favourite flower", "reward": 3, "desc": "Choose your favourite flower in the Garden."}, {"id": "organize_tokens", "title": "Token inventory check", "reward": 2, "desc": "Look through the Token Jar."}, {"id": "date_idea", "title": "Think of a future date idea", "reward": 5, "desc": "Self-confirmed."}, {"id": "little_attitude", "title": "Little Miss Attitude challenge", "reward": 5, "desc": "Deliver one iconic but harmless attitude moment."}, {"id": "lizzyos_tour", "title": "LizzyOS Tour", "reward": 7, "desc": "Visit the Garden, Games folder and Token Jar today."}, {"id": "artist", "title": "🎨 The Artist", "reward": 60, "desc": "Draw something in 5 minutes without using an eraser. Proof required: Photo."}, {"id": "accent_challenge", "title": "🗣️ The Accent Challenge", "reward": 65, "desc": "Say a sentence in 3 different accents. Proof required: Video."}, {"id": "paper_plane", "title": "🏆 The Paper Airplane Olympics", "reward": 62, "desc": "Build a paper airplane that flies at least 5 metres. Proof required: Video."}, {"id": "floor_lava", "title": "🌍 The Floor Is Lava", "reward": 58, "desc": "Play a game of Floor Is Lava with your sister. Proof required: Video."}, {"id": "sister_laugh", "title": "😂 Make Your Sister Laugh", "reward": 57, "desc": "Make your sister laugh. Proof required: Screenshot or video."}, {"id": "weird_snack", "title": "🧑‍🍳 The Weird Snack Chef", "reward": 60, "desc": "Make the weirdest snack combination you can think of. Proof required: Photo + rating."}, {"id": "alphabet_backwards", "title": "🔤 Backwards Alphabet", "reward": 63, "desc": "Say the alphabet backwards. Proof required: Video."}, {"id": "terrible_singer", "title": "🎤 Terrible Singer", "reward": 55, "desc": "Sing the chorus of a song terribly. Proof required: Video."}, {"id": "hide_seek", "title": "🕵️ The Great Hide & Seek", "reward": 58, "desc": "Hide an object and make your sister find it. Proof required: Video."}, {"id": "one_leg", "title": "🧍 Flamingo Stand", "reward": 38, "desc": "Stand on one leg for 30 seconds. Proof required: Video."}, {"id": "spoon_nose", "title": "🥄 Spoon Nose", "reward": 40, "desc": "Balance a spoon on your nose for 10 seconds. Proof required: Video."}, {"id": "frog", "title": "🐸 Frog Impression", "reward": 42, "desc": "Do your best frog impression. Proof required: Video."}, {"id": "penguin", "title": "🐧 Penguin Walk", "reward": 40, "desc": "Walk like a penguin across the room. Proof required: Video."}, {"id": "worst_dance", "title": "🕺 Worst Dance Move", "reward": 38, "desc": "Do your worst dance move. Proof required: Video."}, {"id": "dance_10", "title": "💃 10-Second Dance Party", "reward": 35, "desc": "Dance for 10 seconds. Proof required: Video."}, {"id": "mirror_stare", "title": "🪞 Mirror Stare-Down", "reward": 42, "desc": "Stare at yourself in the mirror for 30 seconds without laughing. Proof required: Video."}, {"id": "responsible_adult", "title": "🗣️ Responsible Adult", "reward": 45, "desc": "Say “I am a responsible adult” with a straight face. Proof required: Video."}, {"id": "mikael_one_liner", "title": "😂 One-Sentence Comedian", "reward": 45, "desc": "Make Mikael laugh using only one sentence. Proof required: Screenshot or video."}, {"id": "movie_doorway", "title": "🚪 Movie Entrance", "reward": 40, "desc": "Walk through a doorway like you’re entering a movie scene. Proof required: Video."}];
 const SEEDS=[
  {id:"tulipSeed",name:"Tulip Seed",emoji:"🌷",price:3},
- {id:"roseSeed",name:"Rose Seed",emoji:"🌹",img:"assets/flowers/redRose.png",price:4},
+ {id:"roseSeed",name:"Rose Seed",emoji:"🌹",price:4},
  {id:"sunflowerSeed",name:"Sunflower Seed",emoji:"🌻",price:4},
- {id:"snapdragonSeed",name:"Snapdragon Seed",emoji:"🌺",img:"assets/flowers/snapdragon.png",price:5},
- {id:"lavenderSeed",name:"Lavender Seed",emoji:"🪻",img:"assets/flowers/lavender.png",price:5},
- {id:"lilySeed",name:"Lily of the Valley Seed",emoji:"🤍",img:"assets/flowers/lilyValley.png",price:7},
- {id:"cryingLilySeed",name:"Crying Lily Seed",emoji:"🥀",img:"assets/flowers/cryingLily.png",price:8},
- {id:"orchidSeed",name:"Orchid Seed",emoji:"🌸",img:"assets/flowers/orchid.png",price:9},
- {id:"mysterySeed",name:"Mystery Seed",emoji:"❓",img:"assets/flowers/mysteryBloom.png",price:12},
- {id:"moonSeed",name:"Moonflower Seed",emoji:"🌙",img:"assets/flowers/moonflower.png",price:20},
- {id:"jacarandaSeed",name:"Jacaranda Sapling",emoji:"🌳",img:"assets/flowers/jacaranda.png",price:18},
- {id:"lemonTreeSeed",name:"Lemon Tree Sapling",emoji:"🍋",img:"assets/flowers/lemonTree.png",price:18},
- {id:"willowSeed",name:"Willow Sapling",emoji:"🌳",img:"assets/flowers/willow.png",price:22},
- {id:"cherryTreeSeed",name:"Cherry Blossom Sapling",emoji:"🌸",img:"assets/flowers/cherryTree.png",price:24},
- {id:"pinkDogwoodSeed",name:"Pink Dogwood Sapling",emoji:"🌸",img:"assets/flowers/pinkDogwood.png",price:26},
- {id:"bottlebrushSeed",name:"Bottlebrush Sapling",emoji:"🌳",img:"assets/flowers/bottlebrush.png",price:28},
- {id:"silkTreeSeed",name:"Persian Silk Sapling",emoji:"🌸",img:"assets/flowers/silkTree.png",price:30},
- {id:"japaneseMapleSeed",name:"Japanese Maple Sapling",emoji:"🍁",img:"assets/flowers/japaneseMaple.png",price:34},
- {id:"saucerMagnoliaSeed",name:"Saucer Magnolia Sapling",emoji:"🌷",img:"assets/flowers/saucerMagnolia.png",price:38},
- {id:"mikaelSeed",name:"Mikael's Favourite",emoji:"🍌",img:"assets/flowers/bananaTree.png",price:25,note:"Grows into something suspiciously banana-shaped."}
+ {id:"snapdragonSeed",name:"Snapdragon Seed",emoji:"🌺",price:5},
+ {id:"lavenderSeed",name:"Lavender Seed",emoji:"🪻",price:5},
+ {id:"lilySeed",name:"Lily of the Valley Seed",emoji:"🤍",price:7},
+ {id:"cryingLilySeed",name:"Crying Lily Seed",emoji:"🥀",price:8},
+ {id:"orchidSeed",name:"Orchid Seed",emoji:"🌸",price:9},
+ {id:"mysterySeed",name:"Mystery Seed",emoji:"❓",price:12},
+ {id:"moonSeed",name:"Moonflower Seed",emoji:"🌙",price:20}
 ];
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
 const read=(k,f)=>{try{let v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch(e){return f}};
-const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('LizzyOS: save failed',k,e)}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const balance=()=>Number(localStorage.getItem(KEYS.wallet)||0);
 const setBalance=n=>localStorage.setItem(KEYS.wallet,String(Math.max(0,n)));
-function notify(type,title,details,extra){if(typeof window.lizzyTelegramNotify==="function")return window.lizzyTelegramNotify(type,title,details,extra);if(typeof lizzyTelegramNotify==="function")return lizzyTelegramNotify(type,title,details,extra);return Promise.resolve(false)}
+function notify(type,title,details){if(typeof window.lizzyTelegramNotify==="function")return window.lizzyTelegramNotify(type,title,details);if(typeof lizzyTelegramNotify==="function")return lizzyTelegramNotify(type,title,details);return Promise.resolve(false)}
 function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
 function dailyJobs(){
  let state=read(KEYS.jobs,{date:"",selected:[],completed:{}});
@@ -57,10 +47,10 @@ function render(){
  }).join("");
  host?.querySelectorAll("[data-job]").forEach(b=>b.onclick=()=>completeJob(b.dataset.job));
  const shop=$("seedShopList");
- if(shop)shop.innerHTML=SEEDS.map(s=>`<div class="seedShopCard">${s.img?`<img class="seedPhoto" src="${s.img}" alt="${s.name}">`:`<div class="seedPhoto" aria-hidden="true">${s.emoji}</div>`}<h4>${s.name}</h4><div class="seedPrice">💵 ${s.price} MB</div><button data-buy="${s.id}">Buy Seed</button></div>`).join("");
+ if(shop)shop.innerHTML=SEEDS.map(s=>`<div class="seedShopCard"><h4>${s.emoji} ${s.name}</h4><div class="seedPrice">💵 ${s.price} MB</div><button data-buy="${s.id}">Buy Seed</button></div>`).join("");
  shop?.querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>buySeed(b.dataset.buy));
  const claimed=localStorage.getItem(KEYS.allowance)===today();
- if($("claimMickyAllowance")){$("claimMickyAllowance").disabled=claimed;$("claimMickyAllowance").textContent=claimed?"Minimum Wage Claimed ✓":"Claim Minimum Wage +12 MB"}
+ if($("claimMickyAllowance")){$("claimMickyAllowance").disabled=claimed;$("claimMickyAllowance").textContent=claimed?"Daily 2 MB Claimed ✓":"Claim Daily +2 MB"}
 }
 function completeJob(id){
  const state=dailyJobs(),j=JOBS.find(x=>x.id===id);
@@ -68,43 +58,28 @@ function completeJob(id){
  state.completed[id]={at:new Date().toISOString(),reward:j.reward};
  write(KEYS.jobs,state);setBalance(balance()+j.reward);
  if($("seedStoreStatus"))$("seedStoreStatus").textContent=`✅ Job complete! +${j.reward} MB`;
- notify("💼 MICKY BUCS JOB COMPLETED",j.title,`Status: COMPLETED\nEarned: +${j.reward} MB\nNew Balance: ${balance()} MB\nDate: ${today()}`,{task:j.title,reward:j.reward,amount:j.reward,balance:balance()});
+ notify("💼 MICKY BUCS JOB COMPLETED",j.title,`Status: COMPLETED\nEarned: +${j.reward} MB\nNew Balance: ${balance()} MB\nDate: ${today()}`);
  render();
 }
 function claimAllowance(){
  if(localStorage.getItem(KEYS.allowance)===today())return;
- localStorage.setItem(KEYS.allowance,today());setBalance(balance()+12);
- if($("mickyAllowanceStatus"))$("mickyAllowanceStatus").textContent="💵 Minimum Wage claimed: +12 MB";
- notify("💵 DAILY MICKY BUCS","Minimum Wage Claimed",`Lizzy claimed +12 MB Minimum Wage\nNew balance: ${balance()} MB\nDate: ${today()}`,{amount:12,reward:12,balance:balance()});
+ localStorage.setItem(KEYS.allowance,today());setBalance(balance()+2);
+ if($("mickyAllowanceStatus"))$("mickyAllowanceStatus").textContent="💵 Daily allowance claimed: +2 MB";
+ notify("💵 DAILY MICKY BUCS","Daily Allowance Claimed",`Lizzy claimed +2 MB\nNew balance: ${balance()} MB\nDate: ${today()}`);
  render();
 }
 function buySeed(id){
  const s=SEEDS.find(x=>x.id===id);if(!s)return;
  if(balance()<s.price){if($("seedStoreStatus"))$("seedStoreStatus").textContent=`😭 Not enough Micky Bucs. You need ${s.price} MB.`;return}
  // ADD to the existing Garden only. Never recreate/reset Garden progress.
- // Preferred path: the Garden's own safe entry point. It re-reads the saved
- // Garden first, so purchased seeds can never be overwritten by a later save.
- let added=false;
- try{
-   if(window.LizzyRewards&&typeof window.LizzyRewards.addSeed==="function"){
-     added=window.LizzyRewards.addSeed(id,1)===true;
-   }
- }catch(e){added=false}
- if(!added){
-   // Fallback: write straight to storage, then tell the Garden to reload
-   // so the in-memory copy picks the new seed up immediately.
-   const garden=read("lizzyGardenV1",null)||{};
-   if(typeof garden!=="object"){if($("seedStoreStatus"))$("seedStoreStatus").textContent="Garden data wasn't found, so no purchase was made.";return}
-   garden.seeds=garden.seeds||{};
-   garden.seeds[id]=Number(garden.seeds[id]||0)+1;
-   write("lizzyGardenV1",garden);
-   window.dispatchEvent(new Event("lizzyGardenUpdated"));
- }
- setBalance(balance()-s.price);
+ const garden=read("lizzyGardenV1",null);
+ if(!garden||typeof garden!=="object"){if($("seedStoreStatus"))$("seedStoreStatus").textContent="Garden data wasn't found, so no purchase was made.";return}
+ garden.seeds=garden.seeds||{};
+ garden.seeds[id]=Number(garden.seeds[id]||0)+1;
+ write("lizzyGardenV1",garden);setBalance(balance()-s.price);
  if($("seedStoreStatus"))$("seedStoreStatus").textContent=`🌱 Purchased ${s.name}! Check Lizzy's Garden.`;
- notify("🛍️ SEED STORE PURCHASE",`${s.emoji} ${s.name}`,`Quantity: 1\nPaid: ${s.price} MB\nRemaining balance: ${balance()} MB\nGarden inventory updated successfully.`,{item:`${s.emoji} ${s.name}`,cost:s.price,price:s.price,balance:balance()});
+ notify("🛍️ SEED STORE PURCHASE",`${s.emoji} ${s.name}`,`Quantity: 1\nPaid: ${s.price} MB\nRemaining balance: ${balance()} MB\nGarden inventory updated successfully.`);
  window.dispatchEvent(new CustomEvent("lizzySeedStorePurchase",{detail:{seed:s.id,name:s.name,price:s.price}}));
- window.dispatchEvent(new Event("lizzyGardenUpdated"));
  render();
 }
 function openStore(){$("seedStoreWindow")?.classList.remove("hidden");render()}
@@ -134,7 +109,7 @@ const V2={
 const WALLET="lizzyMickyBucsV1", JOBSKEY="lizzyMickyJobsV1";
 const WORKER=window.LIZZY_TELEGRAM_WORKER_URL || "https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
 const read=(k,f)=>{try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch(e){return f}};
-const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('LizzyOS: save failed',k,e)}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const wallet=()=>Number(localStorage.getItem(WALLET)||0);
 const setWallet=n=>localStorage.setItem(WALLET,String(Math.max(0,n)));
 const dateKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
@@ -263,7 +238,7 @@ renderExtras();renderBank();renderAchievements();
 "use strict";
 const $=id=>document.getElementById(id);
 const read=(k,f)=>{try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}};
-const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('LizzyOS: save failed',k,e)}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const WALLET="lizzyMickyBucsV1",SHELF="lizzySecretShelfV1",LETTERS="lizzyPurchasedLettersV1",DOSSIERS="lizzyPurchasedDossiers",MTOKENS="lizzyMikaelTokensV1";
 const WORKER=window.LIZZY_TELEGRAM_WORKER_URL||"https://lizzyos-notifications.mulaudzimikael73.workers.dev/";
 const LETTER002=`Lizzy,
@@ -540,9 +515,6 @@ const ITEMS=[
 {id:"mwa_005",icon:"🎯",publicName:"Classified File #005",kind:"dossier",title:"MWA-005 — Mikael Weakness Assessment",content:MWA005,teaser:"FILE: MWA-005 • VULNERABILITIES: CLASSIFIED"},
 {id:"aypp_006",icon:"🔐",publicName:"Classified File #006",kind:"dossier",title:"AYPP-006 — Agent Yelizaveta Psychological Profile",content:AYPP006,encrypted:true,teaser:"FILE: AYPP-006 • ENCRYPTED • CLEARANCE REQUIRED"}
 ];
-const SHELF_PRICES=[32,23];
-const VAULT_PRICE=32;
-function priceOf(i){const n=ITEMS.findIndex(x=>x.id===(i&&i.id?i.id:i));return SHELF_PRICES[(n<0?0:n)%SHELF_PRICES.length]}
 const wallet=()=>Number(localStorage.getItem(WALLET)||0),setWallet=n=>localStorage.setItem(WALLET,String(Math.max(0,Math.floor(Number(n)||0))));
 const REWARD_PERKS="lizzyRewardPerksV1";
 function rewardPerks(){const p=read(REWARD_PERKS,{vaultFree:0,vaultDiscount:0});p.vaultFree=Math.max(0,Number(p.vaultFree||0));return p}
@@ -552,7 +524,7 @@ function freeVaultCredits(){return rewardPerks().vaultFree}
 const shelf=()=>{const s=read(SHELF,{owned:{},bids:{}});s.owned=s.owned||{};s.bids=s.bids||{};return s},saveShelf=s=>write(SHELF,s);
 function addDossier(i,price=0){let l=read(DOSSIERS,[]);if(!Array.isArray(l))l=[];if(!l.some(x=>x.id===i.id)){l.push({id:i.id,title:i.title,content:i.content,encrypted:!!i.encrypted,price,acquiredAt:new Date().toISOString()});write(DOSSIERS,l)}window.dispatchEvent(new Event("lizzyClassifiedUpdated"))}
 function migrate(){const s=shelf();if(s.owned.archive_x17){const c=ITEMS.find(x=>x.id==="archive_x17");addDossier({id:"archive_x17",title:"Cody Legal Documents",content:c.content},s.owned.archive_x17.price||0)}if(s.owned.hater_file)addDossier(ITEMS.find(x=>x.id==="hater_file"),s.owned.hater_file.price||0);if(s.owned.vault||s.owned.mrperfect_file)addDossier(ITEMS.find(x=>x.id==="mrperfect_file"),s.owned.vault?.price||s.owned.mrperfect_file?.price||0);const old=read("lizzyVaultRewardsV1",[]);if(Array.isArray(old)&&old.some(x=>x.id==="mrperfect_file"||String(x.title||"").includes("#003")))addDossier(ITEMS.find(x=>x.id==="mrperfect_file"),0);let l=read(LETTERS,[]);if(Array.isArray(l)){const f=l.filter(x=>!(x.id==="letter_002"&&String(x.content||"").includes("I like us.")));if(f.length!==l.length)write(LETTERS,f)}}
-function st(b,o){return o?"OWNED 🔓":"AVAILABLE"}
+function st(b,o){if(o)return"OWNED 🔓";if(b?.status==="pending")return`YOUR OFFER: ${b.amount} MB • WAITING FOR MIKAEL`;if(b?.status==="countered")return`MIKAEL'S COUNTER: ${b.counterOffer} MB`;if(b?.status==="rejected")return"OFFER REJECTED — NEGOTIATION REOPENED";return"NEGOTIATION OPEN"}
 function repairPurchasedDestinations(){const s=shelf();if(s.owned.archive_x17){const c=ITEMS.find(x=>x.id==="archive_x17");if(c)addDossier({id:"archive_x17",title:"Cody Legal Documents",content:c.content},s.owned.archive_x17.price||0)}for(const id of ["dossier_001","hater_file","mrperfect_file","o4e_004","mwa_005","aypp_006"]){if(s.owned[id]){const i=ITEMS.find(x=>x.id===id);if(i)addDossier(i,s.owned[id].price||0)}}}
 
 const VAULT_STATE="lizzyVaultStateV3";
@@ -630,16 +602,20 @@ function renderShelf(){
  const sh=shelf(),t=vaultTokenCount();
  h.innerHTML=`<div class="secretVaultHeader"><div><small>SECRET SHELF // RESTRICTED MARKET</small><h3>🔒 Mikael's Secret Shelf</h3></div><div class="vaultWallet">AVAILABLE: <b>${wallet()} MB</b><br><span class="vaultFreeCredit">${vaultStatusText()}</span></div></div>
  <section class="vaultFeature"><div class="vaultFeatureTop"><div><small>RESTRICTED FEATURE</small><h3>🎰 THE VAULT</h3></div><span class="vaultBadge">RANDOM PRIZES</span></div>
- <p>Vault access is now a fixed price of <b>${VAULT_PRICE} MB</b>, or free with a Free Vault Token. Every opening gives <b>one random prize</b>.</p>
+ <p>Make a Vault bid and wait for Mikael to accept, or use a Free Vault Token for immediate access. Every opening gives <b>one random prize</b>.</p>
  <div class="vaultPrizePreview"><span>🟢 Common</span><span>🔵 Rare</span><span>🟣 Epic</span><span>🟡 Legendary</span></div>
  ${t>0?`<button id="openFreeVaultBtn" class="vaultOpenBtn">🎟️ OPEN VAULT WITH FREE TOKEN</button>`:`<small>No Free Vault Token available.</small>`}
  <div id="vaultResult"></div></section>
- <div class="vaultBidBox"><button id="vaultBuyBtn">🎰 OPEN THE VAULT — ${VAULT_PRICE} MB</button><small id="vaultBidStatus">Fixed price: ${VAULT_PRICE} MB. No bidding, no waiting.</small></div>
- <div class="secretShelfGrid">${(()=>{const avail=ITEMS.filter(x=>!sh.owned[x.id]);if(!avail.length)return `<p class="seedStoreIntro">🗃️ Every Secret Shelf item has been purchased. Purchased items now live in Open When → Purchased Letters, Classified Dossiers and the Token Jar.</p>`;return avail.map(i=>{const p=priceOf(i),afford=wallet()>=p,free=freeVaultCredits()>0;return `<article class="secretItem vaultItem"><div class="vaultItemIcon">${i.icon}</div><strong>${i.publicName}</strong><p>${i.teaser}</p><small class="vaultStatus">PRICE: ${p} MB</small><div class="vaultBidControls"><button data-buy-shelf="${i.id}" ${afford?"":"disabled"}>${afford?`BUY FOR ${p} MB`:`NEED ${p} MB`}</button>${free?`<button data-free-claim="${i.id}">🎟️ USE FREE CREDIT</button>`:""}</div></article>`}).join("")})()}</div>`;
+ <div class="vaultBidBox"><input id="vaultBidInput" type="number" min="1" placeholder="Your Vault offer in MB"><button id="vaultBidBtn">🎰 BID FOR VAULT ACCESS</button><small id="vaultBidStatus">Bid for access. Mikael's acceptance will open the Vault.</small></div>
+ <div class="secretShelfGrid">${(()=>{const avail=ITEMS.filter(x=>!sh.owned[x.id]);if(!avail.length)return `<p class="seedStoreIntro">🗃️ Every Secret Shelf item has been purchased. Purchased items now live in Open When → Purchased Letters, Classified Dossiers and the Token Jar.</p>`;return avail.map(i=>{const b=sh.bids[i.id],c=b?.status==="countered"&&Number(b.counterOffer)>0;return `<article class="secretItem vaultItem ${c?"hasCounter":""}"><div class="vaultItemIcon">${i.icon}</div><strong>${i.publicName}</strong><p>${i.teaser}</p><small class="vaultStatus">${st(b,false)}</small>${c?`<div class="persistentCounter"><small>COUNTER OFFER FROM MIKAEL</small><strong>${b.counterOffer} MB</strong></div>`:""}<div class="vaultBidControls"><input type="number" min="1" data-bid-input="${i.id}" placeholder="${c?`New bid against ${b.counterOffer} MB`:"Your offer in MB"}"><button data-bid="${i.id}">${c?"Make Another Bid":"Submit Offer"}</button></div></article>`}).join("")})()}</div>`;
  h.querySelector("#openFreeVaultBtn")?.addEventListener("click",()=>openVault("token"));
- h.querySelector("#vaultBuyBtn")?.addEventListener("click",buyVaultOpen);
- h.querySelectorAll("[data-buy-shelf]").forEach(x=>x.addEventListener("click",()=>buyShelfItem(x.dataset.buyShelf)));
- h.querySelectorAll("[data-free-claim]").forEach(x=>x.addEventListener("click",()=>claimFreeVaultItem(x.dataset.freeClaim)));
+ h.querySelector("#vaultBidBtn")?.addEventListener("click",async()=>{
+  const n=Math.floor(Number(h.querySelector("#vaultBidInput")?.value||0)),status=h.querySelector("#vaultBidStatus");
+  if(!n||n<1){status.textContent="Enter a valid Vault bid.";return}
+  if(n>wallet()){status.textContent="You cannot bid more than your current Micky Bucs balance.";return}
+  try{const r=await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"vault_bid",offer:n})}),d=await r.json();if(!r.ok||!d.success)throw new Error(d.error||"Bid failed");status.textContent=`🎰 Vault bid of ${n} MB submitted. Waiting for Mikael's acceptance.`}catch(e){status.textContent="The Vault bid could not be sent. Please try again."}
+ });
+ h.querySelectorAll("[data-bid]").forEach(x=>x.addEventListener("click",()=>submitBid(x.dataset.bid)));
 }
 function openDoc(id){const i=ITEMS.find(x=>x.id===id),s=shelf(),h=$("vaultOwnedFileReader");if(!i||!s.owned[id]||!h)return;const safe=i.content.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));h.innerHTML=`<section class="vaultDocumentReader"><button id="closeVaultDocument">×</button><small>ACQUIRED SECRET SHELF DOCUMENT // CONFIDENTIAL</small><h3>⚖️ Cody Legal Documents</h3><pre>${safe}</pre></section>`;$("closeVaultDocument")?.addEventListener("click",()=>h.innerHTML="");h.scrollIntoView({behavior:"smooth",block:"nearest"})}
 function claimFreeVaultItem(id){
@@ -656,37 +632,20 @@ function claimFreeVaultItem(id){
  alert(`🔓 ${i.publicName} claimed for FREE.\n\nRemaining Free Vault Item credits: ${perks.vaultFree}`);
 }
 
-function shelfNotifyPurchase(i,paid,balanceAfter){
- if(i.kind==="letter"){
-  try{fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"secret_shelf_letter_purchased",letter:i.publicName,item:i.publicName,itemId:i.id,paid,price:paid,cost:paid,balance:balanceAfter})}).catch(()=>{})}catch(e){}
-  return;
- }
- try{fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"secret_shelf_purchase",item:i.publicName,itemId:i.id,kind:i.kind||"item",paid,price:paid,cost:paid,balance:balanceAfter,details:`Paid: ${paid} MB\nRemaining balance: ${balanceAfter} MB`})}).catch(()=>{})}catch(e){}
-}
-function buyShelfItem(id){
- const i=ITEMS.find(x=>x.id===id);if(!i)return;
- const s=shelf();if(s.owned[id]){renderShelf();return}
- const price=priceOf(i),before=wallet();
- if(before<price)return alert(`${i.publicName} costs ${price} MB.\n\nYour balance: ${before} MB.`);
- if(!confirm(`Buy ${i.publicName} for ${price} MB?\n\nBalance after purchase: ${before-price} MB`))return;
- if(!grant(i,price))return alert("The purchase could not be completed.");
- const after=wallet(),paid=Math.max(0,before-after);
- shelfNotifyPurchase(i,paid,after);
- window.dispatchEvent(new CustomEvent("lizzySecretPurchaseGranted",{detail:{itemId:i.id,kind:i.kind}}));
- repairPurchasedDestinations();renderShelf();renderLetters();renderMikaelTokens();
- alert(`✅ ${i.publicName} purchased.\n\nPaid: ${paid} MB\nRemaining balance: ${after} MB`);
-}
-function buyVaultOpen(){
- const before=wallet();
- if(before<VAULT_PRICE)return alert(`Opening the Vault costs ${VAULT_PRICE} MB.\n\nYour balance: ${before} MB.`);
- if(!confirm(`Open the Vault for ${VAULT_PRICE} MB?\n\nBalance after: ${before-VAULT_PRICE} MB`))return;
- try{fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"secret_shelf_purchase",item:"The Vault — one opening",itemId:"vault",kind:"vault",paid:VAULT_PRICE,price:VAULT_PRICE,cost:VAULT_PRICE,balance:before-VAULT_PRICE,details:`Paid: ${VAULT_PRICE} MB\nRemaining balance: ${before-VAULT_PRICE} MB`})}).catch(()=>{})}catch(e){}
- showVaultResult(vaultPick(),"purchase",VAULT_PRICE);
-}
+async function submitBid(id){const i=ITEMS.find(x=>x.id===id),inp=[...document.querySelectorAll("[data-bid-input]")].find(x=>x.dataset.bidInput===id),amount=Math.floor(Number(inp?.value));if(!i)return;if(!amount||amount<1)return alert("Enter an offer first.");if(amount>wallet())return alert("You cannot offer more Micky Bucs than you currently have.");try{const r=await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"secret_shelf_bid",item:id,offer:amount})}),d=await r.json();if(!r.ok||!d.success||!d.claimId)throw new Error(d.error||"Offer failed");const s=shelf();s.bids[id]={claimId:d.claimId,amount,status:"pending",counterOffer:null,createdAt:new Date().toISOString()};saveShelf(s);renderShelf()}catch(e){console.error(e);alert(String(e?.message||"").includes("Unknown Secret Shelf item")?"Deploy the included cloudflare-worker.js first, then try this new Secret Shelf item again.":"The offer could not be sent. Please try again.")}}
 function grant(i,price,serverAccepted=false){const s=shelf();if(s.owned[i.id])return true;price=Math.max(0,Math.floor(Number(price)||0));const vd=Number(localStorage.getItem("lizzyVipShelfDiscount")||0),rd=Number(localStorage.getItem("lizzyRareShelfDiscount")||0),discount=Math.max(vd,rd),originalPrice=price;if(discount>0&&price>0){price=Math.max(1,Math.ceil(price*(100-discount)/100));localStorage.removeItem("lizzyVipShelfDiscount");localStorage.removeItem("lizzyRareShelfDiscount")}if(!serverAccepted&&(price<1||wallet()<price))return false;if(price>0)setWallet(Math.max(0,wallet()-price));s.owned[i.id]={at:new Date().toISOString(),price,originalPrice,discount};saveShelf(s);if(i.kind==="letter"){let l=read(LETTERS,[]);if(!Array.isArray(l))l=[];const entry={id:i.id,title:i.publicName,content:i.content,folder:"open_when_purchased",purchasedAt:new Date().toISOString()};const at=l.findIndex(x=>x.id===i.id);if(at>=0)l[at]={...l[at],...entry};else l.push(entry);write(LETTERS,l);renderLetters();window.dispatchEvent(new Event("lizzyPurchasedLettersUpdated"))}if(i.kind==="dossier")addDossier(i,price);if(i.kind==="document"&&i.id==="archive_x17"){addDossier({id:"archive_x17",title:"Cody Legal Documents",content:i.content},price)}if(i.kind==="mikael_token"){const t=read(MTOKENS,{inventory:{},history:[]});t.inventory=t.inventory||{};t.history=t.history||[];t.inventory["UNO Reverse"]=Number(t.inventory["UNO Reverse"]||0)+1;t.history.push({type:"earned",token:"UNO Reverse",source:"Mystery Reward",at:new Date().toISOString()});write(MTOKENS,t);renderMikaelTokens()}window.dispatchEvent(new Event("lizzyStoreRefresh"));return true}
-async function sync(){return}
-async function pollVault(){return}
-async function poll(){repairPurchasedDestinations();renderShelf();renderLetters();renderMikaelTokens()}
+async function sync(){const s=shelf();let dirty=false;for(const i of ITEMS){if(s.owned[i.id])continue;try{const r=await fetch(`${WORKER}?shelfItem=${encodeURIComponent(i.id)}`,{cache:"no-store"});if(!r.ok)continue;const d=await r.json(),x=d.state;if(!x?.claimId)continue;const l=s.bids[i.id],rt=Date.parse(x.updatedAt||x.createdAt||0)||0,lt=Date.parse(l?.updatedAt||l?.createdAt||0)||0;if(!l||x.claimId===l.claimId||rt>=lt){s.bids[i.id]={claimId:x.claimId,amount:Number(x.offer||l?.amount||0),status:x.status||"pending",counterOffer:x.counterOffer==null?null:Number(x.counterOffer),createdAt:x.createdAt||l?.createdAt||new Date().toISOString(),updatedAt:x.updatedAt||x.decidedAt||new Date().toISOString()};dirty=true}}catch{}}if(dirty)saveShelf(s)}
+async function pollVault(){
+ try{
+  const r=await fetch(`${WORKER}?type=vault_claim`,{cache:"no-store"}); if(!r.ok)return;
+  const d=await r.json(),c=d.claim;
+  if(c?.status==="accepted"&&!c?.lizzyOpened){
+   await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"vault_claim_opened",claimId:c.claimId})}).catch(()=>{});
+   vaultBidAccepted(Number(c.acceptedPrice??c.offer??0));
+  }
+ }catch(e){console.warn("Vault poll failed",e)}
+}
+async function poll(){await sync();let s=shelf();let dirty=false;for(const i of ITEMS){const b=s.bids[i.id];if(!b?.claimId||s.owned[i.id])continue;try{const r=await fetch(`${WORKER}?claimId=${encodeURIComponent(b.claimId)}`,{cache:"no-store"});if(!r.ok)continue;const d=await r.json(),c=d.claim||d;if(c.status==="accepted"){const price=Number(c.offer??b.amount);if(grant(i,price,true)){s=shelf();if(s.bids[i.id]){s.bids[i.id].status="accepted";s.bids[i.id].updatedAt=c.decidedAt||new Date().toISOString()}saveShelf(s);dirty=false;window.dispatchEvent(new CustomEvent("lizzySecretPurchaseGranted",{detail:{itemId:i.id,kind:i.kind}}))}}else if(c.status==="rejected"){b.status="rejected";b.updatedAt=c.decidedAt||new Date().toISOString();dirty=true}else if(c.status==="countered"){b.status="countered";b.counterOffer=Number(c.counterOffer);b.updatedAt=c.decidedAt||new Date().toISOString();dirty=true}}catch(e){console.error("Secret Shelf poll failed",e)}}if(dirty)saveShelf(s);repairPurchasedDestinations();renderShelf();renderLetters();renderMikaelTokens();pollVault()}
 async function notifyPurchasedLetterOpened(letter){
  try{
   await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
@@ -699,7 +658,7 @@ async function notifyPurchasedLetterOpened(letter){
 }
 function renderLetters(){const w=$("openWhenWindow")||$("openWhenFolderWindow");if(!w)return;const host=w.querySelector(".windowScroll")||w;let b=$("purchasedLettersBox");if(!b){b=document.createElement("section");b.id="purchasedLettersBox";host.appendChild(b)}const l=read(LETTERS,[]);b.innerHTML=Array.isArray(l)&&l.length?`<h3>🛍️ Purchased Letters</h3>${l.map((x,i)=>`<article class="purchasedLetter"><div class="purchasedLetterHead"><strong>💌 ${x.title}</strong><button type="button" data-purchased-letter-open="${i}">OPEN LETTER</button></div><div class="purchasedLetterBody hidden" data-purchased-letter-body="${i}"><pre>${x.content}</pre></div></article>`).join("")}`:"";b.querySelectorAll("[data-purchased-letter-open]").forEach(btn=>btn.addEventListener("click",()=>{const i=Number(btn.dataset.purchasedLetterOpen),letter=l[i],body=b.querySelector(`[data-purchased-letter-body="${i}"]`);if(!letter||!body)return;const opening=body.classList.contains("hidden");body.classList.toggle("hidden");btn.textContent=opening?"CLOSE LETTER":"OPEN LETTER";if(opening)notifyPurchasedLetterOpened(letter)}))}
 function renderMikaelTokens(){const w=$("tokenJarWindow");if(!w)return;const host=w.querySelector(".windowScroll")||w;let b=$("mikaelTokensBox");if(!b){b=document.createElement("section");b.id="mikaelTokensBox";host.appendChild(b)}const t=read(MTOKENS,{inventory:{}}),n=Number(t.inventory?.["UNO Reverse"]||0);b.innerHTML=n?`<h3>🕴️ Mikael's Tokens</h3><div class="tokenCard"><div class="tokenCardEmoji">🔄</div><div><strong>UNO Reverse</strong><p>Mikael has the power: one playful, reasonable request for Lizzy.</p></div><div class="tokenCount">×${n}</div></div>`:""}
-migrate();repairPurchasedDestinations();$("seedStoreIcon")?.addEventListener("click",()=>setTimeout(()=>{renderShelf();poll()},60));document.querySelector('[data-store-tab="secret"]')?.addEventListener("click",()=>setTimeout(poll,30));$("openWhenIcon")?.addEventListener("click",()=>setTimeout(renderLetters,60));window.addEventListener("lizzyPurchasedLettersUpdated",renderLetters);window.addEventListener("lizzySecretPurchaseGranted",e=>{if(e.detail?.kind==="letter")renderLetters()});$("tokenJarIcon")?.addEventListener("click",()=>setTimeout(renderMikaelTokens,60));window.addEventListener("focus",()=>{if(!$("secretShelfPanel")?.classList.contains("hidden"))poll()});document.addEventListener("visibilitychange",()=>{if(!document.hidden)poll()});window.addEventListener("focus",()=>poll());renderShelf();pollVault();renderLetters();renderMikaelTokens();setTimeout(poll,500);
+migrate();repairPurchasedDestinations();$("seedStoreIcon")?.addEventListener("click",()=>setTimeout(()=>{renderShelf();poll()},60));document.querySelector('[data-store-tab="secret"]')?.addEventListener("click",()=>setTimeout(poll,30));$("openWhenIcon")?.addEventListener("click",()=>setTimeout(renderLetters,60));window.addEventListener("lizzyPurchasedLettersUpdated",renderLetters);window.addEventListener("lizzySecretPurchaseGranted",e=>{if(e.detail?.kind==="letter")renderLetters()});$("tokenJarIcon")?.addEventListener("click",()=>setTimeout(renderMikaelTokens,60));window.addEventListener("focus",()=>{if(!$("secretShelfPanel")?.classList.contains("hidden"))poll()});setInterval(()=>{if(!document.hidden){poll();pollVault()}},30000);renderShelf();pollVault();renderLetters();renderMikaelTokens();setTimeout(poll,500);
 })();
 
 
@@ -710,7 +669,7 @@ migrate();repairPurchasedDestinations();$("seedStoreIcon")?.addEventListener("cl
 "use strict";
 const $=id=>document.getElementById(id);
 const read=(k,f)=>{try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch(e){return f}};
-const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('LizzyOS: save failed',k,e)}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const EXTRA="lizzyStoreExtrasV1", NAMES="lizzyCustomPlantNamesV1";
 const LABELS={mystery_pack:"🎁 Mystery Seed Pack",heart_pot:"💗 Heart Pot",gotham_pot:"🦇 Gotham Pot",moon_pot:"🌙 Moon Pot",fairy_lights:"✨ Fairy Lights",butterflies:"🦋 Garden Butterflies",falling_petals:"🌸 Falling Petals",name_plant:"🏷️ Name-a-Plant Pass",discount25:"🎟️ 25% Seed Coupon"};
 
@@ -801,7 +760,7 @@ window.addEventListener("lizzyExtrasChanged",()=>setTimeout(()=>{renderMyExtras(
 (()=>{
 "use strict";
 const read=(k,f)=>{try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch(e){return f}};
-const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('LizzyOS: save failed',k,e)}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const SHELF="lizzySecretShelfV1",LETTERS="lizzyPurchasedLettersV1",TOKENS="lizzyMikaelTokensV1";
 const LETTER_ID="letter_001";
 const LETTER_TITLE="Unreleased Letter #001";
@@ -885,7 +844,7 @@ for(let i=0;i<localStorage.length;i++){
    if(value!==null)snapshot.values[key]=value;
  }
 }
-try{localStorage.setItem(SNAP,JSON.stringify(snapshot))}catch(e){/* phone storage full: skip the optional backup */}
+localStorage.setItem(SNAP,JSON.stringify(snapshot));
 })();
 
 
